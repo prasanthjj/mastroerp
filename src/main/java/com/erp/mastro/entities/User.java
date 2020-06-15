@@ -28,12 +28,6 @@ public class User {
             , inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Roles> roles;
 
-    @Column(name = "date_of_birth")
-    protected Date dateOfBirth;
-
-    @Column(name = "gender")
-    protected String gender;
-
     public Long getId() {
         return id;
     }
@@ -80,21 +74,5 @@ public class User {
 
     public void setRoles(Set<Roles> roles) {
         this.roles = roles;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 }
