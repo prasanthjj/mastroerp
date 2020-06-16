@@ -1,6 +1,7 @@
 package com.erp.mastro.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "sub_category")
@@ -20,6 +21,11 @@ public class SubCategory {
     @JoinTable(name = "category_subcategory", joinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
     private Category category;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "subcategory_product", joinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
+    private Set<Product> productSet;
 
 
     public Long getId() {
@@ -52,5 +58,13 @@ public class SubCategory {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Product> getProductSet() {
+        return productSet;
+    }
+
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
     }
 }
