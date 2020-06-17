@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add HSN </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <link href="../resources/css/animate.css" rel="stylesheet">
+    <link href="../resources/css/style.css" rel="stylesheet">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet">
+</head>
+
+<body >
+    <div id="wrapper">
+    <nav class="navbar-default navbar-static-side " role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">Admin</span>
+                            <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                          
+                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
+                </li>
+                <li  class="active">
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="item_master.html">Product</a></li>
+                        <li class="active"><a href="hsn_master.html">HSN</a></li>
+                        <li><a href="location_master.html">Location</a></li>
+                        <li><a href="party_master.html">Party</a></li>
+                        <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                        <li><a href="catalog_master.html">Category</a></li>
+                        <li><a href="assets_master.html">Assets</a></li>
+                        <li><a href="brand_master.html">Brands</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span class="fa arrow"></span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Purchase </span><span class="fa arrow"></span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Billing</span><span class="fa arrow"></span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">HR </span><span class="fa arrow"></span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Reports </span><span class="fa arrow"></span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+        <nav class="navbar navbar-static-top master-dark-blue-bg" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+           
+        </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a href="login.html">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add HSN </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="hsn_master.html">HSN List </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add HSN </strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+               
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1  (Last Login at :07/06/2020  06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+               
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title  ">
+                        <!-- <h5 class="text-info"><i class="fa fa-barcode"></i> Manage HSN</h5> -->
+                        <div class="ibox-tools">
+                            
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="view_hsn.html">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row"><label class="col-sm-4 col-form-label">Entry Date</label>
+                                        <div class="col-sm-8" id="data_1">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Section</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Chapter</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Heading</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Sub Heading</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">HSN</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Name Of GST Goods</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group row"><label class="col-sm-4 col-form-label">Effective From</label>
+                                        <div class="col-sm-8" id="data_1">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">SGST (%)</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">CGST (%)</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST (%)</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">UTGST (%)</label>
+
+                                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                </div>
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                            </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="footer">
+            <div class="float-right">
+                Designed and Developed By <strong>Halo Technology Solutions</strong> 
+            </div>
+            <div>
+                <strong>Copyright</strong> Mastro Metals &copy; 2020
+            </div>
+        </div>
+
+        </div>
+      
+    </div>
+
+   <!-- Mainly scripts -->
+   <script src="../resources/js/jquery-3.1.1.min.js"></script>
+   <script src="../resources/js/popper.min.js"></script>
+   <script src="../resources/js/bootstrap.js"></script>
+   <script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+   <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+   <!-- Custom and plugin javascript -->
+   <script src="../resources/js/inspinia.js"></script>
+   <script src="../resources/js/plugins/pace/pace.min.js"></script>
+   <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+
+  <!-- Data picker -->
+  <script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+ <!-- Tags Input -->
+   <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script>
+        $(document).ready(function(){
+           
+            var mem = $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+        });
+
+    </script>
+    
+</body>
+</html>

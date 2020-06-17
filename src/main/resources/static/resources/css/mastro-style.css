@@ -1,0 +1,45 @@
+.master-dark-blue-bg{
+    background-color:#2f4050 !important ;
+}
+.master-yellow-bg{
+    background-color:#e0bd1d !important ;
+}
+.mastro-blue-bg{
+    background-color: #0094db !important;
+}
+.mastro-white-bg{
+    background-color: #ffffff !important;
+}
+.txt-white{
+    color: #ffffff;
+}
+
+.last-login {
+ margin-bottom: 0px;
+}
+.last-login li{
+list-style: none;
+text-align: right;
+font-weight: bold;
+}
+label{font-weight: 600;}
+.catalogIcon i{
+    font-size: 18px;
+    padding-right: 10px;
+}
+.Catalog-bg{
+    border: 1px dashed #293846 !important;
+    background: #293846 !important;
+    color: #fff !important;
+}
+.Catalog-category-bg{
+    border: 1px dashed #293846;
+    background: #293846;
+    color: #fff;
+}
+.catalogSelect{
+    display: none;
+}
+.dd-handle:hover .catalogSelect{
+    display: block;
+}
