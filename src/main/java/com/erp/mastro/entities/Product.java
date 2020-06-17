@@ -30,6 +30,9 @@ public class Product {
     @Column(name = "warranty")
     private String warranty;
 
+    @Column(name = "property_size")
+    private String propertySize;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "subcategory_product", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")})
@@ -39,6 +42,17 @@ public class Product {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<ProductImages> productImages= new HashSet<>();
+
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProductUOM> productUOMSet= new HashSet<>();
+
+    @Column(name = "base_uom")
+    private String baseUOM;
+
+    @Column(name = "base_quantity")
+    private String baseQuantity;
 
     public Long getId() {
         return id;
@@ -110,5 +124,37 @@ public class Product {
 
     public void setProductImages(Set<ProductImages> productImages) {
         this.productImages = productImages;
+    }
+
+    public Set<ProductUOM> getProductUOMSet() {
+        return productUOMSet;
+    }
+
+    public void setProductUOMSet(Set<ProductUOM> productUOMSet) {
+        this.productUOMSet = productUOMSet;
+    }
+
+    public String getPropertySize() {
+        return propertySize;
+    }
+
+    public void setPropertySize(String propertySize) {
+        this.propertySize = propertySize;
+    }
+
+    public String getBaseUOM() {
+        return baseUOM;
+    }
+
+    public void setBaseUOM(String baseUOM) {
+        this.baseUOM = baseUOM;
+    }
+
+    public String getBaseQuantity() {
+        return baseQuantity;
+    }
+
+    public void setBaseQuantity(String baseQuantity) {
+        this.baseQuantity = baseQuantity;
     }
 }
