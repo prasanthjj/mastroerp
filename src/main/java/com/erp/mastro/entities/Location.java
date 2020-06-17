@@ -5,8 +5,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "location")
-public class Location
-{
+public class Location {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -26,6 +26,14 @@ public class Location
     @Column(name = "pincode")
     protected String pincode;
 
+    public Location(Long id, String countryName, String stateName, String cityName, String areaName, String pincode) {
+        this.id = id;
+        this.countryName = countryName;
+        this.stateName = stateName;
+        this.cityName = cityName;
+        this.areaName = areaName;
+        this.pincode = pincode;
+    }
 
     public Long getId() {
         return  id;
@@ -35,9 +43,7 @@ public class Location
         this.id = id;
     }
 
-    public String getCountryName() {
-        return countryName;
-    }
+    public String getCountryName() { return countryName; }
 
     public void setCountryName(String countryName) {
         this.cityName = countryName;
@@ -71,12 +77,6 @@ public class Location
          return pincode;
      }
 
-     public void setPincode(String pincode) {
-        this.pincode=pincode;
-     }
-
-
-
-
+     public void setPincode(String pincode) { this.pincode=pincode; }
 
 }
