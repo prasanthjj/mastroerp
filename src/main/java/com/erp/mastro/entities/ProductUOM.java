@@ -22,7 +22,7 @@ public class ProductUOM {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "uom_id")
-    private UOM uom;
+    private Uom uom;
 
     public Long getId() {
         return id;
@@ -56,11 +56,11 @@ public class ProductUOM {
         this.product = product;
     }
 
-    public UOM getUom() {
+    public Uom getUom() {
         return uom;
     }
 
-    public void setUom(UOM uom) {
+    public void setUom(Uom uom) {
         this.uom = uom;
     }
 }

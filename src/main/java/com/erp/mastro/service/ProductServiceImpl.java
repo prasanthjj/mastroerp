@@ -1,11 +1,9 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.dao.CategoryRepository;
-import com.erp.mastro.dao.ProductRepository;
-import com.erp.mastro.entities.Catalog;
-import com.erp.mastro.entities.Category;
+
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.SubCategory;
+import com.erp.mastro.repository.ProductRepository;
 import com.erp.mastro.service.interfaces.CategoryService;
 import com.erp.mastro.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

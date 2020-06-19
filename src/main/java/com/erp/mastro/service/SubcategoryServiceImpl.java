@@ -1,8 +1,6 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.dao.CategoryRepository;
-import com.erp.mastro.dao.SubCategoryRepository;
-import com.erp.mastro.entities.Catalog;
+import com.erp.mastro.repository.SubCategoryRepository;
 import com.erp.mastro.entities.Category;
 import com.erp.mastro.entities.SubCategory;
 import com.erp.mastro.service.interfaces.SubcategoryService;
