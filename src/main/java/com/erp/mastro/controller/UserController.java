@@ -53,7 +53,6 @@ public class UserController {
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);
-
         userService.saveOrUpdateUser(user);
 
         return "login";
