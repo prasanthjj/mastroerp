@@ -1,7 +1,7 @@
 package com.erp.mastro.service;
 
 
-import com.erp.mastro.dao.BranchRepository;
+import com.erp.mastro.repository.BranchRepository;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.service.interfaces.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.erp.mastro.service;
 
 
-import com.erp.mastro.dao.AssetRepository;
+import com.erp.mastro.repository.AssetRepository;
 import com.erp.mastro.entities.Assets;
 import com.erp.mastro.service.interfaces.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;

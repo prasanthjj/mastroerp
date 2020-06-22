@@ -1,7 +1,7 @@
 package com.erp.mastro.service;
 
 
-import com.erp.mastro.dao.HSNRepository;
+import com.erp.mastro.repository.HSNRepository;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.service.interfaces.HSNService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ public class HSNServiceImpl implements HSNService {
 
     @Autowired
     private HSNRepository hsnRepository;
-
 
 
     public List<HSN> getAllHSN()
