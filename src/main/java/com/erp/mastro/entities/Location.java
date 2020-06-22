@@ -1,7 +1,6 @@
 package com.erp.mastro.entities;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "location")
@@ -9,22 +8,24 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @Column(name = "country_name")
-    protected String countryName;
+    private String countryName;
 
     @Column(name = "state_name")
-    protected String stateName;
+    private String stateName;
 
     @Column(name = "city_name")
-    protected String cityName;
+    private String cityName;
 
     @Column(name = "area_name")
-    protected String areaName;
+    private String areaName;
 
     @Column(name = "pincode")
-    protected String pincode;
+    private String pincode;
+
+    public Location() { }
 
     public Location(Long id, String countryName, String stateName, String cityName, String areaName, String pincode) {
         this.id = id;
@@ -39,9 +40,7 @@ public class Location {
         return  id;
     }
 
-    public void setId(Long Id) {
-        this.id = id;
-    }
+    public void setId(Long Id) { this.id = id; }
 
     public String getCountryName() { return countryName; }
 
