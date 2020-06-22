@@ -48,6 +48,10 @@ public class Product {
             orphanRemoval = true)
     private Set<ProductUOM> productUOMSet= new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hsn_id")
+    private HSN hsn;
+
     @Column(name = "base_uom")
     private String baseUOM;
 
@@ -156,5 +160,13 @@ public class Product {
 
     public void setBaseQuantity(String baseQuantity) {
         this.baseQuantity = baseQuantity;
+    }
+
+    public HSN getHsn() {
+        return hsn;
+    }
+
+    public void setHsn(HSN hsn) {
+        this.hsn = hsn;
     }
 }
