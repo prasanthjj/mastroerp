@@ -53,6 +53,10 @@ public class Product {
             orphanRemoval = true)
     private Set<ProductUOM> productUOMSet= new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hsn_id")
+    private HSN hsn;
+
     @Column(name = "base_uom")
     private String baseUOM;
 
