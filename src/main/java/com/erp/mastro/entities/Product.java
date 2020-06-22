@@ -1,9 +1,14 @@
 package com.erp.mastro.entities;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "product")
 public class Product {
@@ -54,107 +59,21 @@ public class Product {
     @Column(name = "base_quantity")
     private String baseQuantity;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @JoinTable(name = "product_party", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
+    private Set<Party> partySet;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  /*  @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProductPartyRateRelation> productPartyRateRelationSet= new HashSet<>();*/
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getItemCode() {
-        return itemCode;
-    }
-
-    public void setItemCode(String itemCode) {
-        this.itemCode = itemCode;
-    }
-
-    public String getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public String getGuarantee() {
-        return guarantee;
-    }
-
-    public void setGuarantee(String guarantee) {
-        this.guarantee = guarantee;
-    }
-
-    public String getWarranty() {
-        return warranty;
-    }
-
-    public void setWarranty(String warranty) {
-        this.warranty = warranty;
-    }
-
-    public SubCategory getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public Set<ProductImages> getProductImages() {
-        return productImages;
-    }
-
-    public void setProductImages(Set<ProductImages> productImages) {
-        this.productImages = productImages;
-    }
-
-    public Set<ProductUOM> getProductUOMSet() {
-        return productUOMSet;
-    }
-
-    public void setProductUOMSet(Set<ProductUOM> productUOMSet) {
-        this.productUOMSet = productUOMSet;
-    }
-
-    public String getPropertySize() {
-        return propertySize;
-    }
-
-    public void setPropertySize(String propertySize) {
-        this.propertySize = propertySize;
-    }
-
-    public String getBaseUOM() {
-        return baseUOM;
-    }
-
-    public void setBaseUOM(String baseUOM) {
-        this.baseUOM = baseUOM;
-    }
-
-    public String getBaseQuantity() {
-        return baseQuantity;
-    }
-
-    public void setBaseQuantity(String baseQuantity) {
-        this.baseQuantity = baseQuantity;
-    }
+  /*  @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "product_party",
+            joinColumns = { @JoinColumn(name = "product_id") },
+            inverseJoinColumns = { @JoinColumn(name = "party_id") }
+    )
+    Set<Party> parties = new HashSet<>();*/
 }
