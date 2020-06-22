@@ -1,8 +1,13 @@
 package com.erp.mastro.entities;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
-
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "sub_category")
 public class SubCategory {
@@ -27,44 +32,13 @@ public class SubCategory {
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private Set<Product> productSet;
 
+    public SubCategory(Long id, String subCategoryName, String subCategoryDescription,Category category) {
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
         this.id = id;
+        this.subCategoryName= subCategoryName;
+        this.subCategoryDescription=subCategoryDescription;
+        this.category=category;
+
     }
 
-    public String getSubCategoryName() {
-        return subCategoryName;
-    }
-
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
-    }
-
-    public String getSubCategoryDescription() {
-        return subCategoryDescription;
-    }
-
-    public void setSubCategoryDescription(String subCategoryDescription) {
-        this.subCategoryDescription = subCategoryDescription;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Set<Product> getProductSet() {
-        return productSet;
-    }
-
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
-    }
 }

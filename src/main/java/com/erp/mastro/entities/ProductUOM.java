@@ -1,7 +1,12 @@
 package com.erp.mastro.entities;
 
-import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "product_uom")
 public class ProductUOM {
@@ -24,43 +29,4 @@ public class ProductUOM {
     @JoinColumn(name = "uom_id")
     private Uom uom;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public String getConvertionFactor() {
-        return convertionFactor;
-    }
-
-    public void setConvertionFactor(String convertionFactor) {
-        this.convertionFactor = convertionFactor;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Uom getUom() {
-        return uom;
-    }
-
-    public void setUom(Uom uom) {
-        this.uom = uom;
-    }
 }

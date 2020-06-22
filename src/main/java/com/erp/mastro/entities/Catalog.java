@@ -1,9 +1,14 @@
 package com.erp.mastro.entities;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
-
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "catalog")
 public class Catalog {
@@ -26,43 +31,12 @@ public class Catalog {
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
     private Set<Category> categories;
 
-    public Long getId() {
-        return id;
-    }
+    public Catalog(Long id, String catalogName, String catalogDescription) {
 
-    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCatalogName() {
-        return catalogName;
-    }
-
-    public void setCatalogName(String catalogName) {
         this.catalogName = catalogName;
+        this.catalogDescription=catalogDescription;
+
     }
 
-    public String getCatalogDescription() {
-        return catalogDescription;
-    }
-
-    public void setCatalogDescription(String catalogDescription) {
-        this.catalogDescription = catalogDescription;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
 }
