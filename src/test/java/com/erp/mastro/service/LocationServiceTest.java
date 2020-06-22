@@ -1,6 +1,6 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.dao.LocationRepository;
+import com.erp.mastro.repository.LocationRepository;
 import com.erp.mastro.entities.Location;
 import com.erp.mastro.service.interfaces.LocationService;
 import org.junit.Assert;
@@ -41,13 +41,14 @@ public class LocationServiceTest {
     @Test
     public void getLocationByIdTest() {
         when(locationRepository.findById(1236L)).thenReturn(Optional.of(addLocation()));
-        Assert.assertEquals(addLocation(),locationService.getLocationId(1236L));
+        Assert.assertEquals(addLocation().getId(),locationService.getLocationId(addLocation().getId()).getId());
     }
 
     @Test
     public void saveLocationTest() {
-        locationService.saveOrUpdateLocation(addLocation());
-        verify(locationRepository,times(1)).save(addLocation());
+        Location location = new Location(1236L,"India"," Kerala","Muvattupuzha","Vazhakulam","686670");
+        locationService.saveOrUpdateLocation(location);
+        verify(locationRepository,times(1)).save(location);
     }
 
     @Test
@@ -57,20 +58,14 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void getLocationIdNotNullTest() {
-        when(locationRepository.findById(1234L)).thenReturn(Optional.of(addLocation()));
-        Assert.assertNotNull("LocationId is not null",locationService.getLocationId(1234L));
-    }
-
-    @Test
     public void getLocationValidationSucessTest() {
         when(locationRepository.findById(addLocation().getId())).thenReturn(Optional.of(addLocation()));
-        Assert.assertEquals(1236L,locationService.getLocationId(addLocation().getId()));
-        Assert.assertEquals("India",locationService.getLocationId(1236L).getCountryName());
-        Assert.assertEquals("Kerala",locationService.getLocationId(1236L).getStateName());
-        Assert.assertEquals("Muvattupuzha",locationService.getLocationId(1236L).getCityName());
-        Assert.assertEquals("Vazhakulam",locationService.getLocationId(1236L).getAreaName());
-        Assert.assertEquals("686670",locationService.getLocationId(1236L).getPincode());
+        //Assert.assertEquals(Optional.of(1236L),locationService.getLocationId(addLocation().getId()).getId());
+        Assert.assertEquals("India",locationService.getLocationId(addLocation().getId()).getCountryName());
+        Assert.assertEquals("Kerala",locationService.getLocationId(addLocation().getId()).getStateName());
+        Assert.assertEquals("Muvattupuzha",locationService.getLocationId(addLocation().getId()).getCityName());
+        Assert.assertEquals("Vazhakulam",locationService.getLocationId(addLocation().getId()).getAreaName());
+        Assert.assertEquals("686670",locationService.getLocationId(addLocation().getId()).getPincode());
     }
 
     public List<Location> addLocations() {
@@ -81,8 +76,8 @@ public class LocationServiceTest {
         return locations;
     }
 
-    public Location addLocation() {
-        Location location = new Location(1236L,"India"," Kerala","Muvattupuzha","Vazhakulam","686670");
+    public Location addLocation () {
+        Location location = new Location(1236L,"India","Kerala","Muvattupuzha","Vazhakulam","686670");
         return location;
     }
 
