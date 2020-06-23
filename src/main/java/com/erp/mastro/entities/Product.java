@@ -68,16 +68,4 @@ public class Product {
             , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
     private Set<Party> partySet;
 
-  /*  @OneToMany(mappedBy = "product",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<ProductPartyRateRelation> productPartyRateRelationSet= new HashSet<>();*/
-
-  /*  @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "product_party",
-            joinColumns = { @JoinColumn(name = "product_id") },
-            inverseJoinColumns = { @JoinColumn(name = "party_id") }
-    )
-    Set<Party> parties = new HashSet<>();*/
 }

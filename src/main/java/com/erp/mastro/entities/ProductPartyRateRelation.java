@@ -15,15 +15,6 @@ public class ProductPartyRateRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "party_id")
-    private Party party;
-*/
-
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "party_id")
     private Party party;

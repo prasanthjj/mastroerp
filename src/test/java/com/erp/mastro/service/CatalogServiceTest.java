@@ -1,6 +1,6 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.dao.CatalogRepository;
+import com.erp.mastro.repository.CatalogRepository;
 import com.erp.mastro.dao.LocationRepository;
 import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.Location;
@@ -51,22 +51,5 @@ public class CatalogServiceTest {
         Assert.assertNotEquals(1,catalogService.getAllCatalogs().size());
     }
 
-    @Test
-    public void getByIdTest() {
 
-        when(catalogRepository.findById(3L)).thenReturn(Optional.of(addCatalog()));
-        Assert.assertEquals(addCatalog(),catalogService.getCatalogById(3L));
-
-    }
-
-    @Test
-    public void saveCatalogTest()
-    {
-        catalogService.saveOrUpdateCatalog(addCatalog());
-        verify(catalogRepository, times(1)).save(addCatalog());
-    }
-    public Catalog addCatalog() {
-        Catalog catalog = new Catalog(3L, "A ","b");
-        return catalog;
-    }
 }

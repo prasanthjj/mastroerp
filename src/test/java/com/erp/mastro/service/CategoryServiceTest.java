@@ -1,7 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.dao.CatalogRepository;
-import com.erp.mastro.dao.CategoryRepository;
+import com.erp.mastro.repository.CategoryRepository;
 import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.Category;
 import com.erp.mastro.service.interfaces.CatalogService;
@@ -50,25 +50,6 @@ public class CategoryServiceTest {
     public void getCategorysSizeNotEqualTest() {
         when(categoryRepository.findAll()).thenReturn(addCategorys());
         Assert.assertNotEquals(1,categoryService.getAllCategories().size());
-    }
-
-    @Test
-    public void getByIdTest() {
-
-        Catalog catalog = new Catalog(3L, "A ","b");
-        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
-        Assert.assertEquals(category,categoryService.getCategoryById(1L));
-
-    }
-
-    @Test
-    public void saveCatalogTest()
-    {
-        Catalog catalog = new Catalog(3L, "A ","b");
-        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
-        categoryService.saveOrUpdateCategory(category);
-        verify(categoryRepository, times(1)).save(category);
     }
 
 }

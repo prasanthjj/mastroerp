@@ -97,11 +97,10 @@ public class Party {
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private Product product;
 
-    /*@OneToMany(mappedBy = "party",
+    @OneToOne(mappedBy = "party",
             cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             orphanRemoval = true)
-    private Set<ProductPartyRateRelation> productPartyRateRelationSet= new HashSet<>();
-*/
-   /* @ManyToMany(mappedBy = "parties")
-    private Set<Product> products = new HashSet<>();*/
+    private ProductPartyRateRelation productPartyRateRelation;
+
 }

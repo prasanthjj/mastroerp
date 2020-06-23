@@ -29,10 +29,10 @@ public class CreditDetails {
 
     @Column(name = "remarks")
     private String remarks;
-//uncomment after create branch entity
-   /* @OneToOne
+
+    @OneToOne
     @JoinColumn(name = "branch_id")
-    private Branch branch;*/
+    private Branch branch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "party_credit_details", joinColumns = {@JoinColumn(name = "credit_details_id", referencedColumnName = "id")}
