@@ -40,16 +40,61 @@ public class CategoryServiceTest {
 
     }
 
+    public Category addCategory() {
+        Catalog catalog = new Catalog(3L, "a ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        return category;
+    }
+
     @Test
-    public void getCategorysSizeEqualTest() {
+    public void testGetCategorysSizeEqual() {
         when(categoryRepository.findAll()).thenReturn(addCategorys());
         Assert.assertEquals(2,categoryService.getAllCategories().size());
     }
 
     @Test
-    public void getCategorysSizeNotEqualTest() {
+    public void testGetCategorysSizeNotEqual() {
+
         when(categoryRepository.findAll()).thenReturn(addCategorys());
         Assert.assertNotEquals(1,categoryService.getAllCategories().size());
+
+    }
+
+    @Test
+    public void testGetById() {
+
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(addCategory()));
+        Assert.assertEquals(addCategory().getId(),categoryService.getCategoryById(addCategory().getId()).getId());
+
+    }
+
+
+    @Test
+    public void testSaveCategory()
+    {
+        Catalog catalog = new Catalog(3L, "a ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        categoryService.saveOrUpdateCategory(category);
+        verify(categoryRepository, times(1)).save(category);
+    }
+
+    @Test
+    public void testDeleteCategory() {
+
+        categoryService.deleteCategory(addCategory().getId());
+        verify(categoryRepository,times(1)).deleteById(addCategory().getId());
+
+    }
+
+    @Test
+    public void testGetCategoryValidationSucess() {
+
+        when(categoryRepository.findById(addCategory().getId())).thenReturn(Optional.of(addCategory()));
+        Assert.assertEquals("a1",categoryService.getCategoryById(addCategory().getId()).getCategoryName());
+        Assert.assertEquals("a2",categoryService.getCategoryById(addCategory().getId()).getCategoryDescription());
+        Assert.assertEquals("a3",categoryService.getCategoryById(addCategory().getId()).getCategoryShortCode());
+        Assert.assertEquals("a4",categoryService.getCategoryById(addCategory().getId()).getCategoryType());
+        Assert.assertEquals(addCategory().getCatalog().getId(),categoryService.getCategoryById(addCategory().getId()).getCatalog().getId());
     }
 
 }

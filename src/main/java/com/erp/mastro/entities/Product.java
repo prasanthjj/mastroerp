@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product extends Auditable<String>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,9 +63,13 @@ public class Product {
     @Column(name = "base_quantity")
     private String baseQuantity;
 
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JoinTable(name = "product_party", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
-    private Set<Party> partySet;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "product_party",
+            joinColumns = { @JoinColumn(name = "product_id") },
+            inverseJoinColumns = { @JoinColumn(name = "party_id") }
+    )
+    Set<Party> parties = new HashSet<>();
+
 
 }

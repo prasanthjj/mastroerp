@@ -39,17 +39,51 @@ public class CatalogServiceTest {
 
     }
 
+    public Catalog addCatalog () {
+        Catalog catalog = new Catalog(3L, "a","b");
+        return catalog;
+    }
+
     @Test
-    public void getCatalogsSizeEqualTest() {
+    public void testGetCatalogsSizeEqual() {
         when(catalogRepository.findAll()).thenReturn(addCatalogs());
         Assert.assertEquals(2,catalogService.getAllCatalogs().size());
     }
 
     @Test
-    public void getCatalogsSizeNotEqualTest() {
+    public void testGetCatalogsSizeNotEqual() {
         when(catalogRepository.findAll()).thenReturn(addCatalogs());
         Assert.assertNotEquals(1,catalogService.getAllCatalogs().size());
     }
 
+
+    @Test
+    public void testGetById() {
+
+        when(catalogRepository.findById(3L)).thenReturn(Optional.of(addCatalog()));
+        Assert.assertEquals(addCatalog().getId(),catalogService.getCatalogById(addCatalog().getId()).getId());
+
+    }
+    @Test
+    public void testSaveCatalog()
+    {
+        Catalog catalog = new Catalog(3L, "a","b");
+        catalogService.saveOrUpdateCatalog(catalog);
+        verify(catalogRepository, times(1)).save(catalog);
+    }
+
+    @Test
+    public void testDeleteCatalog() {
+        catalogService.deleteCatalog(addCatalog().getId());
+        verify(catalogRepository,times(1)).deleteById(addCatalog().getId());
+    }
+
+    @Test
+    public void testGetCatalogValidationSucess() {
+
+        when(catalogRepository.findById(addCatalog().getId())).thenReturn(Optional.of(addCatalog()));
+        Assert.assertEquals("a",catalogService.getCatalogById(addCatalog().getId()).getCatalogName());
+        Assert.assertEquals("b",catalogService.getCatalogById(addCatalog().getId()).getCatalogDescription());
+    }
 
 }

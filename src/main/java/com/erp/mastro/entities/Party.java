@@ -92,10 +92,8 @@ public class Party {
             , inverseJoinColumns = {@JoinColumn(name = "credit_details_id", referencedColumnName = "id")})
     private Set<CreditDetails> creditDetails;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_party", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
-    private Product product;
+    @ManyToMany(mappedBy = "parties")
+    private Set<Product> products = new HashSet<>();
 
     @OneToOne(mappedBy = "party",
             cascade = CascadeType.ALL,
