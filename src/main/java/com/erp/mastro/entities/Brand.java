@@ -40,4 +40,9 @@ public class Brand {
         this.brandDescription = brandDescription;
     }
 
+    public Brand(Long id, String brandName, String brandDescription) {
+        this.id = id;
+        this.brandName = brandName;
+        this.brandDescription = brandDescription;
+    }
 }
