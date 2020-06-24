@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class ProductServiceTest {
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
         SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn=new HSN();
+        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
         Set<ProductImages> productImages1=new HashSet<>();
         Set<ProductImages> productImages2=new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
@@ -51,7 +52,7 @@ public class ProductServiceTest {
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
         SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn=new HSN();
+        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
         Set<ProductImages> productImages1=new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
         Product product=new Product(1L,"a11","a22","a33","a44","a55","a66","a77",subCategory,hsn,"a88","a99",productImages1,productUOMSet1);
@@ -85,7 +86,7 @@ public class ProductServiceTest {
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
         SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn=new HSN();
+        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
         Set<ProductImages> productImages1=new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
         Product product=new Product(1L,"a11","a22","a33","a44","a55","a66","a77",subCategory,hsn,"a88","a99",productImages1,productUOMSet1);
