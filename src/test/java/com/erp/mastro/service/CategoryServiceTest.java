@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,13 +27,13 @@ public class CategoryServiceTest {
     @MockBean
     private CategoryRepository categoryRepository;
 
-    public List<Category> addCategorys() {
+    public Set<Category> addCategorys() {
 
-        List<Category> categorys = new ArrayList<Category>();
+        Set<Category> categorys = new HashSet<>();
         Catalog catalog = new Catalog(3L, "A ","b");
         Stream<Category> stream = Stream.of(new Category(1L,"a1","a2","a3","a4",catalog),
                 new Category(2L,"b1","b2","b3","b4",catalog));
-        categorys= stream.collect(Collectors.toList());
+        categorys= stream.collect(Collectors.toSet());
         return categorys;
 
     }
@@ -95,6 +93,17 @@ public class CategoryServiceTest {
         Assert.assertEquals("a3",categoryService.getCategoryById(addCategory().getId()).getCategoryShortCode());
         Assert.assertEquals("a4",categoryService.getCategoryById(addCategory().getId()).getCategoryType());
         Assert.assertEquals(addCategory().getCatalog().getId(),categoryService.getCategoryById(addCategory().getId()).getCatalog().getId());
+    }
+
+    @Test
+    public void testCatalogCategorysSizeEqual() {
+
+        Catalog catalog = new Catalog(3L, "A ","b");
+        Set<Category> categorySet=new HashSet<>();
+        categorySet=addCategorys();
+        catalog.setCategories(categorySet);
+        Assert.assertEquals(catalog.getCategories().size(),categoryService.getCatalogCategories(catalog).size());
+
     }
 
 }

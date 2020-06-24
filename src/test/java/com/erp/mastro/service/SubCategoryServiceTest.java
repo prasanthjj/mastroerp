@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,28 +28,85 @@ public class SubCategoryServiceTest {
     @MockBean
     private SubCategoryRepository subCategoryRepository;
 
-    public List<SubCategory> addSubCategorys() {
+    public Set<SubCategory> addSubCategorys() {
 
-        List<SubCategory> subCategories = new ArrayList<SubCategory>();
+        Set<SubCategory> subCategories = new HashSet<>();
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
         Stream<SubCategory> stream = Stream.of(new SubCategory(1L,"a11","a22",category),
                 new SubCategory (2L,"b11","b22",category));
-        subCategories= stream.collect(Collectors.toList());
+        subCategories= stream.collect(Collectors.toSet());
         return subCategories;
 
     }
 
+    public SubCategory addSubCategory() {
+
+        Catalog catalog = new Catalog(3L, "A ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
+        return subCategory;
+
+    }
+
     @Test
-    public void getSubCategorysSizeEqualTest() {
+    public void testGetSubCategorysSizeEqual() {
         when(subCategoryRepository.findAll()).thenReturn(addSubCategorys());
         Assert.assertEquals(2,subcategoryService.getAllSubCategories().size());
     }
 
     @Test
-    public void getSubCategorysSizeNotEqualTest() {
+    public void testGetSubCategorysSizeNotEqual() {
         when(subCategoryRepository.findAll()).thenReturn(addSubCategorys());
         Assert.assertNotEquals(1,subcategoryService.getAllSubCategories().size());
     }
+
+    @Test
+    public void testGetById() {
+
+        when(subCategoryRepository.findById(1L)).thenReturn(Optional.of(addSubCategory()));
+        Assert.assertEquals(addSubCategory().getId(),subcategoryService.getSubCategoryById(addSubCategory().getId()).getId());
+
+    }
+
+    @Test
+    public void testSaveSubCategory()
+    {
+        Catalog catalog = new Catalog(3L, "A ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
+        subcategoryService.saveOrUpdateSubCategory(subCategory);
+        verify(subCategoryRepository, times(1)).save(subCategory);
+    }
+
+    @Test
+    public void testDeleteSubCategory() {
+
+        subcategoryService.deleteSubCategory(addSubCategory().getId());
+        verify(subCategoryRepository,times(1)).deleteById(addSubCategory().getId());
+
+    }
+
+    @Test
+    public void testSubCategoryValidationSucess() {
+
+        when(subCategoryRepository.findById(addSubCategory().getId())).thenReturn(Optional.of(addSubCategory()));
+        Assert.assertEquals("a11",subcategoryService.getSubCategoryById(addSubCategory().getId()).getSubCategoryName());
+        Assert.assertEquals("a22",subcategoryService.getSubCategoryById(addSubCategory().getId()).getSubCategoryDescription());
+        Assert.assertEquals(addSubCategory().getCategory().getId(),subcategoryService.getSubCategoryById(addSubCategory().getId()).getCategory().getId());
+    }
+
+    @Test
+    public void testCategorySubCategorysSizeEqual() {
+
+        Catalog catalog = new Catalog(3L, "A ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        Set<SubCategory> subCategorySet=new HashSet<>();
+        subCategorySet=addSubCategorys();
+        category.setSubCategories(subCategorySet);
+        Assert.assertEquals( category.getSubCategories().size(),subcategoryService.getCategorySubCategory(category).size());
+
+    }
+
 
 }
