@@ -74,4 +74,28 @@ public class BillingDetails {
             , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
     private Party party;
 
+    public BillingDetails(Long id,String type,String country,String state,String street,String city,String area,String pinCode,String designation,String faxNo,String telephoneNo,String contactPersonName,String gst,String emailId,String eccNo,String commisionRate,String rangeNo,String division,Party party) {
+
+        this.id = id;
+        this.type=type;
+        this.country=country;
+        this.state=state;
+        this.street=street;
+        this.city=city;
+        this.area=area;
+        this.pinCode=pinCode;
+        this.designation=designation;
+        this.faxNo=faxNo;
+        this.telephoneNo=telephoneNo;
+        this.contactPersonName=contactPersonName;
+        this.gst=gst;
+        this.emailId=emailId;
+        this.eccNo=eccNo;
+        this.commisionRate=commisionRate;
+        this.rangeNo=rangeNo;
+        this.division=division;
+        this.party=party;
+
+    }
+
 }

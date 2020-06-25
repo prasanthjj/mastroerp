@@ -1,6 +1,8 @@
 package com.erp.mastro.service;
 
 
+import com.erp.mastro.entities.CreditDetails;
+import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.SubCategory;
 import com.erp.mastro.repository.ProductRepository;
@@ -47,5 +49,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id)
     {
         productRepository.deleteById(id);
+    }
+
+    public void saveOrUpdateProductPartys(Product product, Set<Party> parties) {
+        product.setParties(parties);
+        productRepository.save(product);
     }
 }

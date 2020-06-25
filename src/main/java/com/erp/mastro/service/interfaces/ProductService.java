@@ -1,5 +1,6 @@
 package com.erp.mastro.service.interfaces;
 
+import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.SubCategory;
 
@@ -17,4 +18,6 @@ public interface ProductService {
     void saveOrUpdateProduct(Product product);
 
     void deleteProduct(Long id);
+
+    void saveOrUpdateProductPartys(Product product, Set<Party> parties);
 }

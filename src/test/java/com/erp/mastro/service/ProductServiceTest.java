@@ -62,14 +62,18 @@ public class ProductServiceTest {
 
     @Test
     public void testGetProductsSizeEqual() {
+
         when(productRepository.findAll()).thenReturn(addProducts());
         Assert.assertEquals(2,productService.getAllProducts().size());
+
     }
 
     @Test
     public void testGetProductsSizeNotEqual() {
+
         when(productRepository.findAll()).thenReturn(addProducts());
         Assert.assertNotEquals(1,productService.getAllProducts().size());
+
     }
 
     @Test
@@ -121,4 +125,29 @@ public class ProductServiceTest {
         Assert.assertEquals(addProduct().getProductUOMSet().size(),productService.getProductById(addProduct().getId()).getProductUOMSet().size());
     }
 
+    @Test
+    public void testSubCategoryProductsSizeEqual() {
+
+        Catalog catalog = new Catalog(3L, "A ","b");
+        Category category= new Category(1L,"a1","a2","a3","a4",catalog);
+        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
+        Set<Product> productSet=new HashSet<>();
+        productSet=addProducts();
+        subCategory.setProductSet(productSet);
+        Assert.assertEquals(subCategory.getProductSet().size(),productService.getSubCategoryProducts( subCategory).size());
+
+    }
+
+    @Test
+    public void testSaveorUpdateProductParties()
+    {
+
+        Product product= addProduct();
+        Set<Party> partySet=new HashSet<>();
+        Party party= new Party(1L,"a1","a2","a3","a4","a5","a6","a7",new Date(),"a9","a10","a11","a12","a13");
+        partySet.add(party);
+        productService.saveOrUpdateProductPartys(product,partySet);
+        verify(productRepository, times(1)).save(product);
+
+    }
 }

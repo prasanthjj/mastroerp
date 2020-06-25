@@ -41,4 +41,18 @@ public class BankDetails {
             , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
     private Party party;
 
+    public BankDetails(Long id,String accountType,String ifscCode,String accountNo,String bankName,String swiftNo,String branchName,String bankAddress,Party party) {
+
+        this.id = id;
+        this.accountType=accountType;
+        this.ifscCode=ifscCode;
+        this.accountNo=accountNo;
+        this.bankName=bankName;
+        this.swiftNo=swiftNo;
+        this.branchName=branchName;
+        this.bankAddress=bankAddress;
+        this.party=party;
+
+    }
+
 }
