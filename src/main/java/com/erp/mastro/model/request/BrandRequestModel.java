@@ -1,22 +1,12 @@
-package com.erp.mastro.entities;
+package com.erp.mastro.model.request;
 
-import javax.persistence.*;
+public class BrandRequestModel {
 
-@Entity
-@Table(name = "brand")
-public class Brand {
+    private Long id;
+    private String brandName;
+    private String brandDescription;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-
-    @Column(name = "brand_name")
-    protected  String brandName;
-
-    @Column(name = "brand_description")
-    protected String brandDescription;
-
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -39,5 +29,4 @@ public class Brand {
     public void setBrandDescription(String brandDescription) {
         this.brandDescription = brandDescription;
     }
-
 }

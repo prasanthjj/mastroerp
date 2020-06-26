@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.Brand;
+import com.erp.mastro.model.request.BrandRequestModel;
 import com.erp.mastro.repository.BrandRepository;
 import com.erp.mastro.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,20 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void saveOrUpdateBrand(Brand brand) {
-        brandRepository.save(brand);
+    public void saveOrUpdateBrand(BrandRequestModel brandRequestModel) {
+
+        if (brandRequestModel.getId() == null) {
+            Brand brand = new Brand();
+            brand.setBrandName(brandRequestModel.getBrandName());
+            brand.setBrandDescription(brandRequestModel.getBrandDescription());
+            brandRepository.save(brand);
+        } else {
+            Brand brand = brandRepository.findById(brandRequestModel.getId()).get();
+            brand.setBrandName(brandRequestModel.getBrandName());
+            brand.setBrandDescription(brandRequestModel.getBrandDescription());
+            brandRepository.save(brand);
+        }
+
     }
 
     @Override
