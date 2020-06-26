@@ -37,4 +37,17 @@ public class ProductPartyRateRelation {
     @Column(name = "allowed_price_dev_per_lower")
     private double allowedPriceDevPerLower;
 
+    public ProductPartyRateRelation(Long id, double rate, String grade, double discountPercentage, String creditDays, double allowedPriceDevPerUpper, double allowedPriceDevPerLower, Party party) {
+
+        this.id = id;
+        this.rate = rate;
+        this.grade = grade;
+        this.discountPercentage = discountPercentage;
+        this.creditDays = creditDays;
+        this.allowedPriceDevPerUpper = allowedPriceDevPerUpper;
+        this.allowedPriceDevPerLower = allowedPriceDevPerLower;
+        this.party = party;
+    }
+
+
 }
