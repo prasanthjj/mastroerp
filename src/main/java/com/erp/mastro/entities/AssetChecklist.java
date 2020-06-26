@@ -17,13 +17,19 @@ public class AssetChecklist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="check_list")
+    @Column(name = "check_list")
     private String checkList;
 
-    @Column(name="remarks")
+    @Column(name = "remarks")
     private String remarks;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     private Assets assets;
+
+    public AssetChecklist(long id, String checkList, String remarks) {
+        this.id = id;
+        this.checkList = checkList;
+        this.remarks = remarks;
+    }
 }

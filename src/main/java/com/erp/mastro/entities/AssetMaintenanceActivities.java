@@ -28,15 +28,24 @@ public class AssetMaintenanceActivities {
     @Column(name="tolerence_lowerlimit")
     private String tolerenceLowerlimit;
 
-    @Column(name="frequency")
+    @Column(name = "frequency")
     private String frequency;
 
-    @Column(name="category")
+    @Column(name = "category")
     private String category;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     private Assets assets;
 
+    public AssetMaintenanceActivities(long id, String activityName, String upperLimit, String standardObservation, String tolerenceLowerlimit, String frequency, String category) {
+        this.id = id;
+        this.activityName = activityName;
+        this.upperLimit = upperLimit;
+        this.standardObservation = standardObservation;
+        this.tolerenceLowerlimit = tolerenceLowerlimit;
+        this.frequency = frequency;
+        this.category = category;
+    }
 }
 

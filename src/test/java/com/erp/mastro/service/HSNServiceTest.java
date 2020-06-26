@@ -72,14 +72,19 @@ public class HSNServiceTest {
     @Test
     public void testDeleteHSN() {
         hsnService.deleteHSN(addHSNs().getId());
-        verify(hsnRepository,times(1)).deleteById(addHSNs().getId());
+        verify(hsnRepository, times(1)).deleteById(addHSNs().getId());
     }
+
     @Test
-    public void testGetCatalogValidationSucess() {
+    public void testGetHSNValidationSucess() {
 
         when(hsnRepository.findById(addHSNs().getId())).thenReturn(Optional.of(addHSNs()));
-        Assert.assertEquals("abcde",hsnService.getHSNById(addHSNs().getId()).getSection());
-        Assert.assertEquals("a2",hsnService.getHSNById(addHSNs().getId()).getChapter());
+        Assert.assertEquals("abcde", hsnService.getHSNById(addHSNs().getId()).getSection());
+        Assert.assertEquals("a2", hsnService.getHSNById(addHSNs().getId()).getChapter());
+        Assert.assertEquals("H3", hsnService.getHSNById(addHSNs().getId()).getHeading());
+        Assert.assertEquals("SH3", hsnService.getHSNById(addHSNs().getId()).getSubHeading());
+        Assert.assertEquals("hname3", hsnService.getHSNById(addHSNs().getId()).getHsn_name());
+        Assert.assertEquals("gstname2", hsnService.getHSNById(addHSNs().getId()).getGstGoodsName());
     }
 
 

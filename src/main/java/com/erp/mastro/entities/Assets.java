@@ -75,5 +75,20 @@ public class Assets {
             orphanRemoval = true)
     private AssetChecklist assetChecklist;
 
-
+    public Assets(long id, String assetName, String assetType, String assetLocation, String subLocation, String partyNo, String hoursUtilized, Date installationDate, Date effectiveDate, String capacity, String maintenancePriority, boolean isActive, boolean maintenanceRequired, String make) {
+        this.id = id;
+        this.assetName = assetName;
+        this.assetType = assetType;
+        this.assetLocation = assetLocation;
+        this.subLocation = subLocation;
+        this.partyNo = partyNo;
+        this.hoursUtilized = hoursUtilized;
+        this.installationDate = installationDate;
+        this.effectiveDate = effectiveDate;
+        this.capacity = capacity;
+        this.maintenancePriority = maintenancePriority;
+        this.isActive = isActive;
+        this.maintenanceRequired = maintenanceRequired;
+        this.make = make;
+    }
 }
