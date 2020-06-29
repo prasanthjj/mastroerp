@@ -1,8 +1,9 @@
 package com.erp.mastro.service;
 
 
-import com.erp.mastro.repository.HSNRepository;
 import com.erp.mastro.entities.HSN;
+import com.erp.mastro.model.request.HSNRequestModel;
+import com.erp.mastro.repository.HSNRepository;
 import com.erp.mastro.service.interfaces.HSNService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,51 @@ public class HSNServiceImpl implements HSNService {
     private HSNRepository hsnRepository;
 
 
-    public List<HSN> getAllHSN()
-    {
+    public List<HSN> getAllHSN() {
         List<HSN> hsnList = new ArrayList<HSN>();
-        hsnRepository.findAll().forEach(hsn ->hsnList.add(hsn));
+        hsnRepository.findAll().forEach(hsn -> hsnList.add(hsn));
         return hsnList;
     }
 
-    public HSN getHSNById(Long id) { return hsnRepository.findById(id).get(); }
+    public HSN getHSNById(Long id) {
+        return hsnRepository.findById(id).get();
+    }
 
+    public void saveOrUpdateHSN(HSNRequestModel hsnRequestModel) {
+        if (hsnRequestModel.getId() == null) {
+            HSN hsn = new HSN();
+            hsn.setEntryDate(hsnRequestModel.getEntryDate());
+            hsn.setSection(hsnRequestModel.getSection());
+            hsn.setChapter(hsnRequestModel.getChapter());
+            hsn.setHeading(hsnRequestModel.getHeading());
+            hsn.setSubHeading(hsnRequestModel.getSubHeading());
+            hsn.setHsnName(hsnRequestModel.getHsnName());
+            hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
+            hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
+            hsn.setSgst(hsnRequestModel.getSgst());
+            hsn.setCgst(hsnRequestModel.getCgst());
+            hsn.setIgst(hsnRequestModel.getIgst());
+            hsn.setUtgst(hsnRequestModel.getUtgst());
+            hsnRepository.save(hsn);
+        } else {
+            HSN hsn = hsnRepository.findById(hsnRequestModel.getId()).get();
+            hsn.setEntryDate(hsnRequestModel.getEntryDate());
+            hsn.setSection(hsnRequestModel.getSection());
+            hsn.setChapter(hsnRequestModel.getChapter());
+            hsn.setHeading(hsnRequestModel.getHeading());
+            hsn.setSubHeading(hsnRequestModel.getSubHeading());
+            hsn.setHsnName(hsnRequestModel.getHsnName());
+            hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
+            hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
+            hsn.setSgst(hsnRequestModel.getSgst());
+            hsn.setCgst(hsnRequestModel.getCgst());
+            hsn.setIgst(hsnRequestModel.getIgst());
+            hsn.setUtgst(hsnRequestModel.getUtgst());
+            hsnRepository.save(hsn);
+        }
+    }
 
-    public void saveOrUpdateHSN(HSN hsn) {hsnRepository.save(hsn); }
-
-    public void deleteHSN(Long id) {hsnRepository.deleteById(id); }
+    public void deleteHSN(Long id) {
+        hsnRepository.deleteById(id);
+    }
 }

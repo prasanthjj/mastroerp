@@ -2,9 +2,7 @@ package com.erp.mastro.service;
 
 import com.erp.mastro.entities.*;
 import com.erp.mastro.repository.ProductRepository;
-import com.erp.mastro.repository.SubCategoryRepository;
 import com.erp.mastro.service.interfaces.ProductService;
-import com.erp.mastro.service.interfaces.SubcategoryService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +32,9 @@ public class ProductServiceTest {
         Set<Product> productSet = new HashSet<>();
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
-        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
-        Set<ProductImages> productImages1=new HashSet<>();
+        SubCategory subCategory = new SubCategory(1L, "a11", "a22", category);
+        HSN hsn = new HSN();
+        Set<ProductImages> productImages1 = new HashSet<>();
         Set<ProductImages> productImages2=new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
         Set<ProductUOM> productUOMSet2=new HashSet<>();
@@ -51,9 +49,9 @@ public class ProductServiceTest {
 
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
-        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
-        Set<ProductImages> productImages1=new HashSet<>();
+        SubCategory subCategory = new SubCategory(1L, "a11", "a22", category);
+        HSN hsn = new HSN();
+        Set<ProductImages> productImages1 = new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
         Product product=new Product(1L,"a11","a22","a33","a44","a55","a66","a77",subCategory,hsn,"a88","a99",productImages1,productUOMSet1);
         return product;
@@ -89,9 +87,9 @@ public class ProductServiceTest {
     {
         Catalog catalog = new Catalog(3L, "A ","b");
         Category category= new Category(1L,"a1","a2","a3","a4",catalog);
-        SubCategory subCategory=new SubCategory(1L,"a11","a22",category);
-        HSN hsn = new HSN(3L,new Date(),"abcde","a2","H3","SH3","hname3","gstname2",new Date(),0.12,0.12,0.06,0.06);
-        Set<ProductImages> productImages1=new HashSet<>();
+        SubCategory subCategory = new SubCategory(1L, "a11", "a22", category);
+        HSN hsn = new HSN();
+        Set<ProductImages> productImages1 = new HashSet<>();
         Set<ProductUOM> productUOMSet1=new HashSet<>();
         Product product=new Product(1L,"a11","a22","a33","a44","a55","a66","a77",subCategory,hsn,"a88","a99",productImages1,productUOMSet1);
         productService.saveOrUpdateProduct(product);

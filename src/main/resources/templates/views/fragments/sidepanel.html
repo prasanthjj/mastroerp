@@ -1,3 +1,4 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar-default navbar-static-side " role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
@@ -21,7 +22,29 @@
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
                         class="fa arrow"></span></a>
             </li>
-            <li class="active">
+
+
+            <li class="active" th:if="${masterModule== 'masterModule'}">
+                <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="item_master.html">Product</a></li>
+                    <li><a href="hsn_master.html">HSN</a></li>
+                    <li><a href="location_master.html">Location</a></li>
+                    <li><a href="party_master.html">Party</a></li>
+                    <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li><a href="catalog_master.html">Category</a></li>
+                    <li><a href="assets_master.html">Assets</a></li>
+
+                    <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brands</a></li>
+
+                    <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brands</a></li>
+
+                </ul>
+            </li>
+
+
+            <li class="" th:unless="${masterModule== 'masterModule'}">
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -32,9 +55,14 @@
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
                     <li><a href="catalog_master.html">Category</a></li>
                     <li><a href="assets_master.html">Assets</a></li>
-                    <li><a href="brand_master.html">Brands</a></li>
+                    <li th:if="${brandTab== 'brand'}" class="active"><a href="brand_master.html"
+                                                                        th:href="@{/master/getBrand}">Brands</a></li>
+
+                    <li th:unless="${brandTab== 'brand'}"><a href="brand_master.html" th:href="@{/master/getBrand}">Brands</a>
+                    </li>
                 </ul>
             </li>
+
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
                         class="fa arrow"></span></a>
@@ -59,3 +87,4 @@
 
     </div>
 </nav>
+</html>

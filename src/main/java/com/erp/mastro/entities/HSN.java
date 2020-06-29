@@ -36,8 +36,8 @@ public class HSN {
     @Column(name="sub_heading")
     private String subHeading;
 
-    @Column(name="hsn_name")
-    private String hsn_name;
+    @Column(name = "hsn_name")
+    private String hsnName;
 
     @Column(name="gst_goods_name")
     private String gstGoodsName;
@@ -62,21 +62,6 @@ public class HSN {
             orphanRemoval = true)
     private Set<Product> productSet = new HashSet<>();
 
-    public HSN(Long id, Date entryDate, String section, String chapter, String heading, String subHeading, String hsn_name, String gstGoodsName, Date effectiveFrom, Double sgst, Double cgst, Double igst, Double utgst) {
-        this.id = id;
-        this.entryDate = entryDate;
-        this.section = section;
-        this.chapter = chapter;
-        this.heading = heading;
-        this.subHeading = subHeading;
-        this.hsn_name = hsn_name;
-        this.gstGoodsName = gstGoodsName;
-        this.effectiveFrom = effectiveFrom;
-        this.sgst = sgst;
-        this.cgst = cgst;
-        this.igst = igst;
-        this.utgst = utgst;
-    }
 }
 
 
