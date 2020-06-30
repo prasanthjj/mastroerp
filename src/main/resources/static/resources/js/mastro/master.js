@@ -68,7 +68,7 @@ $(document).ready(function(){
 
     e.preventDefault();
      var brandId=$(this).data('brandid');
-     alert(brandId);
+
      	$.ajax({
       url: '/master/getBrandForEdit',
       type: 'GET',
@@ -77,15 +77,11 @@ $(document).ready(function(){
 
       success: function(data){
                if(data.success) {
-                           alert("ok");
-                           alert(data.data.brandId);
-                           alert(data.data.brandName);
-                           alert(data.data.brandDescription);
 
                             $('#brandId').val(data.data.brandId);
-                           $('#brandnames').val(data.data.brandName);
+                            $('#brandnames').val(data.data.brandName);
 
-                           $('#branddescription').val(data.data.brandDescription);
+                            $('#branddescription').val(data.data.brandDescription);
 
                                 }
 

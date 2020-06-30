@@ -25,9 +25,6 @@ $('.dataTables-brand').DataTable({
 });
 //Brand End
 
-[Yesterday 11:10 PM] Rinto
-
-
 //HSN Data-table start
 $('.dataTables-hsn').DataTable({
 pageLength:25,
