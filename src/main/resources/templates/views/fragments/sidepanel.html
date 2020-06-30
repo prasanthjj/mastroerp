@@ -36,9 +36,9 @@
                     <li><a href="catalog_master.html">Category</a></li>
                     <li><a href="assets_master.html">Assets</a></li>
 
-                    <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brands</a></li>
+                    <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brand</a></li>
 
-                    <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brands</a></li>
+                    <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brand</a></li>
 
                 </ul>
             </li>
@@ -56,9 +56,9 @@
                     <li><a href="catalog_master.html">Category</a></li>
                     <li><a href="assets_master.html">Assets</a></li>
                     <li th:if="${brandTab== 'brand'}" class="active"><a href="brand_master.html"
-                                                                        th:href="@{/master/getBrand}">Brands</a></li>
+                                                                        th:href="@{/master/getBrand}">Brand</a></li>
 
-                    <li th:unless="${brandTab== 'brand'}"><a href="brand_master.html" th:href="@{/master/getBrand}">Brands</a>
+                    <li th:unless="${brandTab== 'brand'}"><a href="brand_master.html" th:href="@{/master/getBrand}">Brand</a>
                     </li>
                 </ul>
             </li>

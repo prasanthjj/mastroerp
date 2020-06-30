@@ -101,8 +101,10 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#" data-toggle="modal"
-                                                           data-target="#editBrand"><i class="fa fa-edit"></i>
+                                                    <li><a class="dropdown-item font-bold brandEdit" href="#"
+                                                           data-toggle="modal"
+                                                           data-target="#editBrand" th:data-brandid="${brandObj.id}"><i
+                                                            class="fa fa-edit"></i>
                                                         Manage</a></li>
                                                     <li class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item font-bold removeBrand" href="#"><i
@@ -176,7 +178,8 @@
 </div>
 <div class="modal inmodal" id="editBrand" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="editBrandForm">
+        <form th:action="@{/master/saveBrand}" th:object="${brandForm}"
+              name="brandForm" method="post">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
@@ -184,19 +187,22 @@
                     <h4 class="modal-title">Edit Brand</h4>
 
                 </div>
+                <input type="hidden" name="id" id="brandId"/>
+
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Brand Name <i
                                 class="fa fa-asterisk "></i></label>
 
-                            <div class="col-sm-8"><input type="text" name="" required class=" form-control"/></div>
+                            <div class="col-sm-8"><input type="text" name="brandName" id="brandnames" required
+                                                         class=" form-control"/></div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Brand Description</label>
 
                             <div class="col-sm-8">
-                                    <textarea class="form-control">
+                                    <textarea class="form-control" name="brandDescription" id="branddescription">
 
                                     </textarea>
                             </div>
