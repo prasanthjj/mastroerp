@@ -17,6 +17,7 @@ public class HSNRequestModel {
     private Double cgst;
     private Double igst;
     private Double utgst;
+    private Double cess;
 
     public Long getId() {
         return id;
@@ -120,5 +121,13 @@ public class HSNRequestModel {
 
     public void setUtgst(Double utgst) {
         this.utgst = utgst;
+    }
+
+    public Double getCess() {
+        return cess;
+    }
+
+    public void setCess(Double cess) {
+        this.cess = cess;
     }
 }

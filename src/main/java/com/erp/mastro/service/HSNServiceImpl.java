@@ -43,6 +43,7 @@ public class HSNServiceImpl implements HSNService {
             hsn.setCgst(hsnRequestModel.getCgst());
             hsn.setIgst(hsnRequestModel.getIgst());
             hsn.setUtgst(hsnRequestModel.getUtgst());
+            hsn.setCess(hsnRequestModel.getCess());
             hsnRepository.save(hsn);
         } else {
             HSN hsn = hsnRepository.findById(hsnRequestModel.getId()).get();
@@ -58,6 +59,7 @@ public class HSNServiceImpl implements HSNService {
             hsn.setCgst(hsnRequestModel.getCgst());
             hsn.setIgst(hsnRequestModel.getIgst());
             hsn.setUtgst(hsnRequestModel.getUtgst());
+            hsn.setCess(hsnRequestModel.getCess());
             hsnRepository.save(hsn);
         }
     }

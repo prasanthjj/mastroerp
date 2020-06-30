@@ -29,7 +29,8 @@
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="item_master.html">Product</a></li>
-                    <li><a href="hsn_master.html">HSN</a></li>
+                    <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
+                    <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li><a href="location_master.html">Location</a></li>
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
@@ -49,7 +50,8 @@
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="item_master.html">Product</a></li>
-                    <li class="active"><a href="hsn_master.html">HSN</a></li>
+                    <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
+                    <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li><a href="location_master.html">Location</a></li>
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>

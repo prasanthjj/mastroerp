@@ -48,14 +48,17 @@ public class HSN {
     @Column(name="sgst")
     private Double sgst;
 
-    @Column(name="cgst")
+    @Column(name = "cgst")
     private Double cgst;
 
-    @Column(name="igst")
+    @Column(name = "igst")
     private Double igst;
 
-    @Column(name="utgst")
+    @Column(name = "utgst")
     private Double utgst;
+
+    @Column(name = "cess")
+    private Double cess;
 
     @OneToMany(mappedBy = "hsn",
             cascade = CascadeType.ALL,

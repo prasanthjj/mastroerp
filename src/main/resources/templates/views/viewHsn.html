@@ -76,7 +76,8 @@
                                     <div class="col-lg-6">
                                         <div class="form-group row"><label class="col-sm-4 col-form-label">Entry
                                             Date</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-8"
+                                                 th:text="${#dates.format(hsnDetails.entryDate, 'dd-MMMM-yyyy')}">
 
                                             </div>
                                         </div>
@@ -84,30 +85,30 @@
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Section</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.section}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Chapter</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.chapter}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Heading</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.heading}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Sub
                                             Heading</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.subHeading}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">HSN</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.hsnName}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
@@ -115,12 +116,13 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Name Of GST
                                             Goods</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.gstGoodsName}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group row"><label class="col-sm-4 col-form-label">Effective
                                             From</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-8"
+                                                 th:text="${#dates.format(hsnDetails.effectiveFrom, 'dd-MMMM-yyyy')}">
 
                                             </div>
                                         </div>
@@ -128,31 +130,31 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">SGST
                                             (%)</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.sgst}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CGST
                                             (%)</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.cgst}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST
                                             (%)</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.igst}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">UTGST
                                             (%)</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.utgst}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CESS
                                             (%)</label>
 
-                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-8" th:text="${hsnDetails.cess}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
