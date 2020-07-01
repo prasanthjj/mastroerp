@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,12 @@ public class BrandController {
     public String getBrand(Model model) {
 
         try {
-            List<Brand> brandList = brandService.getAllBrands();
+            List<Brand> brandList = new ArrayList<>();
+            for (Brand brand : brandService.getAllBrands()) {
+                if (brand.getBrandDeleteStatus() != 1) {
+                    brandList.add(brand);
+                }
+            }
             model.addAttribute("brandForm", new BrandRequestModel());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("brandTab", "brand");
@@ -67,4 +73,20 @@ public class BrandController {
 
     }
 
+    @PostMapping("/master/deleteBrandDetails")
+    @ResponseBody
+    public GenericResponse deleteBrand(Model model, HttpServletRequest request, @RequestParam("brandId") Long brandId) {
+
+        try {
+
+            brandService.deleteBrandDetails(brandId);
+            return new GenericResponse(true, "delete brand details");
+
+        } catch (Exception e) {
+
+            return new GenericResponse(false, e.getMessage());
+
+        }
+
+    }
 }

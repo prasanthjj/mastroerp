@@ -67,4 +67,12 @@ public class HSNServiceImpl implements HSNService {
     public void deleteHSN(Long id) {
         hsnRepository.deleteById(id);
     }
+
+    public void deleteHsnDetails(Long id) {
+
+        HSN hsn = getHSNById(id);
+        hsn.setHsnDeleteStatus(1);
+        hsnRepository.save(hsn);
+
+    }
 }

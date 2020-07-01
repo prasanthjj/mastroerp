@@ -16,4 +16,6 @@ public interface BrandService {
 
     void deleteBrand(Long id);
 
+    public void deleteBrandDetails(Long id);
+
 }

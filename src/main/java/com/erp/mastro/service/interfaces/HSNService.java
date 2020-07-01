@@ -15,5 +15,7 @@ public interface HSNService {
 
     void deleteHSN(Long id);
 
+    public void deleteHsnDetails(Long id);
+
 
 }

@@ -50,4 +50,13 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.deleteById(id);
     }
 
+    public void deleteBrandDetails(Long id) {
+
+        Brand brand = getBrandId(id);
+        brand.setBrandDeleteStatus(1);
+        brandRepository.save(brand);
+
+    }
+
+
 }

@@ -65,6 +65,9 @@ public class HSN {
             orphanRemoval = true)
     private Set<Product> productSet = new HashSet<>();
 
+    @Column(name = "delete_status", nullable = false)
+    private int hsnDeleteStatus;
+
 }
 
 
