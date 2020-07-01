@@ -6,10 +6,7 @@ import com.erp.mastro.service.interfaces.HSNService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -76,6 +73,21 @@ public class HSNController {
             throw e;
         }
 
+    }
+
+    @RequestMapping(value = "/master/getHSNEdit", method = RequestMethod.GET)
+    public String getHSNEdit(HttpServletRequest request, @RequestParam("hsnId") Long hsnId, Model model) {
+
+        try {
+            HSNRequestModel hsnRequestModel = new HSNRequestModel();
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("hsnTab", "hsn");
+            model.addAttribute("hsnForm", hsnService.getHSNById(hsnId));
+            return "views/editHsnMaster";
+
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 }

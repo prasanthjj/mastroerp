@@ -76,7 +76,9 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form>
+                            <form id="hsnForm" th:action="@{/master/saveHSN}" th:object="${hsnForm}"
+                                  name="hsnForm" method="post">
+                                <input type="hidden" name="id" th:field="*{id}"/>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group row"><label class="col-sm-4 col-form-label">Entry Date <i
@@ -86,7 +88,9 @@
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input type="text"
                                                                                                      class="form-control"
-                                                                                                     value="" required>
+                                                                                                     name="entryDate"
+                                                                                                     th:value="${#dates.format(hsnForm.entryDate, 'MM/dd/yyyy')}"
+                                                                                                     required>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,31 +98,36 @@
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Section</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{section}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Chapter</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{chapter}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label
                                                 class="col-sm-4 col-form-label">Heading</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{heading}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Sub
                                             Heading</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{subHeading}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">HSN <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required>
+                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                                                         th:field="*{hsnCode}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -127,7 +136,8 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Name Of GST
                                             Goods <i class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required>
+                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                                                         th:field="*{gstGoodsName}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -138,7 +148,9 @@
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input type="text"
                                                                                                      class="form-control"
-                                                                                                     required value="">
+                                                                                                     required
+                                                                                                     name="effectiveFrom"
+                                                                                                     th:value="${#dates.format(hsnForm.effectiveFrom, 'MM/dd/yyyy')}">
                                                 </div>
                                             </div>
                                         </div>
@@ -146,34 +158,39 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">SGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required>
+                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                                                         th:field="*{sgst}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required>
+                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                                                         th:field="*{cgst}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required>
+                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                                                         th:field="*{igst}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">UTGST
                                             (%)</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{utgst}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CESS
                                             (%)</label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{cess}"></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
@@ -208,8 +225,7 @@
 <!-- Custom and plugin javascript -->
 <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
 <script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
-<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
-        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
 <!-- jQuery UI -->
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
@@ -220,21 +236,8 @@
 <!-- Tags Input -->
 <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
         th:src="@{/resources/js/pluginsbootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
-<script>
-        $(document).ready(function(){
-           
-            var mem = $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
+<script src="../resources/js/mastro/master.js" th:src="@{/resources/js/mastro/master.js}"></script>
 
-        });
-
-
-</script>
 
 </body>
 </html>

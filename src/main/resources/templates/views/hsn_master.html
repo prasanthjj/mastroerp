@@ -114,7 +114,8 @@
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item font-bold"
-                                                           href="edit_hsn_master.html"><i class="fa fa-edit"></i> Manage</a>
+                                                           th:href="@{/master/getHSNEdit?hsnId=__${hsnObj.id}__}"><i
+                                                            class="fa fa-edit"></i> Manage</a>
                                                     </li>
                                                     <li class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item font-bold removeHsn" href="#"><i
