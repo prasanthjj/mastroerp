@@ -4,9 +4,9 @@ import com.erp.mastro.entities.AssetCharacteristics;
 import com.erp.mastro.entities.AssetChecklist;
 import com.erp.mastro.entities.AssetMaintenanceActivities;
 import com.erp.mastro.entities.Assets;
+import com.erp.mastro.model.request.AssetRequestModel;
 
 import java.util.List;
-import java.util.Set;
 
 public interface AssetService {
 
@@ -14,7 +14,7 @@ public interface AssetService {
 
     Assets getAssetsById(Long id);
 
-    void saveOrUpdateAssets(Assets assets);
+    void saveOrUpdateAssets(AssetRequestModel assetRequestModel);
 
     void saveOrUpdateAssetCharacteristics(Assets assets, AssetCharacteristics assetCharacteristics);
 

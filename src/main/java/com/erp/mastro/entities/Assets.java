@@ -11,21 +11,24 @@ import java.util.Date;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="assets")
+@Table(name = "assets")
 
 public class Assets {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="asset_name")
+    @Column(name = "asset_no")
+    private String assetNo;
+
+    @Column(name = "asset_name")
     private String assetName;
 
-    @Column(name="asset_type")
+    @Column(name = "asset_type")
     private String assetType;
 
-    @Column(name="asset_location")
-    private  String assetLocation;
+    @Column(name = "asset_location")
+    private String assetLocation;
 
     @Column(name="sub_location")
     private String subLocation;
@@ -33,8 +36,8 @@ public class Assets {
     @Column(name="party_no")
     private String partyNo;
 
-    @Column(name="hours_utilized")
-    private String hoursUtilized;
+    @Column(name = "hours_utilized")
+    private Double hoursUtilized;
 
     @Column(name="installation_date")
     private Date installationDate;
@@ -75,20 +78,4 @@ public class Assets {
             orphanRemoval = true)
     private AssetChecklist assetChecklist;
 
-    public Assets(long id, String assetName, String assetType, String assetLocation, String subLocation, String partyNo, String hoursUtilized, Date installationDate, Date effectiveDate, String capacity, String maintenancePriority, boolean isActive, boolean maintenanceRequired, String make) {
-        this.id = id;
-        this.assetName = assetName;
-        this.assetType = assetType;
-        this.assetLocation = assetLocation;
-        this.subLocation = subLocation;
-        this.partyNo = partyNo;
-        this.hoursUtilized = hoursUtilized;
-        this.installationDate = installationDate;
-        this.effectiveDate = effectiveDate;
-        this.capacity = capacity;
-        this.maintenancePriority = maintenancePriority;
-        this.isActive = isActive;
-        this.maintenanceRequired = maintenanceRequired;
-        this.make = make;
-    }
 }

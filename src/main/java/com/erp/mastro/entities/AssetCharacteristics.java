@@ -16,23 +16,24 @@ public class AssetCharacteristics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="character")
+    @Column(name = "character")
     private String character;
 
     @Column(name = "value")
     private String value;
 
-    @Column(name = "remarks")
-    private String remarks;
+    @Column(name = "asset_Remarks")
+    private String assetRemarks;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     private Assets assets;
 
-    public AssetCharacteristics(long id, String character, String value, String remarks) {
+    public AssetCharacteristics(long id, String character, String value, String assetRemarks, Assets assets) {
         this.id = id;
         this.character = character;
         this.value = value;
-        this.remarks = remarks;
+        this.assetRemarks = assetRemarks;
+        this.assets = assets;
     }
 }
