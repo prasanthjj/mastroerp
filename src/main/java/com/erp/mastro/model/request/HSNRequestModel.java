@@ -10,7 +10,7 @@ public class HSNRequestModel {
     private String chapter;
     private String heading;
     private String subHeading;
-    private String hsnName;
+    private String hsnCode;
     private String gstGoodsName;
     private Date effectiveFrom;
     private Double sgst;
@@ -67,12 +67,12 @@ public class HSNRequestModel {
         this.subHeading = subHeading;
     }
 
-    public String getHsnName() {
-        return hsnName;
+    public String getHsnCode() {
+        return hsnCode;
     }
 
-    public void setHsnName(String hsnName) {
-        this.hsnName = hsnName;
+    public void setHsnCode(String hsnCode) {
+        this.hsnCode = hsnCode;
     }
 
     public String getGstGoodsName() {

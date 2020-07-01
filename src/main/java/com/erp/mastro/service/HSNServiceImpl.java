@@ -36,7 +36,7 @@ public class HSNServiceImpl implements HSNService {
             hsn.setChapter(hsnRequestModel.getChapter());
             hsn.setHeading(hsnRequestModel.getHeading());
             hsn.setSubHeading(hsnRequestModel.getSubHeading());
-            hsn.setHsnName(hsnRequestModel.getHsnName());
+            hsn.setHsnCode(hsnRequestModel.getHsnCode());
             hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
             hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
             hsn.setSgst(hsnRequestModel.getSgst());
@@ -52,7 +52,7 @@ public class HSNServiceImpl implements HSNService {
             hsn.setChapter(hsnRequestModel.getChapter());
             hsn.setHeading(hsnRequestModel.getHeading());
             hsn.setSubHeading(hsnRequestModel.getSubHeading());
-            hsn.setHsnName(hsnRequestModel.getHsnName());
+            hsn.setHsnCode(hsnRequestModel.getHsnCode());
             hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
             hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
             hsn.setSgst(hsnRequestModel.getSgst());

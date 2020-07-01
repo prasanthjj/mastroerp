@@ -27,25 +27,25 @@ public class HSN {
     @Column(name="section")
     private String section;
 
-    @Column(name="chapter")
+    @Column(name = "chapter")
     private String chapter;
 
-    @Column(name="heading")
+    @Column(name = "heading")
     private String heading;
 
-    @Column(name="sub_heading")
+    @Column(name = "sub_heading")
     private String subHeading;
 
-    @Column(name = "hsn_name")
-    private String hsnName;
+    @Column(name = "hsn_code")
+    private String hsnCode;
 
-    @Column(name="gst_goods_name")
+    @Column(name = "gst_goods_name")
     private String gstGoodsName;
 
-    @Column(name="effective_from")
+    @Column(name = "effective_from")
     private Date effectiveFrom;
 
-    @Column(name="sgst")
+    @Column(name = "sgst")
     private Double sgst;
 
     @Column(name = "cgst")
