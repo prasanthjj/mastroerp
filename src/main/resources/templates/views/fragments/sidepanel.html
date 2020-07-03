@@ -35,8 +35,9 @@
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
                     <li><a href="catalog_master.html">Category</a></li>
-                    <li><a href="assets_master.html">Assets</a></li>
-
+                    <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
+                    </li>
+                    <li th:unless="${assetTab== 'asset'}"><a th:href="@{/master/getAssetList}">Assets</a></li>
                     <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brand</a></li>
 
                     <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brand</a></li>
@@ -56,7 +57,9 @@
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
                     <li><a href="catalog_master.html">Category</a></li>
-                    <li><a href="assets_master.html">Assets</a></li>
+                    <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
+                    </li>
+                    <li th:unless="${assetTab== 'asset'}"><a th:href="@{/master/getAssetList}">Assets</a></li>
                     <li th:if="${brandTab== 'brand'}" class="active"><a href="brand_master.html"
                                                                         th:href="@{/master/getBrand}">Brand</a></li>
 

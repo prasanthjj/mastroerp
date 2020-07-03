@@ -27,9 +27,5 @@ public class AssetChecklist {
     @JoinColumn(name = "asset_id")
     private Assets assets;
 
-    public AssetChecklist(long id, String checkList, String remarks) {
-        this.id = id;
-        this.checkList = checkList;
-        this.remarks = remarks;
-    }
+
 }

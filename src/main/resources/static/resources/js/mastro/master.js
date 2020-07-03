@@ -110,6 +110,23 @@ $(document).ready(function(){
     });
     // Edit HSN end
 
+    //remove assets start
+    $('.removeAsset').click(function () {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this Item!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Deleted!", "Item has been deleted.", "success");
+        });
+    });
+
+    // remove assets  end
+
 });
 
  //get brand edit start

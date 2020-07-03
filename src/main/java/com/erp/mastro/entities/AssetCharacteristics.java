@@ -29,11 +29,5 @@ public class AssetCharacteristics {
     @JoinColumn(name = "asset_id")
     private Assets assets;
 
-    public AssetCharacteristics(long id, String character, String value, String assetRemarks, Assets assets) {
-        this.id = id;
-        this.character = character;
-        this.value = value;
-        this.assetRemarks = assetRemarks;
-        this.assets = assets;
-    }
+
 }

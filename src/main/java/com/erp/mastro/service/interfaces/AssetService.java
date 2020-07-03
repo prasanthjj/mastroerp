@@ -16,11 +16,11 @@ public interface AssetService {
 
     void saveOrUpdateAssets(AssetRequestModel assetRequestModel);
 
-    void saveOrUpdateAssetCharacteristics(Assets assets, AssetCharacteristics assetCharacteristics);
+    AssetCharacteristics saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets);
 
-    void saveOrUpdateAssetMaintenanceActivities(Assets assets, AssetMaintenanceActivities assetMaintenanceActivities);
+    AssetMaintenanceActivities saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets);
 
-    void saveOrUpdateAssetChecklist(Assets assets, AssetChecklist assetChecklist);
+    AssetChecklist saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets);
 
     void deleteAssets(Long id);
 
