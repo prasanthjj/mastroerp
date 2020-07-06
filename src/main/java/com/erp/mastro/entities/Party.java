@@ -99,7 +99,7 @@ public class Party extends Auditable<String>{
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true)
-    private ProductPartyRateRelation productPartyRateRelation;
+    private PartyPriceList partyPriceList;
 
     public Party(Long id,String partyType,String partyCode,String partyName,String aliasName,String status,String categoryType,String transporterName,Date partyDate,String oldReferCode,String relationshipMananger,String industryType,String emailId,String transactionType) {
 
