@@ -25,7 +25,7 @@ public class AssetMaintenanceActivities {
     @Column(name="standard_observation")
     private String standardObservation;
 
-    @Column(name="tolerence_lowerlimit")
+    @Column(name = "tolerence_lowerlimit")
     private String tolerenceLowerlimit;
 
     @Column(name = "frequency")
@@ -34,10 +34,10 @@ public class AssetMaintenanceActivities {
     @Column(name = "category")
     private String category;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private Assets assets;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})
+    private Assets asset;
 
 }
 

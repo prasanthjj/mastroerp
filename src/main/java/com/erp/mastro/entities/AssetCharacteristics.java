@@ -22,12 +22,12 @@ public class AssetCharacteristics {
     @Column(name = "value")
     private String value;
 
-    @Column(name = "asset_Remarks")
+    @Column(name = "asset_remarks")
     private String assetRemarks;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private Assets assets;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "asset_assetcharacteristics", joinColumns = {@JoinColumn(name = "characteristics_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})
+    private Assets asset;
 
 }

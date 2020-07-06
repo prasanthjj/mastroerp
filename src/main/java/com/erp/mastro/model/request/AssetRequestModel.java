@@ -1,7 +1,9 @@
 package com.erp.mastro.model.request;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AssetRequestModel {
     private Long id;
@@ -19,17 +21,9 @@ public class AssetRequestModel {
     protected boolean isActive;
     protected boolean maintenanceRequired;
     private String make;
-    private String character;
-    private String value;
-    private String assetRemarks;
-    private String activityName;
-    private String upperLimit;
-    private String standardObservation;
-    private String tolerenceLowerlimit;
-    private String frequency;
-    private String category;
-    private String checkList;
-    private String remarks;
+    private List<AssetCharacteristicsModel> assetCharacteristicsModel = new ArrayList<>();
+    private List<AssetMaintenanceActivitiesModel> assetMaintenanceActivitiesModel = new ArrayList<>();
+    private List<AssetCheckListModel> assetCheckListModel = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -151,91 +145,168 @@ public class AssetRequestModel {
         this.make = make;
     }
 
-    public String getCharacter() {
-        return character;
+    public List<AssetCharacteristicsModel> getAssetCharacteristicsModel() {
+        return assetCharacteristicsModel;
     }
 
-    public void setCharacter(String character) {
-        this.character = character;
+    public void setAssetCharacteristicsModel(List<AssetCharacteristicsModel> assetCharacteristicsModel) {
+        this.assetCharacteristicsModel = assetCharacteristicsModel;
     }
 
-    public String getValue() {
-        return value;
+
+    public List<AssetMaintenanceActivitiesModel> getAssetMaintenanceActivitiesModel() {
+        return assetMaintenanceActivitiesModel;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setAssetMaintenanceActivitiesModel(List<AssetMaintenanceActivitiesModel> assetMaintenanceActivitiesModel) {
+        this.assetMaintenanceActivitiesModel = assetMaintenanceActivitiesModel;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public List<AssetCheckListModel> getAssetCheckListModel() {
+        return assetCheckListModel;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setAssetCheckListModel(List<AssetCheckListModel> assetCheckListModel) {
+        this.assetCheckListModel = assetCheckListModel;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public static class AssetCharacteristicsModel {
+
+        private Long id;
+        private String character;
+        private String value;
+        private String assetRemarks;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getCharacter() {
+            return character;
+        }
+
+        public void setCharacter(String character) {
+            this.character = character;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getAssetRemarks() {
+            return assetRemarks;
+        }
+
+        public void setAssetRemarks(String assetRemarks) {
+            this.assetRemarks = assetRemarks;
+        }
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
+    public static class AssetMaintenanceActivitiesModel {
+
+        private Long id;
+        private String activityName;
+        private String upperLimit;
+        private String standardObservation;
+        private String tolerenceLowerlimit;
+        private String frequency;
+        private String category;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getActivityName() {
+            return activityName;
+        }
+
+        public void setActivityName(String activityName) {
+            this.activityName = activityName;
+        }
+
+        public String getUpperLimit() {
+            return upperLimit;
+        }
+
+        public void setUpperLimit(String upperLimit) {
+            this.upperLimit = upperLimit;
+        }
+
+        public String getStandardObservation() {
+            return standardObservation;
+        }
+
+        public void setStandardObservation(String standardObservation) {
+            this.standardObservation = standardObservation;
+        }
+
+        public String getTolerenceLowerlimit() {
+            return tolerenceLowerlimit;
+        }
+
+        public void setTolerenceLowerlimit(String tolerenceLowerlimit) {
+            this.tolerenceLowerlimit = tolerenceLowerlimit;
+        }
+
+        public String getFrequency() {
+            return frequency;
+        }
+
+        public void setFrequency(String frequency) {
+            this.frequency = frequency;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
     }
 
-    public String getUpperLimit() {
-        return upperLimit;
+    public static class AssetCheckListModel {
+
+        private Long id;
+        private String checkList;
+        private String remarks;
+
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getCheckList() {
+            return checkList;
+        }
+
+        public void setCheckList(String checkList) {
+            this.checkList = checkList;
+        }
+
+        public String getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(String remarks) {
+            this.remarks = remarks;
+        }
     }
 
-    public void setUpperLimit(String upperLimit) {
-        this.upperLimit = upperLimit;
-    }
-
-    public String getStandardObservation() {
-        return standardObservation;
-    }
-
-    public void setStandardObservation(String standardObservation) {
-        this.standardObservation = standardObservation;
-    }
-
-    public String getTolerenceLowerlimit() {
-        return tolerenceLowerlimit;
-    }
-
-    public void setTolerenceLowerlimit(String tolerenceLowerlimit) {
-        this.tolerenceLowerlimit = tolerenceLowerlimit;
-    }
-
-    public String getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getCheckList() {
-        return checkList;
-    }
-
-    public void setCheckList(String checkList) {
-        this.checkList = checkList;
-    }
-
-    public String getAssetRemarks() {
-        return assetRemarks;
-    }
-
-    public void setAssetRemarks(String assetRemarks) {
-        this.assetRemarks = assetRemarks;
-    }
 }

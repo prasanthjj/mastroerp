@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -57,25 +58,22 @@ public class Assets {
     @Column(name = "maintenanace_required", nullable = false)
     protected boolean maintenanceRequired;
 
-    @Column(name="make")
+    @Column(name = "make")
     private String make;
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetCharacteristics assetCharacteristics;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetcharacteristics", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "characteristics_id", referencedColumnName = "id")})
+    private Set<AssetCharacteristics> assetCharacteristics;
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetMaintenanceActivities assetMaintenanceActivities;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")})
+    private Set<AssetMaintenanceActivities> assetMaintenanceActivities;
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetChecklist assetChecklist;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetchecklist", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "checklist_id", referencedColumnName = "id")})
+    private Set<AssetChecklist> assetChecklists;
 
 }

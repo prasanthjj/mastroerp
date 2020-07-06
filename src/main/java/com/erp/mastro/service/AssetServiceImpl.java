@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AssetServiceImpl implements AssetService{
@@ -48,12 +50,12 @@ public class AssetServiceImpl implements AssetService{
             assets.setActive(assetRequestModel.isActive());
             assets.setMaintenanceRequired(assetRequestModel.isMaintenanceRequired());
             assets.setMake(assetRequestModel.getMake());
-            AssetCharacteristics assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
+            Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
             assets.setAssetCharacteristics(assetCharacteristics);
-            AssetMaintenanceActivities assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
+            Set<AssetMaintenanceActivities> assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
             assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
-            AssetChecklist assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
-            assets.setAssetChecklist(assetChecklist);
+            Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
+            assets.setAssetChecklists(assetChecklist);
             assetRepository.save(assets);
         } else {
             Assets assets = assetRepository.findById(assetRequestModel.getId()).get();
@@ -71,75 +73,74 @@ public class AssetServiceImpl implements AssetService{
             assets.setActive(assetRequestModel.isActive());
             assets.setMaintenanceRequired(assetRequestModel.isMaintenanceRequired());
             assets.setMake(assetRequestModel.getMake());
-            AssetCharacteristics assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
+            Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
             assets.setAssetCharacteristics(assetCharacteristics);
-            AssetMaintenanceActivities assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
+            Set<AssetMaintenanceActivities> assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
             assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
-            AssetChecklist assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
-            assets.setAssetChecklist(assetChecklist);
+            Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
+            assets.setAssetChecklists(assetChecklist);
             assetRepository.save(assets);
         }
     }
 
-    public AssetCharacteristics saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
-        if (assets.getAssetCharacteristics() == null) {
-            AssetCharacteristics assetCharacteristics = new AssetCharacteristics();
-            assetCharacteristics.setAssets(assets);
-            assetCharacteristics.setAssetRemarks(assetRequestModel.getAssetRemarks());
-            assetCharacteristics.setValue(assetRequestModel.getValue());
-            assetCharacteristics.setCharacter(assetRequestModel.getCharacter());
-            return assetCharacteristics;
-        } else {
-            AssetCharacteristics assetCharacteristics = assets.getAssetCharacteristics();
-            assetCharacteristics.setAssets(assets);
-            assetCharacteristics.setAssetRemarks(assetRequestModel.getAssetRemarks());
-            assetCharacteristics.setValue(assetRequestModel.getValue());
-            assetCharacteristics.setCharacter(assetRequestModel.getCharacter());
-            return assetCharacteristics;
+    public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
 
+        Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
+        assets.getAssetCharacteristics().clear();
+        if (assetRequestModel.getAssetCharacteristicsModel().isEmpty() == false) {
+            assetRequestModel.getAssetCharacteristicsModel().parallelStream()
+                    .forEach(x -> {
+                        AssetCharacteristics assetCharacteristics = new AssetCharacteristics();
+                        assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
+                        assetCharacteristics.setValue(x.getValue());
+                        assetCharacteristics.setCharacter(x.getCharacter());
+                        assetCharacteristics.setAsset(assets);
+                        assetCharacteristicsSet.add(assetCharacteristics);
+
+                    });
         }
+        return assetCharacteristicsSet;
     }
 
-    public AssetMaintenanceActivities saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
-        if (assets.getAssetMaintenanceActivities() == null) {
-            AssetMaintenanceActivities assetMaintenanceActivities = new AssetMaintenanceActivities();
-            assetMaintenanceActivities.setAssets(assets);
-            assetMaintenanceActivities.setActivityName(assetRequestModel.getActivityName());
-            assetMaintenanceActivities.setCategory(assetRequestModel.getCategory());
-            assetMaintenanceActivities.setFrequency(assetRequestModel.getFrequency());
-            assetMaintenanceActivities.setStandardObservation(assetRequestModel.getStandardObservation());
-            assetMaintenanceActivities.setUpperLimit(assetRequestModel.getUpperLimit());
-            assetMaintenanceActivities.setTolerenceLowerlimit(assetRequestModel.getTolerenceLowerlimit());
-            return assetMaintenanceActivities;
-        } else {
-            AssetMaintenanceActivities assetMaintenanceActivities = assets.getAssetMaintenanceActivities();
-            assetMaintenanceActivities.setAssets(assets);
-            assetMaintenanceActivities.setActivityName(assetRequestModel.getActivityName());
-            assetMaintenanceActivities.setCategory(assetRequestModel.getCategory());
-            assetMaintenanceActivities.setFrequency(assetRequestModel.getFrequency());
-            assetMaintenanceActivities.setStandardObservation(assetRequestModel.getStandardObservation());
-            assetMaintenanceActivities.setUpperLimit(assetRequestModel.getUpperLimit());
-            assetMaintenanceActivities.setTolerenceLowerlimit(assetRequestModel.getTolerenceLowerlimit());
-            return assetMaintenanceActivities;
+    public Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
+
+        Set<AssetMaintenanceActivities> assetMaintenanceActivitySet = new HashSet<>();
+        assets.getAssetMaintenanceActivities().clear();
+        if (assetRequestModel.getAssetMaintenanceActivitiesModel().isEmpty() == false) {
+            assetRequestModel.getAssetMaintenanceActivitiesModel().parallelStream()
+                    .forEach(x -> {
+                        AssetMaintenanceActivities assetMaintenanceActivities = new AssetMaintenanceActivities();
+                        assetMaintenanceActivities.setActivityName(x.getActivityName());
+                        assetMaintenanceActivities.setCategory(x.getCategory());
+                        assetMaintenanceActivities.setFrequency(x.getFrequency());
+                        assetMaintenanceActivities.setStandardObservation(x.getStandardObservation());
+                        assetMaintenanceActivities.setUpperLimit(x.getUpperLimit());
+                        assetMaintenanceActivities.setTolerenceLowerlimit(x.getTolerenceLowerlimit());
+                        assetMaintenanceActivities.setAsset(assets);
+                        assetMaintenanceActivitySet.add(assetMaintenanceActivities);
+                    });
 
         }
+        return assetMaintenanceActivitySet;
     }
 
-    public AssetChecklist saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
-        if (assets.getAssetChecklist() == null) {
-            AssetChecklist assetChecklist = new AssetChecklist();
-            assetChecklist.setAssets(assets);
-            assetChecklist.setCheckList(assetRequestModel.getCheckList());
-            assetChecklist.setRemarks(assetRequestModel.getRemarks());
-            return assetChecklist;
-        } else {
-            AssetChecklist assetChecklist = assets.getAssetChecklist();
-            assetChecklist.setAssets(assets);
-            assetChecklist.setCheckList(assetRequestModel.getCheckList());
-            assetChecklist.setRemarks(assetRequestModel.getRemarks());
-            return assetChecklist;
+    public Set<AssetChecklist> saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
+
+        Set<AssetChecklist> assetChecklistSet = new HashSet<>();
+        assets.getAssetChecklists().clear();
+        if (assetRequestModel.getAssetCheckListModel().isEmpty() == false) {
+            assetRequestModel.getAssetCheckListModel().parallelStream()
+                    .forEach(x -> {
+                        AssetChecklist assetChecklist = new AssetChecklist();
+                        assetChecklist.setCheckList(x.getCheckList());
+                        assetChecklist.setRemarks(x.getRemarks());
+                        assetChecklist.setAsset(assets);
+                        assetChecklistSet.add(assetChecklist);
+
+                    });
 
         }
+        return assetChecklistSet;
     }
 
     public void deleteAssets(Long id) {
