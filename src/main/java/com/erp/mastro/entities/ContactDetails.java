@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -55,21 +54,5 @@ public class ContactDetails {
             , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
     private Party party;
 
-    public ContactDetails(Long id,String contactPersonName,String contactType,String designation,String department,String telephoneNo,String altTelephoneNo,String address,String mobileNo,String altMobileNo,String faxNo,String emailId,Party party) {
 
-        this.id = id;
-        this.contactPersonName=contactPersonName;
-        this.contactType=contactType;
-        this.designation=designation;
-        this.department=department;
-        this.telephoneNo=telephoneNo;
-        this.altTelephoneNo=altTelephoneNo;
-        this.address=address;
-        this.mobileNo=mobileNo;
-        this.altMobileNo=altMobileNo;
-        this.faxNo=faxNo;
-        this.emailId=emailId;
-        this.party=party;
-
-    }
 }

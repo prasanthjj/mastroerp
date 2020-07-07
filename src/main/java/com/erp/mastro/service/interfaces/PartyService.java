@@ -1,6 +1,7 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.*;
+import com.erp.mastro.model.request.PartyRequestModel;
 
 import java.util.List;
 import java.util.Set;
@@ -11,17 +12,17 @@ public interface PartyService {
 
     Party getPartyById(Long id);
 
-    void saveOrUpdateParty(Party party);
+    void saveOrUpdateParty(PartyRequestModel partyRequestModel);
 
     void deleteParty(Long id);
 
-    void saveOrUpdatePartyContactDetails(Party party, Set<ContactDetails> contactDetails);
+    Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party);
 
-    void saveOrUpdatePartyBankDetails(Party party, Set<BankDetails> bankDetails);
+    Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party);
 
-    void saveOrUpdatePartyBillingDetails(Party party, Set<BillingDetails> billingDetails);
+    Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party);
 
-    void saveOrUpdatePartyCreditDetails(Party party, Set<CreditDetails> creditDetails);
+    Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party);
 
     void saveOrUpdatePartyProducts(Party party,Set<Product> products);
 

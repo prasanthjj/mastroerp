@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -136,16 +135,4 @@ public class ProductServiceTest {
 
     }
 
-    @Test
-    public void testSaveorUpdateProductParties()
-    {
-
-        Product product= addProduct();
-        Set<Party> partySet=new HashSet<>();
-        Party party= new Party(1L,"a1","a2","a3","a4","a5","a6","a7",new Date(),"a9","a10","a11","a12","a13");
-        partySet.add(party);
-        productService.saveOrUpdateProductPartys(product,partySet);
-        verify(productRepository, times(1)).save(product);
-
-    }
 }

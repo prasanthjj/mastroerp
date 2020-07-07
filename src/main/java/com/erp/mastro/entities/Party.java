@@ -101,22 +101,4 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private PartyPriceList partyPriceList;
 
-    public Party(Long id,String partyType,String partyCode,String partyName,String aliasName,String status,String categoryType,String transporterName,Date partyDate,String oldReferCode,String relationshipMananger,String industryType,String emailId,String transactionType) {
-
-        this.id = id;
-        this.partyType=partyType;
-        this.partyCode=partyCode;
-        this.partyName=partyName;
-        this.aliasName=aliasName;
-        this.status=status;
-        this.categoryType=categoryType;
-        this.transporterName=transporterName;
-        this.partyDate=partyDate;
-        this.oldReferCode=oldReferCode;
-        this.relationshipMananger=relationshipMananger;
-        this.industryType=industryType;
-        this.emailId=emailId;
-        this.transactionType=transactionType;
-
-    }
 }
