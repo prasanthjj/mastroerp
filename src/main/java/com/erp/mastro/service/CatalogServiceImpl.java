@@ -1,8 +1,8 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.repository.CatalogRepository;
 import com.erp.mastro.entities.Catalog;
-
+import com.erp.mastro.model.request.CatalogRequestModel;
+import com.erp.mastro.repository.CatalogRepository;
 import com.erp.mastro.service.interfaces.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,18 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogRepository.findById(id).get();
     }
 
-    public void saveOrUpdateCatalog(Catalog catalog)
-    {
-        catalogRepository.save(catalog);
+    public void saveOrUpdateCatalog(CatalogRequestModel catalogRequestModel) {
+        if (catalogRequestModel.getId() == null) {
+            Catalog catalog = new Catalog();
+            catalog.setCatalogName(catalogRequestModel.getCatalogName());
+            catalog.setCatalogDescription(catalogRequestModel.getCatalogDescription());
+            catalogRepository.save(catalog);
+        } else {
+            Catalog catalog = getCatalogById(catalogRequestModel.getId());
+            catalog.setCatalogName(catalogRequestModel.getCatalogName());
+            catalog.setCatalogDescription(catalogRequestModel.getCatalogDescription());
+            catalogRepository.save(catalog);
+        }
     }
 
     public void deleteCatalog(Long id)

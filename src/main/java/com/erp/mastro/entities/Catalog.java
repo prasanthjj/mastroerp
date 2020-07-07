@@ -31,12 +31,5 @@ public class Catalog {
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
     private Set<Category> categories;
 
-    public Catalog(Long id, String catalogName, String catalogDescription) {
-
-        this.id = id;
-        this.catalogName = catalogName;
-        this.catalogDescription=catalogDescription;
-
-    }
 
 }

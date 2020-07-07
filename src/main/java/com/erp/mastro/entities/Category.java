@@ -42,14 +42,5 @@ public class Category {
             , inverseJoinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")})
     private Set<SubCategory> subCategories;
 
-    public Category(Long id, String categoryName, String categoryDescription,String categoryShortCode,String categoryType,Catalog catalog) {
 
-        this.id = id;
-        this.categoryName= categoryName;
-        this.categoryDescription=categoryDescription;
-        this.categoryShortCode=categoryShortCode;
-        this.categoryType=categoryType;
-        this.catalog=catalog;
-
-    }
 }

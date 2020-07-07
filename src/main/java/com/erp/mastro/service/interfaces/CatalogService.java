@@ -1,6 +1,7 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.Catalog;
+import com.erp.mastro.model.request.CatalogRequestModel;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface CatalogService {
 
      Catalog getCatalogById(Long id);
 
-     void saveOrUpdateCatalog(Catalog catalog);
+    void saveOrUpdateCatalog(CatalogRequestModel catalogRequestModel);
 
      void deleteCatalog(Long id);
 
