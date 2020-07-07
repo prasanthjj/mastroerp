@@ -2,6 +2,7 @@ package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.Category;
 import com.erp.mastro.entities.SubCategory;
+import com.erp.mastro.model.request.SubCategoryRequestModel;
 
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,7 @@ public interface SubcategoryService {
 
      SubCategory getSubCategoryById(Long id);
 
-     void saveOrUpdateSubCategory(SubCategory subCategory);
+     void saveOrUpdateSubCategory(SubCategoryRequestModel subCategoryRequestModel);
 
      void deleteSubCategory(Long id);
 }

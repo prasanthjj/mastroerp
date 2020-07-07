@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.PriceList;
+import com.erp.mastro.model.request.PriceListRequestModel;
 import com.erp.mastro.repository.PriceListRepository;
 import com.erp.mastro.service.interfaces.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,28 @@ public class PriceListServiceImpl implements PriceListService {
         return priceListRepository.findById(id).get();
     }
 
-    public void saveOrUpdatePriceList(PriceList priceList) {
-        priceListRepository.save(priceList);
+    public void saveOrUpdatePriceList(PriceListRequestModel priceListRequestModel) {
+
+        if (priceListRequestModel.getId() == null) {
+            PriceList priceList = new PriceList();
+            priceList.setName(priceListRequestModel.getName());
+            priceList.setCategoryType(priceListRequestModel.getCategoryType());
+            priceList.setPartyType(priceListRequestModel.getPartyType());
+            priceList.setDiscountPercentage(priceListRequestModel.getDiscountPercentage());
+            priceList.setAllowedPriceDevPerUpper(priceListRequestModel.getAllowedPriceDevPerUpper());
+            priceList.setAllowedPriceDevPerLower(priceListRequestModel.getAllowedPriceDevPerLower());
+            priceListRepository.save(priceList);
+
+        } else {
+            PriceList priceList = priceListRepository.findById(priceListRequestModel.getId()).get();
+            priceList.setName(priceListRequestModel.getName());
+            priceList.setCategoryType(priceListRequestModel.getCategoryType());
+            priceList.setPartyType(priceListRequestModel.getPartyType());
+            priceList.setDiscountPercentage(priceListRequestModel.getDiscountPercentage());
+            priceList.setAllowedPriceDevPerUpper(priceListRequestModel.getAllowedPriceDevPerUpper());
+            priceList.setAllowedPriceDevPerLower(priceListRequestModel.getAllowedPriceDevPerLower());
+            priceListRepository.save(priceList);
+        }
     }
 
     public void deletePriceList(Long id) {

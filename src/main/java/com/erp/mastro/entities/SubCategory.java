@@ -32,13 +32,4 @@ public class SubCategory {
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private Set<Product> productSet;
 
-    public SubCategory(Long id, String subCategoryName, String subCategoryDescription,Category category) {
-
-        this.id = id;
-        this.subCategoryName= subCategoryName;
-        this.subCategoryDescription=subCategoryDescription;
-        this.category=category;
-
-    }
-
 }
