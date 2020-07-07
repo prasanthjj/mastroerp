@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,12 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/master")
 public class AssetController {
 
     @Autowired
     private AssetService assetService;
 
-    @GetMapping("/master/getAssetList")
+    @GetMapping("/getAssetList")
     public String getAssetList(Model model) {
 
         try {
@@ -38,7 +40,7 @@ public class AssetController {
 
     }
 
-    @GetMapping("/master/getCreateAsset")
+    @GetMapping("/getCreateAsset")
     public String getCreateAsset(Model model) {
 
         try {
@@ -53,7 +55,7 @@ public class AssetController {
 
     }
 
-    @PostMapping("/master/saveAsset")
+    @PostMapping("/saveAsset")
     public String saveAsset(@ModelAttribute("assetForm") @Valid AssetRequestModel assetRequestModel, HttpServletRequest request, Model model) {
 
         try {

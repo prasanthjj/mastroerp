@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/master")
 public class BrandController {
 
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/master/getBrand")
+    @GetMapping("/getBrand")
     public String getBrand(Model model) {
 
         try {
@@ -42,7 +43,7 @@ public class BrandController {
 
     }
 
-    @PostMapping("/master/saveBrand")
+    @PostMapping("/saveBrand")
     public String saveBrand(@ModelAttribute("brandForm") @Valid BrandRequestModel brandRequestModel, HttpServletRequest request, Model model) {
 
         try {
@@ -53,7 +54,7 @@ public class BrandController {
         }
     }
 
-    @GetMapping("/master/getBrandForEdit")
+    @GetMapping("/getBrandForEdit")
     @ResponseBody
     public GenericResponse getBrandForEdit(Model model, HttpServletRequest request, @RequestParam("brandId") Long brandId) {
 
@@ -73,7 +74,7 @@ public class BrandController {
 
     }
 
-    @PostMapping("/master/deleteBrandDetails")
+    @PostMapping("/deleteBrandDetails")
     @ResponseBody
     public GenericResponse deleteBrand(Model model, HttpServletRequest request, @RequestParam("brandId") Long brandId) {
 

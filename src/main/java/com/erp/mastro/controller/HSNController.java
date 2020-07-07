@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/master")
 public class HSNController {
 
     @Autowired
     private HSNService hsnService;
 
-    @GetMapping("/master/getHSN")
+    @GetMapping("/getHSN")
     public String getHSN(Model model) {
 
         try {
@@ -41,7 +42,7 @@ public class HSNController {
 
     }
 
-    @GetMapping("/master/getCreateHSN")
+    @GetMapping("/getCreateHSN")
     public String getCreateHSN(Model model) {
 
         try {
@@ -56,7 +57,7 @@ public class HSNController {
 
     }
 
-    @PostMapping("/master/saveHSN")
+    @PostMapping("/saveHSN")
     public String saveHSN(@ModelAttribute("hsnForm") @Valid HSNRequestModel hsnRequestModel, HttpServletRequest request, Model model) {
 
         try {
@@ -67,7 +68,7 @@ public class HSNController {
         }
     }
 
-    @GetMapping("/master/viewHSN")
+    @GetMapping("/viewHSN")
     public String getViewHSN(Model model, @RequestParam("hsnId") Long hsnId, HttpServletRequest req) {
 
         try {
@@ -82,7 +83,7 @@ public class HSNController {
 
     }
 
-    @RequestMapping(value = "/master/getHSNEdit", method = RequestMethod.GET)
+    @RequestMapping(value = "/getHSNEdit", method = RequestMethod.GET)
     public String getHSNEdit(HttpServletRequest request, @RequestParam("hsnId") Long hsnId, Model model) {
 
         try {
@@ -97,7 +98,7 @@ public class HSNController {
         }
     }
 
-    @PostMapping("/master/deleteHsnDetails")
+    @PostMapping("/deleteHsnDetails")
     @ResponseBody
     public GenericResponse deleteHsnDetails(Model model, HttpServletRequest request, @RequestParam("hsnId") Long hsnId) {
 
