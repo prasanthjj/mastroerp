@@ -91,6 +91,14 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
+    public void deletePartyDetails(Long id) {
+        Party party = getPartyById(id);
+        party.setPartyDeleteStatus(1);
+        partyRepository.save(party);
+
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
     public Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) {
         Set<ContactDetails> contactDetailsSet = new HashSet<>();
         party.getContactDetails().clear();
@@ -192,5 +200,6 @@ public class PartyServiceImpl implements PartyService {
         party.setProducts(products);
         partyRepository.save(party);
     }
+
 
 }

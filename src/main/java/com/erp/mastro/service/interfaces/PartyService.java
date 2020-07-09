@@ -16,6 +16,8 @@ public interface PartyService {
 
     void deleteParty(Long id);
 
+    void deletePartyDetails(Long id);
+
     Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party);
 
     Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party);
@@ -24,6 +26,6 @@ public interface PartyService {
 
     Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party);
 
-    void saveOrUpdatePartyProducts(Party party,Set<Product> products);
+    void saveOrUpdatePartyProducts(Party party, Set<Product> products);
 
 }

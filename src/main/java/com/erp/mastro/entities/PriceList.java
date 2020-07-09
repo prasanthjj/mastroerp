@@ -34,4 +34,7 @@ public class PriceList {
     @Column(name = "allowed_price_dev_per_lower")
     private double allowedPriceDevPerLower;
 
+    @Column(name = "delete_status", nullable = false)
+    private int pricelistDeleteStatus;
+
 }

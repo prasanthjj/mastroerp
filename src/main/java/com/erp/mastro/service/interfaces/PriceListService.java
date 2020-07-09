@@ -14,4 +14,6 @@ public interface PriceListService {
     void saveOrUpdatePriceList(PriceListRequestModel priceListRequestModel);
 
     void deletePriceList(Long id);
+
+    void deletePriceListDetails(Long id);
 }

@@ -101,4 +101,7 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private PartyPriceList partyPriceList;
 
+    @Column(name = "delete_status", nullable = false)
+    private int partyDeleteStatus;
+
 }

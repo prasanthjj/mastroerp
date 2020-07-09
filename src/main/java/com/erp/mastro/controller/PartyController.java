@@ -1,15 +1,13 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Party;
 import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.service.interfaces.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -62,6 +60,23 @@ public class PartyController {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @PostMapping("/deletePartyDetails")
+    @ResponseBody
+    public GenericResponse deletePartyDetails(Model model, HttpServletRequest request, @RequestParam("partyId") Long partyId) {
+
+        try {
+
+            partyService.deletePartyDetails(partyId);
+            return new GenericResponse(true, "delete party details");
+
+        } catch (Exception e) {
+
+            return new GenericResponse(false, e.getMessage());
+
+        }
+
     }
 
 

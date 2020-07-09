@@ -55,4 +55,13 @@ public class PriceListServiceImpl implements PriceListService {
     public void deletePriceList(Long id) {
         priceListRepository.deleteById(id);
     }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public void deletePriceListDetails(Long id) {
+
+        PriceList priceList = getPriceListById(id);
+        priceList.setPricelistDeleteStatus(1);
+        priceListRepository.save(priceList);
+
+    }
 }
