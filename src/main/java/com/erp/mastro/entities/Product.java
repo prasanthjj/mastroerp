@@ -70,24 +70,5 @@ public class Product extends Auditable<String>{
             inverseJoinColumns = { @JoinColumn(name = "party_id") }
     )
     Set<Party> parties = new HashSet<>();
-    public Product(Long id,String productName,String itemCode,String dimension,String colour,String guarantee,String warranty,String propertySize,SubCategory subCategory,HSN hsn,String baseUOM,String baseQuantity,Set<ProductImages> productImages,Set<ProductUOM> productUOMSet) {
-
-        this.id = id;
-        this.productName =productName;
-        this.itemCode=itemCode;
-        this.dimension= dimension;
-        this.colour=colour;
-        this.guarantee=guarantee;
-        this.warranty=warranty;
-        this.propertySize=propertySize;
-        this.subCategory=subCategory;
-        this.hsn=hsn;
-        this.baseUOM=baseUOM;
-        this.baseQuantity=baseQuantity;
-        this.productImages=productImages;
-        this.productUOMSet=productUOMSet;
-
-    }
-
 
 }
