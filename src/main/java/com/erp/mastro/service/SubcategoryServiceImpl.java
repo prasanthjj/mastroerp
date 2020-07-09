@@ -9,6 +9,7 @@ import com.erp.mastro.service.interfaces.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,6 +40,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
         return subCategoryRepository.findById(id).get();
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateSubCategory(SubCategoryRequestModel subCategoryRequestModel) {
         if (subCategoryRequestModel.getId() == null) {
             SubCategory subCategory = new SubCategory();

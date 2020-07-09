@@ -8,6 +8,7 @@ import com.erp.mastro.service.interfaces.HSNService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class HSNServiceImpl implements HSNService {
         return hsnRepository.findById(id).get();
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateHSN(HSNRequestModel hsnRequestModel) {
         if (hsnRequestModel.getId() == null) {
             HSN hsn = new HSN();
@@ -68,6 +70,7 @@ public class HSNServiceImpl implements HSNService {
         hsnRepository.deleteById(id);
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void deleteHsnDetails(Long id) {
 
         HSN hsn = getHSNById(id);

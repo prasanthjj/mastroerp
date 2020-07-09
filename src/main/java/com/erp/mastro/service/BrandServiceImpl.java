@@ -7,6 +7,7 @@ import com.erp.mastro.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class BrandServiceImpl implements BrandService {
         return brandRepository.findById(id).get();
     }
 
-    @Override
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateBrand(BrandRequestModel brandRequestModel) {
 
         if (brandRequestModel.getId() == null) {
@@ -50,6 +51,7 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.deleteById(id);
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void deleteBrandDetails(Long id) {
 
         Brand brand = getBrandId(id);

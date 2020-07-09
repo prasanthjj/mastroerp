@@ -7,6 +7,7 @@ import com.erp.mastro.service.interfaces.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ public class PartyServiceImpl implements PartyService {
         return partyRepository.findById(id).get();
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateParty(PartyRequestModel partyRequestModel) {
         if (partyRequestModel.getId() == null) {
             Party party = new Party();
@@ -88,6 +90,7 @@ public class PartyServiceImpl implements PartyService {
         partyRepository.deleteById(id);
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) {
         Set<ContactDetails> contactDetailsSet = new HashSet<>();
         party.getContactDetails().clear();
@@ -113,6 +116,7 @@ public class PartyServiceImpl implements PartyService {
         return contactDetailsSet;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party) {
         Set<BankDetails> bankDetailsSet = new HashSet<>();
         party.getBankDetails().clear();
@@ -133,6 +137,7 @@ public class PartyServiceImpl implements PartyService {
         return bankDetailsSet;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party) {
         Set<BillingDetails> billingDetailsSet = new HashSet<>();
         party.getBillingDetails().clear();
@@ -164,6 +169,7 @@ public class PartyServiceImpl implements PartyService {
         return billingDetailsSet;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party) {
         Set<CreditDetails> creditDetailsSet = new HashSet<>();
         party.getCreditDetails().clear();

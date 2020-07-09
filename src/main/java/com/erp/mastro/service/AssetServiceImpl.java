@@ -11,6 +11,7 @@ import com.erp.mastro.service.interfaces.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,7 @@ public class AssetServiceImpl implements AssetService{
         return assetRepository.findById(id).get();
     }
 
-    @Override
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateAssets(AssetRequestModel assetRequestModel) {
         if (assetRequestModel.getId() == null) {
             Assets assets = new Assets();
@@ -83,6 +84,7 @@ public class AssetServiceImpl implements AssetService{
         }
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
@@ -102,6 +104,7 @@ public class AssetServiceImpl implements AssetService{
         return assetCharacteristicsSet;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetMaintenanceActivities> assetMaintenanceActivitySet = new HashSet<>();
@@ -124,6 +127,7 @@ public class AssetServiceImpl implements AssetService{
         return assetMaintenanceActivitySet;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public Set<AssetChecklist> saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetChecklist> assetChecklistSet = new HashSet<>();

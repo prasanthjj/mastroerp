@@ -7,6 +7,7 @@ import com.erp.mastro.service.interfaces.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class PriceListServiceImpl implements PriceListService {
         return priceListRepository.findById(id).get();
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdatePriceList(PriceListRequestModel priceListRequestModel) {
 
         if (priceListRequestModel.getId() == null) {

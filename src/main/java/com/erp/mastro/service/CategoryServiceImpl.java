@@ -9,6 +9,7 @@ import com.erp.mastro.service.interfaces.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(id).get();
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateCategory(CategoryRequestModel categoryRequestModel) {
         if (categoryRequestModel.getId() == null) {
             Category category = new Category();
