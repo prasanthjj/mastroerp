@@ -24,4 +24,6 @@ public interface ProductService {
     void deleteProduct(Long id);
 
     void saveOrUpdateProductPartys(Product product, Set<Party> parties);
+
+    void deleteProductDetails(Long id);
 }

@@ -113,4 +113,13 @@ public class ProductServiceImpl implements ProductService {
         product.setParties(parties);
         productRepository.save(product);
     }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public void deleteProductDetails(Long id) {
+
+        Product product = getProductById(id);
+        product.setProductDeleteStatus(1);
+        productRepository.save(product);
+
+    }
 }

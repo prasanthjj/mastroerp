@@ -63,11 +63,14 @@ public class Product extends Auditable<String>{
     @Column(name = "base_quantity")
     private String baseQuantity;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @Column(name = "delete_status", nullable = false)
+    private int productDeleteStatus;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "product_party",
-            joinColumns = { @JoinColumn(name = "product_id") },
-            inverseJoinColumns = { @JoinColumn(name = "party_id") }
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "party_id")}
     )
     Set<Party> parties = new HashSet<>();
 
