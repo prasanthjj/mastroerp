@@ -61,6 +61,9 @@ public class Assets {
     @Column(name = "make")
     private String make;
 
+    @Column(name = "delete_status", nullable = false)
+    private int assetDeleteStatus;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "asset_assetcharacteristics", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "characteristics_id", referencedColumnName = "id")})

@@ -43,8 +43,16 @@ public class CatalogServiceImpl implements CatalogService {
         }
     }
 
-    public void deleteCatalog(Long id)
-    {
+    public void deleteCatalog(Long id) {
         catalogRepository.deleteById(id);
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public void deleteCatalogDetails(Long id) {
+
+        Catalog catalog = getCatalogById(id);
+        catalog.setCatalogDeleteStatus(1);
+        catalogRepository.save(catalog);
+
     }
 }

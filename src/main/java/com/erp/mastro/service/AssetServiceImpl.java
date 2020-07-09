@@ -151,5 +151,14 @@ public class AssetServiceImpl implements AssetService{
         assetRepository.deleteById(id);
     }
 
+    @Transactional(rollbackOn = {Exception.class})
+    public void deleteAssetDetails(Long id) {
+
+        Assets assets = getAssetsById(id);
+        assets.setAssetDeleteStatus(1);
+        assetRepository.save(assets);
+
+    }
+
 
 }

@@ -7,12 +7,14 @@ import java.util.List;
 
 public interface CatalogService {
 
-     List<Catalog> getAllCatalogs();
+    List<Catalog> getAllCatalogs();
 
-     Catalog getCatalogById(Long id);
+    Catalog getCatalogById(Long id);
 
     void saveOrUpdateCatalog(CatalogRequestModel catalogRequestModel);
 
-     void deleteCatalog(Long id);
+    void deleteCatalog(Long id);
+
+    void deleteCatalogDetails(Long id);
 
 }

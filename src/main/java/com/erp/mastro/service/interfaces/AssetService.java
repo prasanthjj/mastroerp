@@ -25,5 +25,7 @@ public interface AssetService {
 
     void deleteAssets(Long id);
 
+    void deleteAssetDetails(Long id);
+
 }
 

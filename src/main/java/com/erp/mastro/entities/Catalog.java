@@ -26,6 +26,10 @@ public class Catalog {
     @Column(name = "creation_date")
     private Date creationDate;
 
+    @Column(name = "delete_status", nullable = false)
+    private int catalogDeleteStatus;
+
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "catalog_category", joinColumns = {@JoinColumn(name = "catalog_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})

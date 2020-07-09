@@ -1,15 +1,13 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Assets;
 import com.erp.mastro.model.request.AssetRequestModel;
 import com.erp.mastro.service.interfaces.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -28,9 +26,15 @@ public class AssetController {
 
         try {
             List<Assets> assetsList = new ArrayList<>();
+            for (Assets asset : assetService.getAllAssets()) {
+                if (asset.getAssetDeleteStatus() != 1) {
+                    assetsList.add(asset);
+                }
+            }
             model.addAttribute("assetForm", new AssetRequestModel());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("assetTab", "asset");
+            model.addAttribute("assetList", assetsList);
 
             return "views/assetsMaster";
 
@@ -64,5 +68,22 @@ public class AssetController {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @PostMapping("/deleteAssetDetails")
+    @ResponseBody
+    public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetId") Long assetId) {
+
+        try {
+
+            assetService.deleteAssetDetails(assetId);
+            return new GenericResponse(true, "delete asset details");
+
+        } catch (Exception e) {
+
+            return new GenericResponse(false, e.getMessage());
+
+        }
+
     }
 }
