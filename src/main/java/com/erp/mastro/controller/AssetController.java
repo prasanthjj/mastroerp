@@ -70,6 +70,22 @@ public class AssetController {
         }
     }
 
+    @RequestMapping(value = "/getAssetEdit", method = RequestMethod.GET)
+    public String getAssetEdit(HttpServletRequest request, @RequestParam("assetId") Long assetId, Model model) {
+
+        try {
+            AssetRequestModel assetRequestModel = new AssetRequestModel();
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("assetTab", "asset");
+            model.addAttribute("assetForm", assetService.getAssetsById(assetId));
+            return "views/editAssetMaster";
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
     @PostMapping("/deleteAssetDetails")
     @ResponseBody
     public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetId") Long assetId) {

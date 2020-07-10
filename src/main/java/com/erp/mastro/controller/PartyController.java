@@ -62,6 +62,21 @@ public class PartyController {
         }
     }
 
+    @RequestMapping(value = "/getPartyEdit", method = RequestMethod.GET)
+    public String getPartyEdit(HttpServletRequest request, @RequestParam("partyId") Long partyId, Model model) {
+
+        try {
+            PartyRequestModel partyRequestModel = new PartyRequestModel();
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("partytab", "party");
+            model.addAttribute("partyform", partyService.getPartyById(partyId));
+            return "views/editPartyMaster";
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     @PostMapping("/deletePartyDetails")
     @ResponseBody
     public GenericResponse deletePartyDetails(Model model, HttpServletRequest request, @RequestParam("partyId") Long partyId) {
