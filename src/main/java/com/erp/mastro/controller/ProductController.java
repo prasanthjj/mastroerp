@@ -85,5 +85,18 @@ public class ProductController {
 
     }
 
+    @RequestMapping(value = "/getProductEdit", method = RequestMethod.GET)
+    public String getProductEdit(HttpServletRequest request, @RequestParam("productId") Long productId, Model model) {
 
+        try {
+            ProductRequestModel productRequestModel = new ProductRequestModel();
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("productTab", "product");
+            model.addAttribute("productForm", productService.getProductById(productId));
+            return "views/editProductMaster";
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
