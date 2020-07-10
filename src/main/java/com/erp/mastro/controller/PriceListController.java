@@ -48,6 +48,30 @@ public class PriceListController {
         }
     }
 
+    @GetMapping("/getPriceListforEdit")
+    @ResponseBody
+    public GenericResponse getPriceListforEdit(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) {
+
+        try {
+
+            PriceList priceListdetails = priceListService.getPriceListById(pricelistId);
+            return new GenericResponse(true, "get pricelist details")
+                    .setProperty("pricelistid", priceListdetails.getId())
+                    .setProperty("pricelistName", priceListdetails.getName())
+                    .setProperty("categoryType", priceListdetails.getCategoryType())
+                    .setProperty("partyType", priceListdetails.getPartyType())
+                    .setProperty("discountPercentage", priceListdetails.getDiscountPercentage())
+                    .setProperty("allowedPriceDevPerUpper", priceListdetails.getAllowedPriceDevPerUpper())
+                    .setProperty("allowedPriceDevPerLower", priceListdetails.getAllowedPriceDevPerLower());
+
+        } catch (Exception e) {
+
+            return new GenericResponse(false, e.getMessage());
+
+        }
+    }
+
+
     @PostMapping("/deletePriceListDetails")
     @ResponseBody
     public GenericResponse deletePriceListDetails(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) {
