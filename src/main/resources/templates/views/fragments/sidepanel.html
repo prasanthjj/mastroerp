@@ -34,6 +34,10 @@
                     <li><a href="location_master.html">Location</a></li>
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
+                        Price list </a></li>
+                    <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}"> Price
+                        list </a></li>
                     <li><a href="catalog_master.html">Category</a></li>
                     <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
                     </li>
@@ -56,6 +60,10 @@
                     <li><a href="location_master.html">Location</a></li>
                     <li><a href="party_master.html">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
+                        Price list </a></li>
+                    <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}"> Price
+                        list </a></li>
                     <li><a href="catalog_master.html">Category</a></li>
                     <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
                     </li>
@@ -71,22 +79,45 @@
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="stock_details.html">Stock Details</a></li>
+                    <li><a href="stock_transfer.html">Stock Transfer</a></li>
+                    <li><a href="indent_master.html">Indent</a></li>
+                    <li><a href="gatepass.html">Gate Pass</a></li>
+                    <li><a href="dc_purchase_slip.html">DC / Purchase Slip</a></li>
+                    <li><a href="grn.html">GRN</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Purchase </span><span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="purchase_order.html">Purchase Order</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Billing</span><span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="invoice.html">Invoice</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">HR </span><span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="department_master.html">Department</a></li>
+                    <li><a href="salary_components_master.html">Salary Components</a></li>
+                    <li><a href="salary_templates_master.html">Salary Templates</a></li>
+                    <li><a href="employees.html">Employees</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Reports </span><span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="itemwise_stock_ledger.html">Itemwise Stock Ledger</a></li>
+                </ul>
             </li>
         </ul>
 

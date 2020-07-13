@@ -26,13 +26,13 @@ public class PriceList {
     private String partyType;
 
     @Column(name = "discount_percentage")
-    private double discountPercentage;
+    private Double discountPercentage;
 
     @Column(name = "allowed_price_dev_per_upper")
-    private double allowedPriceDevPerUpper;
+    private Double allowedPriceDevPerUpper;
 
     @Column(name = "allowed_price_dev_per_lower")
-    private double allowedPriceDevPerLower;
+    private Double allowedPriceDevPerLower;
 
     @Column(name = "delete_status", nullable = false)
     private int pricelistDeleteStatus;

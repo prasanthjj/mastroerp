@@ -29,7 +29,7 @@ public class PriceListController {
             model.addAttribute("priceListTab", "priceList");
             model.addAttribute("priceList", priceList);
             model.addAttribute("priceListForm", new PriceListRequestModel());
-            return "views/priceListMaster";
+            return "views/pricelistMaster";
 
         } catch (Exception e) {
             throw e;

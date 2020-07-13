@@ -6,9 +6,9 @@ public class PriceListRequestModel {
     private String name;
     private String categoryType;
     private String partyType;
-    private double discountPercentage;
-    private double allowedPriceDevPerUpper;
-    private double allowedPriceDevPerLower;
+    private Double discountPercentage;
+    private Double allowedPriceDevPerUpper;
+    private Double allowedPriceDevPerLower;
 
     public Long getId() {
         return id;
@@ -42,27 +42,27 @@ public class PriceListRequestModel {
         this.partyType = partyType;
     }
 
-    public double getDiscountPercentage() {
+    public Double getDiscountPercentage() {
         return discountPercentage;
     }
 
-    public void setDiscountPercentage(double discountPercentage) {
+    public void setDiscountPercentage(Double discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
 
-    public double getAllowedPriceDevPerUpper() {
+    public Double getAllowedPriceDevPerUpper() {
         return allowedPriceDevPerUpper;
     }
 
-    public void setAllowedPriceDevPerUpper(double allowedPriceDevPerUpper) {
+    public void setAllowedPriceDevPerUpper(Double allowedPriceDevPerUpper) {
         this.allowedPriceDevPerUpper = allowedPriceDevPerUpper;
     }
 
-    public double getAllowedPriceDevPerLower() {
+    public Double getAllowedPriceDevPerLower() {
         return allowedPriceDevPerLower;
     }
 
-    public void setAllowedPriceDevPerLower(double allowedPriceDevPerLower) {
+    public void setAllowedPriceDevPerLower(Double allowedPriceDevPerLower) {
         this.allowedPriceDevPerLower = allowedPriceDevPerLower;
     }
 }
