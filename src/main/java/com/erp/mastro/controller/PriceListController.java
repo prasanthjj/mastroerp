@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,12 @@ public class PriceListController {
     public String getPriceListMaster(Model model) {
 
         try {
-            List<PriceList> priceList = priceListService.getAllPriceList();
+            List<PriceList> priceList = new ArrayList<>();
+            for (PriceList priceList1 : priceListService.getAllPriceList()) {
+                if (priceList1.getPricelistDeleteStatus() != 1) {
+                    priceList.add(priceList1);
+                }
+            }
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("priceListTab", "priceList");
             model.addAttribute("priceList", priceList);
@@ -56,8 +62,8 @@ public class PriceListController {
 
             PriceList priceListdetails = priceListService.getPriceListById(pricelistId);
             return new GenericResponse(true, "get pricelist details")
-                    .setProperty("pricelistid", priceListdetails.getId())
-                    .setProperty("pricelistName", priceListdetails.getName())
+                    .setProperty("pricelistId", priceListdetails.getId())
+                    .setProperty("pricelistName", priceListdetails.getPricelistName())
                     .setProperty("categoryType", priceListdetails.getCategoryType())
                     .setProperty("partyType", priceListdetails.getPartyType())
                     .setProperty("discountPercentage", priceListdetails.getDiscountPercentage())

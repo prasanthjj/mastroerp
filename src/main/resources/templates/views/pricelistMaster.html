@@ -95,7 +95,7 @@
                                     <tbody>
                                     <tr class="gradeX" th:each="priceListObj,iterator:${priceList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td th:text="${priceListObj.name}">
+                                        <td th:text="${priceListObj.pricelistName}">
                                         </td>
                                         <td th:text="${priceListObj.discountPercentage}"></td>
                                         <td class="center" th:text="${priceListObj.allowedPriceDevPerUpper}">5</td>
@@ -107,11 +107,15 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#" data-toggle="modal"
-                                                           data-target="#editPricelist"><i class="fa fa-edit"></i>
+                                                    <li><a class="dropdown-item font-bold pricelistEdit" href="#"
+                                                           data-toggle="modal"
+                                                           data-target="#editPricelist"
+                                                           th:data-pricelistid="${priceListObj.id}"><i
+                                                            class="fa fa-edit"></i>
                                                         Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removePriceList" href="#"><i
+                                                    <li><a class="dropdown-item font-bold removePriceList" href="#"
+                                                           th:data-pricelistids="${priceListObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
@@ -180,7 +184,7 @@
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Price List Name <i
                                 class="fa fa-asterisk "></i></label>
 
-                            <div class="col-sm-8"><input type="text" class="form-control" name="name"/></div>
+                            <div class="col-sm-8"><input type="text" class="form-control" name="pricelistName"/></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Discount (%) <i
@@ -218,14 +222,16 @@
 </div>
 <div class="modal inmodal" id="editPricelist" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="editPriceListForm">
+        <form th:action="@{/master/savePriceList}" th:object="${priceListForm}"
+              name="brandForm" method="post">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Add Price List</h4>
+                    <h4 class="modal-title">Edit Price List</h4>
 
                 </div>
+                <input type="hidden" name="id" id="pricelistId"/>
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Party Type</label>
@@ -256,26 +262,30 @@
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Price List Name <i
                                 class="fa fa-asterisk "></i></label>
 
-                            <div class="col-sm-8"><input type="text" class="form-control" name="editPriceListName"/>
+                            <div class="col-sm-8"><input type="text" class="form-control" name="pricelistName"
+                                                         id="pricelistName"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Discount (%) <i
                                 class="fa fa-asterisk "></i></label>
 
-                            <div class="col-sm-8"><input type="text" class="form-control"/></div>
+                            <div class="col-sm-8"><input type="text" class="form-control" name="discountPercentage"
+                                                         id="discountPercentage"/></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Allowed Price Dev (%)
                             (Upper)</label>
 
-                            <div class="col-sm-8"><input type="text" class="form-control"/></div>
+                            <div class="col-sm-8"><input type="text" class="form-control" name="allowedPriceDevPerUpper"
+                                                         id="allowedPriceDevPerUpper"/></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Allowed Price Dev (%)
                             (Lower)</label>
 
-                            <div class="col-sm-8"><input type="text" class="form-control"/></div>
+                            <div class="col-sm-8"><input type="text" class="form-control" name="allowedPriceDevPerLower"
+                                                         id="allowedPriceDevPerLower"/></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="hr-line-dashed"></div>

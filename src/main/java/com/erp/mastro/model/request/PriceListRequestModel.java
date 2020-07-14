@@ -3,7 +3,7 @@ package com.erp.mastro.model.request;
 public class PriceListRequestModel {
 
     private Long id;
-    private String name;
+    private String pricelistName;
     private String categoryType;
     private String partyType;
     private Double discountPercentage;
@@ -18,12 +18,12 @@ public class PriceListRequestModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getPricelistName() {
+        return pricelistName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPricelistName(String pricelistName) {
+        this.pricelistName = pricelistName;
     }
 
     public String getCategoryType() {

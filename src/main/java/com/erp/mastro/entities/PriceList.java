@@ -16,8 +16,8 @@ public class PriceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "pricelist_name")
+    private String pricelistName;
 
     @Column(name = "category_type")
     private String categoryType;

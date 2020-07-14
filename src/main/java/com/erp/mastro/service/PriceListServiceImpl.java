@@ -32,7 +32,7 @@ public class PriceListServiceImpl implements PriceListService {
 
         if (priceListRequestModel.getId() == null) {
             PriceList priceList = new PriceList();
-            priceList.setName(priceListRequestModel.getName());
+            priceList.setPricelistName(priceListRequestModel.getPricelistName());
             priceList.setCategoryType(priceListRequestModel.getCategoryType());
             priceList.setPartyType(priceListRequestModel.getPartyType());
             priceList.setDiscountPercentage(priceListRequestModel.getDiscountPercentage());
@@ -42,7 +42,7 @@ public class PriceListServiceImpl implements PriceListService {
 
         } else {
             PriceList priceList = priceListRepository.findById(priceListRequestModel.getId()).get();
-            priceList.setName(priceListRequestModel.getName());
+            priceList.setPricelistName(priceListRequestModel.getPricelistName());
             priceList.setCategoryType(priceListRequestModel.getCategoryType());
             priceList.setPartyType(priceListRequestModel.getPartyType());
             priceList.setDiscountPercentage(priceListRequestModel.getDiscountPercentage());
