@@ -16,10 +16,10 @@ public class AssetCharacteristics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "character")
+    @Column(name = "asset_characters")
     private String character;
 
-    @Column(name = "value")
+    @Column(name = "asset_values")
     private String value;
 
     @Column(name = "asset_remarks")

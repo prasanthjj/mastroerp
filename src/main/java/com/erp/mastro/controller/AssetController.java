@@ -51,7 +51,7 @@ public class AssetController {
             model.addAttribute("assetForm", new AssetRequestModel());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("assetTab", "asset");
-            return "views/createAssetMaster";
+            return "views/createAssets";
 
         } catch (Exception e) {
             throw e;

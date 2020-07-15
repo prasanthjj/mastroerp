@@ -35,6 +35,7 @@ public class AssetServiceImpl implements AssetService{
 
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateAssets(AssetRequestModel assetRequestModel) {
+
         if (assetRequestModel.getId() == null) {
             Assets assets = new Assets();
             assets.setAssetNo(assetRequestModel.getAssetNo());
@@ -48,8 +49,16 @@ public class AssetServiceImpl implements AssetService{
             assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
             assets.setCapacity(assetRequestModel.getCapacity());
             assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
-            assets.setActive(assetRequestModel.isActive());
-            assets.setMaintenanceRequired(assetRequestModel.isMaintenanceRequired());
+            if (assetRequestModel.getActive() != null) {
+                assets.setActive(assetRequestModel.getActive());
+            } else {
+                assets.setActive(false);
+            }
+            if (assetRequestModel.getMaintenanceRequired() != null) {
+                assets.setMaintenanceRequired(assetRequestModel.getMaintenanceRequired());
+            } else {
+                assets.setMaintenanceRequired(false);
+            }
             assets.setMake(assetRequestModel.getMake());
             Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
             assets.setAssetCharacteristics(assetCharacteristics);
@@ -71,8 +80,16 @@ public class AssetServiceImpl implements AssetService{
             assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
             assets.setCapacity(assetRequestModel.getCapacity());
             assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
-            assets.setActive(assetRequestModel.isActive());
-            assets.setMaintenanceRequired(assetRequestModel.isMaintenanceRequired());
+            if (assetRequestModel.getActive() != null) {
+                assets.setActive(assetRequestModel.getActive());
+            } else {
+                assets.setActive(false);
+            }
+            if (assetRequestModel.getMaintenanceRequired() != null) {
+                assets.setMaintenanceRequired(assetRequestModel.getMaintenanceRequired());
+            } else {
+                assets.setMaintenanceRequired(false);
+            }
             assets.setMake(assetRequestModel.getMake());
             Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
             assets.setAssetCharacteristics(assetCharacteristics);
@@ -88,7 +105,6 @@ public class AssetServiceImpl implements AssetService{
     public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
-        assets.getAssetCharacteristics().clear();
         if (assetRequestModel.getAssetCharacteristicsModel().isEmpty() == false) {
             assetRequestModel.getAssetCharacteristicsModel().parallelStream()
                     .forEach(x -> {
@@ -96,7 +112,6 @@ public class AssetServiceImpl implements AssetService{
                         assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
                         assetCharacteristics.setValue(x.getValue());
                         assetCharacteristics.setCharacter(x.getCharacter());
-                        assetCharacteristics.setAsset(assets);
                         assetCharacteristicsSet.add(assetCharacteristics);
 
                     });
@@ -108,7 +123,6 @@ public class AssetServiceImpl implements AssetService{
     public Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetMaintenanceActivities> assetMaintenanceActivitySet = new HashSet<>();
-        assets.getAssetMaintenanceActivities().clear();
         if (assetRequestModel.getAssetMaintenanceActivitiesModel().isEmpty() == false) {
             assetRequestModel.getAssetMaintenanceActivitiesModel().parallelStream()
                     .forEach(x -> {
@@ -119,7 +133,7 @@ public class AssetServiceImpl implements AssetService{
                         assetMaintenanceActivities.setStandardObservation(x.getStandardObservation());
                         assetMaintenanceActivities.setUpperLimit(x.getUpperLimit());
                         assetMaintenanceActivities.setTolerenceLowerlimit(x.getTolerenceLowerlimit());
-                        assetMaintenanceActivities.setAsset(assets);
+                        assetMaintenanceActivities.setTolerence(x.getTolerence());
                         assetMaintenanceActivitySet.add(assetMaintenanceActivities);
                     });
 
@@ -131,14 +145,12 @@ public class AssetServiceImpl implements AssetService{
     public Set<AssetChecklist> saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
 
         Set<AssetChecklist> assetChecklistSet = new HashSet<>();
-        assets.getAssetChecklists().clear();
         if (assetRequestModel.getAssetCheckListModel().isEmpty() == false) {
             assetRequestModel.getAssetCheckListModel().parallelStream()
                     .forEach(x -> {
                         AssetChecklist assetChecklist = new AssetChecklist();
                         assetChecklist.setCheckList(x.getCheckList());
                         assetChecklist.setRemarks(x.getRemarks());
-                        assetChecklist.setAsset(assets);
                         assetChecklistSet.add(assetChecklist);
 
                     });

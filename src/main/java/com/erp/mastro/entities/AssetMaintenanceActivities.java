@@ -34,6 +34,9 @@ public class AssetMaintenanceActivities {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "tolerence")
+    private Double tolerence;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})

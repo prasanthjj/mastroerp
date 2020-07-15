@@ -53,10 +53,10 @@ public class Assets {
     private String maintenancePriority;
 
     @Column(name = "is_active", nullable = false)
-    protected boolean isActive;
+    private Boolean active;
 
     @Column(name = "maintenanace_required", nullable = false)
-    protected boolean maintenanceRequired;
+    private Boolean maintenanceRequired;
 
     @Column(name = "make")
     private String make;

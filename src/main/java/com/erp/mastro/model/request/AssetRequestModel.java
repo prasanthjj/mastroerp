@@ -18,8 +18,8 @@ public class AssetRequestModel {
     private Date effectiveDate;
     private String capacity;
     private String maintenancePriority;
-    protected boolean isActive;
-    protected boolean maintenanceRequired;
+    private Boolean active;
+    private Boolean maintenanceRequired;
     private String make;
     private List<AssetCharacteristicsModel> assetCharacteristicsModel = new ArrayList<>();
     private List<AssetMaintenanceActivitiesModel> assetMaintenanceActivitiesModel = new ArrayList<>();
@@ -121,19 +121,19 @@ public class AssetRequestModel {
         this.maintenancePriority = maintenancePriority;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
-    public boolean isMaintenanceRequired() {
+    public Boolean getMaintenanceRequired() {
         return maintenanceRequired;
     }
 
-    public void setMaintenanceRequired(boolean maintenanceRequired) {
+    public void setMaintenanceRequired(Boolean maintenanceRequired) {
         this.maintenanceRequired = maintenanceRequired;
     }
 
@@ -219,6 +219,7 @@ public class AssetRequestModel {
         private String tolerenceLowerlimit;
         private String frequency;
         private String category;
+        private Double tolerence;
 
         public Long getId() {
             return id;
@@ -274,6 +275,14 @@ public class AssetRequestModel {
 
         public void setCategory(String category) {
             this.category = category;
+        }
+
+        public Double getTolerence() {
+            return tolerence;
+        }
+
+        public void setTolerence(Double tolerence) {
+            this.tolerence = tolerence;
         }
     }
 
