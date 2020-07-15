@@ -109,7 +109,8 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_assets.html"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/master/viewAsset?assetId=__${assetObj.id}__}"><i
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item font-bold" href="edit_assets.html"><i

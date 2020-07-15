@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Browse Assets </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Browse Assets</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="assets_master.html">List Assets</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Manage Asset</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5></h5>
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form id="viewAssetsForm" action="#" class="wizard-big">
+                                <h1>General Details</h1>
+                                <fieldset>
+                                    <h2>General Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Asset No</label>
+                                                <h4 th:text="${assetDetails.id}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Asset Location</label>
+                                                <h4 th:text="${assetDetails.assetLocation}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Hours Utilized</label>
+                                                <h4 th:text="${assetDetails.hoursUtilized}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Capacity</label>
+                                                <h4 th:text="${assetDetails.capacity}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+
+                                                <label>Is Active</label>
+                                                <h4 th:text="${assetDetails.active}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Asset Name</label>
+                                                <h4 th:text="${assetDetails.assetName}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Asset Sub Location</label>
+                                                <h4 th:text="${assetDetails.subLocation}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Installation Date</label>
+                                                <h4 th:text="${#dates.format(assetDetails.installationDate, 'dd-MMMM-yyyy')}">
+                                                    Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Maintenance Priority</label>
+                                                <h4 th:text="${assetDetails.maintenancePriority}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+
+                                                <label>Maintenance Required</label>
+                                                <h4 th:text="${assetDetails.maintenanceRequired}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Asset Type</label>
+                                                <h4 th:text="${assetDetails.assetType}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Party No</label>
+                                                <h4 th:text="${assetDetails.partyNo}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Effective Date</label>
+                                                <h4 th:text="${#dates.format(assetDetails.effectiveDate, 'dd-MMMM-yyyy')}">
+                                                    Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Make</label>
+                                                <h4 th:text="${assetDetails.make}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <h1>Characteristics</h1>
+                                <fieldset>
+                                    <!--<h2>Characteristics</h2>-->
+                                    <span th:each="assetObjList,iterator:${assetDetails.assetCharacteristics}">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            
+                                            <div class="form-group">
+                                                <label>Characteristics</label>
+                                                <h4 th:text="${assetObjList.character}">Ast-23568749</h4>
+                                               
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Value</label>
+                                              <h4 th:text="${assetObjList.value}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <h4 th:text="${assetObjList.assetRemarks}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                    </div>
+                                    </span>
+
+                                </fieldset>
+
+                                <h1>Maintenance Activities</h1>
+                                <fieldset>
+                                    <!-- <h2>Maintenance Activities</h2>-->
+                                    <span th:each="assetObjMainList,iterator:${assetDetails.assetMaintenanceActivities}">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                          
+                                            <div class="form-group">
+                                                <label> Activity Name</label>
+                                                <h4 th:text="${assetObjMainList.activityName}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label> Upper Limit</label>
+                                                <h4 th:text="${assetObjMainList.upperLimit}">Ast-23568749</h4>
+                                               
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                 <h4 th:text="${assetObjMainList.category}">Ast-23568749</h4>
+                                            </div> 
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Standard Observation</label>
+                                                   <h4 th:text="${assetObjMainList.standardObservation}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Tolerance(%)</label>
+                                                 <h4 th:text="${assetObjMainList.tolerence}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Lower Limit</label>
+                                                  <h4 th:text="${assetObjMainList.tolerenceLowerlimit}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Frequency(In Days)</label>
+                                                <h4 th:text="${assetObjMainList.frequency}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                    </div>
+                                    </span>
+                                </fieldset>
+
+                                <h1>Other CheckList</h1>
+                                <fieldset>
+                                    <!-- <h2>Other CheckList</h2>-->
+                                    <span th:each="assetObjCheckList,iterator:${assetDetails.assetChecklists}">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            
+                                            <div class="form-group">
+                                                <label>CheckList</label>
+                                                <h4 th:text="${assetObjCheckList.checkList}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <h4 th:text="${assetObjCheckList.remarks}">Ast-23568749</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                    </div>
+                                    </span>
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+
+<script src="../resources/js/mastro/mastro_steps.js" th:src="@{/resources/js/mastro/mastro_steps.js}"></script>
+</body>
+</html>

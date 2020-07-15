@@ -102,4 +102,19 @@ public class AssetController {
         }
 
     }
+
+    @GetMapping("/viewAsset")
+    public String getViewAsset(Model model, @RequestParam("assetId") Long assetId, HttpServletRequest req) {
+
+        try {
+            Assets assets = assetService.getAssetsById(assetId);
+            model.addAttribute("assetDetails", assets);
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("assetTab", "asset");
+            return "views/viewAssets";
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
 }
