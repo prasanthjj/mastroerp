@@ -25,7 +25,7 @@ $(document).ready(function(){
          }
      });
     //Add Price List End
-      // Add Price List Start
+      // edit Price List Start
 
       $("#editPriceListForm").validate({
         rules: {
@@ -46,7 +46,7 @@ $(document).ready(function(){
                          }
         }
     });
-   //Add Price List End
+   //edit Price List End
     // Remove Price List Start
     $('.removePriceList').click(function () {
     var pricelistId=$(this).data('pricelistids');
@@ -89,6 +89,9 @@ $(document).ready(function(){
 
  //remove assets start
        $('.removeAsset').click(function () {
+
+        var assetids=$(this).data('assetids');
+
            swal({
                title: "Are you sure?",
                text: "You will not be able to recover this Item!",
@@ -98,6 +101,27 @@ $(document).ready(function(){
                confirmButtonText: "Yes, delete it!",
                closeOnConfirm: false
            }, function () {
+
+             $.ajax({
+                                      url: '/master/deleteAssetDetails',
+                                      type: 'POST',
+                                      dataType : 'json',
+                                      data: { 'assetids': assetids },
+
+                                      success: function(data){
+                                               if(data.success) {
+
+                                var redirectionUrl= "/master/getAssetList";
+                                window.location.href = redirectionUrl;
+                                                                }
+
+                                                           },
+
+                                  error: function(jqXHR, textStatus)
+                                  {
+                                     alert('Error Occured');
+                                  }
+                  });
                swal("Deleted!", "Item has been deleted.", "success");
            });
        });

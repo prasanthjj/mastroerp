@@ -88,7 +88,7 @@ public class AssetController {
 
     @PostMapping("/deleteAssetDetails")
     @ResponseBody
-    public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetId") Long assetId) {
+    public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetids") Long assetId) {
 
         try {
 

@@ -115,7 +115,9 @@
                                                     <li><a class="dropdown-item font-bold" href="edit_assets.html"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeAsset" href="#"><i
+
+                                                    <li><a class="dropdown-item font-bold removeAsset" href="#"
+                                                           th:data-assetids="${assetObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
@@ -166,6 +168,8 @@
 <!-- jQuery UI -->
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 <script src="../resources/js/mastro/mastro_datatables.js"
         th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
