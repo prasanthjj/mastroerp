@@ -9,15 +9,15 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="asset_charateristics")
+@Table(name = "asset_charateristics")
 
 public class AssetCharacteristics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "character")
-    private String character;
+    @Column(name = "characteristic")
+    private String characteristic;
 
     @Column(name = "value")
     private String value;
