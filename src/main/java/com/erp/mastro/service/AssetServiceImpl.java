@@ -95,7 +95,7 @@ public class AssetServiceImpl implements AssetService{
                         AssetCharacteristics assetCharacteristics = new AssetCharacteristics();
                         assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
                         assetCharacteristics.setValue(x.getValue());
-                        assetCharacteristics.setCharacter(x.getCharacter());
+                        assetCharacteristics.setCharacteristic(x.getCharacter());
                         assetCharacteristics.setAsset(assets);
                         assetCharacteristicsSet.add(assetCharacteristics);
 
