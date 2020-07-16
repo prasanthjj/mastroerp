@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.AssetCharacteristics;
 import com.erp.mastro.entities.AssetChecklist;
 import com.erp.mastro.entities.AssetMaintenanceActivities;
@@ -30,6 +31,7 @@ public class AssetServiceImpl implements AssetService{
     }
 
     public Assets getAssetsById(Long id) {
+        MastroLogUtils.info(AssetService.class, "Going to getAssetsBy Id : {}" + id);
         return assetRepository.findById(id).get();
     }
 

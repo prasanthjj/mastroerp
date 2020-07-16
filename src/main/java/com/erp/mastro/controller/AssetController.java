@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Assets;
 import com.erp.mastro.model.request.AssetRequestModel;
@@ -23,7 +24,7 @@ public class AssetController {
 
     @GetMapping("/getAssetList")
     public String getAssetList(Model model) {
-
+        MastroLogUtils.info(AssetController.class, "Going to get Asset List : {}");
         try {
             List<Assets> assetsList = new ArrayList<>();
             for (Assets asset : assetService.getAllAssets()) {
@@ -39,6 +40,7 @@ public class AssetController {
             return "views/assetsMaster";
 
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while getting assets list: {}", e);
             throw e;
         }
 
@@ -46,7 +48,7 @@ public class AssetController {
 
     @GetMapping("/getCreateAsset")
     public String getCreateAsset(Model model) {
-
+        MastroLogUtils.info(AssetController.class, "Going to get CreateAsset : {}");
         try {
             model.addAttribute("assetForm", new AssetRequestModel());
             model.addAttribute("masterModule", "masterModule");
@@ -54,6 +56,7 @@ public class AssetController {
             return "views/createAssets";
 
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while getting CreateAsset : {}");
             throw e;
         }
 
@@ -61,18 +64,19 @@ public class AssetController {
 
     @PostMapping("/saveAsset")
     public String saveAsset(@ModelAttribute("assetForm") @Valid AssetRequestModel assetRequestModel, HttpServletRequest request, Model model) {
-
+        MastroLogUtils.info(AssetController.class, "Going to save asset : {}");
         try {
             assetService.saveOrUpdateAssets(assetRequestModel);
             return "redirect:/master/getAssetList";
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while saving assets : {}", e);
             throw e;
         }
     }
 
     @RequestMapping(value = "/getAssetEdit", method = RequestMethod.GET)
     public String getAssetEdit(HttpServletRequest request, @RequestParam("assetId") Long assetId, Model model) {
-
+        MastroLogUtils.info(AssetController.class, "Going to edit asset : {}" + assetId);
         try {
             AssetRequestModel assetRequestModel = new AssetRequestModel();
             model.addAttribute("masterModule", "masterModule");
@@ -81,6 +85,7 @@ public class AssetController {
             return "views/editAssetMaster";
 
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while editing asset : {}", e);
             throw e;
         }
 
@@ -89,14 +94,14 @@ public class AssetController {
     @PostMapping("/deleteAssetDetails")
     @ResponseBody
     public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetids") Long assetId) {
-
+        MastroLogUtils.info(AssetController.class, "Going to delete Asset : {}");
         try {
 
             assetService.deleteAssetDetails(assetId);
             return new GenericResponse(true, "delete asset details");
 
         } catch (Exception e) {
-
+            MastroLogUtils.error(AssetController.class, "Error occured while deleting asset : {}", e);
             return new GenericResponse(false, e.getMessage());
 
         }
@@ -105,7 +110,7 @@ public class AssetController {
 
     @GetMapping("/viewAsset")
     public String getViewAsset(Model model, @RequestParam("assetId") Long assetId, HttpServletRequest req) {
-
+        MastroLogUtils.info(AssetController.class, "Going to view Asset :{}" + assetId);
         try {
             Assets assets = assetService.getAssetsById(assetId);
             model.addAttribute("assetDetails", assets);
@@ -113,6 +118,7 @@ public class AssetController {
             model.addAttribute("assetTab", "asset");
             return "views/viewAssets";
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while viewing asset : {}", e);
             throw e;
         }
 
