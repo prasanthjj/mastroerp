@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.Brand;
 import com.erp.mastro.model.request.BrandRequestModel;
 import com.erp.mastro.repository.BrandRepository;
@@ -26,6 +27,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand getBrandId(Long id) {
+        MastroLogUtils.info(BrandService.class, "Going to get brand by id : {}" + id);
         return brandRepository.findById(id).get();
     }
 

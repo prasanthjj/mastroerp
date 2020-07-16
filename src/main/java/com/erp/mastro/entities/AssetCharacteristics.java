@@ -9,17 +9,17 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="asset_charateristics")
+@Table(name = "asset_characteristics")
 
 public class AssetCharacteristics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "character")
+    @Column(name = "asset_characters")
     private String character;
 
-    @Column(name = "value")
+    @Column(name = "asset_value")
     private String value;
 
     @Column(name = "asset_remarks")
