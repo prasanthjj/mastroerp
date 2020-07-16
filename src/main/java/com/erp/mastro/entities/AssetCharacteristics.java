@@ -16,8 +16,8 @@ public class AssetCharacteristics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "characteristic")
-    private String characteristic;
+    @Column(name = "character")
+    private String character;
 
     @Column(name = "value")
     private String value;
