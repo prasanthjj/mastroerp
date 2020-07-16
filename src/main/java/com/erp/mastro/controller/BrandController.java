@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Brand;
 import com.erp.mastro.model.request.BrandRequestModel;
@@ -23,7 +24,7 @@ public class BrandController {
 
     @GetMapping("/getBrand")
     public String getBrand(Model model) {
-
+        MastroLogUtils.info(BrandController.class, "Going to get all Brand :{}");
         try {
             List<Brand> brandList = new ArrayList<>();
             for (Brand brand : brandService.getAllBrands()) {
@@ -38,6 +39,7 @@ public class BrandController {
             return "views/brandMaster";
 
         } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured while getting brand", e);
             throw e;
         }
 
@@ -45,11 +47,12 @@ public class BrandController {
 
     @PostMapping("/saveBrand")
     public String saveBrand(@ModelAttribute("brandForm") @Valid BrandRequestModel brandRequestModel, HttpServletRequest request, Model model) {
-
+        MastroLogUtils.info(BrandController.class, "Going to savebrand : {}");
         try {
             brandService.saveOrUpdateBrand(brandRequestModel);
             return "redirect:/master/getBrand";
         } catch (Exception e) {
+            MastroLogUtils.error(BrandController.class, e.getMessage());
             throw e;
         }
     }
@@ -57,7 +60,7 @@ public class BrandController {
     @GetMapping("/getBrandForEdit")
     @ResponseBody
     public GenericResponse getBrandForEdit(Model model, HttpServletRequest request, @RequestParam("brandId") Long brandId) {
-
+        MastroLogUtils.info(BrandController.class, "Going to edit Brand Details : {}");
         try {
 
             Brand brandDetails = brandService.getBrandId(brandId);
@@ -67,8 +70,8 @@ public class BrandController {
                     .setProperty("brandDescription", brandDetails.getBrandDescription());
 
         } catch (Exception e) {
-
-            return new GenericResponse(false, e.getMessage());
+            MastroLogUtils.error(this, "Error Occured while editing brand details :{}", e);
+            throw e;
 
         }
 
@@ -77,16 +80,16 @@ public class BrandController {
     @PostMapping("/deleteBrandDetails")
     @ResponseBody
     public GenericResponse deleteBrand(Model model, HttpServletRequest request, @RequestParam("brandId") Long brandId) {
-
+        MastroLogUtils.info(BrandController.class, "Going to deletebrand");
         try {
 
             brandService.deleteBrandDetails(brandId);
             return new GenericResponse(true, "delete brand details");
 
         } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured while deleting brand details :{}", e);
 
-            return new GenericResponse(false, e.getMessage());
-
+            throw e;
         }
 
     }
