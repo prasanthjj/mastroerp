@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.PriceList;
 import com.erp.mastro.model.request.PriceListRequestModel;
@@ -23,7 +24,7 @@ public class PriceListController {
 
     @GetMapping("/getPriceListMaster")
     public String getPriceListMaster(Model model) {
-
+        MastroLogUtils.info(PriceListController.class, "Going to get all pricelist :{}");
         try {
             List<PriceList> priceList = new ArrayList<>();
             for (PriceList priceList1 : priceListService.getAllPriceList()) {
@@ -38,6 +39,7 @@ public class PriceListController {
             return "views/pricelistMaster";
 
         } catch (Exception e) {
+            MastroLogUtils.error(PriceListController.class, "Error occured while getting pricelist:{}", e);
             throw e;
         }
 
@@ -45,11 +47,12 @@ public class PriceListController {
 
     @PostMapping("/savePriceList")
     public String savePriceList(@ModelAttribute("priceListForm") @Valid PriceListRequestModel priceListRequestModel, HttpServletRequest request, Model model) {
-
+        MastroLogUtils.info(PriceListController.class, "Going to save pricelist :{}");
         try {
             priceListService.saveOrUpdatePriceList(priceListRequestModel);
             return "redirect:/master/getPriceListMaster";
         } catch (Exception e) {
+            MastroLogUtils.error(PriceListController.class, "Error occured while saving pricelist :{}", e);
             throw e;
         }
     }
@@ -57,7 +60,7 @@ public class PriceListController {
     @GetMapping("/getPriceListforEdit")
     @ResponseBody
     public GenericResponse getPriceListforEdit(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) {
-
+        MastroLogUtils.info(PriceListController.class, "Going to get pricelist for edit :{}", +pricelistId);
         try {
 
             PriceList priceListdetails = priceListService.getPriceListById(pricelistId);
@@ -71,7 +74,7 @@ public class PriceListController {
                     .setProperty("allowedPriceDevPerLower", priceListdetails.getAllowedPriceDevPerLower());
 
         } catch (Exception e) {
-
+            MastroLogUtils.error(PriceListController.class, "Error occured while getting pricelist for edit :{}" + pricelistId, e);
             return new GenericResponse(false, e.getMessage());
 
         }
@@ -81,14 +84,14 @@ public class PriceListController {
     @PostMapping("/deletePriceListDetails")
     @ResponseBody
     public GenericResponse deletePriceListDetails(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) {
-
+        MastroLogUtils.info(PriceListController.class, "Going to delete pricelist:{}", +pricelistId);
         try {
 
             priceListService.deletePriceListDetails(pricelistId);
             return new GenericResponse(true, "delete pricelist details");
 
         } catch (Exception e) {
-
+            MastroLogUtils.error(PriceListController.class, "Error occured while deleting pricelist  :{}" + pricelistId, e);
             return new GenericResponse(false, e.getMessage());
 
         }

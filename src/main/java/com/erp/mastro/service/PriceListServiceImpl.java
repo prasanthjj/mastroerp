@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.PriceList;
 import com.erp.mastro.model.request.PriceListRequestModel;
 import com.erp.mastro.repository.PriceListRepository;
@@ -24,6 +25,7 @@ public class PriceListServiceImpl implements PriceListService {
     }
 
     public PriceList getPriceListById(Long id) {
+        MastroLogUtils.info(PriceListService.class, "Going to get pricelist by id :{}" + id);
         return priceListRepository.findById(id).get();
     }
 
@@ -58,7 +60,7 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Transactional(rollbackOn = {Exception.class})
     public void deletePriceListDetails(Long id) {
-
+        MastroLogUtils.info(PriceListService.class, "Going to delete pricelistdetails :{}" + id);
         PriceList priceList = getPriceListById(id);
         priceList.setPricelistDeleteStatus(1);
         priceListRepository.save(priceList);
