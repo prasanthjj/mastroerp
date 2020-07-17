@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class AssetMaintenanceActivities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="activity_name")
     private String activityName;

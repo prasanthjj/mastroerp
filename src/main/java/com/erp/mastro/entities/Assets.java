@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
@@ -67,16 +68,16 @@ public class Assets {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "asset_assetcharacteristics", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "characteristics_id", referencedColumnName = "id")})
-    private Set<AssetCharacteristics> assetCharacteristics;
+    private Set<AssetCharacteristics> assetCharacteristics = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")})
-    private Set<AssetMaintenanceActivities> assetMaintenanceActivities;
+    private Set<AssetMaintenanceActivities> assetMaintenanceActivities = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "asset_assetchecklist", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "checklist_id", referencedColumnName = "id")})
-    private Set<AssetChecklist> assetChecklists;
+    private Set<AssetChecklist> assetChecklists = new HashSet<>();
 
 }

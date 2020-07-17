@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AssetServiceImpl implements AssetService{
@@ -38,6 +36,7 @@ public class AssetServiceImpl implements AssetService{
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateAssets(AssetRequestModel assetRequestModel) {
 
+        MastroLogUtils.info(AssetService.class, "Going to save asset  {}" + assetRequestModel);
         if (assetRequestModel.getId() == null) {
             Assets assets = new Assets();
             assets.setAssetNo(assetRequestModel.getAssetNo());
@@ -101,63 +100,101 @@ public class AssetServiceImpl implements AssetService{
             assets.setAssetChecklists(assetChecklist);
             assetRepository.save(assets);
         }
+        MastroLogUtils.info(AssetService.class, "Going to save asset end {}" + assetRequestModel);
     }
 
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
 
+        MastroLogUtils.info(AssetService.class, "Going to save asset characteristics  {}" + assetRequestModel);
         Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
         if (assetRequestModel.getAssetCharacteristicsModel().isEmpty() == false) {
             assetRequestModel.getAssetCharacteristicsModel().parallelStream()
                     .forEach(x -> {
-                        AssetCharacteristics assetCharacteristics = new AssetCharacteristics();
-                        assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
-                        assetCharacteristics.setValue(x.getValue());
-                        assetCharacteristics.setCharacter(x.getCharacter());
-                        assetCharacteristicsSet.add(assetCharacteristics);
 
+                        if (!containsInList(x.getId(), assets.getAssetCharacteristics().stream().filter(assetdata -> (null != assetdata)).map(y -> y.getId()).collect(Collectors.toList()))) {
+                            AssetCharacteristics assetCharacteristics = new AssetCharacteristics();
+                            assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
+                            assetCharacteristics.setValue(x.getValue());
+                            assetCharacteristics.setCharacter(x.getCharacter());
+                            assetCharacteristicsSet.add(assetCharacteristics);
+                        } else {
+
+                            AssetCharacteristics assetCharacteristics = assets.getAssetCharacteristics().stream().filter(assetdata -> (null != assetdata)).filter(z -> z.getId().equals(x.getId())).findFirst().get();
+                            assetCharacteristics.setAssetRemarks(x.getAssetRemarks());
+                            assetCharacteristics.setValue(x.getValue());
+                            assetCharacteristics.setCharacter(x.getCharacter());
+                            assetCharacteristicsSet.add(assetCharacteristics);
+                        }
                     });
         }
+        removeBlankCharacteristics(assetCharacteristicsSet);
         return assetCharacteristicsSet;
+
     }
 
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
-
+        MastroLogUtils.info(AssetService.class, "Going to save asset MaintenanceActivities  {}" + assetRequestModel);
         Set<AssetMaintenanceActivities> assetMaintenanceActivitySet = new HashSet<>();
         if (assetRequestModel.getAssetMaintenanceActivitiesModel().isEmpty() == false) {
             assetRequestModel.getAssetMaintenanceActivitiesModel().parallelStream()
                     .forEach(x -> {
-                        AssetMaintenanceActivities assetMaintenanceActivities = new AssetMaintenanceActivities();
-                        assetMaintenanceActivities.setActivityName(x.getActivityName());
-                        assetMaintenanceActivities.setCategory(x.getCategory());
-                        assetMaintenanceActivities.setFrequency(x.getFrequency());
-                        assetMaintenanceActivities.setStandardObservation(x.getStandardObservation());
-                        assetMaintenanceActivities.setUpperLimit(x.getUpperLimit());
-                        assetMaintenanceActivities.setTolerenceLowerlimit(x.getTolerenceLowerlimit());
-                        assetMaintenanceActivities.setTolerence(x.getTolerence());
-                        assetMaintenanceActivitySet.add(assetMaintenanceActivities);
+
+                        if (!containsInList(x.getId(), assets.getAssetMaintenanceActivities().stream().filter(assetMaindata -> (null != assetMaindata)).map(y -> y.getId()).collect(Collectors.toList()))) {
+                            AssetMaintenanceActivities assetMaintenanceActivities = new AssetMaintenanceActivities();
+                            assetMaintenanceActivities.setActivityName(x.getActivityName());
+                            assetMaintenanceActivities.setCategory(x.getCategory());
+                            assetMaintenanceActivities.setFrequency(x.getFrequency());
+                            assetMaintenanceActivities.setStandardObservation(x.getStandardObservation());
+                            assetMaintenanceActivities.setUpperLimit(x.getUpperLimit());
+                            assetMaintenanceActivities.setTolerenceLowerlimit(x.getTolerenceLowerlimit());
+                            assetMaintenanceActivities.setTolerence(x.getTolerence());
+                            assetMaintenanceActivitySet.add(assetMaintenanceActivities);
+                        } else {
+
+                            AssetMaintenanceActivities assetMaintenanceActivities = assets.getAssetMaintenanceActivities().stream().filter(assetMaindata -> (null != assetMaindata)).filter(z -> z.getId().equals(x.getId())).findFirst().get();
+                            assetMaintenanceActivities.setActivityName(x.getActivityName());
+                            assetMaintenanceActivities.setCategory(x.getCategory());
+                            assetMaintenanceActivities.setFrequency(x.getFrequency());
+                            assetMaintenanceActivities.setStandardObservation(x.getStandardObservation());
+                            assetMaintenanceActivities.setUpperLimit(x.getUpperLimit());
+                            assetMaintenanceActivities.setTolerenceLowerlimit(x.getTolerenceLowerlimit());
+                            assetMaintenanceActivities.setTolerence(x.getTolerence());
+                            assetMaintenanceActivitySet.add(assetMaintenanceActivities);
+                        }
                     });
 
         }
+        removeBlankMaintanceActivities(assetMaintenanceActivitySet);
         return assetMaintenanceActivitySet;
     }
 
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetChecklist> saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
 
+        MastroLogUtils.info(AssetService.class, "Going to save asset Checklist  {}" + assetRequestModel);
         Set<AssetChecklist> assetChecklistSet = new HashSet<>();
         if (assetRequestModel.getAssetCheckListModel().isEmpty() == false) {
             assetRequestModel.getAssetCheckListModel().parallelStream()
                     .forEach(x -> {
-                        AssetChecklist assetChecklist = new AssetChecklist();
-                        assetChecklist.setCheckList(x.getCheckList());
-                        assetChecklist.setRemarks(x.getRemarks());
-                        assetChecklistSet.add(assetChecklist);
 
+                        if (!containsInList(x.getId(), assets.getAssetChecklists().stream().filter(assetCheckdata -> (null != assetCheckdata)).map(y -> y.getId()).collect(Collectors.toList()))) {
+                            AssetChecklist assetChecklist = new AssetChecklist();
+                            assetChecklist.setCheckList(x.getCheckList());
+                            assetChecklist.setRemarks(x.getRemarks());
+                            assetChecklistSet.add(assetChecklist);
+                        } else {
+
+                            AssetChecklist assetChecklist = assets.getAssetChecklists().stream().filter(assetCheckdata -> (null != assetCheckdata)).filter(z -> z.getId().equals(x.getId())).findFirst().get();
+                            assetChecklist.setCheckList(x.getCheckList());
+                            assetChecklist.setRemarks(x.getRemarks());
+                            assetChecklistSet.add(assetChecklist);
+                        }
                     });
 
         }
+        removeBlankCheckLists(assetChecklistSet);
         return assetChecklistSet;
     }
 
@@ -174,5 +211,20 @@ public class AssetServiceImpl implements AssetService{
 
     }
 
+    private boolean containsInList(Long id, Collection<Long> ids) {
+        return id != null
+                && ids.stream().anyMatch(x -> x.equals(id));
+    }
 
+    private void removeBlankMaintanceActivities(Set<AssetMaintenanceActivities> assetMaintenanceActivities) {
+        assetMaintenanceActivities.removeIf(x -> x.getActivityName() == null);
+    }
+
+    private void removeBlankCheckLists(Set<AssetChecklist> assetChecklists) {
+        assetChecklists.removeIf(x -> x.getCheckList() == null);
+    }
+
+    private void removeBlankCharacteristics(Set<AssetCharacteristics> assetCharacteristics) {
+        assetCharacteristics.removeIf(x -> x.getCharacter() == null);
+    }
 }

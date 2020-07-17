@@ -78,11 +78,14 @@ public class AssetController {
     public String getAssetEdit(HttpServletRequest request, @RequestParam("assetId") Long assetId, Model model) {
         MastroLogUtils.info(AssetController.class, "Going to edit asset : {}" + assetId);
         try {
-            AssetRequestModel assetRequestModel = new AssetRequestModel();
+
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("assetTab", "asset");
-            model.addAttribute("assetForm", assetService.getAssetsById(assetId));
-            return "views/editAssetMaster";
+            model.addAttribute("assetForm", new AssetRequestModel(assetService.getAssetsById(assetId)));
+            model.addAttribute("assetCharSize", assetService.getAssetsById(assetId).getAssetCharacteristics().size());
+            model.addAttribute("assetMainSize", assetService.getAssetsById(assetId).getAssetMaintenanceActivities().size());
+            model.addAttribute("assetCheckSize", assetService.getAssetsById(assetId).getAssetChecklists().size());
+            return "views/editAssets";
 
         } catch (Exception e) {
             MastroLogUtils.error(AssetController.class, "Error occured while editing asset : {}", e);

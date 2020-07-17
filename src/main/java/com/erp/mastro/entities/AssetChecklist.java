@@ -15,7 +15,7 @@ public class AssetChecklist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "check_list")
     private String checkList;
