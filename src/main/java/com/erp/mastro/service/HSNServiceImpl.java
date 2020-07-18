@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.model.request.HSNRequestModel;
 import com.erp.mastro.repository.HSNRepository;
@@ -26,6 +27,7 @@ public class HSNServiceImpl implements HSNService {
     }
 
     public HSN getHSNById(Long id) {
+        MastroLogUtils.info(HSNService.class, "Going to get all hsn by id :{}" + id);
         return hsnRepository.findById(id).get();
     }
 
@@ -72,7 +74,7 @@ public class HSNServiceImpl implements HSNService {
 
     @Transactional(rollbackOn = {Exception.class})
     public void deleteHsnDetails(Long id) {
-
+        MastroLogUtils.info(HSNService.class, "Going to delete HsnDetails by id :{}" + id);
         HSN hsn = getHSNById(id);
         hsn.setHsnDeleteStatus(1);
         hsnRepository.save(hsn);
