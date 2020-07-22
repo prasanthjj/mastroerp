@@ -61,12 +61,15 @@ public class AssetServiceImpl implements AssetService {
     @Transactional(rollbackOn = {Exception.class})
     public Assets saveOrUpdateAssets(AssetRequestModel assetRequestModel) throws ModelNotFoundException {
 
-        MastroLogUtils.info(AssetService.class, "Going to save asset  {}" + assetRequestModel);
+        MastroLogUtils.info(AssetService.class, "Going to save asset  {}" + assetRequestModel.toString());
         Assets assets = new Assets();
+
         if (assetRequestModel == null) {
-            throw new ModelNotFoundException("model is empty");
+            throw new ModelNotFoundException("AssetRequestModel model is empty");
         } else {
             if (assetRequestModel.getId() == null) {
+
+                MastroLogUtils.info(AssetService.class, "Going to Add asset  {}" + assetRequestModel);
 
                 assets.setAssetName(assetRequestModel.getAssetName());
                 assets.setAssetType(assetRequestModel.getAssetType());
@@ -78,6 +81,7 @@ public class AssetServiceImpl implements AssetService {
                 assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
                 assets.setCapacity(assetRequestModel.getCapacity());
                 assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
+
                 if (assetRequestModel.getActive() != null) {
                     assets.setActive(assetRequestModel.getActive());
                 } else {
@@ -95,10 +99,14 @@ public class AssetServiceImpl implements AssetService {
                 assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
                 Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
                 assets.setAssetChecklists(assetChecklist);
+
                 assetRepository.save(assets);
 
+                MastroLogUtils.info(AssetService.class, "Added " + assets.getAssetName() +" succesfully.");
+
             } else {
-                MastroLogUtils.info(AssetService.class, "Going to edit asset  {}" + assetRequestModel);
+                MastroLogUtils.info(AssetService.class, "Going to edit asset  {}" + assetRequestModel.toString());
+
                 assets = assetRepository.findById(assetRequestModel.getId()).get();
                 assets.setAssetName(assetRequestModel.getAssetName());
                 assets.setAssetType(assetRequestModel.getAssetType());
@@ -127,7 +135,10 @@ public class AssetServiceImpl implements AssetService {
                 assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
                 Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
                 assets.setAssetChecklists(assetChecklist);
+
                 assetRepository.save(assets);
+
+                MastroLogUtils.info(AssetService.class, "Updated " + assets.getAssetName() +" succesfully.");
 
             }
             return assets;
@@ -145,7 +156,7 @@ public class AssetServiceImpl implements AssetService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
 
-        MastroLogUtils.info(AssetService.class, "Going to save asset characteristics  {}" + assetRequestModel);
+        MastroLogUtils.info(AssetService.class, "Going to save asset characteristics  {}" + assetRequestModel.toString());
         Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
 
         if (assetRequestModel.getAssetCharacteristicsModel().isEmpty() == false) {
@@ -183,7 +194,7 @@ public class AssetServiceImpl implements AssetService {
      */
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets) {
-        MastroLogUtils.info(AssetService.class, "Going to save asset MaintenanceActivities  {}" + assetRequestModel);
+        MastroLogUtils.info(AssetService.class, "Going to save asset MaintenanceActivities  {}" + assetRequestModel.toString());
         Set<AssetMaintenanceActivities> assetMaintenanceActivitySet = new HashSet<>();
         if (assetRequestModel.getAssetMaintenanceActivitiesModel().isEmpty() == false) {
             assetRequestModel.getAssetMaintenanceActivitiesModel().parallelStream()
@@ -228,7 +239,7 @@ public class AssetServiceImpl implements AssetService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<AssetChecklist> saveOrUpdateAssetChecklist(AssetRequestModel assetRequestModel, Assets assets) {
 
-        MastroLogUtils.info(AssetService.class, "Going to save asset Checklist  {}" + assetRequestModel);
+        MastroLogUtils.info(AssetService.class, "Going to save asset Checklist  {}" + assetRequestModel.toString());
         Set<AssetChecklist> assetChecklistSet = new HashSet<>();
         if (assetRequestModel.getAssetCheckListModel().isEmpty() == false) {
 

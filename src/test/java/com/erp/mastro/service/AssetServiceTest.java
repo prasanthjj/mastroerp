@@ -28,7 +28,7 @@ public class AssetServiceTest {
     private boolean True;
     private boolean False;
 
-    public AssetRequestModel addAssetModel() {
+    public AssetRequestModel createAssetModel() {
         AssetRequestModel assetRequestModel = new AssetRequestModel();
         assetRequestModel.setMaintenanceRequired(true);
         assetRequestModel.setAssetName("Table");
@@ -39,13 +39,13 @@ public class AssetServiceTest {
         assetRequestModel.setInstallationDate(new Date());
         assetRequestModel.setEffectiveDate(new Date());
         assetRequestModel.setAssetType("furniture");
-        assetRequestModel.setAssetCharacteristicsModel(addAssetCharModel());
-        assetRequestModel.setAssetMaintenanceActivitiesModel(addAssetMaintananceModel());
-        assetRequestModel.setAssetCheckListModel(addAssetCheckListModel());
+        assetRequestModel.setAssetCharacteristicsModel(createAssetCharModel());
+        assetRequestModel.setAssetMaintenanceActivitiesModel(createAssetMaintananceModel());
+        assetRequestModel.setAssetCheckListModel(createAssetCheckListModel());
         return assetRequestModel;
     }
 
-    public List<AssetRequestModel.AssetCharacteristicsModel> addAssetCharModel() {
+    public List<AssetRequestModel.AssetCharacteristicsModel> createAssetCharModel() {
 
         List<AssetRequestModel.AssetCharacteristicsModel> assetCharacteristicsModels = new ArrayList<>();
         AssetRequestModel.AssetCharacteristicsModel assetCharacteristicsModel1 = new AssetRequestModel.AssetCharacteristicsModel();
@@ -59,7 +59,7 @@ public class AssetServiceTest {
         return assetCharacteristicsModels;
     }
 
-    public List<AssetRequestModel.AssetMaintenanceActivitiesModel> addAssetMaintananceModel() {
+    public List<AssetRequestModel.AssetMaintenanceActivitiesModel> createAssetMaintananceModel() {
 
         List<AssetRequestModel.AssetMaintenanceActivitiesModel> assetMaintanceModels = new ArrayList<>();
         AssetRequestModel.AssetMaintenanceActivitiesModel assetMaintanceModel1 = new AssetRequestModel.AssetMaintenanceActivitiesModel();
@@ -73,7 +73,7 @@ public class AssetServiceTest {
         return assetMaintanceModels;
     }
 
-    public List<AssetRequestModel.AssetCheckListModel> addAssetCheckListModel() {
+    public List<AssetRequestModel.AssetCheckListModel> createAssetCheckListModel() {
 
         List<AssetRequestModel.AssetCheckListModel> assetCheckModels = new ArrayList<>();
         AssetRequestModel.AssetCheckListModel assetCheckModel1 = new AssetRequestModel.AssetCheckListModel();
@@ -102,7 +102,7 @@ public class AssetServiceTest {
     @Test
     public void testSaveAsset() throws ModelNotFoundException {
 
-        Assets assets = assetService.saveOrUpdateAssets(addAssetModel());
+        Assets assets = assetService.saveOrUpdateAssets(createAssetModel());
         Assert.assertEquals("Table", assets.getAssetName());
         Assert.assertEquals("kottayam", assets.getAssetLocation());
         Assert.assertEquals("vaikom", assets.getSubLocation());
@@ -110,18 +110,15 @@ public class AssetServiceTest {
         Assert.assertEquals("furniture", assets.getAssetType());
 
     }
-   /* @Test(expected =ModelNotFoundException.class )
-    public void testAssetModelNull() throws ModelNotFoundException {
-        when(assetService.saveOrUpdateAssets(null));
 
-        Assert.assertEquals("model is empty",);
+    @Test
+    public void testAssetModelNull() {
 
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                assetService.saveOrUpdateAssets(null))
+                .isExactlyInstanceOf(ModelNotFoundException.class);
 
-        .thenThrow(new ModelNotFoundException("model is empty"));
-        *//*assetService.saveOrUpdateAssets(null);
-        Assert.assertEquals("model is empty",ModelNotFoundException.class);*//*
-
-    }*/
+    }
 
     @Test
     public void testGetById() {

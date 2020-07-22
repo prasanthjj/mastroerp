@@ -385,4 +385,28 @@ public class AssetRequestModel {
         }
     }
 
+    @Override
+    public String toString() {
+        return "AssetRequestModel{" +
+                "id=" + id +
+                ", assetNo='" + assetNo + '\'' +
+                ", assetName='" + assetName + '\'' +
+                ", assetType='" + assetType + '\'' +
+                ", assetLocation='" + assetLocation + '\'' +
+                ", subLocation='" + subLocation + '\'' +
+                ", partyNo='" + partyNo + '\'' +
+                ", hoursUtilized=" + hoursUtilized +
+                ", installationDate=" + installationDate +
+                ", effectiveDate=" + effectiveDate +
+                ", capacity='" + capacity + '\'' +
+                ", maintenancePriority='" + maintenancePriority + '\'' +
+                ", active=" + active +
+                ", maintenanceRequired=" + maintenanceRequired +
+                ", make='" + make + '\'' +
+                ", assetCharacteristicsModel=" + assetCharacteristicsModel +
+                ", assetMaintenanceActivitiesModel=" + assetMaintenanceActivitiesModel +
+                ", assetCheckListModel=" + assetCheckListModel +
+                '}';
+    }
+
 }
