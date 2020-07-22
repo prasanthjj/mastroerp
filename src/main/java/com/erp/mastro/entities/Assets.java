@@ -23,7 +23,7 @@ public class Assets {
     @Column(name = "asset_no")
     private String assetNo;
 
-    @Column(name = "asset_name")
+    @Column(name = "asset_name", nullable = false)
     private String assetName;
 
     @Column(name = "asset_type")
@@ -79,5 +79,27 @@ public class Assets {
     @JoinTable(name = "asset_assetchecklist", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "checklist_id", referencedColumnName = "id")})
     private Set<AssetChecklist> assetChecklists = new HashSet<>();
+
+    public Assets() {
+
+    }
+
+    public Assets(Long id, String assetName, String assetType, String assetLocation, String subLocation, String partyNo, Double hoursUtilized, Date installationDate, Date effectiveDate, String capacity, String maintenancePriority, Boolean active, Boolean maintenanceRequired, String make, Set<AssetCharacteristics> assetCharacteristics) {
+        this.id = id;
+        this.assetName = assetName;
+        this.assetType = assetType;
+        this.assetLocation = assetLocation;
+        this.subLocation = subLocation;
+        this.partyNo = partyNo;
+        this.hoursUtilized = hoursUtilized;
+        this.installationDate = installationDate;
+        this.effectiveDate = effectiveDate;
+        this.capacity = capacity;
+        this.maintenancePriority = maintenancePriority;
+        this.active = active;
+        this.maintenanceRequired = maintenanceRequired;
+        this.make = make;
+        this.assetCharacteristics = assetCharacteristics;
+    }
 
 }

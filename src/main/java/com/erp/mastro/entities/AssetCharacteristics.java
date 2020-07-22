@@ -30,4 +30,15 @@ public class AssetCharacteristics {
             , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})
     private Assets asset;
 
+    public AssetCharacteristics() {
+
+    }
+
+    public AssetCharacteristics(Long id, String character, String value, String assetRemarks) {
+        this.id = id;
+        this.character = character;
+        this.value = value;
+        this.assetRemarks = assetRemarks;
+    }
+
 }
