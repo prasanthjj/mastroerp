@@ -146,8 +146,12 @@ public class AssetController {
     public GenericResponse deleteAssetDetails(Model model, HttpServletRequest request, @RequestParam("assetids") Long assetId) {
         MastroLogUtils.info(AssetController.class, "Going to delete Asset : {}");
         try {
-            assetService.deleteAssetDetails(assetId);
-            return new GenericResponse(true, "delete asset details");
+            if (assetId != null) {
+                assetService.deleteAssetDetails(assetId);
+                return new GenericResponse(true, "delete asset details");
+            } else {
+                return new GenericResponse(false, "asset id null");
+            }
 
         } catch (Exception e) {
             MastroLogUtils.error(AssetController.class, "Error occured while deleting asset : {}", e);
