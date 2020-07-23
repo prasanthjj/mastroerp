@@ -2,6 +2,7 @@ package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.PriceList;
+import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.model.request.PriceListRequestModel;
 import com.erp.mastro.repository.PriceListRepository;
 import com.erp.mastro.service.interfaces.PriceListService;
@@ -24,13 +25,18 @@ public class PriceListServiceImpl implements PriceListService {
         return priceList;
     }
 
-    public PriceList getPriceListById(Long id) {
+    public PriceList getPriceListById(Long id) throws MastroEntityException {
         MastroLogUtils.info(PriceListService.class, "Going to get pricelist by id :{}" + id);
-        return priceListRepository.findById(id).get();
+        PriceList priceList = priceListRepository.findById(id).get();
+        if (priceList == null) {
+            throw new MastroEntityException("Pricelist Entity not found");
+        }
+        return priceList;
+
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void saveOrUpdatePriceList(PriceListRequestModel priceListRequestModel) {
+    public PriceList saveOrUpdatePriceList(PriceListRequestModel priceListRequestModel) {
 
         if (priceListRequestModel.getId() == null) {
             PriceList priceList = new PriceList();
@@ -41,6 +47,7 @@ public class PriceListServiceImpl implements PriceListService {
             priceList.setAllowedPriceDevPerUpper(priceListRequestModel.getAllowedPriceDevPerUpper());
             priceList.setAllowedPriceDevPerLower(priceListRequestModel.getAllowedPriceDevPerLower());
             priceListRepository.save(priceList);
+            return priceList;
 
         } else {
             PriceList priceList = priceListRepository.findById(priceListRequestModel.getId()).get();
@@ -51,6 +58,7 @@ public class PriceListServiceImpl implements PriceListService {
             priceList.setAllowedPriceDevPerUpper(priceListRequestModel.getAllowedPriceDevPerUpper());
             priceList.setAllowedPriceDevPerLower(priceListRequestModel.getAllowedPriceDevPerLower());
             priceListRepository.save(priceList);
+            return priceList;
         }
     }
 
@@ -59,7 +67,7 @@ public class PriceListServiceImpl implements PriceListService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void deletePriceListDetails(Long id) {
+    public void deletePriceListDetails(Long id) throws MastroEntityException {
         MastroLogUtils.info(PriceListService.class, "Going to delete pricelistdetails :{}" + id);
         PriceList priceList = getPriceListById(id);
         priceList.setPricelistDeleteStatus(1);
