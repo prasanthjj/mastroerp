@@ -1,6 +1,9 @@
 .master-dark-blue-bg{
     background-color:#2f4050 !important ;
 }
+.master-blue-bg{
+    background-color:#0094db !important ;
+}
 .master-yellow-bg{
     background-color:#e0bd1d !important ;
 }
@@ -40,6 +43,18 @@ label{font-weight: 600;}
 .catalogSelect{
     display: none;
 }
+
 .dd-handle:hover .catalogSelect{
     display: block;
+} 
+.dropdown-menu.show{
+    background-color: #2f4050;
+    color: #fff;
 }
+
+.fa-asterisk{
+    font-size: 10px;
+    color: #F00;
+    vertical-align: super;
+}
+

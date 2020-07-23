@@ -18,7 +18,7 @@ public interface AssetService {
 
     Assets saveOrUpdateAssets(AssetRequestModel assetRequestModel) throws ModelNotFoundException;
 
-    Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets);
+    Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) throws ModelNotFoundException;
 
     Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets);
 

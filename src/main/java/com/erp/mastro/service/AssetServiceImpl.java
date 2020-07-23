@@ -153,7 +153,7 @@ public class AssetServiceImpl implements AssetService {
      * @return set of asset characteristics
      */
     @Transactional(rollbackOn = {Exception.class})
-    public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) {
+    public Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) throws ModelNotFoundException {
 
         MastroLogUtils.info(AssetService.class, "Going to save asset characteristics  {}" + assetRequestModel.toString());
         Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
@@ -178,6 +178,8 @@ public class AssetServiceImpl implements AssetService {
                             assetCharacteristicsSet.add(assetCharacteristics);
                         }
                     });
+        } else {
+            throw new ModelNotFoundException("AssetCharacteristics model is empty");
         }
         removeBlankCharacteristics(assetCharacteristicsSet);
         return assetCharacteristicsSet;

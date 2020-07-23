@@ -130,4 +130,24 @@ public class HSNRequestModel {
     public void setCess(Double cess) {
         this.cess = cess;
     }
+
+    @Override
+    public String toString() {
+        return "HSNRequestModel{" +
+                "id=" + id +
+                ", entryDate=" + entryDate +
+                ", section='" + section + '\'' +
+                ", chapter='" + chapter + '\'' +
+                ", heading='" + heading + '\'' +
+                ", subHeading='" + subHeading + '\'' +
+                ", hsnCode='" + hsnCode + '\'' +
+                ", gstGoodsName='" + gstGoodsName + '\'' +
+                ", effectiveFrom=" + effectiveFrom +
+                ", sgst=" + sgst +
+                ", cgst=" + cgst +
+                ", igst=" + igst +
+                ", utgst=" + utgst +
+                ", cess=" + cess +
+                '}';
+    }
 }
