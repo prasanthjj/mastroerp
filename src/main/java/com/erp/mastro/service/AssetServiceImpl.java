@@ -61,7 +61,6 @@ public class AssetServiceImpl implements AssetService {
     @Transactional(rollbackOn = {Exception.class})
     public Assets saveOrUpdateAssets(AssetRequestModel assetRequestModel) throws ModelNotFoundException {
 
-        MastroLogUtils.info(AssetService.class, "Going to save asset  {}" + assetRequestModel.toString());
         Assets assets = new Assets();
 
         if (assetRequestModel == null) {
@@ -69,7 +68,7 @@ public class AssetServiceImpl implements AssetService {
         } else {
             if (assetRequestModel.getId() == null) {
 
-                MastroLogUtils.info(AssetService.class, "Going to Add asset  {}" + assetRequestModel);
+                MastroLogUtils.info(AssetService.class, "Going to Add asset  {}" + assetRequestModel.toString());
 
                 assets.setAssetName(assetRequestModel.getAssetName());
                 assets.setAssetType(assetRequestModel.getAssetType());
