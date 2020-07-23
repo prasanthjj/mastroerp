@@ -79,7 +79,10 @@
 }
 
 .select2-container {
-    display: block
+    display: block;
+    z-index: 9999;
+   width: 100% !important;
+
 }
 
 .select2-container :focus {

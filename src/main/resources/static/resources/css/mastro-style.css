@@ -43,3 +43,8 @@ label{font-weight: 600;}
 .dd-handle:hover .catalogSelect{
     display: block;
 }
+.fa-asterisk{
+    font-size: 10px;
+    color: #F00;
+    vertical-align: super;
+}

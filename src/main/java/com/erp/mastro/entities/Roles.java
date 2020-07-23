@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
@@ -15,12 +20,22 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "role_name")
+    private String roleName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
-    private User user;
+    @Column(name="role_description")
+    private String roleDescription;
 
+
+@ManyToMany(mappedBy = "roles")
+private Set<User> user = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @JoinTable(name = "role_module", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")})
+    private Set<Modules> modules;
+
+
+    @Column(name = "delete_status", nullable = false)
+    private int rolesDeleteStatus;
 }

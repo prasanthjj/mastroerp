@@ -4079,6 +4079,8 @@ a.forum-item-title:hover {
 .select2-container--bootstrap4.select2-container--focus .select2-selection {
   box-shadow: none;
   border-color: #1ab394;
+  border-image: linear-gradient(to bottom, #eeeeee00, #00acff);
+  	border-image-slice: 1;
 }
 .select2-container--bootstrap4 .select2-selection__clear {
   margin-top: 0.9em;
