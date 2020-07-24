@@ -86,6 +86,22 @@ $(document).ready(function(){
         });
     });
 //Remove Price List End
+
+// Remove Party Start
+$('.removeParty').click(function () {
+    swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this Item!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0094db",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }, function () {
+        swal("Deleted!", "Item has been deleted.", "success");
+    });
+});
+// Remove Party End
 });
 
  //get pricelist edit start

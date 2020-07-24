@@ -32,7 +32,8 @@
                     <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li><a href="location_master.html">Location</a></li>
-                    <li><a href="party_master.html">Party</a></li>
+                    <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
+                    <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
@@ -58,7 +59,8 @@
                     <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li><a href="location_master.html">Location</a></li>
-                    <li><a href="party_master.html">Party</a></li>
+                    <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
+                    <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
