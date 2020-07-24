@@ -25,6 +25,43 @@ $(document).ready(function(){
          }
      });
     //Add Price List End
+
+    $(function(datepicker) {
+    // party creation date start
+    $('#partyCreationDate .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+    });
+    //party creation date end
+
+    });
+
+    $(function() {
+    //add party contact details start
+    $("#addPartyContactDetails").click(function(){
+        $("#partyContactDetails").append(" <div class='row partyContactDetailsBox'><div class='col-lg-12 text-right'><button class='btn btn-danger dim removePartyContactDetails' type='button'><i class='fa fa-times-circle'></i></button></div><div class='col-lg-4'><div class='form-group'><label>Contact Person Name<i class='fa fa-asterisk'></i></label><input id='name' name='contactPersonName' type='text' required class='form-control '></div><div class='form-group'><label>Address</label><textarea class='form-control ' rows='5'></textarea></div></div><div class='col-lg-4'><div class='form-group'><label>Designation<i class='fa fa-asterisk'></i></label><input name='contactPersonDesignation' required type='text' class='form-control'></div><div class='form-group'><label>Telephone No.</label><input name='contactPersonTel' type='text' class='form-control'></div><div class='form-group'><label>Mobile No.<i class='fa fa-asterisk'></i></label><input id='' name='contactPersonMobile' required type='text' class='form-control'></div><div class='form-group'><label>Fax No.</label><input id='' name='' type='text' class='form-control'></div></div><div class='col-lg-4'><div class='form-group'><label>Department</label><inputtype='text' class='form-control'></div><div class='form-group'><label>Alt Telephone No.</label><input id='' name='' type='text' class='form-control'></div><div class='form-group'><label>Alt Mobile No.</label><input id='' name='contactPersonAltTel' type='text' class='form-control'></div><div class='form-group'><label> Email ID</label><input id='' name='' type='email' class='form-control'></div></div><div class='col-lg-12'><div class='hr-line-dashed'></div></div></div>");
+     });
+     $(document).on('click', '.removePartyContactDetails', function() {
+        $(this).parents('.partyContactDetailsBox').remove();
+    });
+    //add party contact details end
+    // add party Industry Type start
+    $(".partyIndustryType").select2({
+        theme: 'bootstrap4',
+    });
+    // add party Industry Type end
+    // add party Relationship Manager start
+    $(".partyRelationshipManager").select2({
+        theme: 'bootstrap4',
+    });
+
+    // add party Relationship Manager end
+
+    });
+
       // Add Price List Start
 
       $("#editPriceListForm").validate({
@@ -102,6 +139,7 @@ $('.removeParty').click(function () {
     });
 });
 // Remove Party End
+
 });
 
  //get pricelist edit start
