@@ -47,86 +47,51 @@ $(document).ready(function(){
         }
     });
    //edit Price List End
-    // Remove Price List Start
-    $('.removePriceList').click(function () {
-    var pricelistId=$(this).data('pricelistids');
+       //hsn create validation start
+              $("#hsnForm").validate({
+                               rules: {
+                                entryDate: {
+                                 required:true
+                                      },
+                                 hsnCode: {
+                                    required:true
+                                  },
+                                  gstGoodsName: {
+                                   required:true
+                                    },
+                                  effectiveFrom: {
+                                      required:true
+                                        },
+                                    sgst: {
+                                    required:true,
+                                            number:true
 
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this Price List!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#0094db",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function () {
+                                             },
+                                    cgst: {
+                                       required:true,
+                                        number:true
 
-        $.ajax({
-                           url: '/master/deletePriceListDetails',
-                           type: 'POST',
-                           dataType : 'json',
-                           data: { 'pricelistId': pricelistId },
+                                          },
+                                          utgst: {
 
-                           success: function(data){
-                                    if(data.success) {
+                                        number:true
 
-                     var redirectionUrl= "/master/getPriceListMaster";
-                     window.location.href = redirectionUrl;
-                                                     }
+                                         },
+                                          cess: {
 
-                                                },
+                                           number:true
 
-                       error: function(jqXHR, textStatus)
-                       {
-                          alert('Error Occured');
-                       }
-       });
+                                         },
+                                   igst: {
+                                   required:true,
+                                  number:true
 
-            swal("Deleted!", "Item has been deleted.", "success");
-        });
-    });
-//Remove Price List End
+                                        }
 
- //remove assets start
-       $('.removeAsset').click(function () {
+                               }
+                           });
+     //hsn create validation start
 
-        var assetids=$(this).data('assetids');
-
-           swal({
-               title: "Are you sure?",
-               text: "You will not be able to recover this Item!",
-               type: "warning",
-               showCancelButton: true,
-               confirmButtonColor: "#0094db",
-               confirmButtonText: "Yes, delete it!",
-               closeOnConfirm: false
-           }, function () {
-
-             $.ajax({
-                                      url: '/master/deleteAssetDetails',
-                                      type: 'POST',
-                                      dataType : 'json',
-                                      data: { 'assetids': assetids },
-
-                                      success: function(data){
-                                               if(data.success) {
-
-                                var redirectionUrl= "/master/getAssetList";
-                                window.location.href = redirectionUrl;
-                                                                }
-
-                                                           },
-
-                                  error: function(jqXHR, textStatus)
-                                  {
-                                     alert('Error Occured');
-                                  }
-                  });
-               swal("Deleted!", "Item has been deleted.", "success");
-           });
-       });
-
-       // remove assets  end
 
        $(function(datepicker) {
 
@@ -147,6 +112,40 @@ $(document).ready(function(){
            });
 
        //add assets dates End
+
+        // Add HSN start
+           $('#addHsnEntryDate .input-group.date').datepicker({
+               todayBtn: "linked",
+               keyboardNavigation: false,
+               forceParse: false,
+               calendarWeeks: true,
+               autoclose: true
+           });
+           $('#addHsnEffectiveDate .input-group.date').datepicker({
+               todayBtn: "linked",
+               keyboardNavigation: false,
+               forceParse: false,
+               calendarWeeks: true,
+               autoclose: true
+           });
+           // Add HSN end
+           // Edit HSN start
+           $('#editHsnEntryDate .input-group.date').datepicker({
+               todayBtn: "linked",
+               keyboardNavigation: false,
+               forceParse: false,
+               calendarWeeks: true,
+               autoclose: true
+           });
+           $('#editHsnEffectiveDate .input-group.date').datepicker({
+               todayBtn: "linked",
+               keyboardNavigation: false,
+               forceParse: false,
+               calendarWeeks: true,
+               autoclose: true
+           });
+           // Edit HSN end
+
        });
 
        $(function() {
@@ -218,81 +217,94 @@ $(document).ready(function(){
                                             //add Other CheckList edit end
        });
 
-       // view assets form start
-       $("#viewAssetsForm").steps({
-           bodyTag: "fieldset",
-           onStepChanging: function (event, currentIndex, newIndex)
-           {
-               // Always allow going backward even if the current step contains invalid fields!
-               if (currentIndex > newIndex)
-               {
-                   return true;
-               }
 
-               // Forbid suppressing "Warning" step if the user is to young
-               if (newIndex === 3 && Number($("#age").val()) < 18)
-               {
-                   return false;
-               }
 
-               var form = $(this);
 
-               // Clean up if user went backward before
-               if (currentIndex < newIndex)
-               {
-                   // To remove error styles
-                   $(".body:eq(" + newIndex + ") label.error", form).remove();
-                   $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-               }
 
-               // Disable validation on fields that are disabled or hidden.
-               form.validate().settings.ignore = ":disabled,:hidden";
+            // Remove Price List Start
+               $('.removePriceList').click(function () {
 
-               // Start validation; Prevent going forward if false
-               return form.valid();
-           },
-           onStepChanged: function (event, currentIndex, priorIndex)
-           {
-               // Suppress (skip) "Warning" step if the user is old enough.
-               if (currentIndex === 2 && Number($("#age").val()) >= 18)
-               {
-                   $(this).steps("next");
-               }
+               var pricelistId=$(this).data('pricelistids');
 
-               // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-               if (currentIndex === 2 && priorIndex === 3)
-               {
-                   $(this).steps("previous");
-               }
-           },
-           onFinishing: function (event, currentIndex)
-           {
-               var form = $(this);
+                   swal({
+                       title: "Are you sure?",
+                       text: "You will not be able to recover this Price List!",
+                       type: "warning",
+                       showCancelButton: true,
+                       confirmButtonColor: "#0094db",
+                       confirmButtonText: "Yes, delete it!",
+                       closeOnConfirm: false
+                   }, function () {
 
-               // Disable validation on fields that are disabled.
-               // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-               form.validate().settings.ignore = ":disabled";
+                   $.ajax({
+                                      url: '/master/deletePriceListDetails',
+                                      type: 'POST',
+                                      dataType : 'json',
+                                      data: { 'pricelistId': pricelistId },
 
-               // Start validation; Prevent form submission if false
-               return form.valid();
-           },
-           onFinished: function (event, currentIndex)
-           {
-               var form = $(this);
+                                      success: function(data){
+                                               if(data.success) {
 
-               // Submit form input
-               form.submit();
-           }
-       }).validate({
-                   errorPlacement: function (error, element)
-                   {
-                       element.before(error);
-                   },
-                   rules: {
+                                var redirectionUrl= "/master/getPriceListMaster";
+                                window.location.href = redirectionUrl;
+                                                                }
 
-                   }
+                                                           },
+
+                                  error: function(jqXHR, textStatus)
+                                  {
+                                     alert('Error Occured');
+                                  }
+                  });
+
+                       swal("Deleted!", "Item has been deleted.", "success");
+                   });
                });
-       // view assets form end
+           //Remove Price List End
+
+            //remove assets start
+                  $('.removeAsset').click(function () {
+
+                   var assetids=$(this).data('assetids');
+
+                      swal({
+                          title: "Are you sure?",
+                          text: "You will not be able to recover this Item!",
+                          type: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#0094db",
+                          confirmButtonText: "Yes, delete it!",
+                          closeOnConfirm: false
+                      }, function () {
+
+                        $.ajax({
+                                                 url: '/master/deleteAssetDetails',
+                                                 type: 'POST',
+                                                 dataType : 'json',
+                                                 data: { 'assetids': assetids },
+
+                                                 success: function(data){
+                                                          if(data.success) {
+
+                                           var redirectionUrl= "/master/getAssetList";
+                                           window.location.href = redirectionUrl;
+                                                                           }
+
+                                                                      },
+
+                                             error: function(jqXHR, textStatus)
+                                             {
+                                                alert('Error Occured');
+                                             }
+                             });
+                          swal("Deleted!", "Item has been deleted.", "success");
+                      });
+                  });
+
+                  // remove assets  end
+
+
+
 });
 
  //get pricelist edit start
