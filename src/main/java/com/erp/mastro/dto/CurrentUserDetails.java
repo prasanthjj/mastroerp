@@ -22,7 +22,7 @@ public class CurrentUserDetails implements UserDetails {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (Roles role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
 
         return authorities;

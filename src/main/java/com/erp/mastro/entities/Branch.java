@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -32,9 +34,6 @@ public class Branch {
     @Column(name = "city_name")
     private String cityName;
 
-    @Column(name = "area_name")
-    private String AreaName;
-
     @Column(name = "branch_prefix")
     private String branchPrefix;
 
@@ -53,6 +52,9 @@ public class Branch {
     @Column(name = "website")
     private String website;
 
+    @Column(name = "branch_address")
+    private String branchAddress;
+
     @Column(name = "fax_no")
     private String faxNo;
 
@@ -61,5 +63,18 @@ public class Branch {
 
     @Column(name="creation_date")
     private Date creationDate;
+    
+    @Column(name = "delete_status", nullable = false)
+    private int branchDeleteStatus;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "branch_branchRegistration", joinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")})
+    private BranchRegistration branchRegistration;
+
+    @ManyToMany(mappedBy = "branch")
+    private Set<User> user = new HashSet<>();
+
+
 
 }

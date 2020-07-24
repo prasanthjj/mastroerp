@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     @Transactional
     @Override
-    java.util.Optional<User> findById(Integer primaryKey);
+    java.util.Optional<User> findById(Long primaryKey);
 
     /**
      * Retrieve users by their email address. The finder {@literal User.findByEmail} is declared as annotation at
@@ -21,5 +21,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
      * @return the user with the given userName
      */
     User findByEmail(String email);
+
+
 
 }
