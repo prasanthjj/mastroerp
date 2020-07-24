@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -70,10 +72,8 @@ public class Branch {
             , inverseJoinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")})
     private BranchRegistration branchRegistration;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_branch", joinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
-    private User user;
+    @ManyToMany(mappedBy = "branch")
+    private Set<User> user = new HashSet<>();
 
 
 

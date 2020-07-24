@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register/**").permitAll()
+                .antMatchers("/addEmployee/**").permitAll()
                 .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN,ROLE_SUPERADMIN)
                 .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN,ROLE_SUPERADMIN)
                 .anyRequest().authenticated()
@@ -94,7 +95,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**"
                         ,"/css/**",
                         "/h2-console/**",
-                        "/register");
+                        "/register",
+                        "/addEmployee");
     }
 
 }

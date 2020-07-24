@@ -54,16 +54,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
-        /* if (userModel.getId() == null) {*/
-
         User user = userRepository.findByEmail(userModel.getEmail());
-        Iterable<Roles> rolesIterable = rolesRepository.findAll();
+        // register New User
         if (user == null) {
-            user = new User();
-            System.out.println("USER:" + user.getEmail());
-            System.out.println("inside the employee:" + user.getEmail());
 
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
+
+            user = new User();
             user.setUserName(employee.getFirstName());
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
@@ -72,25 +69,18 @@ public class UserServiceImpl implements UserService {
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
 
-           /* Set<Branch> branches = userModel.getBranch();
-            user.setBranch(branches);*/
-
-            userRepository.save(user);
-        }
-        /*else {
-            if  (user.getEnabled()==false){
-                user.setEnabled(true);
-                userRepository.save(user);
-                System.out.println("enabled value:"+(user.getEnabled());
-
-            }
-        }*/ /*else {
-                      throw new UserAlreadyExistsException();
-                      This email alredy exists
+           Set<Branch> branches = userModel.getBranch();
+            user.setBranch(branches);
 
         }
-*/
-        // }
+        else if(!user.isEnabled()){
+            user.setEnabled(userModel.isEnabled());
+        }
+        else{
+            user.setUserName(userModel.getUserName());
+
+        }
+        userRepository.save(user);
     }
 
     @Override

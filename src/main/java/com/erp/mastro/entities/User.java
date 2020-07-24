@@ -30,17 +30,14 @@ public class User extends Auditable<String> {
     @Column(name = "enabled", nullable = false)
     protected boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    Set<Roles> roles = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}    )
+    Set<Roles> roles;
 
-
-
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinTable(name = "user_branch", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
     private Set<Branch> branch;
@@ -48,8 +45,5 @@ public class User extends Auditable<String> {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
-    @Column(name = "delete_status", nullable = false)
-    private int UserDeleteStatus;
 
 }

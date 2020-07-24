@@ -61,7 +61,7 @@ public class UserController {
         try {
             List<User> userList = new ArrayList<>();
             for (User user : userService.getAllUsers()) {
-                if (user.getUserDeleteStatus() != 1) {
+                if (!user.isEnabled()) {
                     userList.add(user);
                 }
             }
@@ -89,13 +89,31 @@ public class UserController {
         }
     }
 
+    @PostMapping(value = "/addEmployee")
+    public void  addEmployee(){
+        Employee employee = new Employee();
+        employee.setEmail("ranjit@mastro.com");
+        employee.setDepartment("HR");
+        employee.setFirstName("Ranjit");
+        employee.setContactNumber("7736212827");
+        Employee employee1 = new Employee();
+        employee1.setEmail("DDRR@mastro.com");
+        employee1.setDepartment("HR");
+        employee1.setFirstName("Ranjit");
+        employee1.setContactNumber("7736212827");
+
+        employeeService.saveOrUpdateEmployee(employee1);
+
+        employeeService.saveOrUpdateEmployee(employee);
+    }
+
     @PostMapping(value = "/register")
-    public String register() {
+    public void register() {
 
         User user = new User();
-        user.setUserName("pj");
-        user.setEmail("prasanth@gmail.com");
-        user.setPassword(bCryptPasswordEncoder.encode("prasanth"));
+        user.setUserName("Ranjit");
+        user.setEmail("ranjit@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("ranjit"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
@@ -105,11 +123,11 @@ public class UserController {
 
         user.setRoles(rolesSet);
         userService.savUser(user);
-        return "login";
     }
 
     @PostMapping(value = "/admin/registerUser")
     public String register(@ModelAttribute ("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) {
+
         userService.saveOrUpdateUser(userModel,request);
 
 
