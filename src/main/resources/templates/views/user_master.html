@@ -93,12 +93,16 @@
                         <td><ul>
                             <li th:each="userRoleObj,iterator:${userObj.roles}" th:text="${userRoleObj.roleName}"></li>
                         </ul></td>
-                        <!--<td th:text="${userObj.enabled}">-->
-                        <td th:text="${userObj.enabled}"></td>
-                           <!-- <div class="btn-group">
-                                <button class="btn btn-primary  userBtn btn-outline active" id="activeBtn" type="button">Active</button>
-                                <button class="btn btn-primary  userBtn btn-outline " id="deActiveBtn" type="button"> In Active</button>
-                            </div>-->
+
+
+                        <td><span th:if="${userObj.enabled} == true">Active</span>
+                            <span th:unless="${userObj.enabled} == true">Deactive</span>
+                        </td>
+
+                       <!-- <span th:unless="${userObj.enabled} false">
+                        <td>Deactive</td>
+                        </span>-->
+
 
                         <td class="center">
                             <div class="btn-group">
@@ -106,7 +110,15 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item font-bold userEdit" href="#" th:data-userid="${userObj.id}" data-toggle="modal" data-target="#editUser" ><i class="fa fa-edit"></i> Manage</a></li>
                                     <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold removeUser "  href="#" th:data-userid="${userObj.id}"><i class="fa fa-trash"></i> Remove</a></li>
+                                    <span th:if="${userObj.enabled} != true">
+                                    <li><a class="dropdown-item font-bold activateUser txt-white"  href="#" th:data-userid="${userObj.id}"><i class="fa fa-user"></i> Acitive</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
+                                    <span th:unless="${userObj.enabled} != true">
+                                    <li><a class="dropdown-item font-bold deactiveUser txt-white "  href="#" th:data-userid="${userObj.id}"><i class="fa fa-user"></i> Deactive</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
+                                    <!--<li><a class="dropdown-item font-bold removeUser "  href="#" th:data-userid="${userObj.id}"><i class="fa fa-trash"></i> Remove</a></li>-->
                                 </ul>
                             </div>
                         </td>
@@ -196,7 +208,7 @@
                         <div class="col-lg-12">
                             <div class="form-group  row"><label class="col-sm-4 col-form-label">Email</label>
     
-                                <div class="col-sm-8"> <input type="text" required placeholder="Email..." id="useremail" name="email" class="user_head form-control" /></div>
+                                <div class="col-sm-8"> <input type="text" required placeholder="Email..." id="useremail" name="email" class="user_head form-control"  /></div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             

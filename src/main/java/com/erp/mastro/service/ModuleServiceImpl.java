@@ -41,7 +41,7 @@ public class ModuleServiceImpl implements ModuleService {
     public void saveOrUpdateModules(ModuleRequestModel moduleRequestModel, Set<String> values) {
 
         Iterable<Modules> modules= moduleRepository.findAll();
-            Roles role = moduleRequestModel.getRoles();
+             Roles role = moduleRequestModel.getRoles();
             Set<Modules> moduleSet = role.getModules();
             for (String id : values) {
                 Modules module = moduleRepository.findById(Long.valueOf(id)).get();
@@ -52,6 +52,8 @@ public class ModuleServiceImpl implements ModuleService {
             rolesRepository.save(role);
 
     }
+
+
 
     @Override
     public void deleteModules(Long id) { moduleRepository.deleteById(id); }

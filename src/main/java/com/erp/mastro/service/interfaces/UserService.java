@@ -14,6 +14,8 @@ public interface UserService {
 
     void saveOrUpdateUser(UserModel userModel, HttpServletRequest request);
 
+    void activateOrDeactivateUser(Long id);
+
     void deleteUser(Long id);
 
     User findByEmail(String email);

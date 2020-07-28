@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.custom.responseBody.GenericResponse;
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Roles;
 import com.erp.mastro.model.request.RolesRequestModel;
 import com.erp.mastro.service.interfaces.RolesService;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class RolesController {
@@ -23,12 +26,14 @@ public class RolesController {
     @RequestMapping("/admin/getRole")
     public String getRole(Model model) {
         try {
-            List<Roles> rolesList = new ArrayList<>();
-            for (Roles roles : rolesService.getAllRoles()) {
-                if (roles.getRolesDeleteStatus() != 1) {
-                    rolesList.add(roles);
-                }
-            }
+            List<Roles> rolesList = rolesService.getAllRoles().stream()
+                    .filter(roleData -> (null != roleData))
+                    .filter(roleData -> (1 != roleData.getRolesDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            Roles::getId).reversed())
+                    .collect(Collectors.toList());
+
+
             model.addAttribute("roleForm", new RolesRequestModel());
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("rolesTab", "roles");

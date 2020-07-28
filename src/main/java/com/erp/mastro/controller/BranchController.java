@@ -21,7 +21,7 @@ public class BranchController {
     @Autowired
     private BranchService branchService;
 
-    @RequestMapping("/addBranch")
+    @GetMapping("/addBranch")
     public String addBranch(Model model){
         model.addAttribute("branchForm", new BranchRequestModel());
         model.addAttribute("adminModule", "adminModule");
@@ -32,6 +32,7 @@ public class BranchController {
     @PostMapping("/saveBranch")
     public String saveBranch(@ModelAttribute("branchForm") @Valid BranchRequestModel branchRequestModel, HttpServletRequest request, Model model) {
         try {
+            System.out.println("inside save");
             branchService.saveOrUpdateBranch(branchRequestModel);
             return "redirect:/admin/getBranch";
         } catch (Exception e) {
@@ -39,7 +40,7 @@ public class BranchController {
         }
     }
 
-    @RequestMapping("/getBranch")
+    @GetMapping("/getBranch")
     public String getBranch(Model model){
         try {
             List<Branch> branchList = new ArrayList<>();
@@ -58,12 +59,14 @@ public class BranchController {
         }
     }
 
-    @RequestMapping("/editBranch")
+    @GetMapping("/editBranch")
     public String editBranch(HttpServletRequest request, @RequestParam("branchId") Long branchId, Model model) {
         try {
+            System.out.println("inside editBranch branchId "+branchId);
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("branchTab", "branch");
             model.addAttribute("branchForm", new BranchRequestModel(branchService.getBranchById(branchId)));
+
             return "views/edit_branch";
         } catch (Exception e) {
             throw e;

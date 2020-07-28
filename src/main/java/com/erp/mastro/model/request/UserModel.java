@@ -93,6 +93,26 @@ public class UserModel {
         }
     }
 
+    public static class RolemodelEdit{
+        private String role;
+        private Long roleid;
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public Long getRoleid() {
+            return roleid;
+        }
+
+        public void setRoleid(Long roleid) {
+            this.roleid = roleid;
+        }
+    }
 
     public static class UserModelBranchEdit{
         private String branchname;

@@ -54,12 +54,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
+
         User user = userRepository.findByEmail(userModel.getEmail());
         // register New User
         if (user == null) {
-
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
-
             user = new User();
             user.setUserName(employee.getFirstName());
             user.setEmployee(employee);
@@ -69,17 +68,41 @@ public class UserServiceImpl implements UserService {
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
 
-           Set<Branch> branches = userModel.getBranch();
+            Set<Branch> branches = userModel.getBranch();
             user.setBranch(branches);
 
         }
         else if(!user.isEnabled()){
             user.setEnabled(userModel.isEnabled());
+
+
         }
         else{
             user.setUserName(userModel.getUserName());
+            //edit codes
+            Set<Roles> roles = userModel.getRoles();
+            user.setRoles(roles);
+
+            Set<Branch> branches = userModel.getBranch();
+            user.setBranch(branches);
+
 
         }
+        userRepository.save(user);
+    }
+
+    @Override
+    public void activateOrDeactivateUser(Long id) {
+        User user = getUserById(id);
+        if(user.isEnabled()) {
+            user.setEnabled(false);
+
+        } else {
+            user.setEnabled(true);
+        }
+/*
+        final Boolean status = user.isEnabled() ? "Active":"Deactive";
+*/
         userRepository.save(user);
     }
 
@@ -93,8 +116,8 @@ public class UserServiceImpl implements UserService {
 
         User user = getUserById(id);
         user.setEnabled(false);
-        userRepository.delete(user);
-
+        userRepository.save(user);
+        /*userRepository.delete(user);*/
     }
 
     @Override

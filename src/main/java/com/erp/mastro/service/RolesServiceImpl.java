@@ -34,11 +34,16 @@ public class RolesServiceImpl implements RolesService {
     public void saveOrUpdateRoles(RolesRequestModel rolesRequestModel) {
 
         if(rolesRequestModel.getId() == null) {
-            Roles roles = new Roles();
-            roles.setRoleName(rolesRequestModel.getRoleName());
-            roles.setRoleDescription(rolesRequestModel.getRoleDescription());
-            rolesRepository.save(roles);
-        } else {
+            /*if (rolesRequestModel.getRoleName() != null) {
+                      System.out.println("Role alredy Exist");
+            } else {*/
+                Roles roles = new Roles();
+                roles.setRoleName(rolesRequestModel.getRoleName());
+                roles.setRoleDescription(rolesRequestModel.getRoleDescription());
+                rolesRepository.save(roles);
+           /* }*/
+        }
+            else {
             Roles roles = rolesRepository.findById(rolesRequestModel.getId()).get();
             roles.setRoleName(rolesRequestModel.getRoleName());
             roles.setRoleDescription(rolesRequestModel.getRoleDescription());
