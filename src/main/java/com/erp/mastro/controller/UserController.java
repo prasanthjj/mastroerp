@@ -1,6 +1,6 @@
 package com.erp.mastro.controller;
 
-import com.erp.mastro.common.MailUtils;
+//import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.UserModel;
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
 
-    @Autowired
-    private MailUtils mailUtils;
+    /*@Autowired
+    private MailUtils mailUtils;*/
 
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;

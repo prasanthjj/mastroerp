@@ -97,10 +97,4 @@ public class BranchRegistration {
 
     @Column(name = "cin_date")
     private Date  cinDate;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "branch_branchRegistration", joinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
-    private Branch branch;
-
 }

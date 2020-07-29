@@ -59,14 +59,16 @@ public class BranchController {
         }
     }
 
-    @GetMapping("/editBranch")
+   @RequestMapping(value = "/editBranch", method = RequestMethod.GET)
     public String editBranch(HttpServletRequest request, @RequestParam("branchId") Long branchId, Model model) {
+       System.out.println("inside editBranch branchId");
         try {
-            System.out.println("inside editBranch branchId "+branchId);
+            Branch branch=branchService.getBranchById(branchId);
+            BranchRequestModel branchRequestModel =new BranchRequestModel(branch);
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("branchTab", "branch");
-            model.addAttribute("branchForm", new BranchRequestModel(branchService.getBranchById(branchId)));
-
+            model.addAttribute("branchForm", branchRequestModel);
+            System.out.println("BranchRequestModel "+branchRequestModel.toString());
             return "views/edit_branch";
         } catch (Exception e) {
             throw e;

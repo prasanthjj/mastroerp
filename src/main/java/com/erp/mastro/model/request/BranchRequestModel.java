@@ -103,4 +103,54 @@ public class BranchRequestModel {
         this.cinNo = branch.getBranchRegistration().getCinNo();
         this.cinDate = branch.getBranchRegistration().getCinDate();
     }
+
+    @Override
+    public String toString() {
+        return "BranchRequestModel{" +
+                "id=" + id +
+                ", branchName='" + branchName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", branchCode='" + branchCode + '\'' +
+                ", stateName='" + stateName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", AreaName='" + AreaName + '\'' +
+                ", branchPrefix='" + branchPrefix + '\'' +
+                ", localCurrency='" + localCurrency + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", address='" + address + '\'' +
+                ", website='" + website + '\'' +
+                ", branchAddress='" + branchAddress + '\'' +
+                ", faxNo='" + faxNo + '\'' +
+                ", pinCode='" + pinCode + '\'' +
+                ", creationDate=" + creationDate +
+                ", tanNo='" + tanNo + '\'' +
+                ", vatTinNo='" + vatTinNo + '\'' +
+                ", vatDate=" + vatDate +
+                ", cstTinNo='" + cstTinNo + '\'' +
+                ", cstdate=" + cstdate +
+                ", juridical='" + juridical + '\'' +
+                ", sTaxNo='" + sTaxNo + '\'' +
+                ", staxDate=" + staxDate +
+                ", panNo='" + panNo + '\'' +
+                ", panDate='" + panDate + '\'' +
+                ", pfAccount='" + pfAccount + '\'' +
+                ", pfDate='" + pfDate + '\'' +
+                ", esicAccount='" + esicAccount + '\'' +
+                ", esicDate='" + esicDate + '\'' +
+                ", eccNo='" + eccNo + '\'' +
+                ", plaNo='" + plaNo + '\'' +
+                ", range='" + range + '\'' +
+                ", division='" + division + '\'' +
+                ", rangeAddress='" + rangeAddress + '\'' +
+                ", divisionAddress='" + divisionAddress + '\'' +
+                ", Commissionerate='" + Commissionerate + '\'' +
+                ", exempted='" + exempted + '\'' +
+                ", commissionerateAddress='" + commissionerateAddress + '\'' +
+                ", limit='" + limit + '\'' +
+                ", gstIn='" + gstIn + '\'' +
+                ", cinNo='" + cinNo + '\'' +
+                ", cinDate=" + cinDate +
+                '}';
+    }
 }

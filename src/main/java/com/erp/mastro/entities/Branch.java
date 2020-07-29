@@ -67,9 +67,8 @@ public class Branch {
     @Column(name = "delete_status", nullable = false)
     private int branchDeleteStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "branch_branchRegistration", joinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")})
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "registration_id")
     private BranchRegistration branchRegistration;
 
     @ManyToMany(mappedBy = "branch")

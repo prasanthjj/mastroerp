@@ -82,7 +82,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Branch Name <i class="fa fa-asterisk "></i></label>
-                                            <input name="addBrachName" id="addBrachName" type="text" class="form-control required"  th:field="*{branchName}" >
+                                            <input name="branchName" id="branchName" type="text" class="form-control required"  >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -96,12 +96,12 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Website</label>
-                                            <input name="" type="text" class="form-control " th:field="*{website}">
+                                            <input name="" type="text" class="form-control ">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>State Name  <i class="fa fa-asterisk "></i></label>
-                                            <select class="form-control m-b  required" name="addBranchStateName" id="addBranchStateName" >
+                                            <select class="form-control m-b  required" name="stateName" id="stateName" >
                                                 <option value="">Select</option>
                                                 <option>Andhra Pradesh	</option>
                                                 <option>Karnataka</option>
@@ -114,7 +114,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Address  <i class="fa fa-asterisk "></i></label>
-                                            <textarea class="form-control m-b required" id="branchAddress" name="branchAddress" th:field="*{branchAddress}"></textarea>
+                                            <textarea class="form-control m-b required" id="branchAddress" name="branchAddress" ></textarea>
 
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -122,22 +122,22 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Branch Code</label>
-                                            <input name="" type="text" class="form-control " th:field="*{branchCode}" disabled>
+                                            <input name="" type="text" class="form-control "  disabled>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Email ID</label>
-                                            <input name="" type="email" class="form-control " th:field="*{emailId}">
+                                            <input name="" type="email" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Fax No.</label>
-                                            <input name="" type="text" class="form-control " th:field="*{faxNo}">
+                                            <input name="" type="text" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>City Name  <i class="fa fa-asterisk "></i></label>
-                                            <select class="form-control m-b required" name="addBranchCityName" id="addBranchCityName" >
+                                            <select class="form-control m-b required" name="cityName" id="cityName" >
                                                 <option>Select</option>
                                                 <option>Alappuzha</option>
                                                 <option>Idukki</option>
@@ -159,24 +159,24 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Pin Code <i class="fa fa-asterisk "></i></label>
-                                            <input type="text" class="form-control required "  name="addBranchPinCode" id="addBranchPinCode" th:field="*{pinCode}">
+                                            <input type="text" class="form-control required "  name="pinCode" id="pinCode" >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Branch Prefix</label>
-                                            <input name="" type="text" class="form-control " th:field="*{branchPrefix}">
+                                            <input name="" type="text" class="form-control " name="branchPrefix" id="branchPrefix" >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input name="" type="text" class="form-control " th:field="*{phoneNo}">
+                                            <input name="" type="text" class="form-control " name="phoneNo" id="phoneNo" >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Country Name  <i class="fa fa-asterisk "></i></label>
-                                            <select class="form-control m-b  required" name="addBranchCountryName" id="addBranchCountryName">
+                                            <select class="form-control m-b  required" name="countryName" id="countryName">
                                                 <option value="">Select</option>
                                                 <option>India</option>
                                                 <option>America</option>
@@ -202,7 +202,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>TAN No.</label>
-                                            <input type="text" th:field="*{tanNo}" class="form-control" >
+                                            <input type="text"  class="form-control" >
                                         </div>
                                     </div>
 
@@ -213,12 +213,12 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>VAT Tin No</label>
-                                            <input type="text" class="form-control " th:field="*{vatTinNo}">
+                                            <input type="text" class="form-control ">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>CST Tin No.</label>
-                                            <input type="text" class="form-control "th:field="*{cstTinNo}">
+                                            <input type="text" class="form-control" >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
@@ -226,14 +226,14 @@
                                         <div class="form-group "  id="vatEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" th:value="${vatDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group" id="cstEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" th:value="${cstdate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -241,7 +241,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Sentence for Juridical	</label>
-                                            <input type="text" class="form-control " th:field="*{juridical}">
+                                            <input type="text" class="form-control " >
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +251,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>S. Tax No.</label>
-                                            <input type="text" class="form-control " th:field="*{sTaxNo}">
+                                            <input type="text" class="form-control " >
                                         </div>
 
                                     </div>
@@ -259,7 +259,7 @@
                                         <div class="form-group" id="sTaxEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control"  th:value="${staxDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" >
                                             </div>
                                         </div>
 
@@ -271,7 +271,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>PAN No.</label>
-                                            <input type="text" class="form-control " th:field="*{panNo}">
+                                            <input type="text" class="form-control " >
                                         </div>
 
                                     </div>
@@ -279,7 +279,7 @@
                                         <div class="form-group" id="incomeTaxEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control"  th:value="${panDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control"  >
                                             </div>
                                         </div>
 
@@ -291,7 +291,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>PF Account No.</label>
-                                            <input type="text" class="form-control "  th:field="*{pfAccount}">
+                                            <input type="text" class="form-control " >
                                         </div>
 
                                     </div>
@@ -299,7 +299,7 @@
                                         <div class="form-group" id="pfEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control"  th:value="${pfDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" >
                                             </div>
                                         </div>
 
@@ -311,7 +311,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> ESIC Account No.</label>
-                                            <input type="text" class="form-control " th:field="*{esicAccount}">
+                                            <input type="text" class="form-control " >
                                         </div>
 
                                     </div>
@@ -319,7 +319,7 @@
                                         <div class="form-group" id="esicEffectFrmDate">
                                             <label>With effect From Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" th:value="${esicDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" >
                                             </div>
                                         </div>
 
@@ -331,29 +331,29 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> ECC No.</label>
-                                            <input  type="text" class="form-control " th:field="*{eccNo}">
+                                            <input  type="text" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Range</label>
-                                            <input type="text" class="form-control " th:field="*{range}">
+                                            <input type="text" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Range Address</label>
-                                            <textarea class="form-control "   th:field="*{rangeAddress}">
+                                            <textarea class="form-control "  >
 
                                             </textarea>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Commissionerate</label>
-                                            <input type="text" class="form-control " th:field="*{Commissionerate}">
+                                            <input type="text" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Commissionerate Address</label>
-                                            <textarea class="form-control " th:field="*{commissionerateAddress}">
+                                            <textarea class="form-control " >
 
                                             </textarea>
                                         </div>
@@ -361,17 +361,17 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>	PLA No.	</label>
-                                            <input  type="text" class="form-control "  th:field="*{plaNo}">
+                                            <input  type="text" class="form-control "  >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Division</label>
-                                            <input type="text" class="form-control " th:field="*{division}">
+                                            <input type="text" class="form-control " >
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Division Address</label>
-                                            <textarea class="form-control "   th:field="*{divisionAddress}">
+                                            <textarea class="form-control "   >
 
                                             </textarea>
                                     </div>
@@ -387,7 +387,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>	Limit</label>
-                                            <input  type="text" class="form-control "  th:field="*{limit}">
+                                            <input  type="text" class="form-control "  >
                                         </div>
                                 </div>
                             </div>
@@ -397,7 +397,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> GSTIN</label>
-                                            <input  type="text" class="form-control " th:field="*{gstIn}">
+                                            <input  type="text" class="form-control " >
                                         </div>
 
                                     </div>
@@ -410,7 +410,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> CIN No.</label>
-                                            <input  type="text" class="form-control " th:field="*{cinNo}">
+                                            <input  type="text" class="form-control ">
                                         </div>
 
                                     </div>
@@ -418,7 +418,7 @@
                                         <div class="form-group" id="cinEffectFrmDate">
                                             <label>CIN Date	</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" th:value="${cinDate}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" >
                                             </div>
                                         </div>
 
