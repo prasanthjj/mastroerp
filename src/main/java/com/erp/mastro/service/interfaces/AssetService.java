@@ -4,6 +4,7 @@ import com.erp.mastro.entities.AssetCharacteristics;
 import com.erp.mastro.entities.AssetChecklist;
 import com.erp.mastro.entities.AssetMaintenanceActivities;
 import com.erp.mastro.entities.Assets;
+import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.AssetRequestModel;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public interface AssetService {
 
     Assets getAssetsById(Long id);
 
-    void saveOrUpdateAssets(AssetRequestModel assetRequestModel);
+    Assets saveOrUpdateAssets(AssetRequestModel assetRequestModel) throws ModelNotFoundException;
 
-    Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets);
+    Set<AssetCharacteristics> saveOrUpdateAssetCharacteristics(AssetRequestModel assetRequestModel, Assets assets) throws ModelNotFoundException;
 
     Set<AssetMaintenanceActivities> saveOrUpdateAssetMaintenanceActivities(AssetRequestModel assetRequestModel, Assets assets);
 
@@ -25,7 +26,7 @@ public interface AssetService {
 
     void deleteAssets(Long id);
 
-    void deleteAssetDetails(Long id);
+    Assets deleteAssetDetails(Long id);
 
 }
 

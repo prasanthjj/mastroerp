@@ -2,6 +2,7 @@ package com.erp.mastro.service.interfaces;
 
 
 import com.erp.mastro.entities.Branch;
+import com.erp.mastro.model.request.BranchRequestModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,9 @@ public interface BranchService {
 
     Branch getBranchById(Long id);
 
-    void saveOrUpdateBranch(Branch branch);
+    void saveOrUpdateBranch(BranchRequestModel branchRequestModel);
 
     void deleteBranch(Long id);
 
+    public void deleteBranchDetails(Long id);
 }

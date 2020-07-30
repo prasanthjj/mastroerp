@@ -71,7 +71,7 @@
                                     <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
                                             class="fa fa-cogs "></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-bold" href="create_assets.html"><i
+                                        <li><a class="dropdown-item font-bold" th:href="@{/master/getCreateAsset}"><i
                                                 class="fa fa-eye"></i> Add Assets</a></li>
                                     </ul>
                                 </div>
@@ -84,7 +84,7 @@
                                     <thead class="mastro-blue-bg txt-white">
                                     <tr>
                                         <th class="mastro-blue-bg txt-white">No</th>
-                                        <th>Asset No</th>
+                                        <!-- <th>Asset No</th>-->
                                         <th>Asset Name</th>
                                         <th>Asset Type</th>
                                         <th>Asset Location</th>
@@ -94,28 +94,32 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td></td>
-                                        <td>
+                                    <tr class="gradeX" th:each="assetObj,iterator:${assetList}">
+                                        <td th:text="${iterator.index+1}"></td>
+                                        <td th:text="${assetObj.assetName}">
                                         </td>
-                                        <td></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
+                                        <!-- <td></td>-->
+                                        <td class="center" th:text="${assetObj.assetType}"></td>
+                                        <td class="center" th:text="${assetObj.assetLocation}"></td>
+                                        <td class="center" th:text="${assetObj.subLocation}"></td>
+                                        <td class="center" th:text="${assetObj.partyNo}"></td>
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_assets.html"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/master/viewAsset?assetId=__${assetObj.id}__}"><i
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="edit_assets.html"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/master/getAssetEdit?assetId=__${assetObj.id}__}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeAsset" href="#"><i
+
+                                                    <li><a class="dropdown-item font-bold removeAsset" href="#"
+                                                           th:data-assetids="${assetObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
@@ -166,8 +170,11 @@
 <!-- jQuery UI -->
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<script src="../resources/js/mastro/master.js" th:src="@{/resources/js/mastro/master.js}"></script>
-<script src="../resources/js/mastro/master_datatable.js" th:src="@{/resources/js/mastro/master_datatable.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/mastro/mastro_datatables.js"
+        th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
 
 </body>
 </html>

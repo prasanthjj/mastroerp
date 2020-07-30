@@ -1,6 +1,5 @@
 package com.erp.mastro.service;
 
-
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.model.request.HSNRequestModel;
@@ -34,6 +33,7 @@ public class HSNServiceImpl implements HSNService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateHSN(HSNRequestModel hsnRequestModel) {
         if (hsnRequestModel.getId() == null) {
+            MastroLogUtils.info(HSNService.class, "Going to Add HSN  {}" + hsnRequestModel.toString());
             HSN hsn = new HSN();
             hsn.setEntryDate(hsnRequestModel.getEntryDate());
             hsn.setSection(hsnRequestModel.getSection());
@@ -50,6 +50,7 @@ public class HSNServiceImpl implements HSNService {
             hsn.setCess(hsnRequestModel.getCess());
             hsnRepository.save(hsn);
         } else {
+            MastroLogUtils.info(HSNService.class, "Going to Edit HSN  {}" + hsnRequestModel.toString());
             HSN hsn = hsnRepository.findById(hsnRequestModel.getId()).get();
             hsn.setEntryDate(hsnRequestModel.getEntryDate());
             hsn.setSection(hsnRequestModel.getSection());

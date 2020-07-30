@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Edit Branch</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet" th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet" th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body >
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Edit Branch </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Admin</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a th:href="@{/admin/getBranch}">Branch List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Edit Branch</strong>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1  (Last Login at :07/06/2020  06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form id="editBranchform" th:action="@{/admin/saveBranch}" th:object="${branchForm}"
+                                  name="branchForm" method="post" class="wizard-big">
+                              <input type="hidden" name="id" th:field="*{id}"/>
+                                <h1>General Details</h1>
+                                <fieldset>
+
+                                    <h2>General Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Branch Name <i class="fa fa-asterisk "></i></label>
+                                                <input type="text" class="form-control required" th:field="*{branchName}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Local Currency</label>
+                                                <select class="form-control m-b" th:field="*{localCurrency}">
+                                                    <option value="">Select</option>
+                                                    <option value="Rupee">Rupee</option>
+                                                    <option value="Dollar">Dollar</option>
+                                                </select>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Website</label>
+                                                <input type="text" class="form-control " th:field="*{website}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>State Name  <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b  required"  id="editBranchStateName" th:field="*{stateName}">
+                                                    <option value="">Select</option>
+                                                    <option value="AndhraPradesh">Andhra Pradesh	</option>
+                                                    <option value="Karnataka">Karnataka</option>
+                                                    <option value="Kerala">Kerala</option>
+                                                    <option value="Telangana">Telangana</option>
+                                                    <option value="TamilNadu">Tamil Nadu</option>
+                                                </select>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Address  <i class="fa fa-asterisk "></i></label>
+                                                <textarea class="form-control m-b required" th:field="*{branchAddress}"></textarea>
+
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Branch Code</label>
+                                                <input type="text" class="form-control " disabled th:field="*{branchCode}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Email ID</label>
+                                                <input type="email" class="form-control " th:field="*{emailId}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Fax No.</label>
+                                                <input type="text" class="form-control " th:field="*{faxNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>City Name  <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b required"  id="editBranchCityName" th:field="*{cityName}">
+                                                    <option value="">Select</option>
+                                                    <option value="Alappuzha">Alappuzha</option>
+                                                    <option value="Idukki">Idukki</option>
+                                                    <option value="Kottayam">Kottayam</option>
+                                                    <option value="Kannur">Kannur</option>
+                                                    <option value="Kasaragod">Kasaragod</option>
+                                                    <option value="Kollam">Kollam</option>
+                                                    <option value="Kozhikode">Kozhikode</option>
+                                                    <option value="Malappuram">Malappuram</option>
+                                                    <option value="Palakkad">Palakkad</option>
+                                                    <option value="Pathanamthitta">Pathanamthitta</option>
+                                                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                                    <option value="Thrissur">Thrissur</option>
+                                                    <option value="Wayanad">Wayanad</option>
+                                                    <option value="Ernakulam">Ernakulam</option>
+                                                </select>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Pin Code <i class="fa fa-asterisk "></i></label>
+                                                <input type="text" class="form-control required " th:field="*{pinCode}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Branch Prefix</label>
+                                                <input type="text" class="form-control " th:field="*{branchPrefix}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <input type="text" class="form-control " th:field="*{phoneNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Country Name  <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b  required" id="editBranchCountryName" th:field="*{countryName}">
+                                                    <option value="">Select</option>
+                                                    <option value="India">India</option>
+                                                    <option value="America">America</option>
+                                                </select>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Registration Details</h1>
+                                <fieldset>
+                                    <h2>Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>TAN No.</label>
+                                                <input type="text" class="form-control" th:field="*{tanNo}" >
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>Sales Tax Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>VAT Tin No</label>
+                                                <input type="text" class="form-control" th:field="*{vatTinNo}" >
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>CST Tin No.</label>
+                                                <input type="text" class="form-control " th:field="*{cstTinNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group "  id="vatEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="vatDate" th:value="${#dates.format(branchForm.vatDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group" id="cstEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="cstdate" th:value="${#dates.format(branchForm.cstdate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Sentence for Juridical	</label>
+                                                <input type="text" class="form-control " th:field="*{juridical}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>S. Tax Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>S. Tax No.</label>
+                                                <input type="text" class="form-control " th:field="*{sTaxNo}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="sTaxEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="staxDate" th:value="${#dates.format(branchForm.staxDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>Income Tax Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>PAN No.</label>
+                                                <input type="text" class="form-control " th:field="*{panNo}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="incomeTaxEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="panDate" th:value="${#dates.format(branchForm.panDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>Provident Fund Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>PF Account No.</label>
+                                                <input type="text" class="form-control " th:field="*{pfAccount}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="pfEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="pfDate" th:value="${#dates.format(branchForm.pfDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>ESIC Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> ESIC Account No.</label>
+                                                <input type="text" class="form-control " th:field="*{esicAccount}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="esicEffectFrmDate">
+                                                <label>With effect From Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="esicDate" th:value="${#dates.format(branchForm.esicDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>Excise Registration Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> ECC No.</label>
+                                                <input type="text" class="form-control " th:field="*{eccNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Range</label>
+                                                <input type="text" class="form-control " th:field="*{range}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Range Address</label>
+                                                <textarea class="form-control " th:field="*{rangeAddress}">
+
+                                            </textarea>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Commissionerate</label>
+                                                <input type="text" class="form-control " th:field="*{Commissionerate}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Commissionerate Address</label>
+                                                <textarea class="form-control " th:field="*{commissionerateAddress}">
+
+                                            </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>	PLA No.	</label>
+                                                <input type="text" class="form-control " th:field="*{plaNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Division</label>
+                                                <input name="" type="text" class="form-control " th:field="*{division}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Division Address</label>
+                                                <textarea class="form-control " th:field="*{divisionAddress}">
+
+                                            </textarea>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Is Exempted</label>
+                                                <select class="form-control " th:field="*{exempted}">
+                                                    <option value="">Select</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>	Limit</label>
+                                                <input type="text" class="form-control " th:field="*{limit}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>GST Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> GSTIN</label>
+                                                <input type="text" class="form-control " th:field="*{gstIn}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>CIN Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> CIN No.</label>
+                                                <input type="text" class="form-control " th:field="*{cinNo}">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="cinEffectFrmDate">
+                                                <label>CIN Date	</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="cinDate" th:value="${#dates.format(branchForm.cinDate, 'MM/dd/yyyy')}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+
+
+<!-- Custom and plugin javascript -->
+
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js" th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<!-- Data picker -->
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js" th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<!-- Tags Input -->
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js" th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js" th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+<script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
+<script src="../resources/js/mastro/branch_step.js" th:src="@{/resources/js/mastro/branch_step.js}"></script>
+</body>
+</html>

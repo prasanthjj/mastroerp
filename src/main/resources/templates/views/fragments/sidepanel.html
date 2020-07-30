@@ -18,9 +18,20 @@
                     Mastro Metals
                 </div>
             </li>
-            <li>
+            <li class="active" th:if="${adminModule== 'adminModule'}">
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
                         class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li th:if="${rolesTab== 'roles'}" class="active"><a th:href="@{/admin/getRole}">Role</a></li>
+                    <li th:unless="${rolesTab== 'roles'}"><a th:href="@{/admin/getRole}">Role</a></li>
+                    <li th:if="${userTab== 'user'}" class="active"><a th:href="@{/admin/addUser}">User</a></li>
+                    <li th:unless="${userTab== 'user'}"><a th:href="@{/admin/addUser}">User</a></li>
+                    <li th:if="${branchTab== 'branch'}" class="active"><a th:href="@{/admin/getBranch}">Branch</a></li>
+                    <li th:unless="${branchTab== 'branch'}"><a th:href="@{/admin/getBranch}">Branch</a></li>
+                    <li th:if="${roleAccessTab== 'roleAccess'}" class="active"><a th:href="@{/admin/getRoleAccess}">Role Access Rights</a></li>
+                    <li th:unless="${roleAccessTab== 'roleAccess'}"><a th:href="@{/admin/getRoleAccess}">Role Access Rights</a></li>
+
+                </ul>
             </li>
 
 
