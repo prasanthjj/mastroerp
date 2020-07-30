@@ -151,7 +151,8 @@ $(document).ready(function(){
             keyboardNavigation: false,
             forceParse: false,
             calendarWeeks: true,
-            autoclose: true
+            autoclose: true,
+            //keepEmptyValues:true
         });
         $('#cstEffectFrmDate .input-group.date').datepicker({
             todayBtn: "linked",

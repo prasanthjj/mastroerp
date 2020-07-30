@@ -91,10 +91,10 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Local Currency</label>
-                                                <select class="form-control m-b" name="">
+                                                <select class="form-control m-b" th:field="*{localCurrency}">
                                                     <option value="">Select</option>
-                                                    <option>Rupee</option>
-                                                    <option>Dollar</option>
+                                                    <option value="Rupee">Rupee</option>
+                                                    <option value="Dollar">Dollar</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -105,10 +105,13 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>State Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="editBranchStateName" id="editBranchStateName">
+                                                <select class="form-control m-b  required"  id="editBranchStateName" th:field="*{stateName}">
                                                     <option value="">Select</option>
-                                                    <option>kerala</option>
-                                                    <option>Tamil Nadu</option>
+                                                    <option value="AndhraPradesh">Andhra Pradesh	</option>
+                                                    <option value="Karnataka">Karnataka</option>
+                                                    <option value="Kerala">Kerala</option>
+                                                    <option value="Telangana">Telangana</option>
+                                                    <option value="TamilNadu">Tamil Nadu</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -137,10 +140,22 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>City Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b required" name="editBranchCityName" id="editBranchCityName" >
+                                                <select class="form-control m-b required"  id="editBranchCityName" th:field="*{cityName}">
                                                     <option value="">Select</option>
-                                                    <option>Ernakulam</option>
-                                                    <option>Kottayam</option>
+                                                    <option value="Alappuzha">Alappuzha</option>
+                                                    <option value="Idukki">Idukki</option>
+                                                    <option value="Kottayam">Kottayam</option>
+                                                    <option value="Kannur">Kannur</option>
+                                                    <option value="Kasaragod">Kasaragod</option>
+                                                    <option value="Kollam">Kollam</option>
+                                                    <option value="Kozhikode">Kozhikode</option>
+                                                    <option value="Malappuram">Malappuram</option>
+                                                    <option value="Palakkad">Palakkad</option>
+                                                    <option value="Pathanamthitta">Pathanamthitta</option>
+                                                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                                    <option value="Thrissur">Thrissur</option>
+                                                    <option value="Wayanad">Wayanad</option>
+                                                    <option value="Ernakulam">Ernakulam</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -163,10 +178,10 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Country Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="editBranchCountryName" id="editBranchCountryName">
+                                                <select class="form-control m-b  required" id="editBranchCountryName" th:field="*{countryName}">
                                                     <option value="">Select</option>
-                                                    <option>India</option>
-                                                    <option>USA</option>
+                                                    <option value="India">India</option>
+                                                    <option value="America">America</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -358,10 +373,10 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Is Exempted</label>
-                                                <select class="form-control ">
+                                                <select class="form-control " th:field="*{exempted}">
                                                     <option value="">Select</option>
-                                                    <option value="">Yes</option>
-                                                    <option value="">No</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>

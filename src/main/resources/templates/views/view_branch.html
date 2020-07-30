@@ -71,8 +71,7 @@
                     </div>
                     <div class="ibox-content">
                         <!--<form id="viewBranchform" action="" class="wizard-big">-->
-                            <form id="viewBranchform" th:action="@{/admin/saveBranch}" th:object="${branchForm}"
-                                  name="branchForm" method="post" class="wizard-big">
+                            <form id="viewBranchform" class="wizard-big">
                                 <input type="hidden" name="id" th:field="*{id}"/>
                             <h1>General Details</h1>
                             <fieldset>
@@ -87,7 +86,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Local Currency</label>
-                                            <p>Doller</p>
+                                            <input type="text" class="form-control " th:field="*{localCurrency}">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -97,7 +96,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>State Name</label>
-                                            <p></p>
+                                            <input type="text" class="form-control " th:field="*{stateName}">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -125,7 +124,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>City Name </label>
-                                            <p></p>
+                                            <input type="text" class="form-control " th:field="*{cityName}">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -147,7 +146,7 @@
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label>Country Name</label>
-                                            <p></p>
+                                            <input type="text" class="form-control " th:field="*{countryName}">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                       

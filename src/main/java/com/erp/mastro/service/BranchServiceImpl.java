@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,7 +53,7 @@ public class BranchServiceImpl implements BranchService {
             branch.setWebsite(branchRequestModel.getWebsite());
             branch.setFaxNo(branchRequestModel.getFaxNo());
             branch.setPinCode(branchRequestModel.getPinCode());
-            branch.setCreationDate(branchRequestModel.getCreationDate());
+            branch.setCreationDate(new Date());
 
             BranchRegistration branchRegistration = new BranchRegistration();
             branchRegistration.setTanNo(branchRequestModel.getTanNo());
@@ -103,7 +104,9 @@ public class BranchServiceImpl implements BranchService {
             branch.setWebsite(branchRequestModel.getWebsite());
             branch.setFaxNo(branchRequestModel.getFaxNo());
             branch.setPinCode(branchRequestModel.getPinCode());
+
             branch.setCreationDate(branchRequestModel.getCreationDate());
+
 
             branchRegistration.setTanNo(branchRequestModel.getTanNo());
             branchRegistration.setVatTinNo(branchRequestModel.getVatTinNo());

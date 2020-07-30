@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Employee;
 import com.erp.mastro.entities.Roles;
@@ -23,6 +24,8 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private MailUtils mailUtils;
 
     @Autowired
     private UserRepository userRepository;
@@ -54,10 +57,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
+        /*mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility");*/
 
         User user = userRepository.findByEmail(userModel.getEmail());
         // register New User
         if (user == null) {
+
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
             user = new User();
             user.setUserName(employee.getFirstName());

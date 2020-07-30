@@ -63,9 +63,6 @@ public class UserController {
     @RequestMapping("/admin/addUser")
     public String addUser(Model model) {
 
-/*
-        mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","testing with utility removed impl");
-*/
 
 
         try {
