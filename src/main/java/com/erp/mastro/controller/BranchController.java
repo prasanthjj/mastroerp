@@ -32,12 +32,12 @@ public class BranchController {
     @PostMapping("/saveBranch")
     public String saveBranch(@ModelAttribute("branchForm") @Valid BranchRequestModel branchRequestModel, HttpServletRequest request, Model model) {
         try {
-            System.out.println("inside save");
-            branchService.saveOrUpdateBranch(branchRequestModel);
-            return "redirect:/admin/getBranch";
+           branchService.saveOrUpdateBranch(branchRequestModel);
+
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
+        return "redirect:/admin/getBranch";
     }
 
     @GetMapping("/getBranch")
@@ -61,15 +61,15 @@ public class BranchController {
 
    @RequestMapping(value = "/editBranch", method = RequestMethod.GET)
     public String editBranch(HttpServletRequest request, @RequestParam("branchId") Long branchId, Model model) {
-       System.out.println("inside editBranch branchId");
+       System.out.println("inside editBranch branchId" + branchId);
         try {
             Branch branch=branchService.getBranchById(branchId);
+            System.out.println("branch : " + branch);
             BranchRequestModel branchRequestModel =new BranchRequestModel(branch);
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("branchTab", "branch");
             model.addAttribute("branchForm", branchRequestModel);
-            System.out.println("BranchRequestModel "+branchRequestModel.toString());
-            return "views/edit_branch";
+             return "views/edit_branch";
         } catch (Exception e) {
             throw e;
         }

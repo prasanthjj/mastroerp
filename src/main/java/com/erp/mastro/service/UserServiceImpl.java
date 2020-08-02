@@ -57,7 +57,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
-        /*mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility");*/
+
+
+        mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility");
+
 
         User user = userRepository.findByEmail(userModel.getEmail());
         // register New User

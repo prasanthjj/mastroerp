@@ -28,7 +28,7 @@ public class ModuleServiceImpl implements ModuleService {
     public List<Modules> getAllModules() {
         List<Modules> modulesList = new ArrayList<Modules>();
         moduleRepository.findAll().forEach(modules ->modulesList.add(modules) );
-        return modulesList;
+         return modulesList;
     }
 
     @Override
@@ -44,6 +44,8 @@ public class ModuleServiceImpl implements ModuleService {
              Roles role = moduleRequestModel.getRoles();
             Set<Modules> moduleSet = role.getModules();
             for (String id : values) {
+                System.out.println("inside role id :"+ values);
+                /*Modules module = moduleRepository.findById(Long.valueOf(id)).get();*/
                 Modules module = moduleRepository.findById(Long.valueOf(id)).get();
                 moduleSet.add(module);
             }

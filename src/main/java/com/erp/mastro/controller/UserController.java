@@ -108,25 +108,6 @@ public class UserController {
         }
     }
 
-/*
-    @PostMapping(value = "/addEmployee")
-*/
-    /*public void  addEmployee(){
-        Employee employee = new Employee();
-        employee.setEmail("ranjit@mastro.com");
-        employee.setDepartment("HR");
-        employee.setFirstName("Ranjit");
-        employee.setContactNumber("7736212827");
-        Employee employee1 = new Employee();
-        employee1.setEmail("DDRR@mastro.com");
-        employee1.setDepartment("HR");
-        employee1.setFirstName("Ranjit");
-        employee1.setContactNumber("7736212827");
-
-        employeeService.saveOrUpdateEmployee(employee1);
-
-        employeeService.saveOrUpdateEmployee(employee);
-    }*/
 
     @PostMapping(value = "/register")
     public void register() {
@@ -263,6 +244,19 @@ public class UserController {
         } catch (Exception e) {
             return new GenericResponse(false, e.getMessage());
         }
+    }
+
+    @RequestMapping("/admin/getUserBranches")
+    public GenericResponse getBranchByUserId(Model model, @RequestParam("userId") Long userId) {
+        System.out.println("Inside getBranchByUserId");
+        User userDetails = userService.getUserById(userId);
+        List<Branch> branchList = new ArrayList<>();
+        for (Branch branch : userDetails.getBranch()) {
+            System.out.println("branch :: " + branch);
+            branchList.add(branch);
+        }
+        return new GenericResponse(true,"get User details")
+        .setProperty("branchList",branchList);
     }
 
 }

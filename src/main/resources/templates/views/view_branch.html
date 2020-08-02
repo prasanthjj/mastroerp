@@ -71,8 +71,9 @@
                     </div>
                     <div class="ibox-content">
                         <!--<form id="viewBranchform" action="" class="wizard-big">-->
-                            <form id="viewBranchform" class="wizard-big">
-                                <input type="hidden" name="id" th:field="*{id}"/>
+                        <form id="viewBranchform" th:action="@{/admin/saveBranch}" th:object="${branchForm}"
+                              name="branchForm" method="post" class="wizard-big">
+                            <input type="hidden" name="id" th:field="*{id}"/>
                             <h1>General Details</h1>
                             <fieldset>
                                 

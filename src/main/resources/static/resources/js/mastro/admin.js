@@ -234,6 +234,54 @@ $(document).ready(function(){
     // Remove Branch End
 
 
+//Role access starts
+
+ $('#roleAccess').change(function (e) {
+   e.preventDefault();
+    var rolesId=document.getElementById("roleAccess").value;
+     alert("Role id :"+rolesId);
+     $.ajax({
+      url: '/admin/getRoleAccessEdit',
+              type: 'GET',
+              dataType : 'json',
+              data: {'roleId': rolesId},
+               success: function(data){
+               alert("sucess");
+               if(data.success) {
+
+                   $("#moduleCheckId tbody").html("");
+
+                   
+
+                    $.each(data.data.rolemodules, function(i){
+                     i++;
+                     var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value='+this['id'] + '/> "+ "</td>";
+                     $(tblRow).appendTo("#moduleCheckId tbody");
+                    });
+                     $.each(data.data.remainingModules, function(i){
+                        j++;
+                        var tblRow = "<tr class='gradeX'>" + "<td>" + j  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName'  value='+this['id'] + '/> "+ "</td>";
+                                                                            $(tblRow).appendTo("#moduleCheckId tbody");
+                      });
+
+                    /*  $.each(data.data.fullrolemodules, function(i){
+                                           i++;
+                                           var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName'/>"+ "</td>";
+                                           $(tblRow).appendTo("#moduleCheckId tbody");
+                                          });*/
+                   }
+
+                 },
+                error: function(jqXHR, textStatus) {
+                           alert('Error Occured');
+                       }
+
+      });
+
+
+
+
+ });
 
 //Edit Role Start
 $("body").on('click','.roleEdit',function (e) {
@@ -307,6 +355,7 @@ $("body").on('click','.userEdit',function (e) {
 });
 //Edit User End
 
+
   //User Role Starts
 
         $(".addUserRole").select2({
@@ -333,6 +382,30 @@ $("body").on('click','.userEdit',function (e) {
  $(".branchList").select2({
                 theme: 'bootstrap4',
             });
+
+
+
+/*
+ $('#roleAccess').change(function () {
+ alert("hi inside the script");
+*/
+/*     var roleId =$(this).data('roleId');*//*
+
+   */
+/*  if ($('#roleAccess').val() == '') {
+       //selected feild
+
+     }
+     else {
+         //full list
+
+     }*//*
+
+
+
+
+ });
+*/
 
 
 });

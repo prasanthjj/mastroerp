@@ -27,15 +27,15 @@ public class BranchRequestModel {
     private String branchAddress;
     private String faxNo;
     private String pinCode;
-    private Date creationDate;
+    private String creationDate;
     private String tanNo;
     private String vatTinNo;
-    private Date vatDate;
+    private String vatDate;
     private String cstTinNo;
-    private Date cstdate ;
+    private String cstdate ;
     private String juridical ;
     private String sTaxNo;
-    private Date staxDate ;
+    private String staxDate ;
     private String panNo;
     private String panDate ;
     private String pfAccount;
@@ -54,7 +54,7 @@ public class BranchRequestModel {
     private String limit;
     private String gstIn;
     private String cinNo;
-    private Date cinDate;
+    private String cinDate;
 
     public BranchRequestModel() {}
 
@@ -74,21 +74,39 @@ public class BranchRequestModel {
         this.branchAddress = branch.getBranchAddress();
         this.faxNo = branch.getFaxNo();
         this.pinCode = branch.getPinCode();
-        this.creationDate = branch.getCreationDate();
+        //this.creationDate = branch.getCreationDate();
         this.tanNo = branch.getBranchRegistration().getTanNo();
         this.vatTinNo = branch.getBranchRegistration().getVatTinNo();
-        this.vatDate = branch.getBranchRegistration().getVatDate();
+        if(branch.getBranchRegistration().getVatDate()!=null){
+            this.vatDate = branch.getBranchRegistration().getVatDate().toString();
+        }
+
         this.cstTinNo = branch.getBranchRegistration().getCstTinNo();
-        this.cstdate = branch.getBranchRegistration().getCstdate();
+        if(branch.getBranchRegistration().getCstdate()!=null){
+            this.cstdate = branch.getBranchRegistration().getCstdate().toString();
+
+        }
         this.juridical = branch.getBranchRegistration().getJuridical();
         this.sTaxNo = branch.getBranchRegistration().getSTaxNo();
-        this.staxDate = branch.getBranchRegistration().getStaxDate();
+        if(branch.getBranchRegistration().getStaxDate()!=null){
+            this.staxDate = branch.getBranchRegistration().getStaxDate().toString();
+        }
+
         this.panNo = branch.getBranchRegistration().getPanNo();
-        this.panDate = branch.getBranchRegistration().getPanDate();
+        if(branch.getBranchRegistration().getPanDate()!=null){
+            this.panDate = branch.getBranchRegistration().getPanDate().toString();
+        }
+
         this.pfAccount = branch.getBranchRegistration().getPfAccount();
-        this.pfDate = branch.getBranchRegistration().getPfDate();
+        if(branch.getBranchRegistration().getPfDate()!=null){
+            this.pfDate = branch.getBranchRegistration().getPfDate().toString();
+        }
+
         this.esicAccount = branch.getBranchRegistration().getEsicAccount();
-        this.esicDate = branch.getBranchRegistration().getEsicDate();
+        if(branch.getBranchRegistration().getEsicDate()!=null){
+            this.esicDate = branch.getBranchRegistration().getEsicDate().toString();
+        }
+
         this.eccNo = branch.getBranchRegistration().getEccNo();
         this.plaNo = branch.getBranchRegistration().getPlaNo();
         this.range = branch.getBranchRegistration().getRange();
@@ -101,7 +119,11 @@ public class BranchRequestModel {
         this.limit = branch.getBranchRegistration().getLimit();
         this.gstIn = branch.getBranchRegistration().getGstIn();
         this.cinNo = branch.getBranchRegistration().getCinNo();
-        this.cinDate = branch.getBranchRegistration().getCinDate();
+        if(branch.getBranchRegistration().getCinDate()!=null){
+            this.cinDate = branch.getBranchRegistration().getCinDate().toString();
+        }
+
+
     }
 
     @Override
