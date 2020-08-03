@@ -3,6 +3,7 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.PriceList;
+import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.model.request.PriceListRequestModel;
 import com.erp.mastro.service.interfaces.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class PriceListController {
     }
 
     @PostMapping("/savePriceList")
-    public String savePriceList(@ModelAttribute("priceListForm") @Valid PriceListRequestModel priceListRequestModel, HttpServletRequest request, Model model) {
+    public String savePriceList(@ModelAttribute("priceListForm") @Valid PriceListRequestModel priceListRequestModel, HttpServletRequest request, Model model) throws MastroEntityException {
         MastroLogUtils.info(PriceListController.class, "Going to save pricelist :{}");
         try {
             priceListService.saveOrUpdatePriceList(priceListRequestModel);
@@ -59,7 +60,7 @@ public class PriceListController {
 
     @GetMapping("/getPriceListforEdit")
     @ResponseBody
-    public GenericResponse getPriceListforEdit(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) {
+    public GenericResponse getPriceListforEdit(Model model, HttpServletRequest request, @RequestParam("pricelistId") Long pricelistId) throws MastroEntityException {
         MastroLogUtils.info(PriceListController.class, "Going to get pricelist for edit :{}", +pricelistId);
         try {
 
@@ -73,6 +74,9 @@ public class PriceListController {
                     .setProperty("allowedPriceDevPerUpper", priceListdetails.getAllowedPriceDevPerUpper())
                     .setProperty("allowedPriceDevPerLower", priceListdetails.getAllowedPriceDevPerLower());
 
+        } catch (MastroEntityException e) {
+            MastroLogUtils.error(PriceListController.class, "Pricelist Entity not found" + pricelistId, e);
+            return new GenericResponse(false, e.getMessage());
         } catch (Exception e) {
             MastroLogUtils.error(PriceListController.class, "Error occured while getting pricelist for edit :{}" + pricelistId, e);
             return new GenericResponse(false, e.getMessage());
@@ -90,6 +94,9 @@ public class PriceListController {
             priceListService.deletePriceListDetails(pricelistId);
             return new GenericResponse(true, "delete pricelist details");
 
+        } catch (MastroEntityException e) {
+            MastroLogUtils.error(PriceListController.class, "Pricelist Entity not found" + pricelistId, e);
+            return new GenericResponse(false, e.getMessage());
         } catch (Exception e) {
             MastroLogUtils.error(PriceListController.class, "Error occured while deleting pricelist  :{}" + pricelistId, e);
             return new GenericResponse(false, e.getMessage());

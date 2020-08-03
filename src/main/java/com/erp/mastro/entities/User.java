@@ -1,10 +1,11 @@
 package com.erp.mastro.entities;
 
-import javax.persistence.*;
-import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -28,8 +29,20 @@ public class User extends Auditable<String> {
     @Column(name = "enabled", nullable = false)
     protected boolean enabled;
 
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private Set<Roles> roles;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    Set<Roles> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_branch", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
+    private Set<Branch> branch;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
 }

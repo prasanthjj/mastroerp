@@ -222,8 +222,8 @@
 </div>
 <div class="modal inmodal" id="editPricelist" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:action="@{/master/savePriceList}" th:object="${priceListForm}"
-              name="brandForm" method="post">
+        <form id="editPriceListForm" th:action="@{/master/savePriceList}" th:object="${priceListForm}"
+              name="priceListForm" method="post">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span

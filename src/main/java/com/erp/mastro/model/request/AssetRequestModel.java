@@ -1,6 +1,11 @@
 package com.erp.mastro.model.request;
 
 
+import com.erp.mastro.entities.AssetCharacteristics;
+import com.erp.mastro.entities.AssetChecklist;
+import com.erp.mastro.entities.AssetMaintenanceActivities;
+import com.erp.mastro.entities.Assets;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,12 +23,38 @@ public class AssetRequestModel {
     private Date effectiveDate;
     private String capacity;
     private String maintenancePriority;
-    protected boolean isActive;
-    protected boolean maintenanceRequired;
+    private Boolean active;
+    private Boolean maintenanceRequired;
     private String make;
     private List<AssetCharacteristicsModel> assetCharacteristicsModel = new ArrayList<>();
     private List<AssetMaintenanceActivitiesModel> assetMaintenanceActivitiesModel = new ArrayList<>();
     private List<AssetCheckListModel> assetCheckListModel = new ArrayList<>();
+
+    public AssetRequestModel() {
+
+    }
+
+    public AssetRequestModel(Assets assets) {
+        if (assets != null) {
+            this.id = assets.getId();
+            this.setAssetName(assets.getAssetName());
+            this.setAssetLocation(assets.getAssetLocation());
+            this.setActive(assets.getActive());
+            this.setAssetType(assets.getAssetType());
+            this.setCapacity(assets.getCapacity());
+            this.setEffectiveDate(assets.getEffectiveDate());
+            this.setHoursUtilized(assets.getHoursUtilized());
+            this.setInstallationDate(assets.getInstallationDate());
+            this.setMaintenancePriority(assets.getMaintenancePriority());
+            this.setMake(assets.getMake());
+            this.setPartyNo(assets.getPartyNo());
+            this.setSubLocation(assets.getSubLocation());
+            this.setMaintenanceRequired(assets.getMaintenanceRequired());
+            assets.getAssetCharacteristics().parallelStream().forEach(x -> this.assetCharacteristicsModel.add(new AssetCharacteristicsModel(x)));
+            assets.getAssetMaintenanceActivities().parallelStream().forEach(x -> this.assetMaintenanceActivitiesModel.add(new AssetMaintenanceActivitiesModel(x)));
+            assets.getAssetChecklists().parallelStream().forEach(x -> this.assetCheckListModel.add(new AssetCheckListModel(x)));
+        }
+    }
 
     public Long getId() {
         return id;
@@ -121,19 +152,19 @@ public class AssetRequestModel {
         this.maintenancePriority = maintenancePriority;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
-    public boolean isMaintenanceRequired() {
+    public Boolean getMaintenanceRequired() {
         return maintenanceRequired;
     }
 
-    public void setMaintenanceRequired(boolean maintenanceRequired) {
+    public void setMaintenanceRequired(Boolean maintenanceRequired) {
         this.maintenanceRequired = maintenanceRequired;
     }
 
@@ -177,6 +208,17 @@ public class AssetRequestModel {
         private String value;
         private String assetRemarks;
 
+        public AssetCharacteristicsModel() {
+
+        }
+
+        public AssetCharacteristicsModel(AssetCharacteristics assetCharacteristics) {
+            this.id = assetCharacteristics.getId();
+            this.character = assetCharacteristics.getCharacter();
+            this.value = assetCharacteristics.getValue();
+            this.assetRemarks = assetCharacteristics.getAssetRemarks();
+        }
+
         public Long getId() {
             return id;
         }
@@ -219,6 +261,23 @@ public class AssetRequestModel {
         private String tolerenceLowerlimit;
         private String frequency;
         private String category;
+        private Double tolerence;
+
+        public AssetMaintenanceActivitiesModel() {
+
+        }
+
+        public AssetMaintenanceActivitiesModel(AssetMaintenanceActivities assetMaintenanceActivities) {
+            this.id = assetMaintenanceActivities.getId();
+            this.activityName = assetMaintenanceActivities.getActivityName();
+            this.category = assetMaintenanceActivities.getCategory();
+            this.frequency = assetMaintenanceActivities.getFrequency();
+            this.standardObservation = assetMaintenanceActivities.getStandardObservation();
+            this.tolerence = assetMaintenanceActivities.getTolerence();
+            this.tolerenceLowerlimit = assetMaintenanceActivities.getTolerenceLowerlimit();
+            this.upperLimit = assetMaintenanceActivities.getUpperLimit();
+
+        }
 
         public Long getId() {
             return id;
@@ -275,6 +334,14 @@ public class AssetRequestModel {
         public void setCategory(String category) {
             this.category = category;
         }
+
+        public Double getTolerence() {
+            return tolerence;
+        }
+
+        public void setTolerence(Double tolerence) {
+            this.tolerence = tolerence;
+        }
     }
 
     public static class AssetCheckListModel {
@@ -283,6 +350,15 @@ public class AssetRequestModel {
         private String checkList;
         private String remarks;
 
+        public AssetCheckListModel() {
+
+        }
+
+        public AssetCheckListModel(AssetChecklist assetChecklist) {
+            this.id = assetChecklist.getId();
+            this.checkList = assetChecklist.getCheckList();
+            this.remarks = assetChecklist.getRemarks();
+        }
 
         public Long getId() {
             return id;
@@ -307,6 +383,30 @@ public class AssetRequestModel {
         public void setRemarks(String remarks) {
             this.remarks = remarks;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "AssetRequestModel{" +
+                "id=" + id +
+                ", assetNo='" + assetNo + '\'' +
+                ", assetName='" + assetName + '\'' +
+                ", assetType='" + assetType + '\'' +
+                ", assetLocation='" + assetLocation + '\'' +
+                ", subLocation='" + subLocation + '\'' +
+                ", partyNo='" + partyNo + '\'' +
+                ", hoursUtilized=" + hoursUtilized +
+                ", installationDate=" + installationDate +
+                ", effectiveDate=" + effectiveDate +
+                ", capacity='" + capacity + '\'' +
+                ", maintenancePriority='" + maintenancePriority + '\'' +
+                ", active=" + active +
+                ", maintenanceRequired=" + maintenanceRequired +
+                ", make='" + make + '\'' +
+                ", assetCharacteristicsModel=" + assetCharacteristicsModel +
+                ", assetMaintenanceActivitiesModel=" + assetMaintenanceActivitiesModel +
+                ", assetCheckListModel=" + assetCheckListModel +
+                '}';
     }
 
 }

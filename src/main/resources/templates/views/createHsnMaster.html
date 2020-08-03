@@ -87,7 +87,7 @@
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input type="text"
                                                                                                      class="form-control"
-                                                                                                     required
+
                                                                                                      th:field="*{entryDate}">
                                                 </div>
                                             </div>
@@ -124,7 +124,7 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">HSN <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control"
                                                                          th:field="*{hsnCode}">
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                             Goods <i class="fa fa-asterisk "></i></label>
 
                                             <div class="col-sm-8"><input type="text" class="form-control"
-                                                                         th:field="*{gstGoodsName}" required>
+                                                                         th:field="*{gstGoodsName}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -146,7 +146,7 @@
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input type="text"
                                                                                                      class="form-control"
-                                                                                                     required
+
                                                                                                      th:field="*{effectiveFrom}">
                                                 </div>
                                             </div>
@@ -155,7 +155,7 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">SGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control"
                                                                          th:field="*{sgst}">
                                             </div>
                                         </div>
@@ -163,7 +163,7 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control"
                                                                          th:field="*{cgst}">
                                             </div>
                                         </div>
@@ -171,7 +171,7 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control"
                                                                          th:field="*{igst}">
                                             </div>
                                         </div>
@@ -231,6 +231,9 @@
 <!-- Tags Input -->
 <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
         th:src="@{/resources/js/pluginsbootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
-<script src="../resources/js/mastro/master.js" th:src="@{/resources/js/mastro/master.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+
 </body>
 </html>

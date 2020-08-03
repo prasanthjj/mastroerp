@@ -10,25 +10,17 @@ public class PartyRequestModel {
     private String partyType;
     private String partyCode;
     private String partyName;
-    private String aliasName;
     private String status;
-    private String type;
-    private String website;
     private String paymentTerms;
-    private String referBy;
-    private String source;
     private String categoryType;
-    private String transporterName;
     private Date partyDate;
     private String oldReferCode;
     private String relationshipMananger;
-    private String industryType;
-    private String emailId;
-    private String transactionType;
     private List<ContactDetailsModel> contactDetailsModelList = new ArrayList<>();
     private List<BillingDetailsModel> billingDetailsModelList = new ArrayList<>();
     private List<BankDetailsModel> bankDetailsModelList = new ArrayList<>();
     private List<CreditDetailsModel> creditDetailsModelList = new ArrayList<>();
+    private Long industryid;
 
     public Long getId() {
         return id;
@@ -62,36 +54,12 @@ public class PartyRequestModel {
         this.partyName = partyName;
     }
 
-    public String getAliasName() {
-        return aliasName;
-    }
-
-    public void setAliasName(String aliasName) {
-        this.aliasName = aliasName;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 
     public String getPaymentTerms() {
@@ -102,36 +70,12 @@ public class PartyRequestModel {
         this.paymentTerms = paymentTerms;
     }
 
-    public String getReferBy() {
-        return referBy;
-    }
-
-    public void setReferBy(String referBy) {
-        this.referBy = referBy;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
     public String getCategoryType() {
         return categoryType;
     }
 
     public void setCategoryType(String categoryType) {
         this.categoryType = categoryType;
-    }
-
-    public String getTransporterName() {
-        return transporterName;
-    }
-
-    public void setTransporterName(String transporterName) {
-        this.transporterName = transporterName;
     }
 
     public Date getPartyDate() {
@@ -156,30 +100,6 @@ public class PartyRequestModel {
 
     public void setRelationshipMananger(String relationshipMananger) {
         this.relationshipMananger = relationshipMananger;
-    }
-
-    public String getIndustryType() {
-        return industryType;
-    }
-
-    public void setIndustryType(String industryType) {
-        this.industryType = industryType;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
     }
 
     public List<ContactDetailsModel> getContactDetailsModelList() {
@@ -214,11 +134,18 @@ public class PartyRequestModel {
         this.creditDetailsModelList = creditDetailsModelList;
     }
 
+    public Long getIndustryid() {
+        return industryid;
+    }
+
+    public void setIndustryid(Long industryid) {
+        this.industryid = industryid;
+    }
+
     public static class ContactDetailsModel {
 
         private Long id;
         private String contactPersonName;
-        private String contactType;
         private String designation;
         private String department;
         private String telephoneNo;
@@ -243,14 +170,6 @@ public class PartyRequestModel {
 
         public void setContactPersonName(String contactPersonName) {
             this.contactPersonName = contactPersonName;
-        }
-
-        public String getContactType() {
-            return contactType;
-        }
-
-        public void setContactType(String contactType) {
-            this.contactType = contactType;
         }
 
         public String getDesignation() {
@@ -335,19 +254,12 @@ public class PartyRequestModel {
         private String state;
         private String street;
         private String city;
-        private String area;
         private String pinCode;
         private String designation;
         private String faxNo;
         private String telephoneNo;
         private String contactPersonName;
-        private String gst;
         private String emailId;
-        private String eccNo;
-        private String commisionRate;
-        private String rangeNo;
-        private String division;
-        private String rangeAddress;
 
         public Long getId() {
             return id;
@@ -397,14 +309,6 @@ public class PartyRequestModel {
             this.city = city;
         }
 
-        public String getArea() {
-            return area;
-        }
-
-        public void setArea(String area) {
-            this.area = area;
-        }
-
         public String getPinCode() {
             return pinCode;
         }
@@ -445,14 +349,6 @@ public class PartyRequestModel {
             this.contactPersonName = contactPersonName;
         }
 
-        public String getGst() {
-            return gst;
-        }
-
-        public void setGst(String gst) {
-            this.gst = gst;
-        }
-
         public String getEmailId() {
             return emailId;
         }
@@ -461,55 +357,14 @@ public class PartyRequestModel {
             this.emailId = emailId;
         }
 
-        public String getEccNo() {
-            return eccNo;
-        }
-
-        public void setEccNo(String eccNo) {
-            this.eccNo = eccNo;
-        }
-
-        public String getCommisionRate() {
-            return commisionRate;
-        }
-
-        public void setCommisionRate(String commisionRate) {
-            this.commisionRate = commisionRate;
-        }
-
-        public String getRangeNo() {
-            return rangeNo;
-        }
-
-        public void setRangeNo(String rangeNo) {
-            this.rangeNo = rangeNo;
-        }
-
-        public String getDivision() {
-            return division;
-        }
-
-        public void setDivision(String division) {
-            this.division = division;
-        }
-
-        public String getRangeAddress() {
-            return rangeAddress;
-        }
-
-        public void setRangeAddress(String rangeAddress) {
-            this.rangeAddress = rangeAddress;
-        }
     }
 
     public static class BankDetailsModel {
 
         private Long id;
-        private String accountType;
         private String ifscCode;
         private String accountNo;
         private String bankName;
-        private String swiftNo;
         private String branchName;
         private String bankAddress;
 
@@ -519,14 +374,6 @@ public class PartyRequestModel {
 
         public void setId(Long id) {
             this.id = id;
-        }
-
-        public String getAccountType() {
-            return accountType;
-        }
-
-        public void setAccountType(String accountType) {
-            this.accountType = accountType;
         }
 
         public String getIfscCode() {
@@ -551,14 +398,6 @@ public class PartyRequestModel {
 
         public void setBankName(String bankName) {
             this.bankName = bankName;
-        }
-
-        public String getSwiftNo() {
-            return swiftNo;
-        }
-
-        public void setSwiftNo(String swiftNo) {
-            this.swiftNo = swiftNo;
         }
 
         public String getBranchName() {
@@ -586,6 +425,7 @@ public class PartyRequestModel {
         private String creditWorthiness;
         private Double interestRate;
         private String remarks;
+        private Long branchId;
 
         public Long getId() {
             return id;
@@ -633,6 +473,14 @@ public class PartyRequestModel {
 
         public void setRemarks(String remarks) {
             this.remarks = remarks;
+        }
+
+        public Long getBranchId() {
+            return branchId;
+        }
+
+        public void setBranchId(Long branchId) {
+            this.branchId = branchId;
         }
     }
 

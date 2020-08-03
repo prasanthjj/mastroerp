@@ -37,4 +37,11 @@ public class PriceList {
     @Column(name = "delete_status", nullable = false)
     private int pricelistDeleteStatus;
 
+    public PriceList(long l, String s, String s1, String s2, double v, double v1, double v2) {
+
+    }
+
+    public PriceList() {
+
+    }
 }

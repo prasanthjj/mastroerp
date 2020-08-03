@@ -1,6 +1,8 @@
 package com.erp.mastro.exception.handler;
 
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.exception.MastroDataException;
+import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.exception.MastroServiceException;
 import com.erp.mastro.exception.model.MastroError;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,12 @@ public class MastroExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<MastroError> mapException(MastroServiceException exception) {
         MastroError error = new MastroError(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage());
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(MastroEntityException.class)
+    public GenericResponse mapException(MastroEntityException exception) {
+        MastroError error = new MastroError(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage());
+        return new GenericResponse(false, "Entity not found");
     }
 
 }

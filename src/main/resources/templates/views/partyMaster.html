@@ -93,14 +93,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>1</td>
-                                        <td>
+                                    <tr class="gradeX" th:each="partyObj,iterator:${partyList}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td th:text="${partyObj.partyName}">
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="center"></td>
-                                        <td class="center"></td>
+                                        <td th:text="${partyObj.id}">PC2020</td>
+                                        <td class="center" th:text="${partyObj.partyType}"></td>
+                                        <td class="center" th:text="${partyObj.categoryType}"></td>
+                                        <td>Open</td>
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static com.erp.mastro.constants.Constants.ROLE_ADMIN;
+import static com.erp.mastro.constants.Constants.ROLE_SUPERADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -61,7 +62,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register/**").permitAll()
-                .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN)
+                .antMatchers("/addEmployee/**").permitAll()
+                .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -90,9 +93,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/resources/**"
-                        ,"/css/**",
+                        , "/css/**",
                         "/h2-console/**",
-                        "/register");
+                        "/register",
+                        "/addEmployee");
     }
 
 }

@@ -5,15 +5,11 @@
  *
  */
 
-
 $(document).ready(function () {
-
-    
 
     // Fast fix bor position issue with Propper.js
     // Will be fixed in Bootstrap 4.1 - https://github.com/twbs/bootstrap/pull/24092
     Popper.Defaults.modifiers.computeStyle.gpuAcceleration = false;
-
 
     // Add body-small class if window less than 768px
     if (window.innerWidth < 769) {
@@ -120,7 +116,6 @@ $(document).ready(function () {
         event.preventDefault();
         $("body").toggleClass("mini-navbar");
         SmoothlyMenu();
-
     });
 
     // Tooltips demo
@@ -128,7 +123,6 @@ $(document).ready(function () {
         selector: "[data-toggle=tooltip]",
         container: "body"
     });
-
 
     // Move right sidebar top after scroll
     $(window).scroll(function () {
@@ -167,7 +161,6 @@ $(window).bind("load", function () {
     }
 });
 
-
 // check if browser support HTML5 local storage
 function localStorageSupport() {
     return (('localStorage' in window) && window['localStorage'] !== null)
@@ -177,15 +170,12 @@ function localStorageSupport() {
 // Set proper body class and plugins based on user configuration
 $(document).ready(function () {
     if (localStorageSupport()) {
-
         var collapse = localStorage.getItem("collapse_menu");
         var fixedsidebar = localStorage.getItem("fixedsidebar");
         var fixednavbar = localStorage.getItem("fixednavbar");
         var boxedlayout = localStorage.getItem("boxedlayout");
         var fixedfooter = localStorage.getItem("fixedfooter");
-
         var body = $('body');
-
         if (fixedsidebar == 'on') {
             body.addClass('fixed-sidebar');
             $('.sidebar-collapse').slimScroll({
@@ -193,7 +183,6 @@ $(document).ready(function () {
                 railOpacity: 0.9
             });
         }
-
         if (collapse == 'on') {
             if (body.hasClass('fixed-sidebar')) {
                 if (!body.hasClass('body-small')) {
@@ -203,19 +192,15 @@ $(document).ready(function () {
                 if (!body.hasClass('body-small')) {
                     body.addClass('mini-navbar');
                 }
-
             }
         }
-
         if (fixednavbar == 'on') {
             $(".navbar-static-top").removeClass('navbar-static-top').addClass('navbar-fixed-top');
             body.addClass('fixed-nav');
         }
-
         if (boxedlayout == 'on') {
             body.addClass('boxed-layout');
         }
-
         if (fixedfooter == 'on') {
             $(".footer").addClass('fixed');
         }
@@ -274,12 +259,26 @@ function WinMove() {
         .disableSelection();
 }
 
-
 $(".addUom").click(function(){
     $("#uomBox").append("<div class='row uomDiv'><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction Type</label><div class='col-sm-12'><select class='form-control m-b' name=''><option>Select</option><option></option><option></option></select></div></div></div><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction UOM</label><div class='col-sm-12'><select class='form-control m-b' name=''><option>Select</option><option></option><option></option></select></div></div></div><div class='col-lg-4'><div class='form-group  row'><label class='col-sm-12 col-form-label'>Convention Factor</label><div class='col-sm-10'><input type='text' class='form-control'></div><div class='col-sm-2 text-right'><h2><a class='removeUom'> <i class='fa fa-times-circle'></i></a></h2></div></div></div></div>");
   });
   $(document).on('click', '.removeUom', function() {
     $(this).parents('.uomDiv').remove();
 });
- 
-  
+
+//Autocomplete Start
+function autoComplete(url, className) {
+    $.ajax({
+        type : 'GET',
+        contentType: "application/json",
+        url : url,
+        dataType : "json",
+        success : function(data) {
+             $("." + className).typeahead({
+                source: data.data.value,
+                minLength : 3
+            });
+        }
+    });
+}
+//Autocomplete End

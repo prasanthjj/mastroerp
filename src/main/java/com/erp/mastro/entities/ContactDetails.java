@@ -19,9 +19,6 @@ public class ContactDetails {
     @Column(name = "contact_person_name")
     private String contactPersonName;
 
-    @Column(name = "contact_type")
-    private String contactType;
-
     @Column(name = "designation")
     private String designation;
 

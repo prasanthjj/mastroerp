@@ -30,9 +30,6 @@ public class BillingDetails {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "area")
-    private String area;
-
     @Column(name = "pin_code")
     private String pinCode;
 
@@ -48,26 +45,8 @@ public class BillingDetails {
     @Column(name = "contact_person_name")
     private String contactPersonName;
 
-    @Column(name = "gst")
-    private String gst;
-
     @Column(name = "email_id")
     private String emailId;
-
-    @Column(name = "ecc_no")
-    private String eccNo;
-
-    @Column(name = "commision_rate")
-    private String commisionRate;
-
-    @Column(name = "range_no")
-    private String rangeNo;
-
-    @Column(name = "division")
-    private String division;
-
-    @Column(name = "range_address")
-    private String rangeAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "party_billing_details", joinColumns = {@JoinColumn(name = "billing_id", referencedColumnName = "id")}

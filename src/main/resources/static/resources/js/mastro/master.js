@@ -77,38 +77,7 @@ $(document).ready(function(){
         });
     });
     // Remove HSN end
-    // Add HSN start
-    $('#addHsnEntryDate .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-    $('#addHsnEffectiveDate .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-    // Add HSN end
-    // Edit HSN start
-    $('#editHsnEntryDate .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-    $('#editHsnEffectiveDate .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-    // Edit HSN end
+
 
     //remove assets start
     $('.removeAsset').click(function () {

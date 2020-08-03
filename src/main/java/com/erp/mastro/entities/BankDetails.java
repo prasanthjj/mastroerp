@@ -15,9 +15,6 @@ public class BankDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_type")
-    private String accountType;
-
     @Column(name = "ifsc_code")
     private String ifscCode;
 
@@ -27,9 +24,6 @@ public class BankDetails {
     @Column(name = "bank_name")
     private String bankName;
 
-    @Column(name = "swift_no")
-    private String swiftNo;
-
     @Column(name = "branch_name")
     private String branchName;
 
@@ -37,7 +31,7 @@ public class BankDetails {
     private String bankAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "party_billing_details", joinColumns = {@JoinColumn(name = "bank_details_id", referencedColumnName = "id")}
+    @JoinTable(name = "party_bank_details", joinColumns = {@JoinColumn(name = "bank_details_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")})
     private Party party;
 

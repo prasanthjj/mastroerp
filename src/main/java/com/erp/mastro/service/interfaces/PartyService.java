@@ -1,6 +1,8 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.*;
+import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.IndustryTypeRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
 
 import java.util.List;
@@ -12,19 +14,25 @@ public interface PartyService {
 
     Party getPartyById(Long id);
 
-    void saveOrUpdateParty(PartyRequestModel partyRequestModel);
+    List<IndustryType> getAllIndustryType();
+
+    IndustryType getIndustryTypeById(Long id);
+
+    Party saveOrUpdateParty(PartyRequestModel partyRequestModel) throws ModelNotFoundException;
 
     void deleteParty(Long id);
 
     void deletePartyDetails(Long id);
 
-    Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party);
+    Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException;
 
-    Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party);
+    Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException;
 
     Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party);
 
     Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party);
+
+    void saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
 
     void saveOrUpdatePartyProducts(Party party, Set<Product> products);
 
