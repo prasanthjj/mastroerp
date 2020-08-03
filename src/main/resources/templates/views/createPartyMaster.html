@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Party </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
+    <link href="../resources/css/plugins/iCheck/custom.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/iCheck/custom.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Party</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="party_master.html">Party List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Party</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form id="createPartyForm" th:action="@{/master/saveParty}" th:object="${partyForm}"
+                                  name="partyForm" method="post" class="wizard-big">
+                                <h1>General Details</h1>
+                                <fieldset>
+                                    <h2>General Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Party Type <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b" name="partyType">
+                                                    <option value="">Select</option>
+                                                    <option>Supplier</option>
+                                                    <option>Customer</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Party Name<i class="fa fa-asterisk "></i></label>
+                                                <input name="partyName" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Category Type</label>
+                                                <select class="form-control m-b" name="categoryType">
+                                                    <option value="">Select</option>
+                                                    <option>A</option>
+                                                    <option>B</option>
+                                                    <option>C</option>
+                                                    <option>D</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label>Payment Terms</label>
+                                                <input name="paymentTerms" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Old Ref. Code</label>
+                                                <input name="oldReferCode" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Relationship Manager</label>
+                                                <select class="form-control m-b partyRelationshipManager"
+                                                        name="relationshipMananger">
+                                                    <option value="">Select</option>
+                                                    <option>Name 1</option>
+                                                    <option>Name 2</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Date</label>
+                                                <div id="partyCreationDate">
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                        <input type="text" name="partyDate" class="form-control"
+                                                               value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Industry Type</label>
+                                                <select class="form-control m-b partyIndustryType" id="industryType"
+                                                        name="industryid">
+                                                    <option value="">Select</option>
+                                                    <option th:each="indtype : ${industryTypes}"
+                                                            th:value="${indtype .id}"
+                                                            th:text="${indtype .industryType}"></option>
+                                                    <option value="addPartyIndustryType">Add Industry Type</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Contact Details</h1>
+                                <fieldset>
+                                    <div id="partyContactDetails">
+                                        <h2>Contact Details</h2>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Contact Person Name<i class="fa fa-asterisk"></i></label>
+                                                    <input name="contactDetailsModelList[0].contactPersonName"
+                                                           type="text"
+                                                           class="form-control " required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <textarea class="form-control" rows="5"
+                                                              name="contactDetailsModelList[0].address">
+                                                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Designation<i class="fa fa-asterisk"></i></label>
+                                                    <input name="contactDetailsModelList[0].designation" type="text"
+                                                           class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Telephone No.</label>
+                                                    <input name="contactDetailsModelList[0].telephoneNo" type="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Mobile No.<i class="fa fa-asterisk"></i></label>
+                                                    <input name="contactDetailsModelList[0].mobileNo" type="text"
+                                                           class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Fax No.</label>
+                                                    <input name="contactDetailsModelList[0].faxNo" type="text"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+
+                                                <div class="form-group">
+                                                    <label>Department</label>
+                                                    <input name="contactDetailsModelList[0].department" type="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Alt Telephone No.</label>
+                                                    <input name="contactDetailsModelList[0].altTelephoneNo" type="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Alt Mobile No.</label>
+                                                    <input name="contactDetailsModelList[0].altMobileNo" type="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label> Email ID</label>
+                                                    <input name="contactDetailsModelList[0].emailId" type="email"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hr-line-dashed"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button class="btn btn-primary dim" type="button"
+                                                    id="addPartyContactDetails"><i
+                                                    class="fa fa-plus-square"></i></button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Billing/Dispatch Details</h1>
+                                <fieldset>
+                                    <h2>Address Details</h2>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Type <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b" name="billingDetailsModelList[0].type"
+                                                        required>
+                                                    <option value="">Select</option>
+                                                    <option>Dispatch</option>
+                                                    <option>Billing</option>
+                                                    <option>Both</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cont. Person Name <i class="fa fa-asterisk "></i></label>
+                                                <input name="billingDetailsModelList[0].contactPersonName" type="text"
+                                                       class="form-control  " required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <input name="billingDetailsModelList[0].designation" type="text"
+                                                       class="form-control  ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Telephone No. <i class="fa fa-asterisk "></i></label>
+                                                <input name="billingDetailsModelList[0].telephoneNo" type="text"
+                                                       class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label> Email ID</label>
+                                                <input name="billingDetailsModelList[0].emailId" type="email"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Fax No.</label>
+                                                <input name="billingDetailsModelList[0].faxNo" type="text"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Country <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b billingCountry "
+                                                        name="billingDetailsModelList[0].country" required>
+                                                    <option value="">Select</option>
+                                                    <option>India</option>
+                                                    <option>UAE</option>
+                                                    <!-- <option>Country name</option>-->
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label> State <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b billingState"
+                                                        name="billingDetailsModelList[0].state" required>
+                                                    <option value="">Select</option>
+                                                    <option>Kerala</option>
+                                                    <option>Tamil Nadu</option>
+                                                    <option>Karnataka</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>City <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b billingCity"
+                                                        name="billingDetailsModelList[0].city" required>
+                                                    <option value="">Select</option>
+                                                    <option>Cochin</option>
+                                                    <option>Chennai</option>
+                                                    <option>Banglore</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Pin Code<i class="fa fa-asterisk "></i></label>
+                                                <input name="billingDetailsModelList[0].pinCode" type="text"
+                                                       class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Street/Lane</label>
+                                                <textarea class="form-control " rows="4"
+                                                          name="billingDetailsModelList[0].street"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Bank Details</h1>
+                                <fieldset>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label>Account No. <i class="fa fa-asterisk"></i></label>
+                                                <input name="bankDetailsModelList[0].accountNo" type="text"
+                                                       class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>IFSC Code <i class="fa fa-asterisk"></i></label>
+                                                <input name="bankDetailsModelList[0].ifscCode" type="text"
+                                                       class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label>Bank Name <i class="fa fa-asterisk"></i></label>
+                                                <input name="bankDetailsModelList[0].bankName" type="text"
+                                                       class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label> Branch Name <i class="fa fa-asterisk"></i></label>
+                                                <input name="bankDetailsModelList[0].branchName" type="text"
+                                                       class="form-control" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label> Bank Address</label>
+                                                <textarea class="form-control " rows="4" name="bankAddress"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Credit Information</h1>
+                                <fieldset>
+                                    <p class="text-right"><input type="checkbox" id="ckbCheckAll" name="select" class=""
+                                                                 value="select"/> Select All </p>
+                                    <table class="table table-bordered  white-bg creditDaysTable">
+                                        <thead>
+                                        <tr class="mastro-blue-bg txt-white">
+                                            <th class="mastro-blue-bg">Select</th>
+                                            <th class="mastro-blue-bg">Branch Name</th>
+                                            <th class="mastro-blue-bg">Credit Limit</th>
+                                            <th class="mastro-blue-bg">Credit Days</th>
+                                            <th class="mastro-blue-bg">Credit Worthiness</th>
+                                            <th class="mastro-blue-bg">Interest Rate</th>
+                                            <th class="mastro-blue-bg">Remark</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="brn,iterator:${branchList}">
+                                            <td class="m-t-lg">
+                                                <input type="checkbox" name="branchId" class="checkBoxClass"
+                                                       th:value="${brn.id}"/>
+                                            </td>
+                                            <td th:text="${brn.branchName}">Mastro Metals Pvt. Ltd.</td>
+                                            <td><input name="creditLimit" type="text" class="form-control" required>
+                                            </td>
+                                            <td><input name="creditDays" type="text" class="form-control" required></td>
+                                            <td><input name="creditWorthiness" type="text" class="form-control"></td>
+                                            <td><input name="interestRates" type="text" class="form-control"></td>
+                                            <td><textarea class="form-control " rows="1" name="remarks"></textarea></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="addPartyIndustryType" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="addPartyIndustryTypeForm" th:action="@{/master/saveIndustryType}" th:object="${industryForm}"
+              name="industryForm" method="post" class="wizard-big">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close closePartyIndustryType"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Party Industry Type</h4>
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Industry Type</label>
+
+                            <div class="col-sm-8"><input type="text" name="industryType" required class="form-control"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white closePartyIndustryType">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js"
+        th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js"
+        th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/mastro/mastro_steps.js"
+        th:src="@{/resources/js/mastro/mastro_steps.js}"></script>
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Data picker -->
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"
+        th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<!-- Select2 -->
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+<!-- Tags Input -->
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
+        th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<!-- iCheck -->
+<script src="../resources/js/plugins/iCheck/icheck.min.js"
+        th:src="@{/resources/js/plugins/iCheck/icheck.min.js}"></script>
+
+
+</body>
+
+</html>
