@@ -8,6 +8,7 @@ import com.erp.mastro.entities.Party;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndustryTypeRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
+import com.erp.mastro.repository.BranchRepository;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class PartyController {
 
     @Autowired
     private BranchService branchService;
+
+    @Autowired
+    private BranchRepository branchRepository;
 
     /**
      * The method for get the full party list
@@ -139,14 +143,7 @@ public class PartyController {
             String[] interestRates = request.getParameterValues("interestRates");
             String[] remarks = request.getParameterValues("remarks");
 
-            System.out.println("goodees" + branchIds.length + creditLimits.length + creditDays.length + creditWorthiness.length + remarks.length);
-          /*  for (int i = 0; i < branchIds.length; i++) {
-                CreditDetails creditDetails = new CreditDetails();
-
-
-            }*/
-
-            partyService.saveOrUpdateParty(partyRequestModel);
+            partyService.saveOrUpdateParty(partyRequestModel, branchIds, creditLimits, creditDays, creditWorthiness, interestRates, remarks);
             return "redirect:/master/getPartys";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "PartyRequestModel model empty", e);

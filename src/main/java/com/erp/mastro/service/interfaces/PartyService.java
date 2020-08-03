@@ -18,7 +18,7 @@ public interface PartyService {
 
     IndustryType getIndustryTypeById(Long id);
 
-    Party saveOrUpdateParty(PartyRequestModel partyRequestModel) throws ModelNotFoundException;
+    Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException;
 
     void deleteParty(Long id);
 
@@ -30,7 +30,7 @@ public interface PartyService {
 
     Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party);
 
-    Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party);
+    Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party);
 
     void saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
 

@@ -80,7 +80,7 @@ public class PartyServiceImpl implements PartyService {
      * @throws ModelNotFoundException
      */
     @Transactional(rollbackOn = {Exception.class})
-    public Party saveOrUpdateParty(PartyRequestModel partyRequestModel) throws ModelNotFoundException {
+    public Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException {
 
         Party party = new Party();
 
@@ -107,7 +107,7 @@ public class PartyServiceImpl implements PartyService {
                 party.setBankDetails(bankDetails);
                 Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
                 party.setBillingDetails(billingDetails);
-                Set<CreditDetails> creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, party);
+                Set<CreditDetails> creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
                 party.setCreditDetails(creditDetails);
                 partyRepository.save(party);
 
@@ -317,35 +317,22 @@ public class PartyServiceImpl implements PartyService {
 
 
     @Transactional(rollbackOn = {Exception.class})
-    public Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, Party party) {
+    public Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchIds, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party) {
 
         MastroLogUtils.info(PartyService.class, "Going to save party credit details {}" + partyRequestModel.toString());
         Set<CreditDetails> creditDetailsSet = new HashSet<>();
-
-        if (partyRequestModel.getCreditDetailsModelList().isEmpty() == false) {
-            partyRequestModel.getCreditDetailsModelList().parallelStream()
-                    .forEach(x -> {
-                        CreditDetails creditDetails;
-                        if (!containsInList(x.getId(), party.getCreditDetails().stream().filter(partyCreditdata -> (null != partyCreditdata)).map(y -> y.getId()).collect(Collectors.toList()))) {
-                            creditDetails = new CreditDetails();
-                            creditDetails.setBranch(branchRepository.findById(Long.parseLong(x.getBranchId().toString())).get());
-                            creditDetails.setCreditLimit(x.getCreditLimit());
-                            creditDetails.setCreditDays(x.getCreditDays());
-                            creditDetails.setCreditWorthiness(x.getCreditWorthiness());
-                            creditDetails.setInterestRate(x.getInterestRate());
-                            creditDetails.setRemarks(x.getRemarks());
-                            creditDetailsSet.add(creditDetails);
-                        } else {
-                            creditDetails = party.getCreditDetails().stream().filter(partyCreditdata -> (null != partyCreditdata)).filter(z -> z.getId().equals(x.getId())).findFirst().get();
-                            creditDetails.setCreditLimit(x.getCreditLimit());
-                            creditDetails.setCreditDays(x.getCreditDays());
-                            creditDetails.setCreditWorthiness(x.getCreditWorthiness());
-                            creditDetails.setInterestRate(x.getInterestRate());
-                            creditDetails.setRemarks(x.getRemarks());
-                            creditDetailsSet.add(creditDetails);
-                        }
-                    });
+        for (int i = 0; i < branchIds.length; i++) {
+            CreditDetails creditDetails = new CreditDetails();
+            Optional<Branch> branch = Optional.of(branchRepository.findById(Long.parseLong(branchIds[i])).get());
+            creditDetails.setBranch(branch.get());
+            creditDetails.setCreditLimit(creditLimits[i]);
+            creditDetails.setCreditDays(creditDays[i]);
+            creditDetails.setCreditWorthiness(creditWorthiness[i]);
+            creditDetails.setInterestRate(Double.parseDouble(interestRates[i]));
+            creditDetails.setRemarks(remarks[i]);
+            creditDetailsSet.add(creditDetails);
         }
+
         removeBlankCreditDetails(creditDetailsSet);
         return creditDetailsSet;
     }
