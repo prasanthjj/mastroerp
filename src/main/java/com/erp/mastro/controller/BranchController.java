@@ -61,7 +61,7 @@ public class BranchController {
 
    @RequestMapping(value = "/editBranch", method = RequestMethod.GET)
     public String editBranch(HttpServletRequest request, @RequestParam("branchId") Long branchId, Model model) {
-       System.out.println("inside editBranch branchId" + branchId);
+       System.out.println("inside editBranch branchId " + branchId);
         try {
             Branch branch=branchService.getBranchById(branchId);
 

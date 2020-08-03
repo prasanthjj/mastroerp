@@ -221,21 +221,24 @@
                                             <div class="form-group "  id="vatEffectFrmDate">
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <th:block th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss')}">
-                                                        <input type="text" class="form-control" name="vatDate"  th:value="${#dates.format(sdf.parse(branchForm.vatDate), 'MM/dd/yyyy')}" />
-                                                    </th:block>
-
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                    <!--                                                    <th:block th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss')}">-->
+                                                    <!--                                                        <input type="text" class="form-control" name="vatDate"  th:value="${#dates.format(sdf.parse(branchForm.vatDate), 'MM/dd/yyyy')}" />-->
+                                                    <!--                                                    </th:block>-->
+                                                    <input class="form-control" name="sVatDate"
+                                                           th:value="${branchForm.sVatDate}" type="text"/>
                                                 </div>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group" id="cstEffectFrmDate">
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <th:block th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss')}">
-                                                        <input type="text" class="form-control" name="cstdate"  th:value="${#dates.format(sdf.parse(branchForm.cstdate), 'MM/dd/yyyy')}" />
-                                                    </th:block>
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+
+                                                    <input class="form-control" name="sCstdate"
+                                                           th:value="${branchForm.sCstdate}" type="text"/>
 
                                                 </div>
                                             </div>
@@ -262,7 +265,10 @@
                                             <div class="form-group" id="sTaxEffectFrmDate">
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="staxDate" th:value="${branchForm.staxDate}">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" name="sStaxDate"
+                                                        th:value="${branchForm.sStaxDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -282,7 +288,10 @@
                                             <div class="form-group" id="incomeTaxEffectFrmDate">
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="panDate" th:value="${branchForm.panDate}">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" name="sPanDate"
+                                                        th:value="${branchForm.sPanDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -303,7 +312,8 @@
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="text" class="form-control" name="pfDate" th:value="${branchForm.pfDate}">
+                                                    <input class="form-control" name="sPfDate"
+                                                           th:value="${branchForm.sPfDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -324,10 +334,8 @@
                                                 <label>With effect From Date	</label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <th:block th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss')}">
-                                                        <input type="text" class="form-control" name="esicDate"  th:value="${#dates.format(sdf.parse(branchForm.esicDate), 'MM/dd/yyyy')}" />
-                                                    </th:block>
-
+                                                    <input class="form-control" name="sEsicDate"
+                                                           th:value="${branchForm.sEsicDate}" type="text"/>
 
                                                 </div>
                                             </div>
@@ -428,10 +436,8 @@
                                                 <label>CIN Date	</label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <th:block th:with="sdf = ${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss')}">
-                                                        <input type="text" class="form-control" name="cinDate"  th:value="${#dates.format(sdf.parse(branchForm.cinDate), 'MM/dd/yyyy')}" />
-                                                    </th:block>
-
+                                                    <input class="form-control" name="sCinDate"
+                                                           th:value="${branchForm.sCinDate}" type="text"/>
                                                     <!--<input type="text" class="form-control" name="cinDate"  th:value="${#dates.format(branchForm.cinDate,'MM/dd/yyyy')}">-->
 
 

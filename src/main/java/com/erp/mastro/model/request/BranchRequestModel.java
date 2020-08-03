@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Setter(AccessLevel.PUBLIC)
@@ -27,36 +29,45 @@ public class BranchRequestModel {
     private String branchAddress;
     private String faxNo;
     private String pinCode;
-    private String creationDate;
     private String tanNo;
     private String vatTinNo;
-    private String vatDate;
-    private String cstTinNo;
-    private String cstdate ;
     private String juridical ;
     private String sTaxNo;
-    private String staxDate ;
+    private String cstTinNo;
     private String panNo;
-    private String panDate ;
     private String pfAccount;
-    private String pfDate ;
     private String esicAccount ;
-    private String esicDate ;
     private String eccNo ;
     private String plaNo ;
-    private String range ;
-    private String division ;
-    private String rangeAddress ;
+    private String range;
+    private String division;
+    private String rangeAddress;
     private String divisionAddress;
-    private String Commissionerate ;
-    private String exempted ;
+    private String Commissionerate;
+    private String exempted;
     private String commissionerateAddress;
     private String limit;
     private String gstIn;
     private String cinNo;
-    private String cinDate;
+    private Date creationDate;
+    private Date vatDate;
+    private Date cstdate;
+    private Date staxDate;
+    private Date panDate;
+    private Date pfDate;
+    private Date esicDate;
+    private Date cinDate;
+    private String sCreationDate;
+    private String sVatDate;
+    private String sCstdate;
+    private String sStaxDate;
+    private String sPanDate;
+    private String sPfDate;
+    private String sEsicDate;
+    private String sCinDate;
 
-    public BranchRequestModel() {}
+    //    private String dateFormatter ="MM/dd/yyyy";
+    private DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     public BranchRequestModel(Branch branch) {
         this.id = branch.getId();
@@ -78,33 +89,33 @@ public class BranchRequestModel {
         this.tanNo = branch.getBranchRegistration().getTanNo();
         this.vatTinNo = branch.getBranchRegistration().getVatTinNo();
         if(branch.getBranchRegistration().getVatDate()!=null){
-            this.vatDate = branch.getBranchRegistration().getVatDate().toString();
+            this.vatDate = branch.getBranchRegistration().getVatDate();
         }
 
         this.cstTinNo = branch.getBranchRegistration().getCstTinNo();
         if(branch.getBranchRegistration().getCstdate()!=null){
-            this.cstdate = branch.getBranchRegistration().getCstdate().toString();
+            this.cstdate = branch.getBranchRegistration().getCstdate();
 
         }
         this.juridical = branch.getBranchRegistration().getJuridical();
         this.sTaxNo = branch.getBranchRegistration().getSTaxNo();
         if(branch.getBranchRegistration().getStaxDate()!=null){
-            this.staxDate = branch.getBranchRegistration().getStaxDate().toString();
+            this.staxDate = branch.getBranchRegistration().getStaxDate();
         }
 
         this.panNo = branch.getBranchRegistration().getPanNo();
         if(branch.getBranchRegistration().getPanDate()!=null){
-            this.panDate = branch.getBranchRegistration().getPanDate().toString();
+            this.panDate = branch.getBranchRegistration().getPanDate();
         }
 
         this.pfAccount = branch.getBranchRegistration().getPfAccount();
         if(branch.getBranchRegistration().getPfDate()!=null){
-            this.pfDate = branch.getBranchRegistration().getPfDate().toString();
+            this.pfDate = branch.getBranchRegistration().getPfDate();
         }
 
         this.esicAccount = branch.getBranchRegistration().getEsicAccount();
         if(branch.getBranchRegistration().getEsicDate()!=null){
-            this.esicDate = branch.getBranchRegistration().getEsicDate().toString();
+            this.esicDate = branch.getBranchRegistration().getEsicDate();
         }
 
         this.eccNo = branch.getBranchRegistration().getEccNo();
@@ -119,11 +130,141 @@ public class BranchRequestModel {
         this.limit = branch.getBranchRegistration().getLimit();
         this.gstIn = branch.getBranchRegistration().getGstIn();
         this.cinNo = branch.getBranchRegistration().getCinNo();
-        if(branch.getBranchRegistration().getCinDate()!=null){
-            this.cinDate = branch.getBranchRegistration().getCinDate().toString();
+        if (branch.getBranchRegistration().getCinDate() != null) {
+            this.cinDate = branch.getBranchRegistration().getCinDate();
         }
 
+    }
 
+    public String getsCreationDate() {
+        if (sCreationDate != null) {
+            return sCreationDate;
+        }
+        Date date = getCreationDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsCreationDate(String sCreationDate) {
+        this.sCreationDate = sCreationDate;
+    }
+
+    public String getsVatDate() {
+        if (sVatDate != null) {
+            return sVatDate;
+        }
+        Date date = getVatDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsVatDate(String sVatDate) {
+        this.sVatDate = sVatDate;
+    }
+
+    public String getsCstdate() {
+        if (sCstdate != null) {
+            return sCstdate;
+        }
+        Date date = getCstdate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsCstdate(String sCstdate) {
+        this.sCstdate = sCstdate;
+    }
+
+    public String getsStaxDate() {
+        if (sStaxDate != null) {
+            return sStaxDate;
+        }
+        Date date = getStaxDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsStaxDate(String sStaxDate) {
+        this.sStaxDate = sStaxDate;
+    }
+
+    public String getsPanDate() {
+        if (sPanDate != null) {
+            return sPanDate;
+        }
+        Date date = getPanDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsPanDate(String sPanDate) {
+        this.sPanDate = sPanDate;
+    }
+
+    public String getsPfDate() {
+        if (sPfDate != null) {
+            return sPfDate;
+        }
+        Date date = getPfDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsPfDate(String sPfDate) {
+        this.sPfDate = sPfDate;
+    }
+
+    public String getsEsicDate() {
+        if (sEsicDate != null) {
+            return sEsicDate;
+        }
+        Date date = getEsicDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public void setsEsicDate(String sEsicDate) {
+        this.sEsicDate = sEsicDate;
+    }
+
+    public String getsCinDate() {
+        if (sCinDate != null) {
+            return sCinDate;
+        }
+        Date date = getCinDate();
+        if (date == null) {
+            return "";
+        } else {
+            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        }
+    }
+
+    public BranchRequestModel() {
+    }
+
+    public void setsCinDate(String sCinDate) {
+        this.sCinDate = sCinDate;
     }
 
     @Override
