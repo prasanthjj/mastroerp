@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 //import com.erp.mastro.common.MailUtils;
+import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.UserModel;
@@ -22,8 +23,8 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
 
-    /*@Autowired
-    private MailUtils mailUtils;*/
+    @Autowired
+    private MailUtils mailUtils;
 
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
@@ -131,14 +132,6 @@ public class UserController {
     public String register(@ModelAttribute ("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) {
 
         userService.saveOrUpdateUser(userModel,request);
-         /*List<User> userList = userService.getAllUsers().stream()
-                .filter(userData -> (null != branchData))
-                .filter(branchData -> (1 != branchData.geUserDeleteStatus()))
-                .sorted(Comparator.comparing(
-                        Brand::getId).reversed())
-                .collect(Collectors.toList());
-*/
-
 
         return "redirect:/admin/addUser";
     }
@@ -206,14 +199,6 @@ public class UserController {
             userModelBranchEdits.add(editBranch);
         }
 
- /*       Set<UserModel.UserModelEdit> union = new HashSet<UserModel.UserModelEdit>(rolemodelEdits);
-        union.addAll(userModelEdits);
-// Prepare an intersection
-        Set<UserModel.UserModelEdit> intersection = new HashSet<UserModel.UserModelEdit>(rolemodelEdits);
-        intersection.removeAll(userModelEdits);
-// Subtract the intersection from the union
-        union.removeAll(intersection);
-// Print the result*/
         return new GenericResponse(true,"get User details")
                 .setProperty("userId",userDetails.getId())
                 .setProperty("email",userDetails.getEmail())

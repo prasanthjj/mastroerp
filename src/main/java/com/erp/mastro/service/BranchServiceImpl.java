@@ -160,9 +160,10 @@ public class BranchServiceImpl implements BranchService {
             String sDate1=branchRequestModel.getVatDate();
             if(sDate1!="")
             {
-
+               System.out.println("date:"+sDate1);
                 Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
                 branchRegistration.setVatDate(date1);
+
             }
             branchRegistration.setCstTinNo(branchRequestModel.getCstTinNo());
             String sDate2=branchRequestModel.getCstdate();
@@ -226,7 +227,7 @@ public class BranchServiceImpl implements BranchService {
             String sDate7=branchRequestModel.getCinDate();
             if(sDate7!="")
             {
-                System.out.println("inside if edit");
+
                 Date date7=new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
                 branchRegistration.setCinDate(date7);
             }

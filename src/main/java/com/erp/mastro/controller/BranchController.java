@@ -64,6 +64,7 @@ public class BranchController {
        System.out.println("inside editBranch branchId" + branchId);
         try {
             Branch branch=branchService.getBranchById(branchId);
+
             System.out.println("branch : " + branch);
             BranchRequestModel branchRequestModel =new BranchRequestModel(branch);
             model.addAttribute("adminModule", "adminModule");

@@ -235,40 +235,31 @@ $(document).ready(function(){
 
 
 //Role access starts
-
  $('#roleAccess').change(function (e) {
    e.preventDefault();
     var rolesId=document.getElementById("roleAccess").value;
-     alert("Role id :"+rolesId);
+
      $.ajax({
       url: '/admin/getRoleAccessEdit',
               type: 'GET',
               dataType : 'json',
               data: {'roleId': rolesId},
                success: function(data){
-               alert("sucess");
+
                if(data.success) {
-
-                   $("#moduleCheckId tbody").html("");
-
-                   
+               $("#moduleCheckId tbody").html("");
 
                     $.each(data.data.rolemodules, function(i){
                      i++;
-                     var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value='+this['id'] + '/> "+ "</td>";
+                     var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value=" +this['id'] +" '/> "+ "</td>";
                      $(tblRow).appendTo("#moduleCheckId tbody");
                     });
                      $.each(data.data.remainingModules, function(i){
-                        j++;
-                        var tblRow = "<tr class='gradeX'>" + "<td>" + j  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName'  value='+this['id'] + '/> "+ "</td>";
-                                                                            $(tblRow).appendTo("#moduleCheckId tbody");
-                      });
+                                         i++;
+                                         var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' value=" +this['id'] +"  '/> "+ "</td>";
+                                         $(tblRow).appendTo("#moduleCheckId tbody");
+                                        });
 
-                    /*  $.each(data.data.fullrolemodules, function(i){
-                                           i++;
-                                           var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName'/>"+ "</td>";
-                                           $(tblRow).appendTo("#moduleCheckId tbody");
-                                          });*/
                    }
 
                  },
@@ -384,28 +375,37 @@ $("body").on('click','.userEdit',function (e) {
             });
 
 
+// dashobard starts
+ //$('#userBranch').change(function (e)
+/* $('#userBranch').on('click','.userBranch',function (e){
+   e.preventDefault();
+    var userId=document.getElementById("userBranch").value;
 
-/*
- $('#roleAccess').change(function () {
- alert("hi inside the script");
-*/
-/*     var roleId =$(this).data('roleId');*//*
+     $.ajax({
+      url: '/admin/getUserBranches',
+              type: 'GET',
+              dataType : 'json',
+              data: {'userId': userId},
+               success: function(data){
 
-   */
-/*  if ($('#roleAccess').val() == '') {
-       //selected feild
-
-     }
-     else {
-         //full list
-
-     }*//*
-
+               if(data.success) {
+                    alert("hi");
 
 
+                   }
 
- });
-*/
+                 },
+                error: function(jqXHR, textStatus) {
+                           alert('Error Occured');
+                       }
+
+      });
+
+
+
+
+ });*/
+//dashboard ends
 
 
 });
