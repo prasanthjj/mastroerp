@@ -12,6 +12,9 @@ import java.util.Date;
 @Getter(AccessLevel.PUBLIC)
 public class BranchRequestModel {
 
+    public BranchRequestModel() {
+    }
+
     private Long id;
     private String branchName;
     private String countryName;
