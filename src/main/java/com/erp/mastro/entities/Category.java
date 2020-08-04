@@ -32,6 +32,9 @@ public class Category {
     @Column(name = "creation_date")
     private Date creationDate;
 
+    @Column(name = "delete_status", nullable = false)
+    private int categoryDeleteStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "catalog_category", joinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "catalog_id", referencedColumnName = "id")})
@@ -42,5 +45,18 @@ public class Category {
             , inverseJoinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")})
     private Set<SubCategory> subCategories;
 
+    public Category() {
+
+    }
+
+    public Category(Long id, String categoryName, String categoryDescription, String categoryShortCode, String categoryType, Catalog catalog) {
+        this.id = id;
+        this.categoryName = categoryName;
+        this.categoryDescription = categoryDescription;
+        this.categoryShortCode = categoryShortCode;
+        this.categoryType = categoryType;
+        this.catalog = catalog;
+
+    }
 
 }

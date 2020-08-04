@@ -98,7 +98,12 @@
                                             <div class="form-group">
 
                                                 <label>Is Active</label>
-                                                <h4 th:text="${assetDetails.active}">Ast-23568749</h4>
+                                                <span th:if="${assetDetails.active==true}">
+                                                <h4>Yes</h4>
+                                                    </span>
+                                                <span th:unless="${assetDetails.active== true}">
+                                                <h4>No</h4>
+                                                    </span>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>
@@ -127,7 +132,12 @@
                                             <div class="form-group">
 
                                                 <label>Maintenance Required</label>
-                                                <h4 th:text="${assetDetails.maintenanceRequired}">Ast-23568749</h4>
+                                                <span th:if="${assetDetails.maintenanceRequired==true}">
+                                                <h4>Yes</h4>
+                                                </span>
+                                                <span th:unless="${assetDetails.maintenanceRequired==true}">
+                                                <h4>No</h4>
+                                                </span>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>

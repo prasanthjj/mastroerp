@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Catalog List </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Catalog List </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="catalog_master.html">Catalog List </a>
+                    </li>
+
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="nestable-menu">
+                        <button type="button" data-action="expand-all" class="btn btn-white btn-sm">Expand All</button>
+                        <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">Collapse All
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-8">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5><i class="fa fa-barcode"></i> Catalog List</h5>
+                            <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item font-bold" data-toggle="modal"
+                                               data-target="#addCatalog" href="#"><i class="fa fa-eye"></i> Add Catalog</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="dd" id="nestable2">
+                                <li class="dd-item" data-id="1" th:each="catalogObj,iterator:${catalogList}">
+                                    <div class="dd-handle Catalog-bg">
+                                        <span class="float-right"></span>
+                                        <span class="label label-info"><i class="fa fa-plus"></i></span><span
+                                            th:text="${catalogObj.catalogName}"></span>
+                                    </div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="1">
+                                            <div class="dd-handle">
+                                                <span class="float-right catalogIcon"><a data-toggle="modal"
+                                                                                         class="addCategoyss"
+                                                                                         data-target="#addCategory"
+                                                                                         href="#"
+                                                                                         th:data-catalogid="${catalogObj.id}">  <i
+                                                        class="fa fa-plus-square"></i> </a></span>
+                                                <span class="label label-info "><i class="fa fa-plus"></i></span>
+                                                <strong class="text-success">Category </strong>
+                                            </div>
+                                        </li>
+                                        <span th:each="categoryObj,iterator:${catalogObj.categories}">
+                                        <li class="dd-item" data-id="1" th:if="${categoryObj.categoryDeleteStatus== 0}">
+
+                                            <div class="dd-handle">
+                                                <span class="float-right  catalogIcon">
+                                                    <a data-toggle="modal" class="editCategorys"
+                                                       data-target="#editCategory" href="#"
+                                                       th:data-categoryid="${categoryObj.id}">   <i
+                                                            class="fa fa-edit"></i> </a>
+                                                    <a class="removeCategory"
+                                                       th:data-categoryidremove="${categoryObj.id}" href="#">
+                                                    <i class="fa fa-trash"></i>
+                                                </a> </span>
+                                                <span class="label label-info"><i class="fa fa-cog"></i></span> <span
+                                                    th:text="${categoryObj.categoryName}">Angles & Channels</span>
+                                            </div>
+                                            <ol class="dd-list">
+                                                <li class="dd-item" data-id="3">
+                                                    <div class="dd-handle">
+                                                        <span class="float-right catalogIcon"> <a data-toggle="modal"
+                                                                                                  data-target="#addSubCategory"
+                                                                                                  class="addSubCategorys"
+                                                                                                  href="#"
+                                                                                                  th:data-categoryyid="${categoryObj.id}">  <i
+                                                                class="fa fa-plus-square"></i> </a></span>
+                                                        <span class="label label-info"><i class="fa fa-plus"></i></span><strong
+                                                            class="text-success">Sub Category</strong>
+                                                    </div>
+                                                </li>
+                                                <span th:each="subcategoryObj,iterator:${categoryObj.subCategories}">
+                                                <li class="dd-item" data-id="2"
+                                                    th:if="${subcategoryObj.subCategoryDeleteStatus== 0}">
+
+                                                    <div class="dd-handle">
+                                                        <span class="float-right  catalogIcon">
+                                                            <a data-toggle="modal" data-target="#editSubCategory"
+                                                               href="#" class="editSubCategorys"
+                                                               th:data-subcategoryid="${subcategoryObj.id}">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a class="removeSubCategory" href="#"
+                                                               th:data-subcategoryremoveid="${subcategoryObj.id}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </span>
+                                                        <span class="label label-info"><i class="fa fa-cog"></i></span>
+                                                        <span th:text="${subcategoryObj.subCategoryName}">Angles</span>
+                                                    </div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="5">
+                                                            <div class="dd-handle">
+                                                                <span class="float-right catalogIcon"></span>
+                                                                <span class="label label-info">
+                                                                    <i class="fa fa-plus"></i> </span><strong
+                                                                    class="text-success">Product </strong>
+                                                            </div>
+                                                        </li>
+                                                      <!--  <li class="dd-item" data-id="4">
+                                                            <div class="dd-handle">
+                                                                <span class="float-right  catalogIcon">
+                                                                    
+                                                                     </span>
+                                                                <span class="label label-info"><i class="fa fa-cog"></i></span>
+                                                                Angles 25x6 (1x1/4)
+                                                            </div>
+
+                                                        </li>-->
+                                                    </ol>
+                                                </li>
+                                                </span>
+                                            </ol>
+                                        </li>
+                                        </span>
+                                    </ol>
+                                </li>
+                                <!--  <li class="dd-item" data-id="1">
+                                      <div class="dd-handle Catalog-bg">
+                                          <span class="float-right"></span>
+                                                  <span class="label label-info"><i class="fa fa-plus"></i></span>Root Catalog 2
+                                      </div>
+                                      </li>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="addCatalog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="addCatalogForm" th:action="@{/master/saveCatalog}" th:object="${catalogForm}"
+              name="catalogForm" method="post">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Catalog</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Catalog Name<i
+                                class="fa fa-asterisk "></i></label>
+
+                            <div class="col-sm-8"><input type="text" class="form-control" name="catalogName" required>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Catalog Description</label>
+
+                            <div class="col-sm-8"><textarea class="form-control" name="catalogDescription"></textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="modal inmodal" id="addCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form id="addCategoryForm" th:action="@{/master/saveCategory}" th:object="${categoryForm}"
+              name="categoryForm" method="post">
+            <input type="hidden" name="catalogId" id="catalogId">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Category</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Category Name<i class="fa fa-asterisk"></i></label>
+
+                                <input type="text" class="form-control" name="categoryName" required>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Category Short Code </label>
+
+                                    <input type="text" class="form-control" name="categoryShortCode">
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>CategoryType <i class="fa fa-asterisk"></i></label>
+
+                            <select class="form-control m-b" name="categoryType" required>
+                                <option value="">Select</option>
+                                <option value="a">a</option>
+                                <option value="b">b</option>
+                                <option value="c"> c</option>
+                            </select>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label>Category Description</label>
+
+                                <textarea class="form-control" name="categoryDescription"></textarea>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="modal inmodal" id="editCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <form id="editCategoryForm" th:action="@{/master/saveCategory}" th:object="${categoryForm}"
+              name="categoryForm" method="post">
+            <input type="hidden" name="id" id="categoryId"/>
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Edit Category</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Category Name <i class="fa fa-asterisk"></i></label>
+
+                                <input type="text" class="form-control" name="categoryName" id="categoryName" required>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Category Short Code </label>
+
+                                    <input type="text" name="categoryShortCode" id="categoryShortCode"
+                                           class="form-control">
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Category Type <i class="fa fa-asterisk"></i> </label>
+
+                            <select class="form-control m-b" name="categoryType" id="categoryType" required>
+                                <option>Select</option>
+                                <option value="a">a</option>
+                                <option value="b">b</option>
+                                <option value="c">c</option>
+                            </select>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label>Category Description</label>
+
+                                <textarea class="form-control" id="categoryDescription"
+                                          name="categoryDescription"></textarea>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal inmodal" id="addSubCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="addSubCategoryForm" th:action="@{/master/saveSubCategory}" th:object="${subCategoryForm}"
+              name="subCategoryForm" method="post">
+            <input type="hidden" name="categoryId" id="categorysId">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Sub Category</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Sub Category Name <i
+                                class="fa fa-asterisk"></i> </label>
+
+                            <div class="col-sm-8"><input type="text" class="form-control" name="subCategoryName"
+                                                         required></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Sub Category
+                            Description</label>
+
+                            <div class="col-sm-8"><textarea class="form-control"
+                                                            name="subCategoryDescription"></textarea></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal inmodal" id="editSubCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editSubCategoryForm" th:action="@{/master/saveSubCategory}" th:object="${subCategoryForm}"
+              name="subCategoryForm" method="post">
+            <input type="hidden" id="subCategoryId" name="id">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Edit Sub Category</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group"><label>Sub Category Name <i class="fa fa-asterisk"></i> </label>
+                            <input type="text" class="form-control" name="subCategoryName" id="subCategoryName"
+                                   required>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label>Sub Category Description</label>
+                            <textarea class="form-control" name="subCategoryDescription"
+                                      id="subCategoryDescription"></textarea>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- Nestable List -->
+<script src="../resources/js/plugins/nestable/jquery.nestable.js"
+        th:src="@{/resources/js/plugins/nestable/jquery.nestable.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/mastro/nestable.js" th:src="@{/resources/js/mastro/nestable.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script>
+
+</script>
+</body>
+</html>

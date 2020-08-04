@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -26,12 +27,12 @@ public class BrandController {
     public String getBrand(Model model) {
         MastroLogUtils.info(BrandController.class, "Going to get all Brand :{}");
         try {
-            List<Brand> brandList = new ArrayList<>();
-            for (Brand brand : brandService.getAllBrands()) {
-                if (brand.getBrandDeleteStatus() != 1) {
-                    brandList.add(brand);
-                }
-            }
+            List<Brand> brandList = brandService.getAllBrands().stream()
+                    .filter(brandData -> (null != brandData))
+                    .filter(brandData -> (1 != brandData.getBrandDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            Brand::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("brandForm", new BrandRequestModel());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("brandTab", "brand");

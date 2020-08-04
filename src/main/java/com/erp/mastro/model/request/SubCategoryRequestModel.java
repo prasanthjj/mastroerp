@@ -1,5 +1,11 @@
 package com.erp.mastro.model.request;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 public class SubCategoryRequestModel {
 
     private Long id;
@@ -7,35 +13,13 @@ public class SubCategoryRequestModel {
     private String subCategoryDescription;
     private Long categoryId;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSubCategoryName() {
-        return subCategoryName;
-    }
-
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
-    }
-
-    public String getSubCategoryDescription() {
-        return subCategoryDescription;
-    }
-
-    public void setSubCategoryDescription(String subCategoryDescription) {
-        this.subCategoryDescription = subCategoryDescription;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    @Override
+    public String toString() {
+        return "SubCategoryRequestModel{" +
+                "id=" + id +
+                ", subCategoryName='" + subCategoryName + '\'' +
+                ", subCategoryDescription='" + subCategoryDescription + '\'' +
+                ", categoryId=" + categoryId +
+                '}';
     }
 }
