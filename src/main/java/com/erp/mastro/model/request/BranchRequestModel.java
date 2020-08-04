@@ -1,12 +1,11 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.entities.Branch;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Setter(AccessLevel.PUBLIC)
@@ -31,14 +30,14 @@ public class BranchRequestModel {
     private String pinCode;
     private String tanNo;
     private String vatTinNo;
-    private String juridical ;
+    private String juridical;
     private String sTaxNo;
     private String cstTinNo;
     private String panNo;
     private String pfAccount;
-    private String esicAccount ;
-    private String eccNo ;
-    private String plaNo ;
+    private String esicAccount;
+    private String eccNo;
+    private String plaNo;
     private String range;
     private String division;
     private String rangeAddress;
@@ -66,9 +65,6 @@ public class BranchRequestModel {
     private String sEsicDate;
     private String sCinDate;
 
-    //    private String dateFormatter ="MM/dd/yyyy";
-    private DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
     public BranchRequestModel(Branch branch) {
         this.id = branch.getId();
         this.branchName = branch.getBranchName();
@@ -85,36 +81,35 @@ public class BranchRequestModel {
         this.branchAddress = branch.getBranchAddress();
         this.faxNo = branch.getFaxNo();
         this.pinCode = branch.getPinCode();
-        //this.creationDate = branch.getCreationDate();
         this.tanNo = branch.getBranchRegistration().getTanNo();
         this.vatTinNo = branch.getBranchRegistration().getVatTinNo();
-        if(branch.getBranchRegistration().getVatDate()!=null){
+        if (branch.getBranchRegistration().getVatDate() != null) {
             this.vatDate = branch.getBranchRegistration().getVatDate();
         }
 
         this.cstTinNo = branch.getBranchRegistration().getCstTinNo();
-        if(branch.getBranchRegistration().getCstdate()!=null){
+        if (branch.getBranchRegistration().getCstdate() != null) {
             this.cstdate = branch.getBranchRegistration().getCstdate();
 
         }
         this.juridical = branch.getBranchRegistration().getJuridical();
         this.sTaxNo = branch.getBranchRegistration().getSTaxNo();
-        if(branch.getBranchRegistration().getStaxDate()!=null){
+        if (branch.getBranchRegistration().getStaxDate() != null) {
             this.staxDate = branch.getBranchRegistration().getStaxDate();
         }
 
         this.panNo = branch.getBranchRegistration().getPanNo();
-        if(branch.getBranchRegistration().getPanDate()!=null){
+        if (branch.getBranchRegistration().getPanDate() != null) {
             this.panDate = branch.getBranchRegistration().getPanDate();
         }
 
         this.pfAccount = branch.getBranchRegistration().getPfAccount();
-        if(branch.getBranchRegistration().getPfDate()!=null){
+        if (branch.getBranchRegistration().getPfDate() != null) {
             this.pfDate = branch.getBranchRegistration().getPfDate();
         }
 
         this.esicAccount = branch.getBranchRegistration().getEsicAccount();
-        if(branch.getBranchRegistration().getEsicDate()!=null){
+        if (branch.getBranchRegistration().getEsicDate() != null) {
             this.esicDate = branch.getBranchRegistration().getEsicDate();
         }
 
@@ -137,15 +132,7 @@ public class BranchRequestModel {
     }
 
     public String getsCreationDate() {
-        if (sCreationDate != null) {
-            return sCreationDate;
-        }
-        Date date = getCreationDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sCreationDate, getCreationDate());
     }
 
     public void setsCreationDate(String sCreationDate) {
@@ -153,15 +140,7 @@ public class BranchRequestModel {
     }
 
     public String getsVatDate() {
-        if (sVatDate != null) {
-            return sVatDate;
-        }
-        Date date = getVatDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sVatDate, getVatDate());
     }
 
     public void setsVatDate(String sVatDate) {
@@ -169,15 +148,7 @@ public class BranchRequestModel {
     }
 
     public String getsCstdate() {
-        if (sCstdate != null) {
-            return sCstdate;
-        }
-        Date date = getCstdate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sCstdate, getCstdate());
     }
 
     public void setsCstdate(String sCstdate) {
@@ -185,15 +156,7 @@ public class BranchRequestModel {
     }
 
     public String getsStaxDate() {
-        if (sStaxDate != null) {
-            return sStaxDate;
-        }
-        Date date = getStaxDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sStaxDate, getStaxDate());
     }
 
     public void setsStaxDate(String sStaxDate) {
@@ -201,15 +164,7 @@ public class BranchRequestModel {
     }
 
     public String getsPanDate() {
-        if (sPanDate != null) {
-            return sPanDate;
-        }
-        Date date = getPanDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sPanDate, getPanDate());
     }
 
     public void setsPanDate(String sPanDate) {
@@ -217,15 +172,7 @@ public class BranchRequestModel {
     }
 
     public String getsPfDate() {
-        if (sPfDate != null) {
-            return sPfDate;
-        }
-        Date date = getPfDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sPfDate, getPfDate());
     }
 
     public void setsPfDate(String sPfDate) {
@@ -233,15 +180,7 @@ public class BranchRequestModel {
     }
 
     public String getsEsicDate() {
-        if (sEsicDate != null) {
-            return sEsicDate;
-        }
-        Date date = getEsicDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
+        return MastroApplicationUtils.getStringFromDate(sEsicDate, getEsicDate());
     }
 
     public void setsEsicDate(String sEsicDate) {
@@ -249,18 +188,7 @@ public class BranchRequestModel {
     }
 
     public String getsCinDate() {
-        if (sCinDate != null) {
-            return sCinDate;
-        }
-        Date date = getCinDate();
-        if (date == null) {
-            return "";
-        } else {
-            return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        }
-    }
-
-    public BranchRequestModel() {
+        return MastroApplicationUtils.getStringFromDate(sCinDate, getCinDate());
     }
 
     public void setsCinDate(String sCinDate) {
@@ -316,4 +244,5 @@ public class BranchRequestModel {
                 ", cinDate=" + cinDate +
                 '}';
     }
+
 }
