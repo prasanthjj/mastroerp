@@ -144,6 +144,7 @@ $(document).ready(function(){
     //End Deactive User
 
 
+
     // Add Branch start
     $(function(datepicker) {
         $('#vatEffectFrmDate .input-group.date').datepicker({
@@ -249,14 +250,14 @@ $(document).ready(function(){
                if(data.success) {
                $("#moduleCheckId tbody").html("");
 
-                    $.each(data.data.rolemodules, function(i){
-                     i++;
-                     var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value=" +this['id'] +" '/> "+ "</td>";
+                   $.each(data.data.rolemodules, function(id){
+                     var tblRow = "<tr class='gradeX'>" + "<td>" + this['id']  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value=" +this['id'] +" '/> "+ "</td>";
                      $(tblRow).appendTo("#moduleCheckId tbody");
-                    });
-                     $.each(data.data.remainingModules, function(i){
-                                         i++;
-                                         var tblRow = "<tr class='gradeX'>" + "<td>" + i  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' value=" +this['id'] +"  '/> "+ "</td>";
+                     });
+
+                     $.each(data.data.remainingModules, function(id){
+
+                                         var tblRow = "<tr class='gradeX'>" + "<td>" + this['id']  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' value=" +this['id'] +"  '/> "+ "</td>";
                                          $(tblRow).appendTo("#moduleCheckId tbody");
                                         });
 
@@ -319,8 +320,8 @@ $("body").on('click','.userEdit',function (e) {
                     });
 
                    $.each(data.data.fullroles, function(i){
-/*
-                  var optionRow =$('<option selected="selected">').val(this['id']).text(this['role']);*/
+
+
 
                   ﻿$('#userRoles').append($('<option>').val(this['id']).text(this['role']));
 
@@ -373,39 +374,6 @@ $("body").on('click','.userEdit',function (e) {
  $(".branchList").select2({
                 theme: 'bootstrap4',
             });
-
-
-// dashobard starts
- //$('#userBranch').change(function (e)
-/* $('#userBranch').on('click','.userBranch',function (e){
-   e.preventDefault();
-    var userId=document.getElementById("userBranch").value;
-
-     $.ajax({
-      url: '/admin/getUserBranches',
-              type: 'GET',
-              dataType : 'json',
-              data: {'userId': userId},
-               success: function(data){
-
-               if(data.success) {
-                    alert("hi");
-
-
-                   }
-
-                 },
-                error: function(jqXHR, textStatus) {
-                           alert('Error Occured');
-                       }
-
-      });
-
-
-
-
- });*/
-//dashboard ends
 
 
 });

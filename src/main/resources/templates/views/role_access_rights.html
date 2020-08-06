@@ -97,11 +97,11 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr class="gradeX" th:each="moduleObj,iterator:${modulesList}">
+                                     <tr class="gradeX" th:each="moduleObj,iterator:${modulesList}">
                                             <td th:text="${iterator.index+1}" th:value="${moduleObj.id}">1</td>
                                             <td th:text="${moduleObj.moduleName}" th:value="${moduleObj.moduleName}">Select</td>
                                             <td><input type="checkbox" name="checkboxName" th:value="${moduleObj.id}"/></td>
-                                        </tr>-->
+                                        </tr>
 
                                         </tbody>
                                         <tfoot>
@@ -130,6 +130,8 @@
         </div>
       
     </div>
+
+    <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 
     <!-- Mainly scripts -->
     <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>

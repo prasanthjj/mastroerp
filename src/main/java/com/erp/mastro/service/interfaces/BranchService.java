@@ -1,6 +1,5 @@
 package com.erp.mastro.service.interfaces;
 
-
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.model.request.BranchRequestModel;
 import org.springframework.stereotype.Service;
@@ -20,4 +19,5 @@ public interface BranchService {
     void deleteBranch(Long id);
 
     public void deleteBranchDetails(Long id);
+
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Setter(AccessLevel.PUBLIC)
@@ -20,9 +19,7 @@ public class Modules {
     @Column(name = "module_name")
     private String moduleName;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-
     @JoinTable(name = "role_module", joinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Roles roles;

@@ -74,6 +74,4 @@ public class Branch {
     @ManyToMany(mappedBy = "branch")
     private Set<User> user = new HashSet<>();
 
-
-
 }

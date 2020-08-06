@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
@@ -26,7 +24,6 @@ public class Roles {
     @Column(name="role_description")
     private String roleDescription;
 
-
     @ManyToMany(mappedBy = "roles")
     private Set<User> user = new HashSet<>();
 
@@ -35,7 +32,7 @@ public class Roles {
             , inverseJoinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")})
     private Set<Modules> modules;
 
-
     @Column(name = "delete_status", nullable = false)
     private int rolesDeleteStatus;
+
 }
