@@ -100,21 +100,37 @@
                                         <td th:text="${partyObj.id}">PC2020</td>
                                         <td class="center" th:text="${partyObj.partyType}"></td>
                                         <td class="center" th:text="${partyObj.categoryType}"></td>
-                                        <td>Open</td>
+                                        <td><span th:if="${partyObj.enabled} == true">Active</span>
+                                            <span th:unless="${partyObj.enabled} == true">Deactive</span>
+                                        </td>
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_party.html"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/master/viewParty?partyId=__${partyObj.id}__}"><i
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="edit_party.html"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/master/getPartyEdit?partyId=__${partyObj.id}__}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeParty" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
+                                                    <span th:if="${partyObj.enabled} != true">
+                                                   <li><a class="dropdown-item font-bold activateParty txt-white"
+                                                          href="#" th:data-partyid="${partyObj.id}">
+                                                   <i class="fa fa-circle" aria-hidden="true"></i>Active</a></li>
+                                                     <li class="dropdown-divider"></li>
+                                                     </span>
+                                                    <span th:unless="${partyObj.enabled} != true">
+                                                    <li><a class="dropdown-item font-bold deactiveParty txt-white "
+                                                           href="#" th:data-partyid="${partyObj.id}">
+                                                        <i class="fa fa-circle-o"
+                                                           aria-hidden="true"></i> Deactive</a></li>
+                                                     <li class="dropdown-divider"></li>
+                                                       </span>
+
                                                 </ul>
                                             </div>
                                         </td>

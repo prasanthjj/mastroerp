@@ -160,6 +160,7 @@ $(document).ready(function(){
 
        $(function() {
 
+
        //industrytype start
                                               $('#industryType').change(function () {
 
@@ -269,6 +270,18 @@ $(document).ready(function(){
                                        });
                                        // add party billing city end
 
+
+                                       //edit party contact details start
+                                                   var editcountpc=document.getElementById("partycontactCountId").value;
+                                                    $("#editPartyContactDetails").click(function(){
+                                                   $("#partyContactDetails").append(" <div class='row partyContactDetailsBox'><div class='col-lg-12 text-right'><button class='btn btn-danger dim removePartyContactDetails' type='button'><i class='fa fa-times-circle'></i></button></div><div class='col-lg-4'><div class='form-group'><label>Contact Details<i class='fa fa-asterisk'></i></label><input id='name' name='contactDetailsModelList["+editcountpc+"].contactPersonName' type='text' required class='form-control '></div><div class='form-group'><label>Address</label><textarea class='form-control ' rows='5' name='contactDetailsModelList["+editcountpc+"].address'></textarea></div></div><div class='col-lg-4'><div class='form-group'><label>Designation<i class='fa fa-asterisk'></i></label><input name='contactDetailsModelList["+editcountpc+"].designation' required type='text' class='form-control'></div><div class='form-group'><label>Telephone No.</label><input name='contactDetailsModelList["+editcountpc+"].telephoneNo' type='text' class='form-control'></div><div class='form-group'><label>Mobile No.<i class='fa fa-asterisk'></i></label><input id='' name='contactDetailsModelList["+editcountpc+"].mobileNo' required type='text' class='form-control'></div><div class='form-group'><label>Fax No.</label><input name='contactDetailsModelList["+count1+"].faxNo' type='text' class='form-control'></div></div><div class='col-lg-4'><div class='form-group'><label>Department</label><inputtype='text' name='contactDetailsModelList["+editcountpc+"].department' class='form-control'></div><div class='form-group'><label>Alt Telephone No.</label><input id='' name='contactDetailsModelList["+editcountpc+"].altTelephoneNo' type='text' class='form-control'></div><div class='form-group'><label>Alt Mobile No.</label><input name='contactDetailsModelList["+editcountpc+"].altMobileNo' type='text' class='form-control'></div><div class='form-group'><label> Email ID</label><input name='contactDetailsModelList["+editcountpc+"].emailId' type='email' class='form-control'></div></div><div class='col-lg-12'><div class='hr-line-dashed'></div></div></div>");
+                                                     editcountpc++;
+                                                     });
+                                                     $(document).on('click', '.removePartyContactDetails', function() {
+                                                       $(this).parents('.partyContactDetailsBox').remove();
+                                                      });
+                                                   //edit party contact details end
+
             //add assets Characteristics in edit start
 
                       var countchar1=document.getElementById("charCountId").value;
@@ -306,6 +319,8 @@ $(document).ready(function(){
                                                 $(this).parents('.assetOtherCheckListBox').remove();
                                             });
                                             //add Other CheckList edit end
+
+
 
 
        });
@@ -393,21 +408,76 @@ $(document).ready(function(){
 
                   // remove assets  end
 
-                  // Remove Party Start
-                  $('.removeParty').click(function () {
-                      swal({
-                          title: "Are you sure?",
-                          text: "You will not be able to recover this Item!",
-                          type: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#0094db",
-                          confirmButtonText: "Yes, delete it!",
-                          closeOnConfirm: false
-                      }, function () {
-                          swal("Deleted!", "Item has been deleted.", "success");
-                      });
-                  });
-                  // Remove Party End
+               //Activate Party
+                                     $('.activateParty').click(function () {
+                                      var partyId=$(this).data('partyid');
+
+                                         swal({
+                                             title: "Are you sure?",
+                                             text: "You want to activate party!",
+                                             type: "warning",
+                                             showCancelButton: true,
+                                             confirmButtonColor: "#0094db",
+                                             confirmButtonText: "Yes, activated!",
+                                             closeOnConfirm: false
+                                         }, function () {
+
+                                         $.ajax({
+                                                             url: '/master/activateOrDeactivateParty',
+                                                             type: 'POST',
+                                                             dataType : 'json',
+                                                            data: { 'partyId': partyId },
+                                                             success: function(data){
+
+                                                                 if(data.success) {
+                                                                     var redirectionUrl= "/master/getPartys";
+                                                                     window.location.href = redirectionUrl;
+                                                                 }
+                                                             },
+                                                             error: function(jqXHR, textStatus) {
+                                                                 alert('Error Occured');
+                                                             }
+                                                         });
+                                            /* swal("Activated!", "Item has been Activated.", "success");*/
+                                         });
+                                     });
+                           //End Active party
+
+                     //Deactivate Party
+                          $('.deactiveParty').click(function () {
+                                      var partyId=$(this).data('partyid');
+                                         swal({
+                                             title: "Are you sure?",
+                                             text: "You want to deactivate Party!",
+                                             type: "warning",
+                                             showCancelButton: true,
+                                             confirmButtonColor: "#0094db",
+                                             confirmButtonText: "Yes, deactivate it!",
+                                             closeOnConfirm: false
+                                         }, function () {
+                                         $.ajax({
+                                                             url: '/master/activateOrDeactivateParty',
+                                                             type: 'POST',
+                                                             dataType : 'json',
+                                                            data: { 'partyId': partyId },
+                                                             success: function(data){
+                                                                 if(data.success) {
+                                                                  var redirectionUrl= "/master/getPartys";
+                                                                   window.location.href = redirectionUrl;
+                                                                 }
+                                                             },
+                                                             error: function(jqXHR, textStatus) {
+                                                                 alert('Error Occured');
+                                                             }
+                                                         });
+               /*
+                                          swal("Activated!", "Party has been Activated.", "success");
+               */
+                                         });
+                                     });
+
+                   //End Deactive Party
+
 
                    $('.removeHsn').click(function () {
                           var hsnId=$(this).data('hsnids');

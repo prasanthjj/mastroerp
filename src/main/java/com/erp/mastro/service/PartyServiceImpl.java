@@ -100,6 +100,7 @@ public class PartyServiceImpl implements PartyService {
                 party.setPartyDate(partyRequestModel.getPartyDate());
                 party.setOldReferCode(partyRequestModel.getOldReferCode());
                 party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
+                party.setEnabled(true);
                 party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
                 Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
                 party.setContactDetails(contactDetails);
@@ -126,6 +127,16 @@ public class PartyServiceImpl implements PartyService {
                 party.setPartyDate(partyRequestModel.getPartyDate());
                 party.setOldReferCode(partyRequestModel.getOldReferCode());
                 party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
+                party.setEnabled(true);
+                party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
+                party.setContactDetails(contactDetails);
+                Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
+                party.setBankDetails(bankDetails);
+                Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
+                party.setBillingDetails(billingDetails);
+              /*  Set<CreditDetails> creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                party.setCreditDetails(creditDetails);*/
 
                 partyRepository.save(party);
 
@@ -337,6 +348,13 @@ public class PartyServiceImpl implements PartyService {
         return creditDetailsSet;
     }
 
+
+    /**
+     * save and edit Party Products
+     *
+     * @param party
+     * @param products
+     */
     public void saveOrUpdatePartyProducts(Party party, Set<Product> products) {
         party.setProducts(products);
         partyRepository.save(party);
@@ -347,12 +365,20 @@ public class PartyServiceImpl implements PartyService {
         partyRepository.deleteById(id);
     }
 
-    @Transactional(rollbackOn = {Exception.class})
-    public void deletePartyDetails(Long id) {
-        Party party = getPartyById(id);
-        party.setPartyDeleteStatus(1);
-        partyRepository.save(party);
+    /**
+     * Activate or Deactivate Party
+     *
+     * @param id
+     */
 
+    public void activateOrDeactivateParty(Long id) {
+        Party party = getPartyById(id);
+        if (party.isEnabled()) {
+            party.setEnabled(false);
+        } else {
+            party.setEnabled(true);
+        }
+        partyRepository.save(party);
     }
 
     private boolean containsInList(Long id, Collection<Long> ids) {

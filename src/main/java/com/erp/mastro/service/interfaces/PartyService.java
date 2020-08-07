@@ -22,7 +22,7 @@ public interface PartyService {
 
     void deleteParty(Long id);
 
-    void deletePartyDetails(Long id);
+     void activateOrDeactivateParty(Long id);
 
     Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException;
 

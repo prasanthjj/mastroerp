@@ -1,5 +1,7 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.entities.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,31 @@ public class PartyRequestModel {
     private List<BankDetailsModel> bankDetailsModelList = new ArrayList<>();
     private List<CreditDetailsModel> creditDetailsModelList = new ArrayList<>();
     private Long industryid;
+
+
+    public PartyRequestModel() {
+
+    }
+
+    public PartyRequestModel(Party party) {
+        if (party != null) {
+            this.id = party.getId();
+            this.partyType = party.getPartyType();
+            this.partyCode = party.getPartyCode();
+            this.partyName = party.getPartyName();
+            this.status = party.getStatus();
+            this.paymentTerms = party.getPaymentTerms();
+            this.categoryType = party.getCategoryType();
+            this.partyDate = party.getPartyDate();
+            this.oldReferCode = party.getOldReferCode();
+            this.relationshipMananger = party.getRelationshipMananger();
+            this.industryid = party.getIndustryType().getId();
+            party.getContactDetails().parallelStream().forEach(x -> this.contactDetailsModelList.add(new ContactDetailsModel(x)));
+            party.getBillingDetails().parallelStream().forEach(x -> this.billingDetailsModelList.add(new BillingDetailsModel(x)));
+            party.getBankDetails().parallelStream().forEach(x -> this.bankDetailsModelList.add(new BankDetailsModel(x)));
+            party.getCreditDetails().parallelStream().forEach(x -> this.creditDetailsModelList.add(new CreditDetailsModel(x)));
+        }
+    }
 
     public Long getId() {
         return id;
@@ -156,6 +183,25 @@ public class PartyRequestModel {
         private String faxNo;
         private String emailId;
 
+        public ContactDetailsModel() {
+
+        }
+
+        public ContactDetailsModel(ContactDetails contactDetails) {
+            this.id = contactDetails.getId();
+            this.contactPersonName = contactDetails.getContactPersonName();
+            this.designation = contactDetails.getDesignation();
+            this.department = contactDetails.getDepartment();
+            this.telephoneNo = contactDetails.getTelephoneNo();
+            this.altTelephoneNo = contactDetails.getAltTelephoneNo();
+            this.address = contactDetails.getAddress();
+            this.mobileNo = contactDetails.getMobileNo();
+            this.altMobileNo = contactDetails.getAltMobileNo();
+            this.faxNo = contactDetails.getFaxNo();
+            this.emailId = contactDetails.getEmailId();
+
+        }
+
         public Long getId() {
             return id;
         }
@@ -260,6 +306,26 @@ public class PartyRequestModel {
         private String telephoneNo;
         private String contactPersonName;
         private String emailId;
+
+
+        public BillingDetailsModel() {
+
+        }
+
+        public BillingDetailsModel(BillingDetails billingDetails) {
+            this.id = billingDetails.getId();
+            this.type = billingDetails.getType();
+            this.country = billingDetails.getCountry();
+            this.state = billingDetails.getState();
+            this.street = billingDetails.getStreet();
+            this.city = billingDetails.getCity();
+            this.pinCode = billingDetails.getPinCode();
+            this.designation = billingDetails.getDesignation();
+            this.faxNo = billingDetails.getFaxNo();
+            this.telephoneNo = billingDetails.getTelephoneNo();
+            this.contactPersonName = billingDetails.getContactPersonName();
+            this.emailId = billingDetails.getEmailId();
+        }
 
         public Long getId() {
             return id;
@@ -368,6 +434,20 @@ public class PartyRequestModel {
         private String branchName;
         private String bankAddress;
 
+        public BankDetailsModel() {
+
+        }
+
+        public BankDetailsModel(BankDetails bankDetails) {
+            this.id = bankDetails.getId();
+            this.ifscCode = bankDetails.getIfscCode();
+            this.accountNo = bankDetails.getAccountNo();
+            this.bankName = bankDetails.getBankName();
+            this.branchName = bankDetails.getBranchName();
+            this.bankAddress = bankDetails.getBankAddress();
+        }
+
+
         public Long getId() {
             return id;
         }
@@ -426,6 +506,22 @@ public class PartyRequestModel {
         private Double interestRate;
         private String remarks;
         private Long branchId;
+        private String branchName;
+
+        public CreditDetailsModel() {
+
+        }
+
+        public CreditDetailsModel(CreditDetails creditDetails) {
+            this.id = creditDetails.getId();
+            this.creditLimit = creditDetails.getCreditLimit();
+            this.creditDays = creditDetails.getCreditDays();
+            this.creditWorthiness = creditDetails.getCreditWorthiness();
+            this.interestRate = creditDetails.getInterestRate();
+            this.remarks = creditDetails.getRemarks();
+            this.branchId = creditDetails.getBranch().getId();
+            this.branchName = creditDetails.getBranch().getBranchName();
+        }
 
         public Long getId() {
             return id;
@@ -482,6 +578,15 @@ public class PartyRequestModel {
         public void setBranchId(Long branchId) {
             this.branchId = branchId;
         }
+
+        public String getBranchName() {
+            return branchName;
+        }
+
+        public void setBranchName(String branchName) {
+            this.branchName = branchName;
+        }
     }
+
 
 }

@@ -3,12 +3,13 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Branch;
+import com.erp.mastro.entities.CreditDetails;
 import com.erp.mastro.entities.IndustryType;
 import com.erp.mastro.entities.Party;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndustryTypeRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
-import com.erp.mastro.repository.BranchRepository;
+import com.erp.mastro.repository.PartyRepository;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ public class PartyController {
     private BranchService branchService;
 
     @Autowired
-    private BranchRepository branchRepository;
+    private PartyRepository partyRepository;
+
 
     /**
      * The method for get the full party list
@@ -167,10 +169,35 @@ public class PartyController {
     public String getPartyEdit(HttpServletRequest request, @RequestParam("partyId") Long partyId, Model model) {
         MastroLogUtils.info(PartyController.class, "Going to edit party :{}" + partyId);
         try {
-            PartyRequestModel partyRequestModel = new PartyRequestModel();
+            List<IndustryType> industryTypes = new ArrayList<>();
+            for (IndustryType industryType : partyService.getAllIndustryType()) {
+                industryTypes.add(industryType);
+            }
+            List<Branch> branchList = new ArrayList<>();
+            for (Branch branch : branchService.getAllBranch()) {
+                if (branch.getBranchDeleteStatus() != 1) {
+                    branchList.add(branch);
+                }
+            }
+            List<Branch> branches = new ArrayList<>();
+            for (CreditDetails creditDetails : partyService.getPartyById(partyId).getCreditDetails()) {
+                branches.add(creditDetails.getBranch());
+            }
+            for (Branch branch : branchList) {
+                for (Branch branch1 : branches) {
+                    if (branch.getId().equals(branch1.getId())) {
+                        branchList.remove(branch1);
+                    }
+                }
+            }
+            model.addAttribute("branchList", branchList);
+            model.addAttribute("industryTypes", industryTypes);
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("partytab", "party");
-            model.addAttribute("partyform", partyService.getPartyById(partyId));
+            if (partyId != null) {
+                model.addAttribute("partyForm", new PartyRequestModel(partyService.getPartyById(partyId)));
+            }
+            model.addAttribute("partyContactSize", partyService.getPartyById(partyId).getContactDetails().size());
             return "views/editPartyMaster";
 
         } catch (Exception e) {
@@ -178,22 +205,42 @@ public class PartyController {
         }
     }
 
-    @PostMapping("/deletePartyDetails")
-    @ResponseBody
-    public GenericResponse deletePartyDetails(Model model, HttpServletRequest request, @RequestParam("partyId") Long partyId) {
+    /**
+     * method to view party
+     *
+     * @param model
+     * @param partyId
+     * @param req
+     * @return
+     */
 
+    @GetMapping("/viewParty")
+    public String getViewParty(Model model, @RequestParam("partyId") Long partyId, HttpServletRequest req) {
+        MastroLogUtils.info(PartyController.class, "Going to view Party :{}" + partyId);
         try {
-
-            partyService.deletePartyDetails(partyId);
-            return new GenericResponse(true, "delete party details");
-
+            Party party = partyService.getPartyById(partyId);
+            model.addAttribute("partyDetails", party);
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("partyTab", "party");
+            return "views/viewParty";
         } catch (Exception e) {
-
-            return new GenericResponse(false, e.getMessage());
-
+            MastroLogUtils.error(PartyController.class, "Error occured while viewing party : {}", e);
+            throw e;
         }
 
     }
 
+
+    @PostMapping("/activateOrDeactivateParty")
+    @ResponseBody
+    public GenericResponse activateOrDeactivateParty(Model model, HttpServletRequest request, @RequestParam("partyId") Long partyId) {
+        MastroLogUtils.info(PartyController.class, "Going to delete Party : {}");
+        Party party = partyService.getPartyById(partyId);
+        partyService.activateOrDeactivateParty(partyId);
+
+        return new GenericResponse(true, "get Party details")
+                .setProperty("partyId", party.getId());
+
+    }
 
 }

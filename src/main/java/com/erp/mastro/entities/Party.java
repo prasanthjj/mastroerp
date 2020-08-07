@@ -45,6 +45,9 @@ public class Party extends Auditable<String>{
     @Column(name = "relationship_mananger")
     private String relationshipMananger;
 
+    @Column(name = "enabled", nullable = false)
+    protected boolean enabled;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "party_contact_details", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id")})
@@ -78,7 +81,5 @@ public class Party extends Auditable<String>{
     @JoinColumn(name = "industry_id")
     private IndustryType industryType;
 
-    @Column(name = "delete_status", nullable = false)
-    private int partyDeleteStatus;
 
 }
