@@ -5,6 +5,7 @@ import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.*;
+import com.erp.mastro.model.request.ModuleRequestModel;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.EmployeeService;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    HttpSession session;
 
     /**
      * Method to login
@@ -71,7 +76,7 @@ public class UserController {
      * @return selected branch and branch list
      */
     @RequestMapping("/home")
-    public String home(Model model) {
+    public String home(Model model ) {
         User userDetails = getCurrentUser();
         List<Branch> branchList = new ArrayList<>();
         String currentBranch = null;
@@ -83,8 +88,10 @@ public class UserController {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
         }
-        model.addAttribute("currentBranch",currentBranch);
-        model.addAttribute("branchList",branchList);
+
+        session.setAttribute("selectedBranch", currentBranch);
+        model.addAttribute("currentBranch", currentBranch);
+        model.addAttribute("UserBranchList",branchList);
         return "views/dashboard";
     }
 
@@ -110,8 +117,8 @@ public class UserController {
      *
      * @return to the access-denied page
      */
-    @GetMapping("/access-denied")
-    public String accessDenied() { return "/error/access-denied"; }
+    @GetMapping("/error/accessDenied")
+    public String accessDenied() { return "views/error/access-denied"; }
 
     /**
      * Method to add new User
@@ -123,16 +130,20 @@ public class UserController {
     public String addUser(Model model) {
         MastroLogUtils.info(UserController.class, "Going to add User :{}");
         try {
-           /*List<User> userList = new ArrayList<>();
-            userList = userService.getAllUsers();*/
-          /*  for (User user : userService.getAllUsers()) {
-               *//* if (!user.isEnabled()) {
-                    userList.add(user);
-                }*//*
-              *//*  if (user.isEnabled()) {
-                    userList.add(user);
-                }*//*
-            }*/
+
+            List<String> emailList = new ArrayList<String>();
+            List<Employee> employeesList = employeeService.getAllEmployees();
+            for(Employee employee : employeesList) {
+                String email = employee.getEmail();
+                emailList.add(email);
+            }
+
+            List<Employee> employeeList = employeeService.getAllEmployees().stream()
+                    .filter(employeData -> (null != employeData))
+                    .filter(employeData -> (null ==  employeData.getUser()))
+                    .sorted(Comparator.comparing(
+                            Employee::getId).reversed())
+                    .collect(Collectors.toList());
 
             List<Roles> rolesList = new ArrayList<>();
             for (Roles roles : rolesService.getAllRoles()) {
@@ -156,6 +167,7 @@ public class UserController {
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("userTab", "user");
             model.addAttribute("usersList",userList);
+            model.addAttribute("employeesList",employeeList);
             model.addAttribute("roleList",rolesList);
             model.addAttribute("branchList",branchList);
             return "views/user_master";
@@ -174,9 +186,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("ranjit@halo.ae");
-        user.setEmail("ranjit@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("ranjit"));
+        user.setUserName("gloria@halo.ae");
+        user.setEmail("gloria@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("gloria"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
@@ -208,6 +220,7 @@ public class UserController {
         }
 
     }
+
 
     /**
      * Method for autocomplete employee email address
@@ -248,7 +261,7 @@ public class UserController {
                 userEditModel.setId(roles.getId());
                 userModelEdits.add(userEditModel);
         }
-        List<Roles> rolesList = new ArrayList<>();
+        Set<Roles> rolesList = new HashSet<>();
         for (Roles roles : rolesService.getAllRoles()) {
             if (roles.getRolesDeleteStatus() != 1) {
                 rolesList.add(roles);
@@ -261,7 +274,7 @@ public class UserController {
             rolemodelEdit.setId(roles.getId());
             rolemodelEdits.add(rolemodelEdit);
         }
-        List<Branch> branchList = new ArrayList<>();
+        Set<Branch> branchList = new HashSet<>();
         for (Branch branch : branchService.getAllBranch()) {
             if (branch.getBranchDeleteStatus() != 1) {
                 branchList.add(branch);
@@ -274,13 +287,38 @@ public class UserController {
             branchmodelEdit.setId(branch.getId());
             branchmodelEdits.add(branchmodelEdit);
         }
-        List<UserModel.UserModelBranchEdit> userModelBranchEdits = new ArrayList<>();
+        Set<UserModel.UserModelBranchEdit> userModelBranchEdits = new HashSet<>();
         for (Branch branch : userDetails.getBranch() ){
             UserModel.UserModelBranchEdit editBranch = new UserModel.UserModelBranchEdit();
             editBranch.setBranchname(branch.getBranchName());
             editBranch.setId(branch.getId());
             userModelBranchEdits.add(editBranch);
         }
+
+        Iterator<UserModel.UserModelEdit> finalSet = rolemodelEdits.iterator();
+        for (Iterator<UserModel.UserModelEdit> it = finalSet; it.hasNext(); ) {
+            UserModel.UserModelEdit fullModel = it.next();
+            if (fullModel != null) {
+                for (UserModel.UserModelEdit roleModel : userModelEdits) {
+                    if (fullModel.getId() == roleModel.getId()) {
+                        finalSet.remove();
+                    }
+                }
+            }
+        }
+
+        Iterator<UserModel.UserModelBranchEdit> finalSetBranch = branchmodelEdits.iterator();
+        for (Iterator<UserModel.UserModelBranchEdit> it = finalSetBranch; it.hasNext(); ) {
+            UserModel.UserModelBranchEdit fullModel = it.next();
+            if (fullModel != null) {
+                for (UserModel.UserModelBranchEdit branchModel : userModelBranchEdits) {
+                    if (fullModel.getId() == branchModel.getId()) {
+                        finalSetBranch.remove();
+                    }
+                }
+            }
+        }
+
         return new GenericResponse(true,"get User details")
                 .setProperty("userId",userDetails.getId())
                 .setProperty("email",userDetails.getEmail())

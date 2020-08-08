@@ -30,7 +30,7 @@
                         <div class="dropdown profile-element">
                             <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">Admin @  <span th:text="${currentBranch}"></span></span>
+                                <span class="block m-t-xs font-bold">Admin @    <span th:text="${session.selectedBranch}"></span></span>
                                 <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -104,7 +104,7 @@
                                 
                             </div> 
                             <div class="col-lg-3">
-                                <a href="#">
+                                <a th:href="@{/error/accessDenied}">
                                     <div class="widget lazur-bg p-md text-center">
                                         <div class="p-md"  >
                                             <i class="fa fa-cubes fa-3x m-b-sm"></i>
@@ -200,7 +200,7 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" id="branchId" name="branchId" required>
                                         <option value="" >Select branch</option>
-                                        <option th:each="branch : ${branchList}"
+                                        <option th:each="branch : ${UserBranchList}"
                                                 th:value="${branch.id}" th:text="${branch.branchName}">Select</option>
                                     </select>
 
@@ -236,8 +236,9 @@
  <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
   <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
 
-<script th:if="${currentBranch} == null">
-function switchBranch() {
+ <!-- <script th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()==null}">-->
+  <script th:if="${currentBranch == null}">
+  function switchBranch() {
    $("#loginBranchList").toggle();
    $('#loginBranchList').css({"background-color": "rgb(0 0 0 / 35%)"});
   }

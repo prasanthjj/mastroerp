@@ -77,10 +77,12 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
+            //User userDetails = new User();
+            user = new User();
             MastroLogUtils.info(UserService.class, "Going to Add User {}" + userModel.toString());
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
-            user = new User();
-            user.setUserName(employee.getFirstName());
+            System.out.println("employee :: " + employee);
+            user.setUserName(employee.getEmail());
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
             user.setEnabled(true);

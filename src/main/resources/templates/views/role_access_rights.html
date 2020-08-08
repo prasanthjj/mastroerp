@@ -76,11 +76,7 @@
                                                 th:value="${roleObj.id}"
                                                 th:text="${roleObj.roleName}">Select</option>
                                     </select></div>
-                                    <!-- <div class="col-lg-2">
-                                         <button type="button" class="btn btn-primary">Select</button>
-                                     </div>-->
-
-                                </div>
+                              </div>
 
                                 <div class="ibox-tools">
                                 </div>
@@ -91,14 +87,12 @@
                                     <table class="table table-striped table-bordered table-hover dataTables-role-access" id="moduleCheckId" >
                                         <thead class="mastro-blue-bg txt-white">
                                         <tr>
-                                            <th class="mastro-blue-bg txt-white">No</th>
-                                            <th>Module Name</th>
+                                            <th class="mastro-blue-bg txt-white">Module Name</th>
                                             <th>Access</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                      <tr class="gradeX" th:each="moduleObj,iterator:${modulesList}">
-                                            <td th:text="${iterator.index+1}" th:value="${moduleObj.id}">1</td>
                                             <td th:text="${moduleObj.moduleName}" th:value="${moduleObj.moduleName}">Select</td>
                                             <td><input type="checkbox" name="checkboxName" th:value="${moduleObj.id}"/></td>
                                         </tr>

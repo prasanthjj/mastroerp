@@ -12,14 +12,21 @@
     <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
     <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
     <!-- Morris -->
+    <link href="../resources/css/plugins/select2/select2.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
     <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"  th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
   <!-- Sweet Alert -->
   <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
-    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2.min.css}">
-    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+   <style>
+    .select2-container {
+    display: block;
+    z-index: 9999;
+    width: 100% !important;
+}
+   </style>
 </head>
 
 <body>
@@ -155,8 +162,18 @@
                         <div class="col-lg-12">
                             <div class="form-group  row"><label class="col-sm-4 col-form-label"><i class="fa fa-asterisk "></i>Email</label>
 
-
+<!--
                                 <div class="col-sm-8"> <input id="email" name ="email" type="text" required placeholder="Email..." class="user_head form-control" th:onclick="|autoComplete('/admin/employeeAutoComplete','user_head')|"/></div>
+-->
+                                <div class="col-sm-8">
+                                    <select class="form-control selectEmail"  id="email" name="email" th:field="*{email}" >
+                                        <option value="" >Select Email</option>
+                                        <option th:each="employees : ${employeesList}"
+                                                th:value="${employees.email}"
+                                                th:text="${employees.email}" ></option>
+                                    </select>
+                                </div>
+
 
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -207,7 +224,7 @@
                     <div class="modal-body">
                         <div class="col-lg-12">
                             <div class="form-group  row"><label class="col-sm-4 col-form-label">Email</label>
-    
+
                                 <div class="col-sm-8"> <input type="text" required placeholder="Email..." id="useremail" name="email" class="user_head form-control"  /></div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -217,9 +234,6 @@
                                 <div class="col-sm-8">
                                     <select class="editUserRole form-control" th:field="*{roles}" id="userRoles" name="userRoles" multiple="multiple">
                                         <optgroup label="Select qualifications"></optgroup>
-                                        <!--<option th:each="roleObj : ${roles}"
-                                                th:value="${roleObj.id}"
-                                                th:text="${roleObj.roleName}">Select</option>-->
                                     </select>
                             </div>
                     </div>
@@ -270,11 +284,20 @@
 
     <!-- Jquery Validate -->
     <script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script src="../resources/js/plugins/select2/select2.full.min.js" th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
     <!-- Custom Mastro Admin -->
     <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
     <script src="../resources/js/mastro/admin_datatable.js" th:src="@{/resources/js/mastro/admin_datatable.js}"></script>
     <script src="../resources/js/plugins/typehead/bootstrap3-typeahead.min.js" th:src="@{/resources/js/plugins/typehead/bootstrap3-typeahead.min.js}"></script>
-    <!-- Select2 -->
-    <script src="../resources/js/plugins/select2/select2.full.min.js" th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+    <script> $(document).ready(function(){
+
+  <!--Select email Starts-->
+    $(".selectEmail").select2({
+    theme:'bootstrap4',
+    });
+    <!--Select email Ends-->
+
+   });
+</script>
 </body>
 </html>

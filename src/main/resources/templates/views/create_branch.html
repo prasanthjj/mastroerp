@@ -8,12 +8,17 @@
 
     <title>Mastro Metals | Add Branch</title>
 
+
+
+
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
     <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
     <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet" th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
     <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
     <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet" th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
     <!-- Morris -->
+    <link href="../resources/css/plugins/select2/select2.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
     <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
@@ -101,7 +106,7 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>City Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b required" name="cityName" id="addBranchCityName" >
+                                                <select class="form-control m-b selectCity  required" name="cityName" id="addBranchCityName" >
                                                     <option value="">Select</option>
                                                     <option value="Alappuzha">Alappuzha</option>
                                                     <option value="Idukki">Idukki</option>
@@ -135,7 +140,7 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Country Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="countryName" id="addBranchCountryName">
+                                                <select class="form-control m-b selectCountry  required" name="countryName" id="addBranchCountryName" >
                                                     <option value="">Select</option>
                                                     <option value="India">India</option>
                                                     <option value="America">America</option>
@@ -168,7 +173,7 @@
 
                                             <div class="form-group">
                                                 <label>State Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="stateName" id="addBranchStateName" >
+                                                <select class="form-control m-b selectState  required" name="stateName" id="addBranchStateName" >
                                                     <option value="">Select</option>
                                                     <option value="AndhraPradesh">Andhra Pradesh	</option>
                                                     <option value="Karnataka">Karnataka</option>
@@ -482,10 +487,33 @@
 <script src="../resources/js/plugins/steps/jquery.steps.min.js" th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
 <!-- Jquery Validate -->
 <script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/plugins/select2/select2.full.min.js" th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
 <!-- Custom Mastro Admin -->
 <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
 <script src="../resources/js/mastro/branch_step.js" th:src="@{/resources/js/mastro/branch_step.js}"></script>
 
 
+<script> $(document).ready(function(){
+<!--SelectCountry Starts-->
+ $(".selectCountry").select2({
+  theme:'bootstrap4',
+  });
+  <!--Select Country Ends-->
+
+  <!--Select State Starts-->
+ $(".selectState").select2({
+  theme:'bootstrap4',
+  });
+  <!--Select State Ends-->
+
+
+  <!--Select City Starts-->
+ $(".selectCity").select2({
+  theme:'bootstrap4',
+  });
+  <!--Select City Ends-->
+
+   });
+</script>
 </body>
 </html>
