@@ -183,7 +183,6 @@ $(document).ready(function(){
 
        $(function() {
 
-
        //industrytype start
                                               $('#industryType').change(function () {
 
@@ -305,9 +304,11 @@ $(document).ready(function(){
                                                       });
                                                    //edit party contact details end
 
-            //add assets Characteristics in edit start
+
 
        });
+
+
 
             $(function() {
                    //add assets Characteristics in edit start
@@ -614,10 +615,46 @@ $(document).ready(function(){
                           });
 
 
+$("#indtype").click(function (e) {
+
+                                                e.preventDefault();
+
+                                                var industryTypeUrl = $('#industryTypeUrl').data('url');
+
+                                               var formData = new FormData(document.getElementById("addPartyIndustryTypeForm"));
+                                                                  $.ajax({
+
+                                                                  url: industryTypeUrl,
+                                                                  data: formData,
+                                                                  processData: false,
+                                                                  contentType: false,
+
+                                                                  type: 'POST',
+
+                                                                  success: function(data) {
+
+                                                                  if(data.success) {
+                                                                  $('#addPartyIndustryType').hide();
+                                                      $('#industryType').empty();
+                                                     $('#inputids').val(data.data.industryid);
+                                                     $('#inputids').text(data.data.industryType);
+                                                      $("#industryType").html("");
+                                                              $.each(data.data.fullindustrytypes, function(i){
+                                                              $('#industryType').append($('<option>').val(this['id']).text(this['industryType']));
+
+                                                              });
+                                                              $('#industryType').append($('<option>').val('addPartyIndustryType').text('addPartyIndustryType'));
+
+                                                                           }
+                                                                        }
+                                                                     });
+                          });
 
 
 
-});
+
+
+ });
 
  //get pricelist edit start
   $("body").on('click','.pricelistEdit',function (e) {

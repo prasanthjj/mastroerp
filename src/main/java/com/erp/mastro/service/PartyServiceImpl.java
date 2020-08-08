@@ -170,7 +170,7 @@ public class PartyServiceImpl implements PartyService {
      */
 
     @Transactional(rollbackOn = {Exception.class})
-    public void saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException {
+    public IndustryType saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException {
         IndustryType industryType = new IndustryType();
         if (industryTypeRequestModel == null) {
             throw new ModelNotFoundException("IndustryType Request Model is empty");
@@ -182,7 +182,9 @@ public class PartyServiceImpl implements PartyService {
                 industryType.setIndustryType(industryTypeRequestModel.getIndustryType());
                 industryTypeRepository.save(industryType);
             }
+
         }
+        return industryType;
     }
 
     /**

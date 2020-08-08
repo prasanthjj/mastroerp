@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,11 +53,6 @@ public class PartyController {
         MastroLogUtils.info(PartyController.class, "Going to get Party : {}");
 
         try {
-           /* List<Party> partyList = new ArrayList<>();
-            for (Party party : partyService.getAllPartys()) {
-                partyList.add(party);
-            }
-            */
             List<Party> partyList = partyService.getAllPartys().stream()
                     .filter(partydata -> (null != partydata))
                     .sorted(Comparator.comparing(Party::getId).reversed())
@@ -115,25 +107,41 @@ public class PartyController {
     }
 
     /**
-     * Method to save and edit industryType
-     *
      * @param industryTypeRequestModel
      * @param request
      * @param model
      * @return
      */
-    @PostMapping("/saveIndustryType")
-    public String saveIndustryType(@ModelAttribute("industryForm") @Valid IndustryTypeRequestModel industryTypeRequestModel, HttpServletRequest request, Model model) {
-        MastroLogUtils.info(PartyController.class, "Going to save industry type :{}");
+
+    @RequestMapping(value = "/saveIndustryType", method = RequestMethod.POST)
+    @ResponseBody
+    public GenericResponse saveIndustryType(@ModelAttribute("industryForm") @Valid IndustryTypeRequestModel industryTypeRequestModel, HttpServletRequest request, Model model) {
+
         try {
-            partyService.saveOrUpdateIndustryType(industryTypeRequestModel);
-            return "redirect:/master/getCreateParty";
+
+            MastroLogUtils.info(PartyController.class, "Going to save industry type : {}");
+            IndustryType industryType = partyService.saveOrUpdateIndustryType(industryTypeRequestModel);
+            Set<IndustryType> industryTypeSet = new HashSet<>();
+            for (IndustryType industryType1 : partyService.getAllIndustryType()) {
+                industryTypeSet.add(industryType1);
+            }
+
+            Set<IndustryTypeRequestModel> industryTypeRequestModelSet = new HashSet<>();
+            for (IndustryType industryType2 : industryTypeSet) {
+                IndustryTypeRequestModel indusModel1 = new IndustryTypeRequestModel();
+                indusModel1.setId(industryType2.getId());
+                indusModel1.setIndustryType(industryType2.getIndustryType());
+                industryTypeRequestModelSet.add(indusModel1);
+            }
+
+            return new GenericResponse(true, "save industry type")
+                    .setProperty("industryid", industryType.getId())
+                    .setProperty("industryType", industryType.getIndustryType())
+                    .setProperty("fullindustrytypes", industryTypeRequestModelSet);
         } catch (ModelNotFoundException e) {
-            MastroLogUtils.error(this, "IndustryRequest model empty", e);
-            return "redirect:/master/getCreateParty";
-        } catch (Exception e) {
             MastroLogUtils.error(PartyController.class, "Error occured while saving industrytype :{}", e);
-            throw e;
+            return new GenericResponse(false, "industrytype model not found");
+
         }
     }
 

@@ -444,7 +444,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white closePartyIndustryType">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" id="indtype" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -488,6 +488,9 @@
     </div>
 </div>
 <!-- Mainly scripts -->
+
+<span id="industryTypeUrl" th:data-url="@{/master/saveIndustryType}"></span>
+
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>

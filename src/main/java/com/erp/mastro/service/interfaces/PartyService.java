@@ -33,7 +33,7 @@ public interface PartyService {
 
     Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party);
 
-    void saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
+    IndustryType saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
 
     void saveOrUpdatePartyProducts(Party party, Set<Product> products);
 
