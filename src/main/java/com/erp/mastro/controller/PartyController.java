@@ -22,8 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -54,10 +56,16 @@ public class PartyController {
         MastroLogUtils.info(PartyController.class, "Going to get Party : {}");
 
         try {
-            List<Party> partyList = new ArrayList<>();
+           /* List<Party> partyList = new ArrayList<>();
             for (Party party : partyService.getAllPartys()) {
                 partyList.add(party);
             }
+            */
+            List<Party> partyList = partyService.getAllPartys().stream()
+                    .filter(partydata -> (null != partydata))
+                    .sorted(Comparator.comparing(Party::getId).reversed())
+                    .collect(Collectors.toList());
+
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("partyTab", "party");
             model.addAttribute("partyList", partyList);
@@ -160,9 +168,6 @@ public class PartyController {
             String[] interestRates1 = request.getParameterValues("interestRates");
             String[] remarks1 = request.getParameterValues("remarks");
 
-            // List list = new ArrayList(Arrays.asList(creditLimits));
-            //list.addAll(Arrays.asList(creditLimits1));
-            // Object[] stringcreditlimit =  list.toArray();
             String[] stringcreditlimit = ArrayUtils.addAll(creditLimits, creditLimits1);
             String[] stringdays = ArrayUtils.addAll(creditDays, creditDays1);
             String[] stringworthiness = ArrayUtils.addAll(creditWorthiness, creditWorthiness1);
