@@ -24,7 +24,6 @@ public class Roles {
     @Column(name = "role_description")
     private String roleDescription;
 
-
     @ManyToMany(mappedBy = "roles")
     private Set<User> user = new HashSet<>();
 
@@ -33,7 +32,7 @@ public class Roles {
             , inverseJoinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")})
     private Set<Modules> modules;
 
-
     @Column(name = "delete_status", nullable = false)
     private int rolesDeleteStatus;
+
 }

@@ -45,19 +45,19 @@ public class BranchRegistration {
     private String panNo;
 
     @Column(name = "pan_date")
-    private String panDate;
+    private Date panDate;
 
     @Column(name = "pf_account")
     private String pfAccount;
 
     @Column(name = "pf_date")
-    private String pfDate;
+    private Date pfDate;
 
     @Column(name = "esic_account")
     private String esicAccount;
 
     @Column(name = "esic_date")
-    private String esicDate;
+    private Date esicDate;
 
     @Column(name = "ecc_no")
     private String eccNo;
@@ -97,10 +97,4 @@ public class BranchRegistration {
 
     @Column(name = "cin_date")
     private Date cinDate;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "branch_branchRegistration", joinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
-    private Branch branch;
-
 }

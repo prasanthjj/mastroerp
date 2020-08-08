@@ -5,6 +5,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndustryTypeRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public interface PartyService {
 
     IndustryType getIndustryTypeById(Long id);
 
-    Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException;
+    Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException, ParseException;
 
     void deleteParty(Long id);
 

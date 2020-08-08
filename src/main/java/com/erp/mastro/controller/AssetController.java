@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -36,12 +37,12 @@ public class AssetController {
     public String getAssetList(Model model) {
         MastroLogUtils.info(AssetController.class, "Going to get Asset List : {}");
         try {
-            List<Assets> assetsList = new ArrayList<>();
-            for (Assets asset : assetService.getAllAssets()) {
-                if (asset.getAssetDeleteStatus() != 1) {
-                    assetsList.add(asset);
-                }
-            }
+            List<Assets> assetsList = assetService.getAllAssets().stream()
+                    .filter(assetData -> (null != assetData))
+                    .filter(assetData -> (1 != assetData.getAssetDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            Assets::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("assetForm", new AssetRequestModel());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("assetTab", "asset");

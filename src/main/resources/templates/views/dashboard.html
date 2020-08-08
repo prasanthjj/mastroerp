@@ -24,7 +24,7 @@
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
 </head>
 
-<body>
+<body onload="switchBranch()">
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side " role="navigation">
         <div class="sidebar-collapse">
@@ -33,12 +33,13 @@
                     <div class="dropdown profile-element">
                         <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold">Admin @ Thrissur</span>
+                            <span class="block m-t-xs font-bold">Admin @  <span
+                                    th:text="${currentBranch}"></span></span>
                             <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
 
-                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </div>
                 </li>
@@ -47,63 +48,10 @@
         </div>
     </nav>
 
+
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom ">
-            <nav class="navbar navbar-static-top master-dark-blue-bg" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
-                    </a>
-
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <a class="" href="#"> Branch : Thrissur</a>
-                    </li>
-                    <li>
-                        <a class="" href="#" data-toggle="modal" data-target="#branchList"><i class="fa fa-edit"></i>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Indent Generated
-                                        <span class="float-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> PO Rejected
-                                        <span class="float-right text-muted small">12 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li>
-                                <div class="text-center link-block">
-                                    <a href="#" class="dropdown-item">
-                                        <strong>See All Alerts</strong>
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="login.html">
-                            <i class="fa fa-sign-out"></i> Log out
-                        </a>
-                    </li>
-                </ul>
-
-            </nav>
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
         </div>
 
         <div class="row wrapper border-bottom white-bg page-heading">
@@ -160,7 +108,7 @@
 
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="stock_details.html">
+                                    <a href="#">
                                         <div class="widget lazur-bg p-md text-center">
                                             <div class="p-md">
                                                 <i class="fa fa-cubes fa-3x m-b-sm"></i>
@@ -170,7 +118,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="purchase_order.html">
+                                    <a href="#">
                                         <div class="widget yellow-bg p-md text-center">
                                             <div class="p-md">
                                                 <i class="fa fa-shopping-cart fa-3x m-b-sm"></i>
@@ -181,7 +129,7 @@
 
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="invoice.html">
+                                    <a href="#">
                                         <div class="widget yellow-bg p-md text-center">
                                             <div class="p-md">
                                                 <i class="fa fa-money fa-3x m-b-sm"></i>
@@ -238,13 +186,15 @@
     </div>
 
 </div>
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
+<div class="modal inmodal" id="loginBranchList" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="branchListForm">
+        <form th:action="@{/admin/selectBranchName}" id="branchListForm" method="post">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close closeBranchList" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
                     <h4 class="modal-title">Branch List</h4>
 
                 </div>
@@ -253,19 +203,19 @@
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" required>
+                                <select class="form-control" id="branchId" name="branchId" required>
                                     <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
+                                    <option th:each="branch : ${branchList}"
+                                            th:value="${branch.id}" th:text="${branch.branchName}">Select
+                                    </option>
                                 </select>
+
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-white closeBranchList" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Select</button>
                     </div>
                 </div>
@@ -273,6 +223,8 @@
         </form>
     </div>
 </div>
+
+
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
@@ -292,5 +244,18 @@
 <script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
         th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
+
+<script th:if="${currentBranch} == null">
+function switchBranch() {
+   $("#loginBranchList").toggle();
+   $('#loginBranchList').css({"background-color": "rgb(0 0 0 / 35%)"});
+  }
+
+ $(document).on('click', '.closeBranchList', function() {
+        $('#loginBranchList').toggle();
+    });
+
+</script>
 </body>
 </html>

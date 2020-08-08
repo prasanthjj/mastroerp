@@ -14,6 +14,10 @@ public interface UserService {
 
     void saveOrUpdateUser(UserModel userModel, HttpServletRequest request);
 
+    void activateOrDeactivateUser(Long id);
+
+    void saveCurrentBranch(Long branchId, User userDetails);
+
     void deleteUser(Long id);
 
     User findByEmail(String email);
@@ -21,4 +25,5 @@ public interface UserService {
     public void deleteUserDetails(Long id);
 
     public void savUser(User User);
+
 }

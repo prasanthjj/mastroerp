@@ -29,11 +29,20 @@ public class Catalog {
     @Column(name = "delete_status", nullable = false)
     private int catalogDeleteStatus;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "catalog_category", joinColumns = {@JoinColumn(name = "catalog_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
     private Set<Category> categories;
 
+    public Catalog() {
+
+    }
+
+    public Catalog(Long id, String catalogName, String catalogDescription) {
+        this.id = id;
+        this.catalogName = catalogName;
+        this.catalogDescription = catalogDescription;
+
+    }
 
 }

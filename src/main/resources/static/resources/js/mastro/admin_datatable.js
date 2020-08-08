@@ -1,25 +1,11 @@
 $(document).ready(function(){
-    // User master table start
+
+// User master table start
 $('.dataTables-user').DataTable({
     pageLength: 25,
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [
-        { extend: 'copy'},
-        {extend: 'csv'},
-        {extend: 'excel', title: 'ExampleFile'},
-        {extend: 'pdf', title: 'ExampleFile'},
-
-        {extend: 'print',
-         customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-
-                $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-        }
-        }
     ]
 });
 // User master table end
@@ -30,23 +16,7 @@ $('.dataTables-role').DataTable({
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [
-        { extend: 'copy'},
-        {extend: 'csv'},
-        {extend: 'excel', title: 'ExampleFile'},
-        {extend: 'pdf', title: 'ExampleFile'},
-
-        {extend: 'print',
-         customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-
-                $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-        }
-        }
     ]
-
 });
 //Role master table end
 
@@ -56,23 +26,7 @@ $('.dataTables-role-access').DataTable({
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [
-        { extend: 'copy'},
-        {extend: 'csv'},
-        {extend: 'excel', title: 'ExampleFile'},
-        {extend: 'pdf', title: 'ExampleFile'},
-
-        {extend: 'print',
-         customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-
-                $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-        }
-        }
     ]
-
 });
 // Role Access Rights End
 
@@ -82,23 +36,7 @@ $('.dataTables-Branch').DataTable({
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [
-        { extend: 'copy'},
-        {extend: 'csv'},
-        {extend: 'excel', title: 'ExampleFile'},
-        {extend: 'pdf', title: 'ExampleFile'},
-
-        {extend: 'print',
-         customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-
-                $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-        }
-        }
     ]
-
 });
 //Branch Master Table End
 

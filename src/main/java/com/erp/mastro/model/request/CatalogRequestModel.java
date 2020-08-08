@@ -1,32 +1,23 @@
 package com.erp.mastro.model.request;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 public class CatalogRequestModel {
 
     private Long id;
     private String catalogName;
     private String catalogDescription;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCatalogName() {
-        return catalogName;
-    }
-
-    public void setCatalogName(String catalogName) {
-        this.catalogName = catalogName;
-    }
-
-    public String getCatalogDescription() {
-        return catalogDescription;
-    }
-
-    public void setCatalogDescription(String catalogDescription) {
-        this.catalogDescription = catalogDescription;
+    @Override
+    public String toString() {
+        return "CatalogRequestModel{" +
+                "id=" + id +
+                ", catalogName='" + catalogName + '\'' +
+                ", catalogDescription='" + catalogDescription + '\'' +
+                '}';
     }
 }

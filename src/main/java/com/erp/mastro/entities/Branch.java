@@ -68,12 +68,10 @@ public class Branch {
     private int branchDeleteStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "branch_branchRegistration", joinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")}
-            , inverseJoinColumns = {@JoinColumn(name = "branchRegistration_id", referencedColumnName = "id")})
+    @JoinColumn(name = "registration_id")
     private BranchRegistration branchRegistration;
 
     @ManyToMany(mappedBy = "branch")
     private Set<User> user = new HashSet<>();
-
 
 }

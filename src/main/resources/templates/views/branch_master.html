@@ -86,7 +86,7 @@
                                     <tr>
                                         <th class="mastro-blue-bg txt-white">No</th>
                                         <th>Branch Name</th>
-                                        <th>Branch Code</th>
+                                        <!-- <th>Branch Code</th>-->
                                         <th>Branch Prefix</th>
                                         <th>Address</th>
                                         <th>Phone No.</th>
@@ -97,7 +97,7 @@
                                     <tr class="gradeX" th:each="branchObj,iterator:${branchList}">
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${branchObj.branchName}"></td>
-                                        <td th:text="${branchObj.branchCode}"></td>
+                                        <!--   <td th:text="${branchObj.branchCode}"></td>-->
                                         <td th:text="${branchObj.branchPrefix}"></td>
                                         <td th:text="${branchObj.branchAddress}"></td>
                                         <td th:text="${branchObj.phoneNo}"></td>
@@ -144,6 +144,9 @@
     </div>
 
 </div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>

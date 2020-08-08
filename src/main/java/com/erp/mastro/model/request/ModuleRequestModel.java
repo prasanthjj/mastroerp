@@ -13,4 +13,12 @@ public class ModuleRequestModel {
     private String moduleName;
     private Roles roles;
 
+    @Setter(AccessLevel.PUBLIC)
+    @Getter(AccessLevel.PUBLIC)
+    public static class ModuleModelEdit {
+
+        private String module;
+        private Long id;
+    }
+
 }

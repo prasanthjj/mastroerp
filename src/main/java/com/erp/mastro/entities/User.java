@@ -41,6 +41,10 @@ public class User extends Auditable<String> {
             , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
     private Set<Branch> branch;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_selected_branch_id")
+    private UserSelectedBranch userSelectedBranch;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;

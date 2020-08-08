@@ -12,6 +12,7 @@ import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.repository.PartyRepository;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.PartyService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -135,17 +138,39 @@ public class PartyController {
      * @return
      */
     @PostMapping("/saveParty")
-    public String saveParty(@ModelAttribute("partyForm") @Valid PartyRequestModel partyRequestModel, HttpServletRequest request, Model model) {
+    public String saveParty(@ModelAttribute("partyForm") @Valid PartyRequestModel partyRequestModel, HttpServletRequest request, Model model) throws ParseException {
         MastroLogUtils.info(PartyController.class, "Going to save party type :{}");
         try {
             String[] branchIds = request.getParameterValues("branchId");
-            String[] creditLimits = request.getParameterValues("creditLimit");
-            String[] creditDays = request.getParameterValues("creditDays");
-            String[] creditWorthiness = request.getParameterValues("creditWorthiness");
-            String[] interestRates = request.getParameterValues("interestRates");
-            String[] remarks = request.getParameterValues("remarks");
+            String[] creditLimits = new String[partyRequestModel.getCreditDetailsModelList().size()];
+            String[] creditDays = new String[partyRequestModel.getCreditDetailsModelList().size()];
+            String[] creditWorthiness = new String[partyRequestModel.getCreditDetailsModelList().size()];
+            String[] interestRates = new String[partyRequestModel.getCreditDetailsModelList().size()];
+            String[] remarks = new String[partyRequestModel.getCreditDetailsModelList().size()];
+            for (int i = 0; i < partyRequestModel.getCreditDetailsModelList().size(); i++) {
+                creditLimits[i] = request.getParameter("creditDetailsModelList[" + i + "].creditLimit");
+                creditDays[i] = request.getParameter("creditDetailsModelList[" + i + "].creditDays");
+                creditWorthiness[i] = request.getParameter("creditDetailsModelList[" + i + "].creditWorthiness");
+                interestRates[i] = request.getParameter("creditDetailsModelList[" + i + "].interestRate");
+                remarks[i] = request.getParameter("creditDetailsModelList[" + i + "].remarks");
+            }
+            String[] creditLimits1 = request.getParameterValues("creditLimit");
+            String[] creditDays1 = request.getParameterValues("creditDays");
+            String[] creditWorthiness1 = request.getParameterValues("creditWorthiness");
+            String[] interestRates1 = request.getParameterValues("interestRates");
+            String[] remarks1 = request.getParameterValues("remarks");
 
-            partyService.saveOrUpdateParty(partyRequestModel, branchIds, creditLimits, creditDays, creditWorthiness, interestRates, remarks);
+            // List list = new ArrayList(Arrays.asList(creditLimits));
+            //list.addAll(Arrays.asList(creditLimits1));
+            // Object[] stringcreditlimit =  list.toArray();
+            String[] stringcreditlimit = ArrayUtils.addAll(creditLimits, creditLimits1);
+            String[] stringdays = ArrayUtils.addAll(creditDays, creditDays1);
+            String[] stringworthiness = ArrayUtils.addAll(creditWorthiness, creditWorthiness1);
+            String[] stringinterestRates = ArrayUtils.addAll(interestRates, interestRates1);
+            String[] stringremarks = ArrayUtils.addAll(remarks, remarks1);
+
+
+            partyService.saveOrUpdateParty(partyRequestModel, branchIds, stringcreditlimit, stringdays, stringworthiness, stringinterestRates, stringremarks);
             return "redirect:/master/getPartys";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "PartyRequestModel model empty", e);
@@ -187,6 +212,17 @@ public class PartyController {
                 for (Branch branch1 : branches) {
                     if (branch.getId().equals(branch1.getId())) {
                         branchList.remove(branch1);
+                    }
+                }
+            }
+            Iterator<Branch> finalSet = branchList.iterator();
+            for (Iterator<Branch> it = finalSet; it.hasNext(); ) {
+                Branch fullModel = it.next();
+                if (fullModel != null) {
+                    for (Branch branchModel : branches) {
+                        if (fullModel.getId() == branchModel.getId()) {
+                            finalSet.remove();
+                        }
                     }
                 }
             }

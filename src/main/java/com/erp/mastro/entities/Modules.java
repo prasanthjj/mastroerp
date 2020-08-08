@@ -19,9 +19,7 @@ public class Modules {
     @Column(name = "module_name")
     private String moduleName;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-
     @JoinTable(name = "role_module", joinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Roles roles;

@@ -32,7 +32,7 @@
 
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-7">
-                <h2 class="text-info"><i class="fa fa-barcode"></i> Edit Branch </h2>
+                <h2 class="text-info"><i class="fa fa-barcode"></i> View Branch </h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="#">Admin</a>
@@ -73,10 +73,7 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <!--<form id="viewBranchform" action="" class="wizard-big">-->
-                            <form id="viewBranchform" th:action="@{/admin/saveBranch}" th:object="${branchForm}"
-                                  name="branchForm" method="post" class="wizard-big">
-                                <input type="hidden" name="id" th:field="*{id}"/>
+                            <form id="viewBranchform" action="" class="wizard-big">
                                 <h1>General Details</h1>
                                 <fieldset>
 
@@ -85,29 +82,30 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Name</label>
-                                                <input type="text" class="form-control required"
-                                                       th:field="*{branchName}">
+                                                <h4 th:text="${branchForm.branchName}">branch name</h4>
+
+
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Local Currency</label>
-                                                <p>Doller</p>
+                                                <h4 th:text="${branchForm.localCurrency}">local Currency</h4>
+
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Website</label>
-                                                <input type="text" class="form-control " th:field="*{website}">
+                                                <h4 th:text="${branchForm.website}">website</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>State Name</label>
-                                                <p></p>
+                                                <h4 th:text="${branchForm.stateName}">state name</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>Address </label>
-                                                <textarea class="form-control m-b required"
-                                                          th:field="*{branchAddress}"></textarea>
+                                                <label>Branch Address </label>
+                                                <h4 th:text="${branchForm.branchAddress}">branch address</h4>
 
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -115,46 +113,46 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Code</label>
-                                                <input type="text" class="form-control " disabled
-                                                       th:field="*{branchCode}">
+                                                <h4 th:text="${branchForm.id}">branch code</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Email ID</label>
-                                                <input type="email" class="form-control " th:field="*{emailId}">
+                                                <h4 th:text="${branchForm.emailId}">email id</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Fax No.</label>
-                                                <input type="text" class="form-control " th:field="*{faxNo}">
+                                                <h4 th:text="${branchForm.faxNo}">fax no</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>City Name </label>
-                                                <p></p>
+                                                <h4 th:text="${branchForm.cityName}">city name</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control required " th:field="*{pinCode}">
-                                                <p></p>
+                                                <label>Pin Code </label>
+                                                <h4 th:text="${branchForm.pinCode}">pincode</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Prefix</label>
-                                                <input type="text" class="form-control " th:field="*{branchPrefix}">
+                                                <h4 th:text="${branchForm.branchPrefix}">branchPrefix</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Phone Number</label>
-                                                <input type="text" class="form-control " th:field="*{phoneNo}">
+                                                <h4 th:text="${branchForm.phoneNo}">phonenumber</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Country Name</label>
-                                                <p></p>
+                                                <h4 th:text="${branchForm.countryName}">country name</h4>
                                             </div>
+                                            <div class="hr-line-dashed"></div>
                                             <div class="hr-line-dashed"></div>
 
                                         </div>
@@ -168,8 +166,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>TAN No.</label>
-                                                <input type="text" class="form-control"
-                                                       th:field="*{branchRegistration.tanNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.tanNo}">tanNo</h4>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -182,40 +179,33 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>VAT Tin No</label>
-                                                <input type="text" class="form-control"
-                                                       th:field="*{branchRegistration.tanNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.vatTinNo}">vatno</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>CST Tin No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.cstTinNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.cstTinNo}">cstTinNo</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group ">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.vatDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.vatDate,'MM/dd/yyyy')}">
+                                                    vatDate</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.cstdate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.cstdate,'MM/dd/yyyy')}">
+                                                    cstdate</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Sentence for Juridical </label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.juridical}">
+                                                <h4 th:text="${branchForm.branchRegistration.juridical}">juridical</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -225,18 +215,15 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>S. Tax No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.sTaxNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.sTaxNo}">S. Tax No</h4>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.staxDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.StaxDate,'MM/dd/yyyy')}">
+                                                    StaxDate</h4>
                                             </div>
 
                                         </div>
@@ -247,18 +234,15 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>PAN No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.panNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.panNo}">panNumber</h4>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.panDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.panDate,'MM/dd/yyyy')}">
+                                                    panDate</h4>
                                             </div>
 
                                         </div>
@@ -269,18 +253,15 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>PF Account No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.pfAccount}">
+                                                <h4 th:text="${branchForm.branchRegistration.pfAccount}">pfAccount</h4>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.pfDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.pfDate,'MM/dd/yyyy')}">
+                                                    pfDate</h4>
                                             </div>
 
                                         </div>
@@ -291,18 +272,16 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label> ESIC Account No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.esicAccount}">
+                                                <h4 th:text="${branchForm.branchRegistration.esicAccount}">
+                                                    esicAccount</h4>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>With effect From Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.esicDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.esicDate,'MM/dd/yyyy')}">
+                                                    esicDate</h4>
                                             </div>
 
                                         </div>
@@ -313,62 +292,62 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label> ECC No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.eccNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.eccNo}">eccNo</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Range</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.range}">
+                                                <h4 th:text="${branchForm.branchRegistration.range}">range</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Range Address</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchRegistration.rangeAddress}">
+                                                <h4 th:text="${branchForm.branchRegistration.rangeAddress}">
+                                                    rangeAddress</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Commissionerate</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.Commissionerate}">
+                                                <h4 th:text="${branchForm.branchRegistration.Commissionerate}">
+                                                    Commissionerate</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Commissionerate Address</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchRegistration.commissionerateAddress}">
+                                                <h4 th:text="${branchForm.branchRegistration.commissionerateAddress}">
+                                                    commissionerateAddress</h4>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label> PLA No. </label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.plaNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.plaNo}">plaNo</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Division</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchRegistration.division}">
+                                                <h4 th:text="${branchForm.branchRegistration.plaNo}">plaNo</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Division Address</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchRegistration.divisionAddress}">
+                                                <h4 th:text="${branchForm.branchRegistration.division}">division</h4>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Division Address</label>
+                                                <h4 th:text="${branchForm.branchRegistration.divisionAddress}">
+                                                    divisionAddress</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Is Exempted</label>
-                                                <p></p>
+                                                <h4 th:text="${branchForm.branchRegistration.exempted}">exempted</h4>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label> Limit</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.limit}">
+                                                <h4 th:text="${branchForm.branchRegistration.limit}">Limit</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -378,8 +357,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label> GSTIN</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.gstIn}">
+                                                <h4 th:text="${branchForm.branchRegistration.gstIn}">gstIn</h4>
                                             </div>
 
                                         </div>
@@ -392,18 +370,15 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label> CIN No.</label>
-                                                <input type="text" class="form-control "
-                                                       th:field="*{branchRegistration.cinNo}">
+                                                <h4 th:text="${branchForm.branchRegistration.cinNo}">cinNo</h4>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>CIN Date </label>
-                                                <span class="input-group-addon"><i
-                                                        class="fa fa-calendar"></i></span><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 th:field="*{branchRegistration.cinDate}">
+                                                <h4 th:text="${#dates.format(branchForm.branchRegistration.cinDate, 'MM/dd/yyyy')}">
+                                                    cinDate</h4>
                                             </div>
 
                                         </div>
@@ -411,6 +386,8 @@
                                     <div class="hr-line-dashed"></div>
                                 </fieldset>
                             </form>
+
+
                         </div>
                     </div>
                 </div>
@@ -425,6 +402,9 @@
     </div>
 
 </div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>

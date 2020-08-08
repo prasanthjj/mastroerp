@@ -20,9 +20,9 @@ public class CurrentUserDetails implements UserDetails {
     }
 
     @Override
-
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Roles> roles = user.getRoles();
+
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (Roles role : roles) {
@@ -60,5 +60,9 @@ public class CurrentUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.isEnabled();
+    }
+
+    public User getUser() {
+        return user;
     }
 }

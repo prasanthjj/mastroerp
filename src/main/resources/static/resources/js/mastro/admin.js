@@ -67,6 +67,84 @@ $(document).ready(function(){
     });
     // Remove user end
 
+    //Activate User
+                      $('.activateUser').click(function () {
+                       var userId=$(this).data('userid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to activate user!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, activated!",
+                              closeOnConfirm: false
+                          }, function () {
+
+                          $.ajax({
+                                              url: '/admin/getActivateOrDeactivateUser',
+                                              type: 'GET',
+                                              dataType : 'json',
+                                             data: { 'userId': userId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                      var redirectionUrl= "/admin/addUser";
+                                                      window.location.href = redirectionUrl;
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+                             /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                          });
+                      });
+            //End Active User
+
+
+
+      //Deactivate User
+           $('.deactiveUser').click(function () {
+                       var userId=$(this).data('userid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to deactivate user!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, deactivate it!",
+                              closeOnConfirm: false
+                          }, function () {
+
+                          $.ajax({
+                                              url: '/admin/getActivateOrDeactivateUser',
+                                              type: 'GET',
+                                              dataType : 'json',
+                                             data: { 'userId': userId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                   var redirectionUrl= "/admin/addUser";
+                                                    window.location.href = redirectionUrl;
+
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+
+/*
+                           swal("Activated!", "Item has been Activated.", "success");
+*/
+
+                          });
+                      });
+
+
+    //End Deactive User
+
+
+
     // Add Branch start
     $(function(datepicker) {
         $('#vatEffectFrmDate .input-group.date').datepicker({
@@ -74,7 +152,8 @@ $(document).ready(function(){
             keyboardNavigation: false,
             forceParse: false,
             calendarWeeks: true,
-            autoclose: true
+            autoclose: true,
+            //keepEmptyValues:true
         });
         $('#cstEffectFrmDate .input-group.date').datepicker({
             todayBtn: "linked",
@@ -156,6 +235,45 @@ $(document).ready(function(){
     // Remove Branch End
 
 
+//Role access starts
+ $('#roleAccess').change(function (e) {
+   e.preventDefault();
+    var rolesId=document.getElementById("roleAccess").value;
+
+     $.ajax({
+      url: '/admin/getRoleAccessEdit',
+              type: 'GET',
+              dataType : 'json',
+              data: {'roleId': rolesId},
+               success: function(data){
+
+               if(data.success) {
+               $("#moduleCheckId tbody").html("");
+
+                   $.each(data.data.rolemodules, function(id){
+                     var tblRow = "<tr class='gradeX'>" + "<td>" + this['id']  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' checked value=" +this['id'] +" '/> "+ "</td>";
+                     $(tblRow).appendTo("#moduleCheckId tbody");
+                     });
+
+                     $.each(data.data.remainingModules, function(id){
+
+                                         var tblRow = "<tr class='gradeX'>" + "<td>" + this['id']  + "</td>"  + "<td>" + this['module'] + "</td>" + "<td>" + "<input type='checkbox' name='checkboxName' value=" +this['id'] +"  '/> "+ "</td>";
+                                         $(tblRow).appendTo("#moduleCheckId tbody");
+                                        });
+
+                   }
+
+                 },
+                error: function(jqXHR, textStatus) {
+                           alert('Error Occured');
+                       }
+
+      });
+
+
+
+
+ });
 
 //Edit Role Start
 $("body").on('click','.roleEdit',function (e) {
@@ -197,22 +315,26 @@ $("body").on('click','.userEdit',function (e) {
                  $("#userRoles").html("");
                   $("#userBranch").html("");
 
-                $.each(data.data.roles, function(i){
+                   $.each(data.data.roles, function(i){
+                    ﻿$('#userRoles').append($('<option selected="selected">').val(this['id']).text(this['role']));
+                    });
 
-                  var id=this['id'];
-                  var optionRow =$('<option selected="selected">').val(this['id']).text(this['role']);
-
-                  ﻿$('#userRoles').append($('<option selected="selected">').val(this['id']).text(this['role']));
+                   $.each(data.data.fullroles, function(i){
 
 
+
+                  ﻿$('#userRoles').append($('<option>').val(this['id']).text(this['role']));
 
                   });
-                    $.each(data.data.branch, function(i){
-                                    var id=this['id'];
 
+                   $.each(data.data.branch, function(i){
+                           ﻿$('#userBranch').append($('<option selected="selected">').val(this['id']).text(this['branchname']));
+                    });
+
+                    $.each(data.data.fullbranch, function(i){
+                                    var id=this['id'];/*
                         var optionRow1 =$('<option selected="selected">').val(this['id']).text(this['branchname']);
-
-                                          ﻿$('#userBranch').append($('<option selected="selected">').val(this['id']).text(this['branchname']));
+*/                   ﻿$('#userBranch').append($('<option>').val(this['id']).text(this['branchname']));
                                     });
 
             }
@@ -224,6 +346,7 @@ $("body").on('click','.userEdit',function (e) {
 
 });
 //Edit User End
+
 
   //User Role Starts
 
@@ -246,6 +369,11 @@ $("body").on('click','.userEdit',function (e) {
                  theme: 'bootstrap4',
                     });
 //User Branch Ends
+
+
+ $(".branchList").select2({
+                theme: 'bootstrap4',
+            });
 
 
 });

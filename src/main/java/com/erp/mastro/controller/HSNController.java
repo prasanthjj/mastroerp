@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -26,12 +27,12 @@ public class HSNController {
     public String getHSN(Model model) {
         MastroLogUtils.info(HSNController.class, "Going to get all hsn : {}");
         try {
-            List<HSN> hsnList = new ArrayList<>();
-            for (HSN hsn : hsnService.getAllHSN()) {
-                if (hsn.getHsnDeleteStatus() != 1) {
-                    hsnList.add(hsn);
-                }
-            }
+            List<HSN> hsnList = hsnService.getAllHSN().stream()
+                    .filter(hsnData -> (null != hsnData))
+                    .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            HSN::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("hsnTab", "hsn");
             model.addAttribute("hsnList", hsnList);

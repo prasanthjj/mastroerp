@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -27,12 +28,12 @@ public class PriceListController {
     public String getPriceListMaster(Model model) {
         MastroLogUtils.info(PriceListController.class, "Going to get all pricelist :{}");
         try {
-            List<PriceList> priceList = new ArrayList<>();
-            for (PriceList priceList1 : priceListService.getAllPriceList()) {
-                if (priceList1.getPricelistDeleteStatus() != 1) {
-                    priceList.add(priceList1);
-                }
-            }
+            List<PriceList> priceList = priceListService.getAllPriceList().stream()
+                    .filter(priceData -> (null != priceData))
+                    .filter(priceData -> (1 != priceData.getPricelistDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            PriceList::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("priceListTab", "priceList");
             model.addAttribute("priceList", priceList);

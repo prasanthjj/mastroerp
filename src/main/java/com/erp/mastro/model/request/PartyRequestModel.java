@@ -1,5 +1,6 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.entities.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class PartyRequestModel {
     private String paymentTerms;
     private String categoryType;
     private Date partyDate;
+    private String spartyDate;
     private String oldReferCode;
     private String relationshipMananger;
     private List<ContactDetailsModel> contactDetailsModelList = new ArrayList<>();
@@ -38,7 +40,6 @@ public class PartyRequestModel {
             this.status = party.getStatus();
             this.paymentTerms = party.getPaymentTerms();
             this.categoryType = party.getCategoryType();
-            this.partyDate = party.getPartyDate();
             this.oldReferCode = party.getOldReferCode();
             this.relationshipMananger = party.getRelationshipMananger();
             this.industryid = party.getIndustryType().getId();
@@ -46,6 +47,9 @@ public class PartyRequestModel {
             party.getBillingDetails().parallelStream().forEach(x -> this.billingDetailsModelList.add(new BillingDetailsModel(x)));
             party.getBankDetails().parallelStream().forEach(x -> this.bankDetailsModelList.add(new BankDetailsModel(x)));
             party.getCreditDetails().parallelStream().forEach(x -> this.creditDetailsModelList.add(new CreditDetailsModel(x)));
+            if (party.getPartyDate() != null) {
+                this.partyDate = party.getPartyDate();
+            }
         }
     }
 
@@ -111,6 +115,14 @@ public class PartyRequestModel {
 
     public void setPartyDate(Date partyDate) {
         this.partyDate = partyDate;
+    }
+
+    public String getSpartyDate() {
+        return MastroApplicationUtils.getStringFromDate(spartyDate, getPartyDate());
+    }
+
+    public void setSpartyDate(String spartyDate) {
+        this.spartyDate = spartyDate;
     }
 
     public String getOldReferCode() {

@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,7 +82,7 @@ public class PartyServiceImpl implements PartyService {
      * @throws ModelNotFoundException
      */
     @Transactional(rollbackOn = {Exception.class})
-    public Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException {
+    public Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException, ParseException {
 
         Party party = new Party();
 
@@ -97,7 +99,6 @@ public class PartyServiceImpl implements PartyService {
                 party.setStatus(partyRequestModel.getStatus());
                 party.setPaymentTerms(partyRequestModel.getPaymentTerms());
                 party.setCategoryType(partyRequestModel.getCategoryType());
-                party.setPartyDate(partyRequestModel.getPartyDate());
                 party.setOldReferCode(partyRequestModel.getOldReferCode());
                 party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
                 party.setEnabled(true);
@@ -108,9 +109,16 @@ public class PartyServiceImpl implements PartyService {
                 party.setBankDetails(bankDetails);
                 Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
                 party.setBillingDetails(billingDetails);
-                Set<CreditDetails> creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                Set<CreditDetails> creditDetails = new HashSet<>();
+                party.setCreditDetails(creditDetails);
+                creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
                 party.setCreditDetails(creditDetails);
                 partyRepository.save(party);
+                String sDate1 = partyRequestModel.getSpartyDate();
+                if (sDate1 != "") {
+                    Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+                    party.setPartyDate(date1);
+                }
 
                 MastroLogUtils.info(PartyService.class, "Added" + party.getPartyName() + "successfully");
 
@@ -135,8 +143,16 @@ public class PartyServiceImpl implements PartyService {
                 party.setBankDetails(bankDetails);
                 Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
                 party.setBillingDetails(billingDetails);
-              /*  Set<CreditDetails> creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
-                party.setCreditDetails(creditDetails);*/
+                Set<CreditDetails> creditDetails = new HashSet<>();
+                party.setCreditDetails(creditDetails);
+                creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                party.setCreditDetails(creditDetails);
+                String sDate1 = partyRequestModel.getSpartyDate();
+                if (sDate1 != "") {
+                    Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+                    party.setPartyDate(date1);
+                }
+
 
                 partyRepository.save(party);
 

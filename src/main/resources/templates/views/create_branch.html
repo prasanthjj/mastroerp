@@ -87,100 +87,113 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Name <i class="fa fa-asterisk "></i></label>
-                                                <input name="addBrachName" id="addBrachName" type="text"
-                                                       class="form-control required" th:field="*{branchName}">
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Local Currency</label>
-                                                <select class="form-control m-b" name="">
-                                                    <option value="">Select</option>
-                                                    <option>Rupee</option>
-                                                    <option>Dollar</option>
-                                                </select>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Website</label>
-                                                <input name="" type="text" class="form-control " th:field="*{website}">
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>State Name <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="addBranchStateName"
-                                                        id="addBranchStateName">
-                                                    <option value="">Select</option>
-                                                    <option>kerala</option>
-                                                    <option>Tamil Nadu</option>
-                                                </select>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Address <i class="fa fa-asterisk "></i></label>
-                                                <textarea class="form-control m-b required" id="branchAddress"
-                                                          name="branchAddress" th:field="*{branchAddress}"></textarea>
-
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Branch Code</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchCode}" disabled>
+                                                <input id="addBrachName" type="text" class="form-control required"
+                                                       th:field="*{branchName}">
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Email ID</label>
-                                                <input name="" type="email" class="form-control " th:field="*{emailId}">
+                                                <input type="email" class="form-control " th:field="*{emailId}">
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>Fax No.</label>
-                                                <input name="" type="text" class="form-control " th:field="*{faxNo}">
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>City Name <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b required" name="addBranchCityName"
-                                                        id="addBranchCityName">
+                                                <label>Local Currency</label>
+                                                <select class="form-control m-b" name="localCurrency">
                                                     <option value="">Select</option>
-                                                    <option>Ernakulam</option>
-                                                    <option>Kottayam</option>
+                                                    <option value="Rupee">Rupee</option>
+                                                    <option value="Dollar">Dollar</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>Pin Code <i class="fa fa-asterisk "></i></label>
-                                                <input type="text" class="form-control required "
-                                                       name="addBranchPinCode" id="addBranchPinCode"
-                                                       th:field="*{pinCode}">
+                                                <label>City Name <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b required" name="cityName"
+                                                        id="addBranchCityName">
+                                                    <option value="">Select</option>
+                                                    <option value="Alappuzha">Alappuzha</option>
+                                                    <option value="Idukki">Idukki</option>
+                                                    <option value="Kottayam">Kottayam</option>
+                                                    <option value="Kannur">Kannur</option>
+                                                    <option value="Kasaragod">Kasaragod</option>
+                                                    <option value="Kollam">Kollam</option>
+                                                    <option value="Kozhikode">Kozhikode</option>
+                                                    <option value="Malappuram">Malappuram</option>
+                                                    <option value="Palakkad">Palakkad</option>
+                                                    <option value="Pathanamthitta">Pathanamthitta</option>
+                                                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                                    <option value="Thrissur">Thrissur</option>
+                                                    <option value="Wayanad">Wayanad</option>
+                                                    <option value="Ernakulam">Ernakulam</option>
+                                                </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Prefix</label>
-                                                <input name="" type="text" class="form-control "
-                                                       th:field="*{branchPrefix}">
+                                                <input type="text" class="form-control " th:field="*{branchPrefix}">
                                             </div>
                                             <div class="hr-line-dashed"></div>
+
                                             <div class="form-group">
                                                 <label>Phone Number</label>
-                                                <input name="" type="text" class="form-control " th:field="*{phoneNo}">
+                                                <input type="text" class="form-control " th:field="*{phoneNo}">
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Country Name <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required" name="addBranchCountryName"
+                                                <select class="form-control m-b  required" name="countryName"
                                                         id="addBranchCountryName">
                                                     <option value="">Select</option>
-                                                    <option>India</option>
-                                                    <option>America</option>
+                                                    <option value="India">India</option>
+                                                    <option value="America">America</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+
+
+                                            <div class="form-group">
+                                                <label>Address <i class="fa fa-asterisk "></i></label>
+                                                <textarea class="form-control m-b required" id="branchAddress"
+                                                          th:field="*{branchAddress}"></textarea>
+
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Website</label>
+                                                <input type="text" class="form-control " th:field="*{website}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <label>Fax No.</label>
+                                                <input type="text" class="form-control " th:field="*{faxNo}">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+
+                                            <div class="form-group">
+                                                <label>State Name <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b  required" name="stateName"
+                                                        id="addBranchStateName">
+                                                    <option value="">Select</option>
+                                                    <option value="AndhraPradesh">Andhra Pradesh</option>
+                                                    <option value="Karnataka">Karnataka</option>
+                                                    <option value="Kerala">Kerala</option>
+                                                    <option value="Telangana">Telangana</option>
+                                                    <option value="TamilNadu">Tamil Nadu</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
 
+                                            <div class="form-group">
+                                                <label>Pin Code <i class="fa fa-asterisk "></i></label>
+                                                <input type="text" class="form-control required " id="addBranchPinCode"
+                                                       th:field="*{pinCode}">
+                                            </div>
                                             <div class="hr-line-dashed"></div>
 
                                         </div>
@@ -219,9 +232,8 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${vatDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" th:field="*{sVatDate}" type="text">
                                                 </div>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -229,9 +241,8 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${cstdate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" th:field="*{sCstdate}" type="text">
                                                 </div>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -258,9 +269,8 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${staxDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" th:field="*{sStaxDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -281,9 +291,8 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${panDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" th:field="*{sPanDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -304,9 +313,8 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${pfDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" th:field="*{sPfDate}" type="text">
                                                 </div>
                                             </div>
 
@@ -327,9 +335,9 @@
                                                 <label>With effect From Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${esicDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" name="sEsicDate" th:field="*{sEsicDate}"
+                                                        type="text">
                                                 </div>
                                             </div>
 
@@ -388,10 +396,10 @@
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
                                                 <label>Is Exempted</label>
-                                                <select class="form-control ">
+                                                <select class="form-control " name="exempted">
                                                     <option value="">Select</option>
-                                                    <option value="">Yes</option>
-                                                    <option value="">No</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
                                                 </select>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -429,9 +437,9 @@
                                                 <label>CIN Date </label>
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input type="text"
-                                                                                                     class="form-control"
-                                                                                                     th:value="${cinDate}">
+                                                            class="fa fa-calendar"></i></span><input
+                                                        class="form-control" name="sCinDate" th:field="*{sCinDate}"
+                                                        type="text">
                                                 </div>
                                             </div>
 
@@ -454,6 +462,9 @@
     </div>
 
 </div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
