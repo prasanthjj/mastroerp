@@ -154,7 +154,7 @@ public class BranchController {
      */
     @PostMapping("/deleteBranchDetails")
     @ResponseBody
-    public GenericResponse deleteRoles(Model model, HttpServletRequest request, @RequestParam("branchId") Long branchId) {
+    public GenericResponse deleteBranch(Model model, HttpServletRequest request, @RequestParam("branchId") Long branchId) {
         MastroLogUtils.info(BranchController.class, "Going to delete Branch : {}" + branchId);
         try {
             if (branchId != null) {

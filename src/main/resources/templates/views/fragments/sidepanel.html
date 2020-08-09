@@ -6,7 +6,12 @@
                 <div class="dropdown profile-element">
                     <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Admin @  <span th:text="${currentBranch}"></span></span>
+                        <span class="block m-t-xs font-bold">Admin @  <span th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()!=null}">
+<span th:text="${#authentication.getPrincipal().getUser().getUserSelectedBranch().getCurrentBranch().getBranchName()}">
+
+</span>
+
+</span></span>
                         <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -18,8 +23,10 @@
                     Mastro Metals
                 </div>
             </li>
+            <li><a th:href="@{/home}"><i class="fa fa-th-large"></i> <span class="nav-label">Quick Links</span></a>
+            </li>
             <li class="active" th:if="${adminModule== 'adminModule'}">
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
+                <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Admin</span> <span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li th:if="${rolesTab== 'roles'}" class="active"><a th:href="@{/admin/getRole}">Role</a></li>
@@ -36,7 +43,7 @@
             </li>
 
             <li class="" th:unless="${adminModule== 'adminModule'}">
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
+                <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Admin</span> <span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li th:if="${rolesTab== 'roles'}" class="active"><a th:href="@{/admin/getRole}">Role</a></li>
@@ -59,7 +66,7 @@
 
 
             <li class="active" th:if="${masterModule== 'masterModule'}">
-                <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
+                <a href="#"><i class="fa fa-barcode"></i> <span class="nav-label">Master</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
@@ -88,7 +95,7 @@
 
 
             <li class="" th:unless="${masterModule== 'masterModule'}">
-                <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
+                <a href="#"><i class="fa fa-barcode"></i> <span class="nav-label">Master</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
 
@@ -124,36 +131,38 @@
                     <li><a href="#">Stock Transfer</a></li>
                     <li><a href="#">Indent</a></li>
                     <li><a href="#">Gate Pass</a></li>
-                    <li><a href="#">DC / Purchase Slip</a></li>
+                    <li><a href="#">DC /Sales Slip</a></li>
                     <li><a href="#">GRN</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Purchase </span><span
+                <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Purchase </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="#">Purchase Order</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Billing</span><span
-                        class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Sales</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Invoice</a></li>
+                    <li> <a href="#">Sales Order</a></li>
+                    <li> <a href="#">Invoice</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">HR </span><span
+                <a href="#"><i class="fa fa-users"></i> <span class="nav-label">HR </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="#">Department</a></li>
                     <li><a href="#">Salary Components</a></li>
                     <li><a href="#">Salary Templates</a></li>
                     <li><a href="#">Employees</a></li>
+                    <li><a href="#">Attendance</a></li>
+                    <li><a href="#">Pay Runs</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Reports </span><span
+                <a href="#"><i class="fa fa-file"></i> <span class="nav-label">Reports </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="#">Itemwise Stock Ledger</a></li>

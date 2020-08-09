@@ -259,12 +259,6 @@ function WinMove() {
         .disableSelection();
 }
 
-$(".addUom").click(function(){
-    $("#uomBox").append("<div class='row uomDiv'><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction Type</label><div class='col-sm-12'><select class='form-control m-b' name=''><option>Select</option><option></option><option></option></select></div></div></div><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction UOM</label><div class='col-sm-12'><select class='form-control m-b' name=''><option>Select</option><option></option><option></option></select></div></div></div><div class='col-lg-4'><div class='form-group  row'><label class='col-sm-12 col-form-label'>Convention Factor</label><div class='col-sm-10'><input type='text' class='form-control'></div><div class='col-sm-2 text-right'><h2><a class='removeUom'> <i class='fa fa-times-circle'></i></a></h2></div></div></div></div>");
-  });
-  $(document).on('click', '.removeUom', function() {
-    $(this).parents('.uomDiv').remove();
-});
 
 //Autocomplete Start
 function autoComplete(url, className) {

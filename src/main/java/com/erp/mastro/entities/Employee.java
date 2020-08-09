@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -40,6 +42,12 @@ public class Employee {
 
     @Column(name = "date_of_joining")
     private Date dateOfJoining;
+
+      @OneToOne(mappedBy = "employee",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    private User user;
 
 /*    public Employee() { }
 
