@@ -254,13 +254,7 @@ $(document).ready(function(){
  });
    //Role access Ends
 
-  //User email
-
-
-
-
-
-   //Edit Role Start
+     //Edit Role Start
    $("body").on('click','.roleEdit',function (e) {
     e.preventDefault();
     var roleId =$(this).data('roleid');
@@ -320,7 +314,36 @@ $(document).ready(function(){
 });
    //Edit User End
 
+$(function() {
+ //Select email Starts
+    $(".selectEmail").select2({
+    theme:'bootstrap4',
+     dropdownParent: $('#addUser'),
+    });
+   //Select email Ends
+   });
 
+   $(function() {
+   //SelectCountry Starts
+    $(".selectCountry").select2({
+     theme:'bootstrap4',
+     });
+    // Select Country Ends
+
+    //Select State Starts
+    $(".selectState").select2({
+     theme:'bootstrap4',
+     });
+    // Select State Ends
+
+
+     //Select City Starts
+    $(".selectCity").select2({
+     theme:'bootstrap4',
+     });
+    //Select City Ends
+
+   });
 
    //User Role Starts
 
