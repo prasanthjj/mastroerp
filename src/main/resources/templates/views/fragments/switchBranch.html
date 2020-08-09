@@ -15,7 +15,7 @@
                        <div class="col-sm-8">
                                <select class="form-control" id="branchId" name="branchId" required>
                                <option value="" >Select branch</option>
-                               <option th:each="branch : ${UserBranchList}"
+                               <option th:each="branch : ${session.branchList}"
                                        th:value="${branch.id}" th:text="${branch.branchName}">Select</option>
                            </select>
                    </div>

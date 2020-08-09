@@ -49,6 +49,7 @@ public class UserController {
     @Autowired
     HttpSession session;
 
+
     /**
      * Method to login
      *
@@ -90,8 +91,7 @@ public class UserController {
         }
 
         session.setAttribute("selectedBranch", currentBranch);
-        model.addAttribute("currentBranch", currentBranch);
-        model.addAttribute("UserBranchList",branchList);
+        session.setAttribute("branchList", branchList);
         return "views/dashboard";
     }
 
