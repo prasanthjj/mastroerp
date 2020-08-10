@@ -48,7 +48,9 @@ public class BranchServiceImpl implements BranchService {
      * @return branch
      */
     @Override
-    public Branch getBranchById(Long id) { return branchRepository.findById(id).get(); }
+    public Branch getBranchById(Long id) {
+        return branchRepository.findById(id).get();
+    }
 
     /**
      * Save or edit branch
@@ -80,39 +82,39 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setTanNo(branchRequestModel.getTanNo());
             branchRegistration.setVatTinNo(branchRequestModel.getVatTinNo());
             String sDate1 = branchRequestModel.getsVatDate();
-            if(sDate1!="") {
-                Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            if (sDate1 != "") {
+                Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
                 branchRegistration.setVatDate(date1);
             }
             branchRegistration.setCstTinNo(branchRequestModel.getCstTinNo());
             String sDate2 = branchRequestModel.getsCstdate();
-            if(sDate2!="") {
-                Date date2=new SimpleDateFormat("MM/dd/yyyy").parse(sDate2);
+            if (sDate2 != "") {
+                Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate2);
                 branchRegistration.setCstdate(date2);
             }
             branchRegistration.setJuridical(branchRequestModel.getJuridical());
             branchRegistration.setSTaxNo(branchRequestModel.getSTaxNo());
             String sDate3 = branchRequestModel.getsStaxDate();
-            if(sDate3!="") {
-                Date date3=new SimpleDateFormat("MM/dd/yyyy").parse(sDate3);
+            if (sDate3 != "") {
+                Date date3 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate3);
                 branchRegistration.setStaxDate(date3);
             }
             branchRegistration.setPanNo(branchRequestModel.getPanNo());
             String sDate4 = branchRequestModel.getsPanDate();
-            if(sDate4!="") {
-                Date date4=new SimpleDateFormat("MM/dd/yyyy").parse(sDate4);
+            if (sDate4 != "") {
+                Date date4 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate4);
                 branchRegistration.setPanDate(date4);
             }
             branchRegistration.setPfAccount(branchRequestModel.getPfAccount());
             String sDate5 = branchRequestModel.getsPfDate();
-            if(sDate5!="") {
-                Date date5=new SimpleDateFormat("MM/dd/yyyy").parse(sDate5);
+            if (sDate5 != "") {
+                Date date5 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate5);
                 branchRegistration.setPfDate(date5);
             }
             branchRegistration.setEsicAccount(branchRequestModel.getEsicAccount());
             String sDate6 = branchRequestModel.getsEsicDate();
-            if(sDate6!="") {
-                Date date6=new SimpleDateFormat("MM/dd/yyyy").parse(sDate6);
+            if (sDate6 != "") {
+                Date date6 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate6);
                 branchRegistration.setEsicDate(date6);
             }
             branchRegistration.setEccNo(branchRequestModel.getEccNo());
@@ -128,13 +130,13 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setGstIn(branchRequestModel.getGstIn());
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
             String sDate7 = branchRequestModel.getsCinDate();
-            if(sDate7!="") {
-                Date date7=new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
+            if (sDate7 != "") {
+                Date date7 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
                 branchRegistration.setCinDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);
             branchRepository.save(branch);
-            MastroLogUtils.info(BranchService.class, "Added " + branch.getBranchName() +" successfully.");
+            MastroLogUtils.info(BranchService.class, "Added " + branch.getBranchName() + " successfully.");
         } else {
             MastroLogUtils.info(BranchService.class, "Going to edit branch {}" + branchRequestModel.toString());
             Branch branch = getBranchById(branchRequestModel.getId());
@@ -156,40 +158,40 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setTanNo(branchRequestModel.getTanNo());
             branchRegistration.setVatTinNo(branchRequestModel.getVatTinNo());
             String sDate1 = branchRequestModel.getsVatDate();
-            if(sDate1!="") {
-                Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            if (sDate1 != "") {
+                Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
                 branchRegistration.setVatDate(date1);
             }
             branchRegistration.setCstTinNo(branchRequestModel.getCstTinNo());
             String sDate2 = branchRequestModel.getsCstdate();
-            if(sDate2!="") {
-                Date date2=new SimpleDateFormat("MM/dd/yyyy").parse(sDate2);
+            if (sDate2 != "") {
+                Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate2);
                 branchRegistration.setCstdate(date2);
             }
             branchRegistration.setJuridical(branchRequestModel.getJuridical());
             branchRegistration.setSTaxNo(branchRequestModel.getSTaxNo());
             branchRegistration.setSTaxNo(branchRequestModel.getSTaxNo());
             String sDate3 = branchRequestModel.getsStaxDate();
-            if(sDate3!="") {
-                Date date3=new SimpleDateFormat("MM/dd/yyyy").parse(sDate3);
+            if (sDate3 != "") {
+                Date date3 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate3);
                 branchRegistration.setStaxDate(date3);
             }
             branchRegistration.setPanNo(branchRequestModel.getPanNo());
             String sDate4 = branchRequestModel.getsPanDate();
-            if(sDate4!="") {
-                Date date4=new SimpleDateFormat("MM/dd/yyyy").parse(sDate4);
+            if (sDate4 != "") {
+                Date date4 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate4);
                 branchRegistration.setPanDate(date4);
             }
             branchRegistration.setPfAccount(branchRequestModel.getPfAccount());
             String sDate5 = branchRequestModel.getsPfDate();
-            if(sDate5!="") {
-                Date date5=new SimpleDateFormat("MM/dd/yyyy").parse(sDate5);
+            if (sDate5 != "") {
+                Date date5 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate5);
                 branchRegistration.setPfDate(date5);
             }
             branchRegistration.setEsicAccount(branchRequestModel.getEsicAccount());
             String sDate6 = branchRequestModel.getsEsicDate();
-            if(sDate6!="") {
-                Date date6=new SimpleDateFormat("MM/dd/yyyy").parse(sDate6);
+            if (sDate6 != "") {
+                Date date6 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate6);
                 branchRegistration.setEsicDate(date6);
             }
             branchRegistration.setEccNo(branchRequestModel.getEccNo());
@@ -205,13 +207,13 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setGstIn(branchRequestModel.getGstIn());
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
             String sDate7 = branchRequestModel.getsCinDate();
-            if(sDate7!="") {
-                Date date7=new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
+            if (sDate7 != "") {
+                Date date7 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
                 branchRegistration.setCinDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);
             branchRepository.save(branch);
-            MastroLogUtils.info(BranchService.class, "Updated " + branch.getBranchName() +" successfully.");
+            MastroLogUtils.info(BranchService.class, "Updated " + branch.getBranchName() + " successfully.");
         }
     }
 
@@ -222,7 +224,7 @@ public class BranchServiceImpl implements BranchService {
      */
     @Override
     public void deleteBranch(Long id) {
-        if(id != null) {
+        if (id != null) {
             branchRepository.deleteById(id);
             MastroLogUtils.info(BranchService.class, "Deleted successfully.");
         }
@@ -235,7 +237,7 @@ public class BranchServiceImpl implements BranchService {
      */
     @Transactional(rollbackOn = {Exception.class})
     public void deleteBranchDetails(Long id) {
-        if(id != null) {
+        if (id != null) {
             Branch branch = getBranchById(id);
             branch.setBranchDeleteStatus(1);
             branchRepository.save(branch);

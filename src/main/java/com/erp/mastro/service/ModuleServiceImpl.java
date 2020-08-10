@@ -40,7 +40,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public List<Modules> getAllModules() {
         List<Modules> modulesList = new ArrayList<Modules>();
-        moduleRepository.findAll().forEach(modules ->modulesList.add(modules) );
+        moduleRepository.findAll().forEach(modules -> modulesList.add(modules));
         return modulesList;
     }
 
@@ -65,7 +65,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateModules(ModuleRequestModel moduleRequestModel, Set<String> values) {
         MastroLogUtils.info(ModuleService.class, "Going to Add access rights {}");
-        Iterable<Modules> modules= moduleRepository.findAll();
+        Iterable<Modules> modules = moduleRepository.findAll();
         Roles role = moduleRequestModel.getRoles();
         Set<Modules> moduleSet = new HashSet<>();
         role.setModules(moduleSet);
@@ -85,7 +85,7 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public void deleteModules(Long id) {
-        if(id != null) {
+        if (id != null) {
             moduleRepository.deleteById(id);
             MastroLogUtils.info(ModuleService.class, "Deleted successfully.");
         }

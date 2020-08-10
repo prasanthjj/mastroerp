@@ -101,7 +101,7 @@ public class AssetServiceImpl implements AssetService {
 
                 assetRepository.save(assets);
 
-                MastroLogUtils.info(AssetService.class, "Added " + assets.getAssetName() +" succesfully.");
+                MastroLogUtils.info(AssetService.class, "Added " + assets.getAssetName() + " succesfully.");
 
             } else {
                 MastroLogUtils.info(AssetService.class, "Going to edit asset  {}" + assetRequestModel.toString());
@@ -137,7 +137,7 @@ public class AssetServiceImpl implements AssetService {
 
                 assetRepository.save(assets);
 
-                MastroLogUtils.info(AssetService.class, "Updated " + assets.getAssetName() +" succesfully.");
+                MastroLogUtils.info(AssetService.class, "Updated " + assets.getAssetName() + " succesfully.");
 
             }
             return assets;

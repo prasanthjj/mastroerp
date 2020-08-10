@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
 
-    /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
+        /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
 
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
             user.setBranch(branches);
-        } else if(!user.isEnabled()) {
+        } else if (!user.isEnabled()) {
             MastroLogUtils.info(UserService.class, "Going to Enable User {}" + userModel.toString());
             user.setEnabled(userModel.isEnabled());
         } else {
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
             user.setBranch(branches);
         }
         userRepository.save(user);
-        MastroLogUtils.info(UserService.class, "Save or Update " + userModel.getEmail() +" successfully.");
+        MastroLogUtils.info(UserService.class, "Save or Update " + userModel.getEmail() + " successfully.");
     }
 
     /**
@@ -114,9 +114,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void activateOrDeactivateUser(Long id) {
-        if(id != null) {
+        if (id != null) {
             User user = getUserById(id);
-            if(user.isEnabled()) {
+            if (user.isEnabled()) {
                 user.setEnabled(false);
             } else {
                 user.setEnabled(true);
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void saveCurrentBranch(Long branchId, User userDetails) {
-        if(branchId != null) {
+        if (branchId != null) {
             Branch branch = branchService.getBranchById(branchId);
             UserSelectedBranch userSelectedBranch = new UserSelectedBranch();
             userSelectedBranch.setCurrentBranch(branch);
@@ -176,7 +176,9 @@ public class UserServiceImpl implements UserService {
      * @param term
      */
     @Override
-    public User findByEmail(String term) { return userRepository.findByEmail(term); }
+    public User findByEmail(String term) {
+        return userRepository.findByEmail(term);
+    }
 
     /**
      * method to save User
@@ -184,6 +186,8 @@ public class UserServiceImpl implements UserService {
      * @param User
      */
     @Override
-    public void savUser(User User) { userRepository.save(User); }
+    public void savUser(User User) {
+        userRepository.save(User);
+    }
 
 }

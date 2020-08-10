@@ -29,7 +29,7 @@ public class Employee {
     private String email;
 
     @Column(name = "contact_number")
-    private String  contactNumber;
+    private String contactNumber;
 
     @Column(name = "designamtion")
     private String designation;

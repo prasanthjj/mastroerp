@@ -31,7 +31,7 @@ public class BranchController {
      * @return to the create branch page
      */
     @GetMapping("/addBranch")
-    public String addBranch(Model model){
+    public String addBranch(Model model) {
         MastroLogUtils.info(BranchController.class, "Going to add Branch :{}");
         try {
             List<Branch> branchList = branchService.getAllBranch().stream()
@@ -76,7 +76,7 @@ public class BranchController {
      * @return branch list
      */
     @GetMapping("/getBranch")
-    public String getBranch(Model model){
+    public String getBranch(Model model) {
         MastroLogUtils.info(BranchController.class, "Going to get Branch list : {}");
         try {
             List<Branch> branchList = new ArrayList<>();
@@ -88,7 +88,7 @@ public class BranchController {
             model.addAttribute("branchForm", new BranchRequestModel());
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("branchTab", "branch");
-            model.addAttribute("branchList",branchList);
+            model.addAttribute("branchList", branchList);
             return "views/branch_master";
         } catch (Exception e) {
             MastroLogUtils.error(BranchController.class, "Error occured while getting the Branch list : {}");
@@ -104,13 +104,13 @@ public class BranchController {
      * @param model
      * @return branch details to edit
      */
-   @RequestMapping(value = "/editBranch", method = RequestMethod.GET)
+    @RequestMapping(value = "/editBranch", method = RequestMethod.GET)
     public String editBranch(HttpServletRequest request, @RequestParam("branchId") Long branchId, Model model) {
-       MastroLogUtils.info(BranchController.class, "Going to edit Branch : {}" + branchId);
+        MastroLogUtils.info(BranchController.class, "Going to edit Branch : {}" + branchId);
         try {
-            if(branchId != null) {
-                Branch branch=branchService.getBranchById(branchId);
-                BranchRequestModel branchRequestModel =new BranchRequestModel(branch);
+            if (branchId != null) {
+                Branch branch = branchService.getBranchById(branchId);
+                BranchRequestModel branchRequestModel = new BranchRequestModel(branch);
                 model.addAttribute("adminModule", "adminModule");
                 model.addAttribute("branchTab", "branch");
                 model.addAttribute("branchForm", branchRequestModel);
@@ -137,7 +137,7 @@ public class BranchController {
             model.addAttribute("branchForm", branchService.getBranchById(branchId));
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("branchTab", "branch");
-             return "views/view_branch";
+            return "views/view_branch";
         } catch (Exception e) {
             MastroLogUtils.error(BranchController.class, "Error occured while viewing Branch : {}");
             throw e;
@@ -157,7 +157,7 @@ public class BranchController {
     public GenericResponse deleteBranch(Model model, HttpServletRequest request, @RequestParam("branchId") Long branchId) {
         MastroLogUtils.info(BranchController.class, "Going to delete Branch : {}" + branchId);
         try {
-            if(branchId != null) {
+            if (branchId != null) {
                 branchService.deleteBranchDetails(branchId);
                 return new GenericResponse(true, "delete Branch Details");
             } else {

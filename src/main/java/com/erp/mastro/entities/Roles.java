@@ -21,13 +21,13 @@ public class Roles {
     @Column(name = "role_name")
     private String roleName;
 
-    @Column(name="role_description")
+    @Column(name = "role_description")
     private String roleDescription;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> user = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "role_module", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "module_id", referencedColumnName = "id")})
     private Set<Modules> modules;

@@ -1,8 +1,8 @@
 package com.erp.mastro.repository;
 
+import com.erp.mastro.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import com.erp.mastro.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @return the user with the given userName
      */
     User findByEmail(String email);
-
 
 
 }

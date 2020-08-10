@@ -15,7 +15,7 @@ public class ModuleRequestModel {
 
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
-    public static class ModuleModelEdit{
+    public static class ModuleModelEdit {
 
         private String module;
         private Long id;

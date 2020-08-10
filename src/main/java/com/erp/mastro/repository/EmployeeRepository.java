@@ -1,7 +1,6 @@
 package com.erp.mastro.repository;
 
 import com.erp.mastro.entities.Employee;
-import com.erp.mastro.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

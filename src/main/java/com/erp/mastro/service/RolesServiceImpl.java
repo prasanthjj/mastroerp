@@ -56,20 +56,20 @@ public class RolesServiceImpl implements RolesService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateRoles(RolesRequestModel rolesRequestModel) {
-        if(rolesRequestModel.getId() == null) {
+        if (rolesRequestModel.getId() == null) {
             MastroLogUtils.info(RolesService.class, "Going to Add Role {}" + rolesRequestModel.toString());
             Roles roles = new Roles();
             roles.setRoleName(rolesRequestModel.getRoleName());
             roles.setRoleDescription(rolesRequestModel.getRoleDescription());
             rolesRepository.save(roles);
-            MastroLogUtils.info(RolesService.class, "Added " + roles.getRoleName() +" successfully.");
+            MastroLogUtils.info(RolesService.class, "Added " + roles.getRoleName() + " successfully.");
         } else {
             MastroLogUtils.info(RolesService.class, "Going to edit branch {}" + rolesRequestModel.toString());
             Roles roles = rolesRepository.findById(rolesRequestModel.getId()).get();
             roles.setRoleName(rolesRequestModel.getRoleName());
             roles.setRoleDescription(rolesRequestModel.getRoleDescription());
             rolesRepository.save(roles);
-            MastroLogUtils.info(RolesService.class, "Updated " + roles.getRoleName() +" successfully.");
+            MastroLogUtils.info(RolesService.class, "Updated " + roles.getRoleName() + " successfully.");
         }
     }
 

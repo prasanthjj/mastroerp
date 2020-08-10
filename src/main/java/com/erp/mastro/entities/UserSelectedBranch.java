@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="user_selected_branch")
+@Table(name = "user_selected_branch")
 public class UserSelectedBranch {
 
     @Id
@@ -18,6 +18,6 @@ public class UserSelectedBranch {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "branch_id")
-    private Branch  currentBranch;
+    private Branch currentBranch;
 
 }

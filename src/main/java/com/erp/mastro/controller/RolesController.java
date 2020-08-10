@@ -41,7 +41,7 @@ public class RolesController {
             model.addAttribute("roleForm", new RolesRequestModel());
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("rolesTab", "roles");
-            model.addAttribute("rolesList",rolesList);
+            model.addAttribute("rolesList", rolesList);
             return "views/role_master";
         } catch (Exception e) {
             MastroLogUtils.error(RolesController.class, "Error occured while getting roles list : {}", e);
@@ -62,7 +62,7 @@ public class RolesController {
         MastroLogUtils.info(RolesController.class, "Going to save Role : {}");
         try {
             rolesService.saveOrUpdateRoles(rolesRequestModel);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             MastroLogUtils.error(RolesController.class, "Error occured while saving Branch : {}");
         }
         return "redirect:/admin/getRole";
@@ -81,10 +81,10 @@ public class RolesController {
     public GenericResponse getRoleForEdit(Model model, HttpServletRequest request, @RequestParam("roleId") Long roleId) {
         MastroLogUtils.info(RolesController.class, "Going to edit Role : {}" + roleId);
         Roles roleDetails = rolesService.getRolesId(roleId);
-        return new GenericResponse(true,"get Role details")
-                .setProperty("roleId",roleDetails.getId())
-                .setProperty("roleName",roleDetails.getRoleName())
-                .setProperty("roleDescription",roleDetails.getRoleDescription());
+        return new GenericResponse(true, "get Role details")
+                .setProperty("roleId", roleDetails.getId())
+                .setProperty("roleName", roleDetails.getRoleName())
+                .setProperty("roleDescription", roleDetails.getRoleDescription());
     }
 
     /**
@@ -100,10 +100,10 @@ public class RolesController {
     public GenericResponse deleteRoles(Model model, HttpServletRequest request, @RequestParam("roleId") Long roleId) {
         MastroLogUtils.info(RolesController.class, "Going to delete Role : {}" + roleId);
         try {
-            if(roleId != null) {
+            if (roleId != null) {
                 rolesService.deleteRolesDetails(roleId);
                 return new GenericResponse(true, "delete Role Details");
-            } else{
+            } else {
                 return new GenericResponse(false, "Role id null");
             }
         } catch (Exception e) {

@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BranchRegistrationRepository extends CrudRepository<BranchRegistration,Long> {
+public interface BranchRegistrationRepository extends CrudRepository<BranchRegistration, Long> {
 
 }

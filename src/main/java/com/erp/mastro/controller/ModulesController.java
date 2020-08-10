@@ -36,12 +36,12 @@ public class ModulesController {
      * @return module list page
      */
     @RequestMapping("/admin/getRoleAccess")
-    public String getRoleAccess(Model model){
+    public String getRoleAccess(Model model) {
         MastroLogUtils.info(ModulesController.class, "Going to get role access : {}");
         try {
             Iterable<Modules> modulesList = moduleRepository.findAll();
-            Set<Modules> modulesSet  = new HashSet<>();
-            for(Modules modules :modulesList) {
+            Set<Modules> modulesSet = new HashSet<>();
+            for (Modules modules : modulesList) {
                 modulesSet.add(modules);
             }
             List<Roles> rolesList = new ArrayList<>();
@@ -56,7 +56,7 @@ public class ModulesController {
             model.addAttribute("modulesList", modulesSet);
             model.addAttribute("rolesList", rolesList);
             return "views/role_access_rights";
-        }catch (Exception e) {
+        } catch (Exception e) {
             MastroLogUtils.error(ModulesController.class, "Error occured while getting role access rights : {}");
             throw e;
         }
@@ -81,15 +81,15 @@ public class ModulesController {
         Roles roles = rolesService.getRolesId(roleId);
         Set<Modules> roleModules = roles.getModules();
         Set<ModuleRequestModel.ModuleModelEdit> moduleModelEdits = new HashSet<>();
-        for (Modules modules : roleModules){
-            ModuleRequestModel.ModuleModelEdit moduleModelEdit = new  ModuleRequestModel.ModuleModelEdit();
+        for (Modules modules : roleModules) {
+            ModuleRequestModel.ModuleModelEdit moduleModelEdit = new ModuleRequestModel.ModuleModelEdit();
             moduleModelEdit.setModule(modules.getModuleName());
             moduleModelEdit.setId(modules.getId());
             moduleModelEdits.add(moduleModelEdit);
         }
         Set<ModuleRequestModel.ModuleModelEdit> fullModuleModelEdits = new HashSet<>();
-        for(Modules modules : modulesList ){
-            ModuleRequestModel.ModuleModelEdit editModuleModel = new  ModuleRequestModel.ModuleModelEdit();
+        for (Modules modules : modulesList) {
+            ModuleRequestModel.ModuleModelEdit editModuleModel = new ModuleRequestModel.ModuleModelEdit();
             editModuleModel.setModule(modules.getModuleName());
             editModuleModel.setId(modules.getId());
             fullModuleModelEdits.add(editModuleModel);
@@ -100,14 +100,14 @@ public class ModulesController {
             if (fullModel != null) {
                 for (ModuleRequestModel.ModuleModelEdit roleModel : moduleModelEdits) {
                     if (fullModel.getId() == roleModel.getId()) {
-                         finalSet.remove();
+                        finalSet.remove();
                     }
                 }
             }
         }
-        return new GenericResponse(true,"get RoleAccess details")
-                .setProperty("rolemodules",moduleModelEdits)
-                .setProperty("remainingModules",fullModuleModelEdits);
+        return new GenericResponse(true, "get RoleAccess details")
+                .setProperty("rolemodules", moduleModelEdits)
+                .setProperty("remainingModules", fullModuleModelEdits);
     }
 
     /**
