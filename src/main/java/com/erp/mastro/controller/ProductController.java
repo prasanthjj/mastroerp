@@ -59,12 +59,12 @@ public class ProductController {
     public String getProduct(Model model) {
 
         try {
-            List<Product> productList = new ArrayList<>();
-            for (Product product : productService.getAllProducts()) {
-                if (product.getProductDeleteStatus() != 1) {
-                    productList.add(product);
-                }
-            }
+
+            List<Product> productList = productService.getAllProducts().stream()
+                    .filter(productData -> (null != productData))
+                    .sorted(Comparator.comparing(
+                            Product::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("productTab", "product");
             model.addAttribute("productList", productList);

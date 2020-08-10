@@ -86,21 +86,23 @@
                                         <th>Item Name</th>
                                         <th>Item Code</th>
                                         <th>HSN Code</th>
-                                        <th>Category</th>
+                                        <th>SubCategory</th>
                                         <th>Base UOM</th>
-                                        <th>Item Image</th>
+                                        <!-- <th>Item Image</th>-->
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>0001</td>
-                                        <td>Oxy .47 Red 3.05mtr (10')</td>
-                                        <td>15062020</td>
-                                        <td class="center">15062020</td>
-                                        <td class="center">Roofing sheet</td>
-                                        <td class="center"> feet</td>
-                                        <td class="center"><img src="../resources/img/gallery/2s.jpg"></td>
+                                    <tr class="gradeX" th:each="productObj,iterator:${productList}">
+                                        <td th:text="${iterator.index+1}">0001</td>
+                                        <td th:text="${productObj.productName}">Oxy .47 Red 3.05mtr (10')</td>
+                                        <td th:text="${productObj.id}">15062020</td>
+                                        <td class="center" th:text="${productObj.hsn.hsnCode}">15062020</td>
+                                        <td class="center" th:text="${productObj.subCategory.subCategoryName}">Roofing
+                                            sheet
+                                        </td>
+                                        <td class="center" th:text="${productObj.uom.UOM}"> feet</td>
+                                        <!--  <td class="center"><img src="../resources/img/gallery/2s.jpg"></td>-->
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
@@ -119,84 +121,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="gradeX">
-                                        <td>0001</td>
-                                        <td>Angles 25x6 (1x1/4)</td>
-                                        <td>14253698</td>
-                                        <td class="center">12457630</td>
-                                        <td class="center">Angles & Channels</td>
-                                        <td class="center">mtr</td>
-                                        <td class="center"><img src="../resources/img/gallery/5.jpg"></td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_item.html"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="edit_item.html"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeItem" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>0001</td>
-                                        <td>Flat 25x6mm (1x1/4)</td>
-                                        <td>78523691</td>
-                                        <td class="center">12586942</td>
-                                        <td class="center">Bars and Rods</td>
-                                        <td class="center">mtr</td>
-                                        <td class="center"><img src="../resources/img/gallery/3.jpg"></td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_item.html"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="edit_item.html"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeItem" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>0001</td>
-                                        <td>GP API GI 50 NB 1.6</td>
-                                        <td>963582147</td>
-                                        <td class="center">147852369</td>
-                                        <td class="center">Pipes</td>
-                                        <td class="center">mtr</td>
-                                        <td class="center"><img src="../resources/img/gallery/4.jpg"></td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="view_item.html"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="edit_item.html"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeItem" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+
                                     </tbody>
                                     <tfoot>
 
