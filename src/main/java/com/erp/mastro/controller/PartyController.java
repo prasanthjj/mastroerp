@@ -279,6 +279,14 @@ public class PartyController {
 
     }
 
+    /**
+     * Activate or Deactivate Party
+     *
+     * @param model
+     * @param request
+     * @param partyId
+     * @return
+     */
 
     @PostMapping("/activateOrDeactivateParty")
     @ResponseBody

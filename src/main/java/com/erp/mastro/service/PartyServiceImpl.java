@@ -53,7 +53,13 @@ public class PartyServiceImpl implements PartyService {
      */
 
     public Party getPartyById(Long id) {
-        return partyRepository.findById(id).get();
+        Party party = new Party();
+        if (id != null) {
+            MastroLogUtils.info(PartyService.class, "Going to getPartyById : {}" + id);
+            party = partyRepository.findById(id).get();
+        }
+
+        return party;
     }
 
     public List<IndustryType> getAllIndustryType() {
@@ -71,7 +77,12 @@ public class PartyServiceImpl implements PartyService {
      */
 
     public IndustryType getIndustryTypeById(Long id) {
-        return industryTypeRepository.findById(id).get();
+        IndustryType industryType = new IndustryType();
+        if (id != null) {
+            MastroLogUtils.info(PartyService.class, "Going to getIndustryTypeBy Id : {}" + id);
+            industryType = industryTypeRepository.findById(id).get();
+        }
+        return industryType;
     }
 
     /**
@@ -102,7 +113,9 @@ public class PartyServiceImpl implements PartyService {
                 party.setOldReferCode(partyRequestModel.getOldReferCode());
                 party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
                 party.setEnabled(true);
-                party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                if (partyRequestModel.getIndustryid() != null) {
+                    party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                }
                 Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
                 party.setContactDetails(contactDetails);
                 Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
@@ -136,7 +149,9 @@ public class PartyServiceImpl implements PartyService {
                 party.setOldReferCode(partyRequestModel.getOldReferCode());
                 party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
                 party.setEnabled(true);
-                party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                if (partyRequestModel.getIndustryid() != null) {
+                    party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                }
                 Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
                 party.setContactDetails(contactDetails);
                 Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);

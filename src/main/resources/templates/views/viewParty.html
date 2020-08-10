@@ -38,7 +38,7 @@
                         <a href="#">Master</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="party_master.html">Party List</a>
+                        <a href="partyMaster.html" th:href="@{/master/getPartys}">Party List</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Browse Party</strong>
@@ -117,7 +117,9 @@
 
                                             <div class="form-group">
                                                 <label>Industry Type</label>
+                                                <span th:if="${partyDetails.industryType != null}">
                                                 <h4 th:text="${partyDetails.industryType.industryType}"></h4>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
