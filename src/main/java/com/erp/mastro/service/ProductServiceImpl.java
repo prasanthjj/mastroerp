@@ -95,11 +95,12 @@ public class ProductServiceImpl implements ProductService {
                 setProductDocs(productDocs, product);
 
                 product = productRepository.save(product);
-                if (product.getId() != null) {
+                if ((product.getId() != null) && (productDocs != null)) {
                     saveProductFilesToFileDB(product.getId(), productDocs);
                     String sproductId = String.valueOf(product.getId());
                     final File folder = new File(getUserFolder() + "/" + sproductId + "/productPic/");
                     productUploasS3(folder, sproductId);
+                    userDetailsServiceImpl.getDataMap().clear();
                 }
 
             } else {
