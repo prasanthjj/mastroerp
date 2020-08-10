@@ -114,7 +114,37 @@ $(document).ready(function(){
                                }
                            });
      //hsn create validation start
+  // Add item Start
 
+   $("#createItemForm").validate({
+    rules: {
+       hsnId: {
+            required: true,
+        },
+        baseUOM: {
+           required: true,
+       },
+       baseQuantity: {
+           required: true,
+       },
+       basePrice: {
+        required: true,
+    },
+    colour: {
+            required: true,
+        },
+         dimension: {
+                    required: true,
+                },
+     brandId: {
+                 required: true,
+             }
+
+
+    },
+
+});
+//Add item End
 
        $(function(datepicker) {
 
@@ -202,6 +232,52 @@ $(document).ready(function(){
                $(this).parents('.assetOtherCheckListBox').remove();
            });
            //add Other CheckList end
+
+         // add item HSN Code start
+                  $(".selectHsnCode").select2({
+                      theme: 'bootstrap4',
+                  });
+                  // add item HSN Code end
+                    // add item Brand  start
+                                    $(".selectBrandCode").select2({
+                                        theme: 'bootstrap4',
+                                    });
+                                    // add item Brand end
+           // add item uom start
+            var uomcount=0;
+           $(".addUom").click(function(){
+           //to get all uoms for option start
+            /*	$.ajax({
+                 url: '/master/getAllUOMDetails',
+                 type: 'GET',
+                 dataType : 'json',
+                 data: { },
+
+                 success: function(data){
+                          if(data.success) {
+
+                                      alert("ok");
+
+                   $.each(data.data.roles, function(i){
+
+                   });
+                                           }
+
+                                      },
+
+             error: function(jqXHR, textStatus)
+              {
+              alert('Error Occured');
+               }
+                  });*/
+      //to get all uoms for option end
+               $("#uomBox").append("<div class='row uomDiv'><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction Type <i class='fa fa-asterisk'></i></label><div class='col-sm-12'><select class='form-control m-b' name='productUOMModelList["+uomcount+"].transactionType' required><option value=''>Select</option><option value='Purchase'>Purchase</option><option value='Sales'>Sales</option></select></div></div></div><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction UOM <i class='fa fa-asterisk'></i></label><div class='col-sm-12'><select class='form-control m-b' name='productUOMModelList["+uomcount+"].uomId' required><option value=''>Select</option><option value='1'>Kg</option><option value='2'>Piece</option><option value='3'>Meter</option><option value='4'>Pack</option><option value='5'>Square ft</option><option value='6'>Inches</option><option value='7'>Each</option><option value='8'>Dozen</option><option value='9'>Case</option><option value='10'>Box</option><option value='11'>Single</option></select></div></div></div><div class='col-lg-4'><div class='form-group  row'><label class='col-sm-12 col-form-label'>Convention Factor <i class='fa fa-asterisk'></i></label><div class='col-sm-10'><input type='text' required class='form-control' name='productUOMModelList["+uomcount+"].convertionFactor'></div><div class='col-sm-2 text-right'><button class='btn btn-danger dim removeUom' type='button'><i class='fa fa-times-circle'></i></button></div></div></div></div>");
+               uomcount++;
+             });
+             $(document).on('click', '.removeUom', function() {
+               $(this).parents('.uomDiv').remove();
+           });
+           // add item uom end
 
        });
 

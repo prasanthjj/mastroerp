@@ -19,14 +19,15 @@ public class ProductUOM {
     private String transactionType;
 
     @Column(name = "convertion_factor")
-    private String convertionFactor;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Double convertionFactor;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "uom_id")
     private Uom uom;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
+    private Product product;
 
 }

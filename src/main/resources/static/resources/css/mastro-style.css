@@ -41,7 +41,7 @@ label{font-weight: 600;}
     color: #fff;
 }
 .catalogSelect{
-    display: none;
+   /* display: none;*/
 }
 
 .dd-handle:hover .catalogSelect{
@@ -58,3 +58,7 @@ label{font-weight: 600;}
     vertical-align: super;
 }
 
+.catlog_scroll_box{
+    overflow-y: scroll;
+    height:350px;
+}
