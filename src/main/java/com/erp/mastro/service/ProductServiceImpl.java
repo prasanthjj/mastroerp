@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 import static com.erp.mastro.Store.MastroFileStore.saveProductFile;
 import static com.erp.mastro.Store.MastroFileStoreBase.getUserFolder;
 
+/**
+ * Product service include product related methods
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -47,22 +50,52 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     S3Service s3Services;
 
+    /**
+     * Method to get all products
+     *
+     * @return productlist
+     */
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<Product>();
         productRepository.findAll().forEach(product -> productList.add(product));
         return productList;
     }
 
+    /**
+     * Method to get sucategorys products
+     *
+     * @param subCategory
+     * @return the productset
+     */
     public Set<Product> getSubCategoryProducts(SubCategory subCategory) {
         Set<Product> productSetSet = new HashSet<>();
         productSetSet = subCategory.getProductSet();
         return productSetSet;
     }
 
+    /**
+     * Method to get a product by id
+     *
+     * @param id
+     * @return the product
+     */
     public Product getProductById(Long id) {
-        return productRepository.findById(id).get();
+        Product product = new Product();
+        if (id != null) {
+            MastroLogUtils.info(ProductService.class, "Going to getProductBy Id : {}" + id);
+            product = productRepository.findById(id).get();
+        }
+        return product;
     }
 
+    /**
+     * Method to save or update product
+     *
+     * @param productRequestModel
+     * @return product
+     * @throws ModelNotFoundException
+     * @throws FileStoreException
+     */
     @Transactional(rollbackOn = {Exception.class})
     public Product saveOrUpdateProduct(ProductRequestModel productRequestModel) throws ModelNotFoundException, FileStoreException {
         Product product = new Product();
@@ -84,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setBasePrice(productRequestModel.getBasePrice());
                 product.setInspectionType(productRequestModel.getInspectionType());
                 product.setLoadingCharge(productRequestModel.getLoadingCharge());
+                product.setEnabled(true);
 
                 Set<ProductUOM> productUOM = saveOrUpdateProductUOM(productRequestModel, product);
                 product.setProductUOMSet(productUOM);
@@ -121,7 +155,13 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
-
+    /**
+     * Method to save or update productuoms
+     *
+     * @param productRequestModel
+     * @param product
+     * @return set of productuoms
+     */
     @Transactional(rollbackOn = {Exception.class})
     public Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product) {
 
@@ -161,11 +201,20 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    /**
+     * Method to enable or disable product
+     *
+     * @param id
+     */
     @Transactional(rollbackOn = {Exception.class})
-    public void deleteProductDetails(Long id) {
+    public void enableOrDisableProduct(Long id) {
 
         Product product = getProductById(id);
-        product.setProductDeleteStatus(1);
+        if (product.isEnabled()) {
+            product.setEnabled(false);
+        } else {
+            product.setEnabled(true);
+        }
         productRepository.save(product);
 
     }
@@ -179,8 +228,15 @@ public class ProductServiceImpl implements ProductService {
         productUOMS.removeIf(x -> x.getTransactionType() == null);
     }
 
+    /**
+     * Method to set productimages
+     *
+     * @param productDocs
+     * @param product
+     */
     private void setProductDocs(Map<String, byte[]> productDocs, Product product) {
         if (productDocs != null && !productDocs.isEmpty()) {
+            MastroLogUtils.info(ProductService.class, "Going to save productImages   {}" + productDocs);
             Set<ProductImages> newProductImages = new HashSet<>();
             productDocs.forEach((x, y) -> {
                 if (!containsInList(x,
@@ -201,17 +257,31 @@ public class ProductServiceImpl implements ProductService {
                 && names.stream().anyMatch(x -> x.equals(name));
     }
 
+    /**
+     * Method to save images in folder for s3
+     *
+     * @param productId
+     * @param productDocs
+     * @throws FileStoreException
+     */
     private void saveProductFilesToFileDB(Long productId, Map<String, byte[]> productDocs) throws FileStoreException {
         if (productDocs != null && !productDocs.isEmpty()) {
+            MastroLogUtils.info(ProductService.class, "Going to save productImages in folder   {}" + productDocs);
             saveProductFile(productId.toString(), productDocs, MastroFileStore.FileType.productImage);
 
         }
     }
 
+    /**
+     * Method to save in s3
+     *
+     * @param folder
+     * @param sproductId
+     */
     public void productUploasS3(final File folder, String sproductId) {
-
         for (final File fileEntry : folder.listFiles()) {
             try {
+                MastroLogUtils.info(ProductService.class, "Going to save productImages in s3   {}" + sproductId);
                 String uploadFilePath = getUserFolder() + "/" + sproductId + "/productPic/" + fileEntry.getName();
                 String ftype = "productImg";
                 s3Services.uploadFile(fileEntry.getAbsoluteFile().getName(), uploadFilePath, sproductId, ftype);

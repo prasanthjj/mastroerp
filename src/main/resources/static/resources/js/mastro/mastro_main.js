@@ -477,7 +477,73 @@ $(document).ready(function(){
     });
     // Remove subcategory end
 
+//Enable Product start
+                      $('.enableProduct').click(function () {
+                       var productId=$(this).data('productid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to Enable product!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, enabled!",
+                              closeOnConfirm: false
+                          }, function () {
 
+                          $.ajax({
+                                              url: '/master/enableOrDisableProduct',
+                                              type: 'POST',
+                                              dataType : 'json',
+                                             data: { 'productId': productId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                      var redirectionUrl= "/master/getProduct";
+                                                      window.location.href = redirectionUrl;
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+                             /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                          });
+                      });
+            //End Product end
+
+//Disable Product start
+                      $('.disableProduct').click(function () {
+                       var productId=$(this).data('productid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to Disable product!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, disabled!",
+                              closeOnConfirm: false
+                          }, function () {
+
+                          $.ajax({
+                                              url: '/master/enableOrDisableProduct',
+                                              type: 'POST',
+                                              dataType : 'json',
+                                             data: { 'productId': productId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                      var redirectionUrl= "/master/getProduct";
+                                                      window.location.href = redirectionUrl;
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+                             /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                          });
+                      });
+            //Disable Product end
 
 });
 

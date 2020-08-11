@@ -74,8 +74,8 @@ public class Product extends Auditable<String>{
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @Column(name = "delete_status", nullable = false)
-    private int productDeleteStatus;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

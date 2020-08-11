@@ -28,7 +28,7 @@ public interface ProductService {
 
     void saveOrUpdateProductPartys(Product product, Set<Party> parties);
 
-    void deleteProductDetails(Long id);
+    void enableOrDisableProduct(Long id);
 
     void productUploasS3(final File folder, String sproductId);
 

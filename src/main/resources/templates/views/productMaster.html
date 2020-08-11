@@ -88,7 +88,7 @@
                                         <th>HSN Code</th>
                                         <th>SubCategory</th>
                                         <th>Base UOM</th>
-                                        <!-- <th>Item Image</th>-->
+                                         <th>Status</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
@@ -102,7 +102,8 @@
                                             sheet
                                         </td>
                                         <td class="center" th:text="${productObj.uom.UOM}"> feet</td>
-                                        <!--  <td class="center"><img src="../resources/img/gallery/2s.jpg"></td>-->
+                                        <td class="center"><span th:if="${productObj.enabled} == true">Enable</span>
+                                            <span th:unless="${productObj.enabled} == true">Disable</span></td>
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
@@ -116,8 +117,20 @@
                                                     <li><a class="dropdown-item font-bold" href="edit_item.html"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeItem" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
+                                                    <span th:if="${productObj.enabled} != true">
+                                    <li><a class="dropdown-item font-bold enableProduct txt-white" href="#"
+                                           th:data-productid="${productObj.id}"><i
+                                            class="fa fa-user"></i> Enable</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
+                                                    <span th:unless="${productObj.enabled} != true">
+                                    <li><a class="dropdown-item font-bold disableProduct txt-white " href="#"
+                                           th:data-productid="${productObj.id}"><i
+                                            class="fa fa-user"></i> Disable</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
+                                                    <!--  <li><a class="dropdown-item font-bold removeItem" href="#"><i
+                                                              class="fa fa-trash"></i> Remove</a></li>-->
                                                 </ul>
                                             </div>
                                         </td>

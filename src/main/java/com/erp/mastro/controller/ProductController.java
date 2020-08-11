@@ -177,17 +177,29 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/deleteProductDetails")
+    /**
+     * Method to enable or disable product
+     *
+     * @param model
+     * @param request
+     * @param productId
+     * @return the response
+     */
+    @PostMapping("/enableOrDisableProduct")
     @ResponseBody
-    public GenericResponse deleteProductDetails(Model model, HttpServletRequest request, @RequestParam("productId") Long productId) {
+    public GenericResponse enableOrDisableProduct(Model model, HttpServletRequest request, @RequestParam("productId") Long productId) {
 
+        MastroLogUtils.info(AssetController.class, "Going to delete Asset : {}");
         try {
-
-            productService.deleteProductDetails(productId);
-            return new GenericResponse(true, "delete product details");
+            if (productId != null) {
+                productService.enableOrDisableProduct(productId);
+                return new GenericResponse(true, "enable or disable product details");
+            } else {
+                return new GenericResponse(false, "product id null");
+            }
 
         } catch (Exception e) {
-
+            MastroLogUtils.error(ProductController.class, "Error occured while enable or disable product : {}", e);
             return new GenericResponse(false, e.getMessage());
 
         }
