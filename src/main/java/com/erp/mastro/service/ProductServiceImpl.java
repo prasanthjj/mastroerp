@@ -9,7 +9,6 @@ import com.erp.mastro.exception.FileStoreException;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.repository.*;
-import com.erp.mastro.service.interfaces.AssetService;
 import com.erp.mastro.service.interfaces.ProductService;
 import com.erp.mastro.service.interfaces.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,16 +137,28 @@ public class ProductServiceImpl implements ProductService {
                 }
 
             } else {
+                MastroLogUtils.info(ProductService.class, "Going to edit product  {}" + productRequestModel.toString());
                 product = getProductById(productRequestModel.getId());
-                product.setProductName(productRequestModel.getColour() + productRequestModel.getDimension());
+                SubCategory subCategory = subCategoryRepository.findById(productRequestModel.getSubCategoryId()).get();
+                product.setSubCategory(subCategory);
+                product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension());
                 product.setDimension(productRequestModel.getDimension());
                 product.setColour(productRequestModel.getColour());
                 product.setWarranty(productRequestModel.getWarranty());
                 product.setGuarantee(productRequestModel.getGuarantee());
                 product.setPropertySize(productRequestModel.getPropertySize());
+                product.setUom(uomRepository.findById(productRequestModel.getBaseUOM()).get());
                 product.setBaseQuantity(productRequestModel.getBaseQuantity());
+                product.setBasePrice(productRequestModel.getBasePrice());
+                product.setInspectionType(productRequestModel.getInspectionType());
+                product.setLoadingCharge(productRequestModel.getLoadingCharge());
+
+                Set<ProductUOM> productUOM = saveOrUpdateProductUOM(productRequestModel, product);
+                product.setProductUOMSet(productUOM);
                 HSN hsn = hsnRepository.findById(productRequestModel.getHsnId()).get();
                 product.setHsn(hsn);
+                Brand brand = brandRepository.findById(productRequestModel.getBrandId()).get();
+                product.setBrand(brand);
                 productRepository.save(product);
 
             }
@@ -165,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product) {
 
-        MastroLogUtils.info(AssetService.class, "Going to save productuoms   {}" + productRequestModel.toString());
+        MastroLogUtils.info(ProductService.class, "Going to save productuoms   {}" + productRequestModel.toString());
         Set<ProductUOM> productUOMSet = new HashSet<>();
 
         if (productRequestModel.getProductUOMModelList().isEmpty() == false) {
@@ -182,7 +193,13 @@ public class ProductServiceImpl implements ProductService {
                             }
                             productUOMSet.add(productUOM);
                         } else {
-
+                            productUOM = product.getProductUOMSet().stream().filter(productdata -> (null != productdata)).filter(z -> z.getId().equals(x.getId())).findFirst().get();
+                            productUOM.setTransactionType(x.getTransactionType());
+                            productUOM.setConvertionFactor(x.getConvertionFactor());
+                            if (x.getUomId() != null) {
+                                productUOM.setUom(uomRepository.findById(x.getUomId()).get());
+                            }
+                            productUOMSet.add(productUOM);
                         }
                     });
         }

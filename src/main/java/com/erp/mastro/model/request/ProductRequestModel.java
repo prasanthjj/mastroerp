@@ -1,5 +1,7 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.entities.Product;
+import com.erp.mastro.entities.ProductUOM;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +29,30 @@ public class ProductRequestModel {
     private Long brandId;
     private List<ProductUOMModel> productUOMModelList = new ArrayList<>();
 
+    public ProductRequestModel() {
+
+    }
+
+    public ProductRequestModel(Product product) {
+        if (product != null) {
+            this.id = product.getId();
+            this.setBasePrice(product.getBasePrice());
+            this.setBaseQuantity(product.getBaseQuantity());
+            this.setBaseUOM(product.getUom().getId());
+            this.setBrandId(product.getBrand().getId());
+            this.setHsnId(product.getHsn().getId());
+            this.setSubCategoryId(product.getSubCategory().getId());
+            this.setColour(product.getColour());
+            this.setInspectionType(product.getInspectionType());
+            this.setDimension(product.getDimension());
+            this.setGuarantee(product.getGuarantee());
+            this.setWarranty(product.getWarranty());
+            this.setPropertySize(product.getPropertySize());
+            this.setLoadingCharge(product.getLoadingCharge());
+            product.getProductUOMSet().parallelStream().forEach(x -> this.productUOMModelList.add(new ProductRequestModel.ProductUOMModel(x)));
+        }
+    }
+
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class ProductUOMModel {
@@ -35,6 +61,17 @@ public class ProductRequestModel {
         private String transactionType;
         private Double convertionFactor;
         private Long uomId;
+
+        public ProductUOMModel() {
+
+        }
+
+        public ProductUOMModel(ProductUOM productUOM) {
+            this.id = productUOM.getId();
+            this.transactionType = productUOM.getTransactionType();
+            this.convertionFactor = productUOM.getConvertionFactor();
+            this.uomId = productUOM.getUom().getId();
+        }
 
     }
 

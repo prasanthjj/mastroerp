@@ -209,16 +209,47 @@ public class ProductController {
     @RequestMapping(value = "/getProductEdit", method = RequestMethod.GET)
     public String getProductEdit(HttpServletRequest request, @RequestParam("productId") Long productId, Model model) {
 
+        MastroLogUtils.info(ProductController.class, "Going to edit product : {}" + productId);
         try {
-            ProductRequestModel productRequestModel = new ProductRequestModel();
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("productTab", "product");
-            model.addAttribute("productForm", productService.getProductById(productId));
-            return "views/editProductMaster";
+            List<HSN> hsnList = hsnService.getAllHSN().stream()
+                    .filter(hsnData -> (null != hsnData))
+                    .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            HSN::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("hsnList", hsnList);
+            List<Catalog> catalogList = catalogService.getAllCatalogs();
+            model.addAttribute("catalogList", catalogList);
+            List<Brand> brandList = brandService.getAllBrands().stream()
+                    .filter(brandData -> (null != brandData))
+                    .filter(brandData -> (1 != brandData.getBrandDeleteStatus()))
+                    .sorted(Comparator.comparing(
+                            Brand::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("brandList", brandList);
+            Iterable<Uom> uomSet = uomRepository.findAll();
+            Set<Uom> uoms = new HashSet<>();
+            for (Uom uom : uomSet) {
+                uoms.add(uom);
+            }
+            model.addAttribute("uomList", uoms);
+            if (productId != null) {
+                model.addAttribute("productForm", new ProductRequestModel(productService.getProductById(productId)));
+                model.addAttribute("productUOMSize", productService.getProductById(productId).getProductUOMSet().size());
+                model.addAttribute("categoryNames", productService.getProductById(productId).getSubCategory().getCategory().getCategoryName());
+                model.addAttribute("subcategoryNames", productService.getProductById(productId).getSubCategory().getSubCategoryName());
+
+            }
+
+            return "views/editProduct";
 
         } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while getting editing product : {}", e);
             throw e;
         }
+
     }
 
     /**
