@@ -165,16 +165,18 @@
                                                                     class="text-success">Product </strong>
                                                             </div>
                                                         </li>
-                                                      <!--  <li class="dd-item" data-id="4">
+                                                        <span th:each="productObj,iterator:${subcategoryObj.productSet}">
+                                                        <li class="dd-item" data-id="4">
                                                             <div class="dd-handle">
                                                                 <span class="float-right  catalogIcon">
-                                                                    
+
                                                                      </span>
                                                                 <span class="label label-info"><i class="fa fa-cog"></i></span>
-                                                                Angles 25x6 (1x1/4)
+                                                                <span th:text="${productObj.productName}">Angles 25x6 (1x1/4)</span>
                                                             </div>
 
-                                                        </li>-->
+                                                        </li>
+                                                        </span>
                                                     </ol>
                                                 </li>
                                                 </span>
