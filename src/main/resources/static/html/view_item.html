@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Browse Item </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="../resources/css/plugins/slick/slick.css" rel="stylesheet">
+    <link href="../resources/css/plugins/slick/slick-theme.css" rel="stylesheet">
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="../resources/css/animate.css" rel="stylesheet">
+    <link href="../resources/css/style.css" rel="stylesheet">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side " role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">Admin @ Thrissur</span>
+                            <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+
+                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        Mastro Metals
+                    </div>
+                </li>
+                <li>
+                    <a href="dashboard.html"><i class="fa fa-th-large"></i> <span
+                            class="nav-label">Quick Links</span></a>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="user_master.html">User</a></li>
+                        <li><a href="role_master.html">Role</a></li>
+                        <li><a href="role_access_rights.html">Role Access Rights</a></li>
+                        <li><a href="branch_master.html">Branch</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="active"><a href="item_master.html">Product</a></li>
+                        <li><a href="hsn_master.html">HSN</a></li>
+                        <li><a href="location_master.html">Location</a></li>
+                        <li><a href="party_master.html">Party</a></li>
+                        <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                        <li><a href="pricelist_master.html"></a></li>
+                        <li><a href="catalog_master.html">Category</a></li>
+                        <li><a href="assets_master.html">Assets</a></li>
+                        <li><a href="brand_master.html">Brands</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="stock_details.html">Stock Details</a></li>
+                        <li><a href="stock_transfer.html">Stock Transfer</a></li>
+                        <li><a href="indent_master.html">Indent</a></li>
+                        <li><a href="gatepass.html">Gate Pass</a></li>
+                        <li><a href="dc_purchase_slip.html">DC / Purchase Slip</a></li>
+                        <li><a href="grn.html">GRN</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Purchase </span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="purchase_order.html">Purchase Order</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Sales</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="invoice.html">Invoice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">HR</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="department_master.html">Department</a></li>
+                        <li><a href="salary_components_master.html">Salary Components</a></li>
+                        <li><a href="salary_templates_master.html">Salary Templates</a></li>
+                        <li><a href="employees.html">Employees</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="itemwise_stock_ledger.html">Itemwise Stock Ledger</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav class="navbar navbar-static-top master-dark-blue-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a class="" href="#"> Branch : Thrissur</a>
+                    </li>
+                    <li>
+                        <a class="" href="#" data-toggle="modal" data-target="#branchList"><i class="fa fa-edit"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> Indent Generated
+                                        <span class="float-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> PO Rejected
+                                        <span class="float-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="#" class="dropdown-item">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Browse Item </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="item_master.html">Item List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Browse Item</strong>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+                            <!-- <h5 class="text-info"><i class="fa fa-barcode"></i> Manage HSN</h5> -->
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Item Name</label>
+                                            <p class="m-t-sm">Angles 25x6 (1x1/4)</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Item Code</label>
+                                            <p class="m-t-sm">15092020</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>HSN Code</label>
+                                            <p class="m-t-sm">Code</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <p class="m-t-sm">Angles & Channels <i class="fa fa-arrow-right"></i> 35x6
+                                                (1 1/4x1/4)</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="product-images">
+
+                                            <div>
+                                                <img alt="image" class="img-responsive"
+                                                     src="../resources/img/roof2.jpg"/>
+
+                                            </div>
+                                            <div>
+                                                <img alt="image" class="img-responsive"
+                                                     src="../resources/img/roof2.jpg"/>
+
+                                            </div>
+                                            <div>
+                                                <img alt="image" class="img-responsive"
+                                                     src="../resources/img/roof2.jpg"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Colour</label>
+                                                    <p class="m-t-sm">Colour</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Dimension</label>
+                                                    <p class="m-t-sm">Dimension</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Property Size</label>
+                                                    <p class="m-t-sm">Property Size</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Inspection Type</label>
+                                                    <p class="m-t-sm">Inspection Type</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Guarantee</label>
+                                                    <p class="m-t-sm">Guarantee</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Warranty</label>
+                                                    <p class="m-t-sm">Warranty</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Base UOM</label>
+                                            <p class="m-t-sm">Base UOM</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Base Quantity</label>
+                                            <p class="m-t-sm">Base Quantity</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Base Price </label>
+                                            <p class="m-t-sm">Base Price </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Loading Charge</label>
+                                            <p class="m-t-sm">Loading Charge</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">Transaction Type </label>
+                                            <p class="col-sm-6 col-form-label">Transaction Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">Transaction UOM</label>
+                                            <p class="col-sm-6 col-form-label">Transaction UOM</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">Convention Factor</label>
+                                            <p class="col-sm-6 col-form-label">Convention Factor </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="footer ">
+            <div class="float-right">
+                Designed and Developed By <strong>Halo Technology Solutions</strong>
+            </div>
+            <div>
+                <strong>Copyright</strong> Mastro Metals &copy; 2020
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.js"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js"></script>
+<script src="../resources/js/plugins/pace/pace.min.js"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- slick carousel-->
+<script src="../resources/js/plugins/slick/slick.min.js"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="../resources/js/mastro/mastro_main.js"></script>
+</body>
+</html>
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX "/>
+</head>
+<body></body>
+<script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+
+</script>
+</html>

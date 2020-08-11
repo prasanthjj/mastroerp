@@ -11,6 +11,7 @@ import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.repository.UOMRepository;
 import com.erp.mastro.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,9 @@ public class ProductController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Value("${mastro.s3.baseurl}")
+    private String baseUrlS3;
 
     /**
      * Method to get all products
@@ -157,7 +161,7 @@ public class ProductController {
      */
     @PostMapping("/saveProduct")
     public String saveProduct(@ModelAttribute("productForm") @Valid ProductRequestModel productRequestModel, HttpServletRequest request, Model model) {
-
+        MastroLogUtils.info(ProductController.class, "Going to save product : {}");
         try {
             productService.saveOrUpdateProduct(productRequestModel);
             return "redirect:/master/getProduct";
@@ -216,7 +220,7 @@ public class ProductController {
     @GetMapping("/getSubcategoryDetails")
     @ResponseBody
     public GenericResponse getSubcategoryDetails(Model model, HttpServletRequest request, @RequestParam("subcategoryId") Long subcategoryId) {
-        MastroLogUtils.info(BrandController.class, "Going to get subcategory Details : {}");
+        MastroLogUtils.info(ProductController.class, "Going to get subcategory Details : {}");
         try {
 
             SubCategory subCategory = subcategoryService.getSubCategoryById(subcategoryId);
@@ -232,35 +236,42 @@ public class ProductController {
 
     }
 
-   /* @GetMapping("/getAllUOMDetails")
-    @ResponseBody
-    public GenericResponse getAllUoms(Model model, HttpServletRequest request) {
-        MastroLogUtils.info(BrandController.class, "Going to get all uoms : {}");
+    /**
+     * Method to view product
+     *
+     * @param model
+     * @param productId
+     * @param req
+     * @return product view page
+     */
+    @GetMapping("/viewProduct")
+    public String getViewProduct(Model model, @RequestParam("productId") Long productId, HttpServletRequest req) {
+        MastroLogUtils.info(ProductController.class, "Going to view Product :{}" + productId);
         try {
+            Product product = productService.getProductById(productId);
+            model.addAttribute("productDetails", product);
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("productTab", "product");
 
-            Iterable<Uom> uomSet =uomRepository.findAll();
-            Set<Uom> uoms=new HashSet<>();
-            for(Uom uom:uomSet)
-            {
-                uoms.add(uom);
-            }
-            Set<UOMModel> allUOM = new HashSet<>();
-            for (Uom uomss: uomSet){
-                UOMModel uomModel= new UOMModel();
-                uomModel.setId(uomss.getId());
-                uomModel.setUom(uomss.getUOM());
-                allUOM.add(uomModel);
-            }
-            return new GenericResponse(true, "get UOM details")
-                    .setProperty("fullUOM",allUOM);
+            if (product.getProductImages() != null) {
+                MastroLogUtils.info(ProductController.class, "Going to view Images :{}" + productId);
+                Set<String> ProductDoc = product.getProductImages().stream().map(x -> x.getFileName()).collect(Collectors.toSet());
+                Set<String> productFilePath = ProductDoc.stream().collect(Collectors.toSet());
+                List<String> newPath = new ArrayList<String>();
+                String productUrl = baseUrlS3 + "/" + productId + "/productImg";
+                for (String prodctImg : productFilePath) {
+                    String productFilePaths = productUrl + "/" + prodctImg;
+                    newPath.add(productFilePaths);
+                }
 
+                model.addAttribute("productFilePath", newPath);
+            }
+            return "views/viewProduct";
         } catch (Exception e) {
-            MastroLogUtils.error(this, "Error Occured while getting UOM details :{}", e);
+            MastroLogUtils.error(AssetController.class, "Error occured while viewing product : {}", e);
             throw e;
-
         }
 
     }
-*/
 
 }

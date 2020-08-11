@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
                 MastroLogUtils.info(ProductService.class, "Going to Add product  {}" + productRequestModel.toString());
                 SubCategory subCategory = subCategoryRepository.findById(productRequestModel.getSubCategoryId()).get();
                 product.setSubCategory(subCategory);
-                product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension() + " " + uomRepository.findById(productRequestModel.getBaseUOM()).get().getUOM() + "(" + productRequestModel.getBaseQuantity() + ")");
+                product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension());
                 product.setDimension(productRequestModel.getDimension());
                 product.setColour(productRequestModel.getColour());
                 product.setWarranty(productRequestModel.getWarranty());
