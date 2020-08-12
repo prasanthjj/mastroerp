@@ -3,12 +3,13 @@
 
     <ul class="last-login m-t-lg">
         <li class="">
-            <span th:text="${#httpServletRequest.getRemoteAddr()}"></span>::1 (Last Login at :07/06/2020 06:35:00)
+            <span th:text="${#httpServletRequest.getRemoteAddr()}"></span>:: Last Login at :
+            <span th:text="${session.lastLoginDate}"></span>
         </li>
     </ul>
     <ul class="last-login m-t-xs">
         <li class="">
-            No Of Active User : 1
+            No Of Active User : <span th:text="${session.ActiveUser}"></span>
         </li>
     </ul>
 

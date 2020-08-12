@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -86,7 +87,8 @@ public class UserServiceImpl implements UserService {
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
             user.setEnabled(true);
-
+            user.setCreatedBy(employee.getFirstName());
+            user.setCreatedDate(new Date());
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
