@@ -2,10 +2,13 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
-import com.erp.mastro.entities.*;
-import com.erp.mastro.model.request.ModuleRequestModel;
+import com.erp.mastro.entities.Branch;
+import com.erp.mastro.entities.Employee;
+import com.erp.mastro.entities.Roles;
+import com.erp.mastro.entities.User;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.EmployeeService;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -85,13 +89,24 @@ public class UserController {
             for (Branch branch : userDetails.getBranch()) {
                 branchList.add(branch);
             }
-            if(userDetails.getUserSelectedBranch() != null && userDetails.getUserSelectedBranch().getCurrentBranch() != null) {
+            if (userDetails.getUserSelectedBranch() != null && userDetails.getUserSelectedBranch().getCurrentBranch() != null) {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
         }
 
         session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
+
+        try {
+            Map emailMap = new HashMap();
+            emailMap.put("recipientName", userDetails.getEmail());
+            emailMap.put("text", "this is email text-Welcome to " + currentBranch);
+            emailMap.put("senderName", "sender");
+            mailUtils.sendMessageUsingThymeleafTemplate("prasanthjj@gmail.com", "Test email from Mastro", emailMap, Constants.TEMPLATE_SAMPLE);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
         return "views/dashboard";
     }
 
