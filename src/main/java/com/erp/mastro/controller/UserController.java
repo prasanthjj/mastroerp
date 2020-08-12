@@ -33,29 +33,21 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    private MailUtils mailUtils;
-
-    @Autowired
     PasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
     BranchService branchService;
-
     @Autowired
     RolesService rolesService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     EmployeeService employeeService;
-
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-
     @Autowired
     HttpSession session;
-
+    @Autowired
+    private MailUtils mailUtils;
 
     /**
      * Method to login
@@ -204,14 +196,14 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("glorida@halo.ae");
-        user.setEmail("glorida@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("glorida"));
+        user.setUserName("gloria@halo.ae");
+        user.setEmail("gloria@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("gloria"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
         Roles roles = new Roles();
-        roles.setRoleName("Role_Sales");
+        roles.setRoleName("ROLE_ADMIN");
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);
