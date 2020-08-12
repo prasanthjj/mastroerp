@@ -196,14 +196,14 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("gloria@halo.ae");
-        user.setEmail("gloria@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("gloria"));
+        user.setUserName("rinto@halo.ae");
+        user.setEmail("rinto@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("rinto"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
         Roles roles = new Roles();
-        roles.setRoleName("ROLE_ADMIN");
+        roles.setRoleName("ROLE_SALES");
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);

@@ -73,7 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")
-                .successHandler(successHandler())
+                .defaultSuccessUrl("/home")
+                // .successHandler(successHandler()) removed temporarily
                 .permitAll()
                 .and()
                 .logout()
@@ -87,10 +88,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Bean
+    /*@Bean
     public MastroAuthenticationSuccessHandler successHandler() {
         return new MastroAuthenticationSuccessHandler();
-    }
+    }*/
 
     @Override
     public void configure(WebSecurity web) throws Exception {

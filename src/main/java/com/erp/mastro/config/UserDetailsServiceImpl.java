@@ -9,42 +9,38 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Date;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
 
-	@Override
-	public UserDetails loadUserByUsername(String email)
-			throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
 
-		User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("Invalid Username or Password");
+        }
 
-		if (user == null) {
-			throw new UsernameNotFoundException("Invalid Username or Password");
-		}
+        if (user.getId() != null) {
+            getCurrentLoginDate(user.getId());
+        }
 
-		if (user.getId()!= null){
-			getCurrentLoginDate(user.getId());
-		}
+        return new CurrentUserDetails(user);
+    }
 
-		return new CurrentUserDetails(user);
-	}
-
-	public Date getCurrentLoginDate(Long id){
-		User user = userRepository.findById(id).get();
-		user.setLastLogin(user.getCurrentLogin());
-		user.setLoggedIn(true);
-		user.setCurrentLogin(new Date());
-		userRepository.save(user);
-
-		return user.getCurrentLogin();
-	}
-
+    public Date getCurrentLoginDate(Long id) {
+        User user = userRepository.findById(id).get();
+        user.setLastLogin(user.getCurrentLogin());
+        user.setLoggedIn(true);
+        user.setCurrentLogin(new Date());
+        userRepository.save(user);
+        return user.getCurrentLogin();
+    }
 
 }
