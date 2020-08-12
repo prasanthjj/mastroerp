@@ -172,7 +172,8 @@
 
                                                                      </span>
                                                                 <span class="label label-info"><i class="fa fa-cog"></i></span>
-                                                                <span th:text="${productObj.productName}">Angles 25x6 (1x1/4)</span>
+                                                             <a th:href="@{/master/viewProduct?productId=__${productObj.id}__}">  <span
+                                                                     th:text="${productObj.productName}">Angles 25x6 (1x1/4)</span></a>
                                                             </div>
 
                                                         </li>
