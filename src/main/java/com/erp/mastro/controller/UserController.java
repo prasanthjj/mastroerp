@@ -1,12 +1,10 @@
 package com.erp.mastro.controller;
 
-import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.config.UserDetailsServiceImpl;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.*;
-import com.erp.mastro.model.request.ModuleRequestModel;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.EmployeeService;
@@ -15,13 +13,10 @@ import com.erp.mastro.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,8 +41,6 @@ public class UserController {
     UserDetailsServiceImpl userDetailsService;
     @Autowired
     HttpSession session;
-    @Autowired
-    private MailUtils mailUtils;
 
     /**
      * Method to login
@@ -196,9 +189,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("rinto@halo.ae");
-        user.setEmail("rinto@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("rinto"));
+        user.setUserName("ranjit@halo.ae");
+        user.setEmail("ranjit@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("ranjit"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();

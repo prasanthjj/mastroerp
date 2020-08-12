@@ -1,6 +1,5 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.UserModel;
@@ -28,9 +27,6 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
-    private MailUtils mailUtils;
 
     @Autowired
     private UserRepository userRepository;
@@ -73,8 +69,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
-
-        /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
 
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
