@@ -159,7 +159,17 @@ public class ProductServiceImpl implements ProductService {
                 product.setHsn(hsn);
                 Brand brand = brandRepository.findById(productRequestModel.getBrandId()).get();
                 product.setBrand(brand);
-                productRepository.save(product);
+                Map<String, byte[]> productDocs = (Map<String, byte[]>) userDetailsServiceImpl.getDataMap().get(Constants.PRODUCT);
+                setProductDocs(productDocs, product);
+
+                product = productRepository.save(product);
+                if ((product.getId() != null) && (productDocs != null)) {
+                    saveProductFilesToFileDB(product.getId(), productDocs);
+                    String sproductId = String.valueOf(product.getId());
+                    final File folder = new File(getUserFolder() + "/" + sproductId + "/productPic/");
+                    productUploasS3(folder, sproductId);
+                    userDetailsServiceImpl.getDataMap().clear();
+                }
 
             }
         }

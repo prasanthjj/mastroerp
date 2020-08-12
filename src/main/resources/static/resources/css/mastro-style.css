@@ -62,3 +62,7 @@ label{font-weight: 600;}
     overflow-y: scroll;
     height:350px;
 }
+
+.item_img{
+    height:300px ;
+}
