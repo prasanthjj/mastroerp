@@ -38,6 +38,7 @@ public class MailUtils {
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom("halotechnologysolution@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);
