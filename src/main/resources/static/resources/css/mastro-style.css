@@ -66,3 +66,11 @@ label{font-weight: 600;}
 .item_img{
     height:300px ;
 }
+.item_img_edit{
+    height:100% ;
+    width:200px;
+    overflow:hidden;
+}
+.item_img_edit img{
+ height:200px ;
+}

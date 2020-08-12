@@ -24,6 +24,8 @@
           th:src="@{/resources/css/plugins/select2/select2.min.css}">
     <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
@@ -86,6 +88,18 @@
                             <form id="createItemForm" th:action="@{/master/saveProduct}" th:object="${productForm}"
                                   name="productForm" method="post">
                                 <input type="hidden" name="id" th:field="*{id}"/>
+                                <div class="row">
+                                    <div class="col-lg-3" th:each="productFiles: ${productFilePath}">
+                                        <div class="item_img_edit">
+
+                                            <img alt="image" class="img-responsive" src="../resources/img/roof2.jpg"
+                                                 th:src="@{__${productFiles}__}"/>
+                                            <a class="btn btn-primary col-lg-12 productImgRemove" href="#"
+                                               th:data-productid="${productId}" th:data-imgname="${productFiles}">Remove
+                                                Image</a>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group  row"><label
@@ -496,6 +510,8 @@
 <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
         th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
 <!-- Jquery Validate -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
 <script src="../resources/js/plugins/validate/jquery.validate.min.js"
         th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="../resources/js/mastro/nestable.js" th:src="@{/resources/js/mastro/nestable.js}"></script>

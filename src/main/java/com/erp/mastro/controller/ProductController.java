@@ -236,11 +236,25 @@ public class ProductController {
             }
             model.addAttribute("uomList", uoms);
             if (productId != null) {
+                model.addAttribute("productId", productId);
                 model.addAttribute("productForm", new ProductRequestModel(productService.getProductById(productId)));
                 model.addAttribute("productUOMSize", productService.getProductById(productId).getProductUOMSet().size());
                 model.addAttribute("categoryNames", productService.getProductById(productId).getSubCategory().getCategory().getCategoryName());
                 model.addAttribute("subcategoryNames", productService.getProductById(productId).getSubCategory().getSubCategoryName());
 
+                if (productService.getProductById(productId).getProductImages() != null) {
+                    MastroLogUtils.info(ProductController.class, "Going to view Images in edit :{}" + productId);
+                    Set<String> ProductDoc = productService.getProductById(productId).getProductImages().stream().map(x -> x.getFileName()).collect(Collectors.toSet());
+                    Set<String> productFilePath = ProductDoc.stream().collect(Collectors.toSet());
+                    List<String> newPath = new ArrayList<String>();
+                    String productUrl = baseUrlS3 + "/" + productId + "/productImg";
+                    for (String prodctImg : productFilePath) {
+                        String productFilePaths = productUrl + "/" + prodctImg;
+                        newPath.add(productFilePaths);
+                    }
+
+                    model.addAttribute("productFilePath", newPath);
+                }
             }
 
             return "views/editProduct";
@@ -315,6 +329,25 @@ public class ProductController {
             throw e;
         }
 
+    }
+
+    @PostMapping("/deleteProductImages")
+    @ResponseBody
+    public GenericResponse deleteGalleryFile(@RequestParam("productImgFileName") String productFile, @RequestParam("productId") Long productId) {
+        try {
+            MastroLogUtils.info(ProductController.class, "Going to delete Product images:{}" + productId);
+            String[] originalName = productFile.split("/", 8);
+            String fileOriginal = originalName[7];
+            productService.deleteProductImage(productId, fileOriginal);
+            userDetailsServiceImpl.getDataMap().remove(fileOriginal);
+
+            return new GenericResponse(true, "delete image success ");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(ProductController.class, "Error occured while deleting images : {}", e);
+            return new GenericResponse(false, e.getMessage());
+
+        }
     }
 
 }

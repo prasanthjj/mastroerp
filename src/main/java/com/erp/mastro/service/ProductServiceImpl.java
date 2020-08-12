@@ -317,4 +317,33 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
+
+    /**
+     * Remove product image
+     *
+     * @param id
+     * @param fileName
+     */
+    public void deleteProductImage(Long id, String fileName) {
+
+        Product product = getProductById(id);
+        if (product.getProductImages() != null) {
+            MastroLogUtils.info(ProductService.class, "Going to remove productImages in s3   {}");
+            Set<ProductImages> productImages = getProductById(id).getProductImages();
+            Iterator<ProductImages> productImageSet = productImages.iterator();
+            for (Iterator<ProductImages> images = productImageSet; images.hasNext(); ) {
+                ProductImages productImage = images.next();
+                if (productImage != null) {
+                    if (productImage.getFileName().equals(fileName)) {
+                        productImageSet.remove();
+                        s3Services.deleteProductImage(id, fileName);
+                    }
+                }
+            }
+
+        }
+        productRepository.save(product);
+
+    }
+
 }

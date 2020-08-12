@@ -32,4 +32,6 @@ public interface ProductService {
 
     void productUploasS3(final File folder, String sproductId);
 
+    void deleteProductImage(Long id, String fileName);
+
 }

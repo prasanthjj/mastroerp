@@ -83,4 +83,10 @@ public class S3ServiceImpl implements S3Service {
         }
     }
 
+    public void deleteProductImage(Long productId, String fileName) throws AmazonClientException {
+        bucketName = "mastro-erp/products" + "/" + productId + "/productImg";
+        s3client.deleteObject(bucketName, fileName);
+
+    }
+
 }

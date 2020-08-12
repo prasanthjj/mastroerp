@@ -488,7 +488,7 @@ $(document).ready(function(){
 
                           });
                       });
-            //End Product end
+            //Enable Product end
 
 //Disable Product start
                       $('.disableProduct').click(function () {
@@ -523,6 +523,46 @@ $(document).ready(function(){
                           });
                       });
             //Disable Product end
+
+            //remove Product image start
+                                  $('.productImgRemove').click(function () {
+
+                                   var productId=$(this).data('productid');
+                                   var filename=$(this).data('imgname');
+
+
+                                      swal({
+                                          title: "Are you sure?",
+                                          text: "You want to delete!",
+                                          type: "warning",
+                                          showCancelButton: true,
+                                          confirmButtonColor: "#0094db",
+                                          confirmButtonText: "Yes, deleted!",
+                                          closeOnConfirm: false
+                                      }, function () {
+
+                                      $.ajax({
+                                                          url: '/master/deleteProductImages',
+                                                          type: 'POST',
+                                                          dataType : 'json',
+                                                         data: { 'productImgFileName': filename,'productId': productId },
+                                                          success: function(data){
+                                                              if(data.success) {
+
+                                                                  var redirectionUrl= "/master/getProductEdit?productId="+productId;
+                                                                  window.location.href = redirectionUrl;
+                                                              }
+                                                          },
+                                                          error: function(jqXHR, textStatus) {
+                                                              alert('Error Occured');
+                                                          }
+                                                      });
+                                         /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                                      });
+                                  });
+                        //remove Product image end
+
 
 });
 
