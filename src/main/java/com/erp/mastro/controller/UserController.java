@@ -196,7 +196,7 @@ public class UserController {
 
         Set<Roles> rolesSet = new HashSet();
         Roles roles = new Roles();
-        roles.setRoleName("ROLE_SALES");
+        roles.setRoleName("ROLE_ADMIN");
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);

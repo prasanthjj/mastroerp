@@ -1,10 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div class="col-lg-5 ">
+<div class="col-lg-5">
 
     <ul class="last-login m-t-lg">
         <li class="">
-            <span th:text="${#httpServletRequest.getRemoteAddr()}"></span>:: Last Login at :
-            <span th:text="${session.lastLoginDate}"></span>
+            IP Address <span th:text="${#httpServletRequest.getRemoteAddr()}"></span>
+            Last Login at :
+            <span th:text="${#dates.format(session.lastLoginDate, 'dd/MM/yyyy hh:mm a')}"></span>
+
+
         </li>
     </ul>
     <ul class="last-login m-t-xs">
