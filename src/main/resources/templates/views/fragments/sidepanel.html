@@ -79,7 +79,11 @@
 
                     <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
-                    <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${itemPartyTab == 'itemParty'}" class="active"><a href="#"
+                                                                                 th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
+                    <li th:unless="${itemPartyTab == 'itemParty'}"><a href="#" th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
                     <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}">
@@ -110,7 +114,11 @@
                     <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brand</a></li>
                     <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
-                    <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${itemPartyTab == 'itemParty'}" class="active"><a href="#"
+                                                                                 th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
+                    <li th:unless="${itemPartyTab == 'itemParty'}"><a href="#" th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
                     <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}">
