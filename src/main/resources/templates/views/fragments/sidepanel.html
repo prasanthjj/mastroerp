@@ -6,12 +6,7 @@
                 <div class="dropdown profile-element">
                     <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Admin @ <span th:text="${session.selectedBranch}"></span> <!--<span th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()!=null}" >
-<span th:text="${#authentication.getPrincipal().getUser().getUserSelectedBranch().getCurrentBranch().getBranchName()}">
-
-</span>
-
-</span>--></span>
+                        <span class="block m-t-xs font-bold">Admin @  <span th:text="${session.selectedBranch}"></span>></span>
                         <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -50,7 +45,6 @@
                     <li th:unless="${rolesTab== 'roles'}"><a th:href="@{/admin/getRole}">Role</a></li>
                     <li th:if="${branchTab== 'branch'}" class="active"><a th:href="@{/admin/getBranch}">Branch</a></li>
                     <li th:unless="${branchTab== 'branch'}"><a th:href="@{/admin/getBranch}">Branch</a></li>
-
 
                     <li th:if="${userTab== 'user'}" class="active"><a th:href="@{/admin/addUser}">User</a></li>
                     <li th:unless="${userTab== 'user'}"><a th:href="@{/admin/addUser}">User</a></li>

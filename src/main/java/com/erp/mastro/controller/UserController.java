@@ -1,7 +1,7 @@
 package com.erp.mastro.controller;
 
-import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.config.UserDetailsServiceImpl;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.Branch;
@@ -31,23 +31,17 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    private MailUtils mailUtils;
-
-    @Autowired
     PasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
     BranchService branchService;
-
     @Autowired
     RolesService rolesService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     EmployeeService employeeService;
-
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
     @Autowired
     HttpSession session;
 
@@ -92,7 +86,14 @@ public class UserController {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
         }
+        Set<User> userListCount = userService.getAllUsers().stream()
+                .filter(userData -> (null != userData))
+                .filter(userData -> (false != userData.isEnabled()))
+                .filter(userData -> (false != userData.isLoggedIn()))
+                .collect(Collectors.toSet());
 
+        session.setAttribute("ActiveUser", userListCount.size());
+        session.setAttribute("lastLoginDate", userDetails.getLastLogin());
         session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
         return "views/dashboard";
@@ -191,9 +192,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("gloria@halo.ae");
-        user.setEmail("gloria@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("gloria"));
+        user.setUserName("ranjit@halo.ae");
+        user.setEmail("ranjit@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("ranjit"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();

@@ -1,6 +1,5 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.UserModel;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,9 +27,6 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
-    private MailUtils mailUtils;
 
     @Autowired
     private UserRepository userRepository;
@@ -73,20 +70,18 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
 
-        /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
-
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
             //User userDetails = new User();
             user = new User();
             MastroLogUtils.info(UserService.class, "Going to Add User {}" + userModel.toString());
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
-            System.out.println("employee :: " + employee);
             user.setUserName(employee.getEmail());
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
             user.setEnabled(true);
-
+            user.setCreatedBy(employee.getFirstName());
+            user.setCreatedDate(new Date());
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
