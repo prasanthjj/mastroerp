@@ -331,6 +331,13 @@ public class ProductController {
 
     }
 
+    /**
+     * Method to delete product images
+     *
+     * @param productFile
+     * @param productId
+     * @return response
+     */
     @PostMapping("/deleteProductImages")
     @ResponseBody
     public GenericResponse deleteGalleryFile(@RequestParam("productImgFileName") String productFile, @RequestParam("productId") Long productId) {
