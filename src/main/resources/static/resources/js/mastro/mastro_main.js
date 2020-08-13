@@ -145,7 +145,63 @@ $(document).ready(function(){
 
 });
 //Add item End
+// item party rate relation add party auto-complete start
+ $.get('../resources/js/api/typehead_collection.json', function(data){
+    $(".addParty_head").typeahead({
+       minLength : 3,
+       source:data.countries });
+},'json');
+// item party rate relation add party auto-complete start
+    // item party rate relation item auto-complete start
+    $.get('../resources/js/api/typehead_collection.json', function(data){
+        $(".item_head").typeahead({
+           minLength : 3,
+           source:data.emails });
+    },'json');
+    // item party rate relation item auto-complete start
+$(".item_head").keyup(function () {
 
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		//alert(val);
+		}
+		});
+    // add item party rate table start
+
+    $('.itemPartyRateTable').on('change', ':checkbox', function () {
+    var $inpts = $(this).closest('tr').find('input:text,textarea').prop("disabled", !$(this).is(':checked'));
+    }).find(':checkbox').change();
+
+    // add item party rate table end
+
+    // item party rate relation change tab start
+
+    $('#partyBox').hide();
+
+    $('.relationBtn').click(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        id = this.id;
+        if (id == 'itemBtn') {
+            $('#itemBox').slideToggle("slow");
+            $('#partyBox').hide();
+            $('#itemBtn').toggleClass("active");
+            if ($('#itemBtn').hasClass('active')){
+                $('#partyBtn').removeClass("active");
+            }
+
+        }
+        else if (id == 'partyBtn'){
+
+            $('#itemBox').hide();
+            $('#partyBox').slideToggle("slow");
+            $('#partyBtn').toggleClass("active");
+            if ($('#partyBtn').hasClass('active')){
+                $("#itemBtn").removeClass("active");
+            }
+        }
+    });
+    // item party rate relation change tab start
        $(function(datepicker) {
 
        //Add assets dates Start

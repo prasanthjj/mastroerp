@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Item Party Relation</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="../resources/css/animate.css" rel="stylesheet">
+    <link href="../resources/css/style.css" rel="stylesheet">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side " role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">Admin @ Thrissur</span>
+                            <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+
+                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        Mastro Metals
+                    </div>
+                </li>
+                <li>
+                    <a href="dashboard.html"><i class="fa fa-th-large"></i> <span
+                            class="nav-label">Quick Links</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="user_master.html">User</a></li>
+                        <li><a href="role_master.html">Role</a></li>
+                        <li><a href="role_access_rights.html">Role Access Rights</a></li>
+                        <li><a href="branch_master.html">Branch</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Master</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="item_master.html">Product</a></li>
+                        <li><a href="hsn_master.html">HSN</a></li>
+                        <li><a href="location_master.html">Location</a></li>
+                        <li><a href="party_master.html">Party</a></li>
+                        <li class="active"><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                        <li><a href="catalog_master.html">Category</a></li>
+                        <li><a href="assets_master.html">Assets</a></li>
+                        <li><a href="brand_master.html">Brands</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="stock_details.html">Stock Details</a></li>
+                        <li><a href="stock_transfer.html">Stock Transfer</a></li>
+                        <li><a href="indent_master.html">Indent</a></li>
+                        <li><a href="gatepass.html">Gate Pass</a></li>
+                        <li><a href="dc_purchase_slip.html">DC / Purchase Slip</a></li>
+                        <li><a href="grn.html">GRN</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Purchase </span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="purchase_order.html">Purchase Order</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Sales</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="invoice.html">Invoice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">HR</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="department_master.html">Department</a></li>
+                        <li><a href="salary_components_master.html">Salary Components</a></li>
+                        <li><a href="salary_templates_master.html">Salary Templates</a></li>
+                        <li><a href="employees.html">Employees</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="itemwise_stock_ledger.html">Itemwise Stock Ledger</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav class="navbar navbar-static-top master-dark-blue-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a class="" href="#"> Branch : Thrissur</a>
+                    </li>
+                    <li>
+                        <a class="" href="#" data-toggle="modal" data-target="#branchList"><i class="fa fa-edit"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> Indent Generated
+                                        <span class="float-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> PO Rejected
+                                        <span class="float-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="#" class="dropdown-item">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Item Party Rate Relation</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Item Party Rate Relation</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+                            <div class="col-md-12 text-center">
+                                <fieldset>
+                                    <button id="itemBtn" class="btn btn-primary  relationBtn btn-outline active "
+                                            type="button">Item Party Relation
+                                    </button>
+                                    <button class="btn  relationBtn btn-primary btn-outline" id="partyBtn"
+                                            type="button">Party Item Relation
+                                    </button>
+
+                                </fieldset>
+                            </div>
+                            <div class="ibox-tools">
+                            </div>
+                        </div>
+                        <div class="ibox-content" id="itemBox">
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
+                                            Name</label>
+
+                                            <div class="col-sm-8"><input id="" name="" type="text"
+                                                                         class="form-control item_head"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button class="btn btn-primary">Select</button>
+
+
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </form>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
+                                        Name</label>
+
+                                        <div class="col-sm-8 m-t-sm"><p><b> .47 Red 3.05mtr (10')</b></p></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
+                                        Code</label>
+
+                                        <div class="col-sm-8 m-t-sm"><p class=""><b>ITM-16586745</b></p></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 text-right m-b-sm ">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item font-bold" href="#" data-toggle="modal"
+                                               data-target="#PartyAssociateItem"><i class="fa fa-plus-square"></i> Add
+                                            Party Associate To Item</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover dataTables-itemParty itemPartyRateTable"
+                                               style="font-weight: bold;">
+                                            <thead class="mastro-blue-bg txt-white">
+                                            <tr>
+                                                <th class="mastro-blue-bg txt-white">#</th>
+                                                <th>No</th>
+                                                <th>Party Type</th>
+                                                <th>Party Code</th>
+                                                <th>Party Name</th>
+
+                                                <th>Category Type</th>
+                                                <th>Rate</th>
+                                                <th>disc %</th>
+                                                <th>credit days</th>
+                                                <th>allowed price Dev (%) (Upper)</th>
+                                                <th>allowed price Dev (%) (Lower)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox" class=""/></td>
+                                                <td>1</td>
+                                                <td class="center"><b>Supplier</b></td>
+                                                <td class="center">5383557</td>
+                                                <td class="center"><b>Thomson Pipes Pvt Ltd</b></td>
+                                                <td class="center">
+                                                    A
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" name="" class="form-control">
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" name="" class="form-control">
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" name="" class="form-control">
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" name="" class="form-control">
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" name="" class="form-control">
+                                                </td>
+                                            </tr>
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox" checked/></td>
+                                                <td>2</td>
+                                                <td class="center">Customer</td>
+                                                <td class="center">52583835</td>
+                                                <td class="center">Thomson Pipes Pvt Ltd</td>
+                                                <td class="center">
+                                                    C
+                                                </td>
+                                                <td class="center">
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                                <td class="center">
+                                                    <p></p>
+                                                </td>
+                                                <td class="center">
+                                                    <p></p>
+                                                </td>
+                                                <td class="center">
+                                                    <p></p>
+                                                </td>
+                                                <td class="center">
+                                                    <p></p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="footer ">
+            <div class="float-right">
+                Designed and Developed By <strong>Halo Technology Solutions</strong>
+            </div>
+            <div>
+                <strong>Copyright</strong> Mastro Metals &copy; 2020
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="PartyAssociateItem" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Party To Associate Item</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Party Name</label>
+
+                            <div class="col-sm-8"><input type="text" required placeholder=""
+                                                         class=" form-control addParty_head"/></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.js"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js"></script>
+<script src="../resources/js/plugins/pace/pace.min.js"></script>
+
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Typehead -->
+<script src="../resources/js/plugins/typehead/bootstrap3-typeahead.min.js"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="../resources/js/mastro/mastro_main.js"></script>
+<script src="../resources/js/mastro/mastro_datatables.js"></script>
+<script>
+    
+$(document).ready(function(){
+
+
+    
+});
+
+
+</script>
+
+</body>
+</html>
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX "/>
+</head>
+<body></body>
+<script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+
+</script>
+</html>
