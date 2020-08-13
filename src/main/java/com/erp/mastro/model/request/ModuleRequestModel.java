@@ -1,61 +1,24 @@
 package com.erp.mastro.model.request;
 
 import com.erp.mastro.entities.Roles;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
-
-import java.util.Set;
-
-
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 public class ModuleRequestModel {
 
     private Long id;
     private String moduleName;
     private Roles roles;
 
-    public Long getId() {
-        return id;
-    }
+    @Setter(AccessLevel.PUBLIC)
+    @Getter(AccessLevel.PUBLIC)
+    public static class ModuleModelEdit {
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
-    }
-
-    public Roles getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
-    }
-
-
-    public static class ModuleModelEdit{
         private String module;
         private Long id;
-
-        public String getModule() {
-            return module;
-        }
-
-        public void setModule(String module) {
-            this.module = module;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
     }
 
 }

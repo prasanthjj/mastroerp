@@ -43,10 +43,10 @@ public class Branch {
     @Column(name="email_id")
     private String emailId;
 
-    @Column(name="phone_no")
+    @Column(name = "phone_no")
     private String phoneNo;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
     @Column(name = "website")
@@ -61,19 +61,17 @@ public class Branch {
     @Column(name = "pin_code")
     private String pinCode;
 
-    @Column(name="creation_date")
+    @Column(name = "creation_date")
     private Date creationDate;
-    
+
     @Column(name = "delete_status", nullable = false)
     private int branchDeleteStatus;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "registration_id")
     private BranchRegistration branchRegistration;
 
     @ManyToMany(mappedBy = "branch")
     private Set<User> user = new HashSet<>();
-
-
 
 }

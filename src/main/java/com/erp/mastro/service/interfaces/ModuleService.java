@@ -16,6 +16,6 @@ public interface ModuleService {
 
     void saveOrUpdateModules(ModuleRequestModel moduleRequestModel, Set<String> values);
 
-    void deleteModules(Long id );
+    void deleteModules(Long id);
 
 }

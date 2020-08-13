@@ -45,20 +45,7 @@
                     </li>
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -146,6 +133,8 @@
     </div>
 
 </div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>

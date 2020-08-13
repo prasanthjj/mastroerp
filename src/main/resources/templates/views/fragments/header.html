@@ -1,4 +1,4 @@
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar navbar-static-top master-dark-blue-bg" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
@@ -6,10 +6,12 @@
     </div>
     <ul class="nav navbar-top-links navbar-right">
         <li>
-            <a class="" href="#"> Branch : Thrissur</a>
+            <a class="" href="#"> Branch : <span th:text="${session.selectedBranch}"></span></a>
+
         </li>
         <li>
-            <a class="" href="#" data-toggle="modal" data-target="#branchList"><i class="fa fa-edit"></i> </a>
+            <a class="" id="userBranchDisplayId" href="#" data-toggle="modal" data-target="#branchList"><i
+                    class="fa fa-edit"></i> </a>
         </li>
         <li class="dropdown">
             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -45,10 +47,11 @@
             </ul>
         </li>
         <li>
-            <a href="login.html">
+            <a th:href="@{/logout}">
                 <i class="fa fa-sign-out"></i> Log out
             </a>
         </li>
     </ul>
 
 </nav>
+</html>

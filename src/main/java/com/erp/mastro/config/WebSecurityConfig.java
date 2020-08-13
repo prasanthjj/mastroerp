@@ -63,8 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/addEmployee/**").permitAll()
-                .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN,ROLE_SUPERADMIN)
-                .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN,ROLE_SUPERADMIN)
+                .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/resources/**"
-                        ,"/css/**",
+                        , "/css/**",
                         "/h2-console/**",
                         "/register",
                         "/addEmployee");

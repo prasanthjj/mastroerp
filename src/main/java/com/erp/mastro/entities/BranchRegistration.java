@@ -10,11 +10,11 @@ import java.util.Date;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="branch_registration")
+@Table(name = "branch_registration")
 public class BranchRegistration {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "tan_no")
@@ -30,71 +30,71 @@ public class BranchRegistration {
     private String cstTinNo;
 
     @Column(name = "cst_date")
-    private Date cstdate ;
+    private Date cstdate;
 
     @Column(name = "juridical")
-    private String juridical ;
+    private String juridical;
 
     @Column(name = "stax_No")
     private String sTaxNo;
 
     @Column(name = "stax_date")
-    private Date staxDate ;
+    private Date staxDate;
 
     @Column(name = "pan_no")
-    private String  panNo;
+    private String panNo;
 
     @Column(name = "pan_date")
-    private Date panDate ;
+    private Date panDate;
 
     @Column(name = "pf_account")
-    private String  pfAccount;
+    private String pfAccount;
 
     @Column(name = "pf_date")
-    private Date pfDate ;
+    private Date pfDate;
 
     @Column(name = "esic_account")
-    private String  esicAccount ;
+    private String esicAccount;
 
     @Column(name = "esic_date")
-    private Date esicDate ;
+    private Date esicDate;
 
     @Column(name = "ecc_no")
-    private String eccNo ;
+    private String eccNo;
 
     @Column(name = "pla_no")
-    private String plaNo ;
+    private String plaNo;
 
     @Column(name = "ranges")
-    private String range ;
+    private String range;
 
     @Column(name = "divisions")
-    private String division ;
+    private String division;
 
     @Column(name = "range_address")
-    private String  rangeAddress ;
+    private String rangeAddress;
 
     @Column(name = "division_address")
-    private String  divisionAddress;
+    private String divisionAddress;
 
     @Column(name = "commissionerate")
-    private String Commissionerate ;
+    private String Commissionerate;
 
     @Column(name = "exempted")
-    private String exempted ;
+    private String exempted;
 
     @Column(name = "Commissionerate_address")
-    private String  commissionerateAddress;
+    private String commissionerateAddress;
 
     @Column(name = "limits")
-    private String  limit;
+    private String limit;
 
     @Column(name = "gstin")
-    private String  gstIn;
+    private String gstIn;
 
     @Column(name = "cin_no")
-    private String  cinNo;
+    private String cinNo;
 
     @Column(name = "cin_date")
-    private Date  cinDate;
+    private Date cinDate;
 }

@@ -27,32 +27,14 @@ public class Party extends Auditable<String>{
     @Column(name = "party_name")
     private String partyName;
 
-    @Column(name = "alias_name")
-    private String aliasName;
-
     @Column(name = "status")
     private String status;
-
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "website")
-    private String website;
 
     @Column(name = "payment_terms")
     private String paymentTerms;
 
-    @Column(name = "refer_by")
-    private String referBy;
-
-    @Column(name = "source")
-    private String source;
-
     @Column(name = "category_type")
     private String categoryType;
-
-    @Column(name = "tranporter_name")
-    private String transporterName;
 
     @Column(name = "party_date")
     private Date partyDate;
@@ -63,34 +45,28 @@ public class Party extends Auditable<String>{
     @Column(name = "relationship_mananger")
     private String relationshipMananger;
 
-    @Column(name = "industry_type")
-    private String industryType;
-
-    @Column(name = "email_id")
-    private String emailId;
-
-    @Column(name = "transaction_type")
-    private String transactionType;
+    @Column(name = "enabled", nullable = false)
+    protected boolean enabled;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "party_contact_details", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id")})
-    private Set<ContactDetails> contactDetails;
+    private Set<ContactDetails> contactDetails = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "party_billing_details", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "billing_id", referencedColumnName = "id")})
-    private Set<BillingDetails> billingDetails;
+    private Set<BillingDetails> billingDetails = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "party_bank_details", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "bank_details_id", referencedColumnName = "id")})
-    private Set<BankDetails> bankDetails;
+    private Set<BankDetails> bankDetails = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "party_credit_details", joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "credit_details_id", referencedColumnName = "id")})
-    private Set<CreditDetails> creditDetails;
+    private Set<CreditDetails> creditDetails = new HashSet<>();
 
     @ManyToMany(mappedBy = "parties")
     private Set<Product> products = new HashSet<>();
@@ -101,7 +77,8 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private PartyPriceList partyPriceList;
 
-    @Column(name = "delete_status", nullable = false)
-    private int partyDeleteStatus;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "industry_id")
+    private IndustryType industryType;
 
 }

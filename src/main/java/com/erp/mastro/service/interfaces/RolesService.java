@@ -18,4 +18,5 @@ public interface RolesService {
     void deleteRoles(Long id);
 
     public void deleteRolesDetails(Long id);
+
 }

@@ -89,33 +89,27 @@ public class BranchRequestModel {
         if (branch.getBranchRegistration().getVatDate() != null) {
             this.vatDate = branch.getBranchRegistration().getVatDate();
         }
-
         this.cstTinNo = branch.getBranchRegistration().getCstTinNo();
         if (branch.getBranchRegistration().getCstdate() != null) {
             this.cstdate = branch.getBranchRegistration().getCstdate();
-
         }
         this.juridical = branch.getBranchRegistration().getJuridical();
         this.sTaxNo = branch.getBranchRegistration().getSTaxNo();
         if (branch.getBranchRegistration().getStaxDate() != null) {
             this.staxDate = branch.getBranchRegistration().getStaxDate();
         }
-
         this.panNo = branch.getBranchRegistration().getPanNo();
         if (branch.getBranchRegistration().getPanDate() != null) {
             this.panDate = branch.getBranchRegistration().getPanDate();
         }
-
         this.pfAccount = branch.getBranchRegistration().getPfAccount();
         if (branch.getBranchRegistration().getPfDate() != null) {
             this.pfDate = branch.getBranchRegistration().getPfDate();
         }
-
         this.esicAccount = branch.getBranchRegistration().getEsicAccount();
         if (branch.getBranchRegistration().getEsicDate() != null) {
             this.esicDate = branch.getBranchRegistration().getEsicDate();
         }
-
         this.eccNo = branch.getBranchRegistration().getEccNo();
         this.plaNo = branch.getBranchRegistration().getPlaNo();
         this.range = branch.getBranchRegistration().getRange();
@@ -131,7 +125,6 @@ public class BranchRequestModel {
         if (branch.getBranchRegistration().getCinDate() != null) {
             this.cinDate = branch.getBranchRegistration().getCinDate();
         }
-
     }
 
     public String getsCreationDate() {
