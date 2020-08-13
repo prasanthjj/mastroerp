@@ -166,6 +166,7 @@
                                                             </div>
                                                         </li>
                                                         <span th:each="productObj,iterator:${subcategoryObj.productSet}">
+                                                      <span th:if="${productObj.enabled} == true">
                                                         <li class="dd-item" data-id="4">
                                                             <div class="dd-handle">
                                                                 <span class="float-right  catalogIcon">
@@ -177,6 +178,7 @@
                                                             </div>
 
                                                         </li>
+                                                      </span>
                                                         </span>
                                                     </ol>
                                                 </li>
