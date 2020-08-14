@@ -9,12 +9,15 @@
     <title>Mastro Metals | Quick Links </title>
 
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
-    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
 
-       <!-- Sweet Alert -->
-  <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
     <!-- Morris -->
-    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
 
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
@@ -22,30 +25,31 @@
 </head>
 
 <body onload="switchBranch()">
-    <div id="wrapper">
-        <nav class="navbar-default navbar-static-side " role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav metismenu" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">Admin @    <span th:text="${session.selectedBranch}"></span></span>
-                                <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side " role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">Admin @    <span
+                                    th:text="${session.selectedBranch}"></span></span>
+                            <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
 
-                                <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
 
-            </div>
-        </nav>
+        </div>
+    </nav>
 
 
-        <div id="page-wrapper" class="gray-bg">
+    <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom ">
             <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
         </div>
@@ -53,191 +57,183 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-7">
                 <h2 class="text-info m-t-lg"><i class="fa fa-barcode"></i> Quick Links </h2>
-                
+
             </div>
-            <div class="col-lg-5 ">
-               
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1  (Last Login at :07/06/2020  06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-               
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
             <div class="row">
                 <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title  ">
-                        <h3 class="text-info"> Quick Links</h3>
-                        <div class="ibox-tools">
-                            
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+                            <h3 class="text-info"> Quick Links</h3>
+                            <div class="ibox-tools">
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <a th:href="@{/admin/addUser}">
-                                    <div class="widget red-bg p-md text-center">
-                                        <div class="p-md"  >
-                                            <i class="fa fa-user fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Admin</h3>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <a th:href="@{/admin/addUser}">
+                                        <div class="widget red-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-user fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Admin</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div> 
-                            <div class="col-lg-3">
-                                <a th:href="@{/master/getHSN}">
-                                    <div class="widget navy-bg p-md text-center">
-                                        <div class="p-md"  >
-                                            <i class="fa fa-barcode fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Master</h3>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a th:href="@{/master/getHSN}">
+                                        <div class="widget navy-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-barcode fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Master</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                
-                            </div> 
-                            <div class="col-lg-3">
-                                <a th:href="@{/error/accessDenied}">
-                                    <div class="widget lazur-bg p-md text-center">
-                                        <div class="p-md"  >
-                                            <i class="fa fa-cubes fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Inventory</h3>
-                                        </div>
-                                    </div>
-                                </a> 
-                            </div> 
-                            <div class="col-lg-3">
-                                <a href="#">
-                                    <div class="widget yellow-bg p-md text-center">
-                                        <div class="p-md" >
-                                            <i class="fa fa-shopping-cart fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Purchase</h3>
-                                        </div>
-                                    </div>
-                                </a>
-                                
-                            </div> 
-                            <div class="col-lg-3">
-                                <a href="#">
-                                    <div class="widget yellow-bg p-md text-center">
-                                        <div class="p-md"  >
-                                            <i class="fa fa-money fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Sales</h3>
-                                        </div>
-                                    </div>
-                                </a>
-                                
-                            </div> 
-                            <div class="col-lg-3">
-                                <a href="#" class="accessDenied">
-                                    <div class="widget lazur-bg p-md text-center">
-                                        <div class="p-md" >
-                                            <i class="fa fa-users fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">HR</h3>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div> 
-                            <div class="col-lg-3">
-                                <a href="#" class="accessDenied">
-                                    <div class="widget navy-bg  p-md text-center">
-                                        <div class="p-md" >
-                                            <i class="fa fa-file fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Reports</h3>
-                                        </div>
-                                    </div>
-                                </a>
-                                
-                            </div> 
-                            <div class="col-lg-3">
-                                <a  href="#" class="accessDenied">
-                                    <div class="widget red-bg p-md text-center">
-                                        <div class="p-md"  >
-                                            <i class="fa fa-briefcase fa-3x m-b-sm"></i>
-                                            <h3 class="m-xs">Accounts</h3>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div> 
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            </div>
-
-
-        </div>
-
-
-            <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
-
-        </div>
-      
-    </div>
-    <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
-
-    <div class="modal inmodal" id="loginBranchList" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-                   <form th:action="@{/admin/selectBranchName}" id="branchListForm" method="post">
-                <div class="modal-content animated flipInY">
-                    <div class="modal-header">
-                        <button type="button" class="close closeBranchList" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Branch List</h4>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="branchId" name="branchId" required>
-                                        <option value="" >Select branch</option>
-                                        <option th:each="branch : ${session.branchList}"
-                                                th:value="${branch.id}" th:text="${branch.branchName}">Select</option>
-                                    </select>
+                                    </a>
 
                                 </div>
+                                <div class="col-lg-3">
+                                    <a href="#">
+                                        <div class="widget lazur-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-cubes fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Inventory</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="#">
+                                        <div class="widget yellow-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-shopping-cart fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Purchase</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="#">
+                                        <div class="widget yellow-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-money fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Sales</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="#" class="accessDenied">
+                                        <div class="widget lazur-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-users fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">HR</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="#" class="accessDenied">
+                                        <div class="widget navy-bg  p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-file fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Reports</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="#" class="accessDenied">
+                                        <div class="widget red-bg p-md text-center">
+                                            <div class="p-md">
+                                                <i class="fa fa-briefcase fa-3x m-b-sm"></i>
+                                                <h3 class="m-xs">Accounts</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="hr-line-dashed"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white closeBranchList" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Select</button>
+
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+
+
         </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
     </div>
 
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 
-   <!-- Mainly scripts -->
-   <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
-   <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
-   <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
-   <script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-   <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-   <!-- Custom and plugin javascript -->
-   <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
-   <script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
-  <!-- jQuery UI -->
-  <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js" th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<div class="modal inmodal" id="loginBranchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/admin/selectBranchName}" id="branchListForm" method="post">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close closeBranchList" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
 
- <!-- Sweet alert -->
- <script src="../resources/js/plugins/sweetalert/sweetalert.min.js" th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
- <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
-  <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
 
- <!-- <script th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()==null}">-->
-  <script th:if="${session.selectedBranch == null}">
+                            <div class="col-sm-8">
+                                <select class="form-control" id="branchId" name="branchId" required>
+                                    <option value="">Select branch</option>
+                                    <option th:each="branch : ${session.branchList}"
+                                            th:value="${branch.id}" th:text="${branch.branchName}">Select
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
+
+<!-- <script th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()==null}">-->
+<script th:if="${session.selectedBranch == null}">
   function switchBranch() {
    $("#loginBranchList").toggle();
    $('#loginBranchList').css({"background-color": "rgb(0 0 0 / 35%)"});
@@ -246,6 +242,8 @@
  $(document).on('click', '.closeBranchList', function() {
         $('#loginBranchList').toggle();
     });
+
+
 </script>
 </body>
 </html>

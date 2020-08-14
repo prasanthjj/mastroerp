@@ -270,7 +270,7 @@ function autoComplete(url, className) {
         success : function(data) {
              $("." + className).typeahead({
                 source: data.data.value,
-                minLength : 3
+                minLength : 1
             });
         }
     });

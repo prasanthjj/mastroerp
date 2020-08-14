@@ -81,5 +81,4 @@ public class Party extends Auditable<String>{
     @JoinColumn(name = "industry_id")
     private IndustryType industryType;
 
-
 }
