@@ -1,10 +1,14 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.User;
+import com.erp.mastro.exception.InvalidTokenException;
+import com.erp.mastro.exception.MastroEntityException;
+import com.erp.mastro.exception.TokenExpiredException;
 import com.erp.mastro.model.request.UserModel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
 
 public interface UserService {
 
@@ -12,7 +16,13 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    void saveOrUpdateUser(UserModel userModel, HttpServletRequest request);
+    void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) throws MastroEntityException;
+
+    void enableUser(User user);
+
+    void saveChangedPassword(User user, String password);
+
+    void validatePasswordResetToken(Long id, String token, HttpServletRequest request) throws TokenExpiredException, InvalidTokenException;
 
     void activateOrDeactivateUser(Long id);
 

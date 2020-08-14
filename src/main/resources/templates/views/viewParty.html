@@ -45,7 +45,20 @@
                     </li>
                 </ol>
             </div>
-            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -369,21 +382,4 @@
 <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
         th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
 </body>
-</html>
-<html>
-<head>
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-    <meta name="Robots" content="NOINDEX "/>
-</head>
-<body></body>
-<script type="text/javascript">
-                 var gearPage = document.getElementById('GearPage');
-                 if(null != gearPage)
-                 {
-                     gearPage.parentNode.removeChild(gearPage);
-                     document.title = "Error";
-                 }
-
-
-</script>
 </html>

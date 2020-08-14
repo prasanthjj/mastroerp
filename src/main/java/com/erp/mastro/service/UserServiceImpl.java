@@ -1,10 +1,16 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.common.MastroApplicationUtils;
+import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.common.UrlUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.*;
+import com.erp.mastro.exception.InvalidTokenException;
+import com.erp.mastro.exception.MastroEntityException;
+import com.erp.mastro.exception.TokenExpiredException;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.repository.EmployeeRepository;
+import com.erp.mastro.repository.PasswordResetTokenRepository;
 import com.erp.mastro.repository.UserRepository;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.ModuleService;
@@ -12,15 +18,17 @@ import com.erp.mastro.service.interfaces.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Service class for User
@@ -31,6 +39,9 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
+    private MailUtils mailUtils;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -38,6 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BranchService branchService;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordTokenRepository;
 
     /**
      * method to get all Users
@@ -70,20 +84,21 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional(rollbackOn = {Exception.class})
-    public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) {
+    public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) throws MastroEntityException {
+
+        /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
 
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
-            //User userDetails = new User();
             user = new User();
             MastroLogUtils.info(UserService.class, "Going to Add User {}" + userModel.toString());
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
+            System.out.println("employee :: " + employee);
             user.setUserName(employee.getEmail());
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
             user.setEnabled(true);
-            user.setCreatedBy(employee.getFirstName());
-            user.setCreatedDate(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
+
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
@@ -101,8 +116,93 @@ public class UserServiceImpl implements UserService {
             user.setBranch(branches);
         }
         userRepository.save(user);
+        String email = userModel.getEmail();
+        sendResetPasswordEmail(email, UrlUtils.getAppurl(request), request.getLocale());
         MastroLogUtils.info(UserService.class, "Save or Update " + userModel.getEmail() + " successfully.");
     }
+
+    /**
+     * Password Reset Method
+     *
+     * @param email
+     * @param appUrl
+     * @param locale
+     * @throws MastroEntityException
+     */
+    public void sendResetPasswordEmail(String email, String appUrl, Locale locale) throws MastroEntityException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new MastroEntityException();
+        }
+        String token = UUID.randomUUID().toString();
+        createPasswordResetTokenForUser(user, token);
+        sentResetPasswordTokenEmail(appUrl, locale, token, user);
+    }
+
+    /**
+     * Token Reset method
+     *
+     * @param user
+     * @param token
+     */
+
+    private void createPasswordResetTokenForUser(User user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordTokenRepository.save(myToken);
+    }
+
+    /**
+     * Method to sent email with token
+     *
+     * @param contextPath
+     * @param locale
+     * @param token
+     * @param user
+     * @return
+     */
+    private boolean sentResetPasswordTokenEmail(String contextPath, Locale locale, String token, User user) {
+
+        String url = contextPath + "changePassword?id=" + user.getId() + "&token=" + token;
+        Map emailMap = new HashMap();
+        emailMap.put("url", url);
+        try {
+            mailUtils.sendMessageUsingThymeleafTemplate("ssoumir04@gmail.com", emailMap, Constants.TEMPLATE_SAMPLE);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+    }
+
+    /**
+     * Method to check token
+     *
+     * @param id
+     * @param token
+     * @param request
+     * @throws TokenExpiredException
+     * @throws InvalidTokenException
+     */
+
+    public void validatePasswordResetToken(Long id, String token, HttpServletRequest request) throws TokenExpiredException, InvalidTokenException {
+        Optional<PasswordResetToken> passTokenOpt = passwordTokenRepository.findByToken(token);
+        PasswordResetToken passToken = passTokenOpt.isPresent() ? passTokenOpt.get() : null;
+
+        if ((passToken == null) || !passToken.isValidUserToken(id)) {
+            throw new InvalidTokenException();
+        } else if (passToken.isExpired()) {
+            throw new TokenExpiredException();
+        } else {
+            User user = passToken.getUser();
+            Authentication auth = new UsernamePasswordAuthenticationToken(user,
+                    null,
+                    Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+        }
+    }
+
 
     /**
      * Activate or Deactivate User
@@ -123,6 +223,32 @@ public class UserServiceImpl implements UserService {
         } else {
             MastroLogUtils.info(UserService.class, "User Id null");
         }
+    }
+
+
+    /**
+     * Enable user
+     *
+     * @param user
+     */
+    public void enableUser(User user) {
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    /**
+     * Method to save password
+     *
+     * @param user
+     * @param password
+     */
+    public void saveChangedPassword(User user, String password) {
+
+        user.setPassword(password);
+        user.encryptPassword();
+        userRepository.save(user);
+        enableUser(user);
+
     }
 
     /**

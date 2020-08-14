@@ -9,4 +9,7 @@ public class MastroEntityException extends Exception {
     }
 
 
+    public MastroEntityException() {
+
+    }
 }

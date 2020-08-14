@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Dear <span th:text="${recipientName}"></span>
+<p th:text="${text}"></p>
+Regards,
+<p>
+    <em th:text="${senderName}"></em> <br/>
+</p>
+</body>
+</html>

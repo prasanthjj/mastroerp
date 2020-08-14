@@ -1,14 +1,14 @@
 package com.erp.mastro.controller;
 
-import com.erp.mastro.common.MastroApplicationUtils;
+import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
-import com.erp.mastro.config.UserDetailsServiceImpl;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Employee;
 import com.erp.mastro.entities.Roles;
 import com.erp.mastro.entities.User;
+import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.EmployeeService;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,19 +32,26 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
+    private MailUtils mailUtils;
+
+    @Autowired
     PasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     BranchService branchService;
+
     @Autowired
     RolesService rolesService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     EmployeeService employeeService;
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+
     @Autowired
     HttpSession session;
+
 
     /**
      * Method to login
@@ -65,9 +71,7 @@ public class UserController {
      * @return to the login page
      */
     @RequestMapping("/login")
-    public String login(Map<String, Object> model) {
-        return "views/login";
-    }
+    public String login(Map<String, Object> model) { return "views/login"; }
 
     /**
      * Method to view dashboard
@@ -76,11 +80,11 @@ public class UserController {
      * @return selected branch and branch list
      */
     @RequestMapping("/home")
-    public String home(Model model) {
+    public String home(Model model ) {
         User userDetails = getCurrentUser();
         List<Branch> branchList = new ArrayList<>();
         String currentBranch = null;
-        if (null != userDetails) {
+        if(null != userDetails) {
             for (Branch branch : userDetails.getBranch()) {
                 branchList.add(branch);
             }
@@ -88,16 +92,10 @@ public class UserController {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
         }
-        Set<User> userListCount = userService.getAllUsers().stream()
-                .filter(userData -> (null != userData))
-                .filter(userData -> (false != userData.isEnabled()))
-                .filter(userData -> (false != userData.isLoggedIn()))
-                .collect(Collectors.toSet());
 
-        session.setAttribute("ActiveUser", userListCount.size());
-        session.setAttribute("lastLoginDate", userDetails.getLastLogin());
         session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
+
         return "views/dashboard";
     }
 
@@ -109,12 +107,12 @@ public class UserController {
      * @return selected branch name
      */
     @PostMapping("/admin/selectBranchName")
-    public String getBranchName(Model model, @Valid Long branchId) {
+    public String getBranchName( Model model, @Valid Long branchId) {
         Branch branch = branchService.getBranchById(branchId);
         String branchName = branch.getBranchName();
         User userDetails = getCurrentUser();
-        userService.saveCurrentBranch(branchId, userDetails);
-        model.addAttribute("branchName", branchName);
+        userService.saveCurrentBranch(branchId,userDetails);
+        model.addAttribute("branchName",branchName);
         return "redirect:/home";
     }
 
@@ -124,9 +122,7 @@ public class UserController {
      * @return to the access-denied page
      */
     @GetMapping("/error/accessDenied")
-    public String accessDenied() {
-        return "views/error/access-denied";
-    }
+    public String accessDenied() { return "views/error/access-denied"; }
 
     /**
      * Method to add new User
@@ -141,14 +137,14 @@ public class UserController {
 
             List<String> emailList = new ArrayList<String>();
             List<Employee> employeesList = employeeService.getAllEmployees();
-            for (Employee employee : employeesList) {
+            for(Employee employee : employeesList) {
                 String email = employee.getEmail();
                 emailList.add(email);
             }
 
             List<Employee> employeeList = employeeService.getAllEmployees().stream()
                     .filter(employeData -> (null != employeData))
-                    .filter(employeData -> (null == employeData.getUser()))
+                    .filter(employeData -> (null ==  employeData.getUser()))
                     .sorted(Comparator.comparing(
                             Employee::getId).reversed())
                     .collect(Collectors.toList());
@@ -161,7 +157,7 @@ public class UserController {
             }
             List<Branch> branchList = new ArrayList<>();
             for (Branch branch : branchService.getAllBranch()) {
-                if (branch.getBranchDeleteStatus() != 1) {
+                if(branch.getBranchDeleteStatus() != 1) {
                     branchList.add(branch);
                 }
             }
@@ -174,10 +170,10 @@ public class UserController {
             model.addAttribute("addUserForm", new UserModel());
             model.addAttribute("adminModule", "adminModule");
             model.addAttribute("userTab", "user");
-            model.addAttribute("usersList", userList);
-            model.addAttribute("employeesList", employeeList);
-            model.addAttribute("roleList", rolesList);
-            model.addAttribute("branchList", branchList);
+            model.addAttribute("usersList",userList);
+            model.addAttribute("employeesList",employeeList);
+            model.addAttribute("roleList",rolesList);
+            model.addAttribute("branchList",branchList);
             return "views/user_master";
         } catch (Exception e) {
             MastroLogUtils.error(UserController.class, "Error occured while adding user : {}");
@@ -194,19 +190,17 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("ranjit@halo.ae");
-        user.setEmail("ranjit@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("ranjit"));
+        user.setUserName("soumyar@halo.ae");
+        user.setEmail("soumyar@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("password"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
         Roles roles = new Roles();
         roles.setRoleName("ROLE_ADMIN");
         rolesSet.add(roles);
-        user.setRoles(rolesSet);
-        user.setCreatedDate(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
-        user.setCreatedBy(user.getEmail());
 
+        user.setRoles(rolesSet);
         userService.savUser(user);
     }
 
@@ -219,7 +213,7 @@ public class UserController {
      * @return saved User details
      */
     @PostMapping(value = "/admin/registerUser")
-    public String register(@ModelAttribute("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) {
+    public String register(@ModelAttribute("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) throws MastroEntityException {
         MastroLogUtils.info(UserController.class, "Going to save User :{}");
         try {
             userService.saveOrUpdateUser(userModel, request);
@@ -231,6 +225,7 @@ public class UserController {
 
     }
 
+
     /**
      * Method for autocomplete employee email address
      *
@@ -241,7 +236,7 @@ public class UserController {
     public GenericResponse EmployeeAutoComplete() {
         List<String> emails = new ArrayList<String>();
         List<Employee> employees = employeeService.getAllEmployees();
-        for (Employee employee : employees) {
+        for(Employee employee : employees) {
             String email = employee.getEmail();
             emails.add(email);
         }
@@ -264,11 +259,11 @@ public class UserController {
         MastroLogUtils.info(UserController.class, "Going to edit User :{}" + userId);
         User userDetails = userService.getUserById(userId);
         Set<UserModel.UserModelEdit> userModelEdits = new HashSet<>();
-        for (Roles roles : userDetails.getRoles()) {
-            UserModel.UserModelEdit userEditModel = new UserModel.UserModelEdit();
-            userEditModel.setRole(roles.getRoleName());
-            userEditModel.setId(roles.getId());
-            userModelEdits.add(userEditModel);
+         for (Roles roles : userDetails.getRoles() ){
+                UserModel.UserModelEdit userEditModel = new  UserModel.UserModelEdit();
+                userEditModel.setRole(roles.getRoleName());
+                userEditModel.setId(roles.getId());
+                userModelEdits.add(userEditModel);
         }
         Set<Roles> rolesList = new HashSet<>();
         for (Roles roles : rolesService.getAllRoles()) {
@@ -277,8 +272,8 @@ public class UserController {
             }
         }
         Set<UserModel.UserModelEdit> rolemodelEdits = new HashSet<>();
-        for (Roles roles : rolesList) {
-            UserModel.UserModelEdit rolemodelEdit = new UserModel.UserModelEdit();
+        for (Roles roles : rolesList ){
+            UserModel.UserModelEdit rolemodelEdit = new  UserModel.UserModelEdit();
             rolemodelEdit.setRole(roles.getRoleName());
             rolemodelEdit.setId(roles.getId());
             rolemodelEdits.add(rolemodelEdit);
@@ -290,14 +285,14 @@ public class UserController {
             }
         }
         Set<UserModel.UserModelBranchEdit> branchmodelEdits = new HashSet<>();
-        for (Branch branch : branchList) {
-            UserModel.UserModelBranchEdit branchmodelEdit = new UserModel.UserModelBranchEdit();
+        for (Branch branch : branchList){
+            UserModel.UserModelBranchEdit branchmodelEdit = new  UserModel.UserModelBranchEdit();
             branchmodelEdit.setBranchname(branch.getBranchName());
             branchmodelEdit.setId(branch.getId());
             branchmodelEdits.add(branchmodelEdit);
         }
         Set<UserModel.UserModelBranchEdit> userModelBranchEdits = new HashSet<>();
-        for (Branch branch : userDetails.getBranch()) {
+        for (Branch branch : userDetails.getBranch() ){
             UserModel.UserModelBranchEdit editBranch = new UserModel.UserModelBranchEdit();
             editBranch.setBranchname(branch.getBranchName());
             editBranch.setId(branch.getId());
@@ -328,13 +323,13 @@ public class UserController {
             }
         }
 
-        return new GenericResponse(true, "get User details")
-                .setProperty("userId", userDetails.getId())
-                .setProperty("email", userDetails.getEmail())
-                .setProperty("roles", userModelEdits)
-                .setProperty("fullroles", rolemodelEdits)
-                .setProperty("fullbranch", branchmodelEdits)
-                .setProperty("branch", userModelBranchEdits);
+        return new GenericResponse(true,"get User details")
+                .setProperty("userId",userDetails.getId())
+                .setProperty("email",userDetails.getEmail())
+                .setProperty("roles",userModelEdits)
+                .setProperty("fullroles",rolemodelEdits)
+                .setProperty("fullbranch",branchmodelEdits)
+                .setProperty("branch",userModelBranchEdits);
     }
 
     /**
@@ -351,8 +346,8 @@ public class UserController {
         MastroLogUtils.info(UserController.class, "Going to Activate or Deactivate User :{}" + userId);
         User userDetails = userService.getUserById(userId);
         userService.activateOrDeactivateUser(userId);
-        return new GenericResponse(true, "get User details")
-                .setProperty("userId", userDetails.getId());
+        return new GenericResponse(true,"get User details")
+                .setProperty("userId",userDetails.getId());
     }
 
     /**
@@ -389,7 +384,7 @@ public class UserController {
     public User getCurrentUser() {
         User userDetails = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.isAuthenticated()) {
+        if(auth.isAuthenticated()) {
             CurrentUserDetails currentUser = (CurrentUserDetails) auth.getPrincipal();
             userDetails = userService.findByEmail(currentUser.getUser().getEmail());
         }
