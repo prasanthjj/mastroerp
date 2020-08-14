@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
@@ -21,6 +22,18 @@ public class User extends Auditable<String> {
     @Column(name = "user_name")
     protected String userName;
 
+    @Column(name = "created_by")
+    protected String createdBy;
+
+    @Column(name = "created_date")
+    protected Date createdDate;
+
+    @Column(name = "last_modified_by")
+    protected String lastModifiedBy;
+
+    @Column(name = "last_modified_date")
+    protected Date lastModifiedDate;
+
     @Column(name = "password")
     protected String password;
 
@@ -29,6 +42,15 @@ public class User extends Auditable<String> {
 
     @Column(name = "enabled", nullable = false)
     protected boolean enabled;
+
+    @Column(name = "current_login")
+    protected Date currentLogin;
+
+    @Column(name = "last_login")
+    protected Date lastLogin;
+
+    @Column(name = "logged_in", nullable = false)
+    protected boolean loggedIn;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

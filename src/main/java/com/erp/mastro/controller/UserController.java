@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MailUtils;
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -84,7 +86,7 @@ public class UserController {
         User userDetails = getCurrentUser();
         List<Branch> branchList = new ArrayList<>();
         String currentBranch = null;
-        if(null != userDetails) {
+        if (null != userDetails) {
             for (Branch branch : userDetails.getBranch()) {
                 branchList.add(branch);
             }
@@ -92,7 +94,14 @@ public class UserController {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
         }
+        Set<User> userListCount = userService.getAllUsers().stream()
+                .filter(userData -> (null != userData))
+                .filter(userData -> (false != userData.isEnabled()))
+                .filter(userData -> (false != userData.isLoggedIn()))
+                .collect(Collectors.toSet());
 
+        session.setAttribute("ActiveUser", userListCount.size());
+        session.setAttribute("lastLoginDate", userDetails.getLastLogin());
         session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
 
@@ -201,6 +210,9 @@ public class UserController {
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);
+        user.setCreatedDate(MastroApplicationUtils.converttoTimestamp(LocalDateTime.now()));
+        user.setCreatedBy(user.getEmail());
+
         userService.savUser(user);
     }
 

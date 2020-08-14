@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService {
         Map emailMap = new HashMap();
         emailMap.put("url", url);
         try {
-            mailUtils.sendMessageUsingThymeleafTemplate("ssoumir04@gmail.com", emailMap, Constants.TEMPLATE_SAMPLE);
+            mailUtils.sendMessageUsingThymeleafTemplate("ssoumir04@gmail.com", "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

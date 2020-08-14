@@ -883,6 +883,8 @@ $("#indtype").click(function (e) {
 
                             $('#pricelistId').val(data.data.pricelistId);
                             $('#pricelistName').val(data.data.pricelistName);
+                             $('#categoryType').text(data.data.categoryType);
+                             $('#partyType').text(data.data.partyType);
                             $('#discountPercentage').val(data.data.discountPercentage);
                             $('#allowedPriceDevPerUpper').val(data.data.allowedPriceDevPerUpper);
                             $('#allowedPriceDevPerLower').val(data.data.allowedPriceDevPerLower);
