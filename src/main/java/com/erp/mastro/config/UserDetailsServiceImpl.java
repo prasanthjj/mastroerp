@@ -44,17 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public void setDataMap(Map<String, Object> dataMap) {
 		this.dataMap = dataMap;
 	}
-
-	public Date getCurrentLoginDate(Long id) {
-		User user = userRepository.findById(id).get();
-		user.setLastLogin(user.getCurrentLogin());
-		user.setLoggedIn(true);
-		user.setCurrentLogin(new Date());
-		userRepository.save(user);
-		return user.getCurrentLogin();
-	}
     public Date getCurrentLoginDate(User user) {
-
         user.setLastLogin(user.getCurrentLogin());
         user.setLoggedIn(true);
         user.setCurrentLogin(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
