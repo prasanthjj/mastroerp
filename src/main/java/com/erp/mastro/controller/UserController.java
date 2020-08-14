@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.config.UserDetailsServiceImpl;
 import com.erp.mastro.custom.responseBody.GenericResponse;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -198,8 +200,10 @@ public class UserController {
         Roles roles = new Roles();
         roles.setRoleName("ROLE_ADMIN");
         rolesSet.add(roles);
-
         user.setRoles(rolesSet);
+        user.setCreatedDate(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
+        user.setCreatedBy(user.getEmail());
+
         userService.savUser(user);
     }
 

@@ -1,5 +1,7 @@
 package com.erp.mastro.common;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -26,6 +28,11 @@ public class MastroApplicationUtils {
         } else {
             return df.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
         }
+    }
+
+    public static Timestamp converttoTimestamp(LocalDateTime date) {
+        Timestamp timestamp = Timestamp.valueOf(date);
+        return timestamp;
     }
 
 }
