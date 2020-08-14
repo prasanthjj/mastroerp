@@ -82,7 +82,7 @@ public class ResetPasswordController {
             try {
                 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 userService.saveChangedPassword(user, resetModel.getPassword());
-                return "redirect:/updatePassword?changePasswordSuccess";
+                return "redirect:/login";
             } catch (Exception e) {
                 return "redirect:/updatePassword";
             }
