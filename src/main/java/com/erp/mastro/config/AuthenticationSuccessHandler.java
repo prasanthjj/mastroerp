@@ -72,6 +72,7 @@ class MastroAuthenticationSuccessHandler implements AuthenticationSuccessHandler
         roleTargetUrlMap.put("ROLE_USER", "/homepage.html");
         roleTargetUrlMap.put("ROLE_ADMIN", "/home");
 
+
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();

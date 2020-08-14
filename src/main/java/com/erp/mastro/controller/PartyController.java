@@ -221,14 +221,7 @@ public class PartyController {
             for (CreditDetails creditDetails : partyService.getPartyById(partyId).getCreditDetails()) {
                 branches.add(creditDetails.getBranch());
             }
-            for (Branch branch : branchList) {
-                for (Branch branch1 : branches) {
-                    if (branch.getId().equals(branch1.getId())) {
-                        branchList.remove(branch1);
-                    }
-                }
-            }
-            Iterator<Branch> finalSet = branchList.iterator();
+          Iterator<Branch> finalSet = branchList.iterator();
             for (Iterator<Branch> it = finalSet; it.hasNext(); ) {
                 Branch fullModel = it.next();
                 if (fullModel != null) {

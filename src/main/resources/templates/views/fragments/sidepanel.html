@@ -6,12 +6,7 @@
                 <div class="dropdown profile-element">
                     <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Admin @  <span th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()!=null}">
-<span th:text="${#authentication.getPrincipal().getUser().getUserSelectedBranch().getCurrentBranch().getBranchName()}">
-
-</span>
-
-</span></span>
+                        <span class="block m-t-xs font-bold">Admin @  <span th:text="${session.selectedBranch}"></span>></span>
                         <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
