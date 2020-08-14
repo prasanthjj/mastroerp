@@ -34,27 +34,27 @@ public class MailUtils {
         emailSender.send(message);
     }
 
-    private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
+    private void sendHtmlMessage(String to, String htmlBody) throws MessagingException {
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setFrom("halotechnologysolution@gmail.com");
         helper.setTo(to);
-        helper.setSubject(subject);
+        // helper.setSubject(subject);
         helper.setText(htmlBody, true);
         emailSender.send(message);
 
     }
 
     public void sendMessageUsingThymeleafTemplate(
-            String to, String subject, Map<String, Object> templateModel, String emailTemplate)
+            String to, Map<String, Object> templateModel, String emailTemplate)
             throws MessagingException {
 
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(templateModel);
         String htmlBody = thymeleafTemplateEngine.process(emailTemplate, thymeleafContext);
 
-        sendHtmlMessage(to, subject, htmlBody);
+        sendHtmlMessage(to, htmlBody);
     }
 
 }

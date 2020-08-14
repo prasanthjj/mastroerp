@@ -3,6 +3,7 @@ package com.erp.mastro.entities;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -48,5 +49,13 @@ public class User extends Auditable<String> {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    public User encryptPassword() {
+        if (this.password != null && !this.password.isEmpty()) {
+            this.password = new BCryptPasswordEncoder().encode(this.password);
+        }
+        return this;
+    }
+
 
 }

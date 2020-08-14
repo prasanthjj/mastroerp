@@ -2,13 +2,13 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroLogUtils;
-import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Employee;
 import com.erp.mastro.entities.Roles;
 import com.erp.mastro.entities.User;
+import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.EmployeeService;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -96,16 +95,6 @@ public class UserController {
 
         session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
-
-        try {
-            Map emailMap = new HashMap();
-            emailMap.put("recipientName", userDetails.getEmail());
-            emailMap.put("text", "this is email text-Welcome to " + currentBranch);
-            emailMap.put("senderName", "sender");
-            mailUtils.sendMessageUsingThymeleafTemplate("prasanthjj@gmail.com", "Test email from Mastro", emailMap, Constants.TEMPLATE_SAMPLE);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
 
         return "views/dashboard";
     }
@@ -201,9 +190,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("gloria@halo.ae");
-        user.setEmail("gloria@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("gloria"));
+        user.setUserName("soumyar@halo.ae");
+        user.setEmail("soumyar@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("password"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
@@ -224,10 +213,10 @@ public class UserController {
      * @return saved User details
      */
     @PostMapping(value = "/admin/registerUser")
-    public String register(@ModelAttribute ("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) {
+    public String register(@ModelAttribute("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) throws MastroEntityException {
         MastroLogUtils.info(UserController.class, "Going to save User :{}");
         try {
-            userService.saveOrUpdateUser(userModel,request);
+            userService.saveOrUpdateUser(userModel, request);
             return "redirect:/admin/addUser";
         } catch (Exception e) {
             MastroLogUtils.error(UserController.class, "Error occured while registering user : {}", e);
