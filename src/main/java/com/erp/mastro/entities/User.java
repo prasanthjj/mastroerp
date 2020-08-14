@@ -51,7 +51,6 @@ public class User extends Auditable<String> {
     @Column(name = "logged_in", nullable = false)
     protected boolean loggedIn;
 
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",

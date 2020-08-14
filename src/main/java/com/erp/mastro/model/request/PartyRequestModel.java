@@ -31,7 +31,6 @@ public class PartyRequestModel {
     private List<CreditDetailsModel> creditDetailsModelList = new ArrayList<>();
     private Long industryid;
 
-
     public PartyRequestModel() {
 
     }
@@ -61,7 +60,6 @@ public class PartyRequestModel {
         }
     }
 
-
     public Date getPartyDate() {
         return partyDate;
     }
@@ -77,7 +75,6 @@ public class PartyRequestModel {
     public void setSpartyDate(String spartyDate) {
         this.spartyDate = spartyDate;
     }
-
 
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
@@ -116,7 +113,6 @@ public class PartyRequestModel {
 
     }
 
-
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class BillingDetailsModel {
@@ -133,7 +129,6 @@ public class PartyRequestModel {
         private String telephoneNo;
         private String contactPersonName;
         private String emailId;
-
 
         public BillingDetailsModel() {
 
@@ -155,7 +150,6 @@ public class PartyRequestModel {
         }
 
     }
-
 
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
@@ -183,7 +177,6 @@ public class PartyRequestModel {
 
     }
 
-
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class CreditDetailsModel {
@@ -210,7 +203,6 @@ public class PartyRequestModel {
             this.branchId = creditDetails.getBranch().getId();
             this.branchName = creditDetails.getBranch().getBranchName();
         }
-
 
     }
 

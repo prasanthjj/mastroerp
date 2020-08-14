@@ -168,7 +168,6 @@ public class PartyServiceImpl implements PartyService {
                     party.setPartyDate(date1);
                 }
 
-
                 partyRepository.save(party);
 
                 MastroLogUtils.info(PartyService.class, "Updated" + party.getPartyName() + "successfully");
@@ -359,7 +358,6 @@ public class PartyServiceImpl implements PartyService {
      * @return
      */
 
-
     @Transactional(rollbackOn = {Exception.class})
     public Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchIds, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party) {
 
@@ -380,7 +378,6 @@ public class PartyServiceImpl implements PartyService {
         removeBlankCreditDetails(creditDetailsSet);
         return creditDetailsSet;
     }
-
 
     /**
      * save and edit Party Products

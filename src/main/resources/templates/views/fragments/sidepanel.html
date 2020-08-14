@@ -45,10 +45,6 @@
                     <li th:unless="${rolesTab== 'roles'}"><a th:href="@{/admin/getRole}">Role</a></li>
                     <li th:if="${branchTab== 'branch'}" class="active"><a th:href="@{/admin/getBranch}">Branch</a></li>
                     <li th:unless="${branchTab== 'branch'}"><a th:href="@{/admin/getBranch}">Branch</a></li>
-                    <li th:if="${roleAccessTab== 'roleAccess'}" class="active"><a th:href="@{/admin/getRoleAccess}">Role
-                        Access Rights</a></li>
-                    <li th:unless="${roleAccessTab== 'roleAccess'}"><a th:href="@{/admin/getRoleAccess}">Role Access
-                        Rights</a></li>
 
                     <li th:if="${userTab== 'user'}" class="active"><a th:href="@{/admin/addUser}">User</a></li>
                     <li th:unless="${userTab== 'user'}"><a th:href="@{/admin/addUser}">User</a></li>
@@ -64,6 +60,9 @@
                 <a href="#"><i class="fa fa-barcode"></i> <span class="nav-label">Master</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
+                    <li th:if="${productTab== 'product'}" class="active"><a th:href="@{/master/getProduct}">Product</a>
+                    </li>
+                    <li th:unless="${productTab== 'product'}"><a th:href="@{/master/getProduct}">Product</a></li>
                     <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:if="${catalogTab== 'catalog'}" class="active"><a th:href="@{/master/getCatalog}">Category</a>
@@ -71,15 +70,19 @@
                     <li th:unless="${catalogTab== 'catalog'}"><a th:href="@{/master/getCatalog}">Category</a></li>
                     <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brand</a></li>
                     <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brand</a></li>
-                    <li><a href="#">Product</a></li>
+
                     <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
-                    <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${itemPartyTab == 'itemParty'}" class="active"><a href="#"
+                                                                                 th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
+                    <li th:unless="${itemPartyTab == 'itemParty'}"><a href="#" th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
                     <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
-                    <li><a href="#">Item Party Rate Relation</a></li>
+
                     <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
                     </li>
                     <li th:unless="${assetTab== 'asset'}"><a th:href="@{/master/getAssetList}">Assets</a></li>
@@ -93,7 +96,9 @@
                 <a href="#"><i class="fa fa-barcode"></i> <span class="nav-label">Master</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-
+                    <li th:if="${productTab== 'product'}" class="active"><a th:href="@{/master/getProduct}">Product</a>
+                    </li>
+                    <li th:unless="${productTab== 'product'}"><a th:href="@{/master/getProduct}">Product</a></li>
                     <li th:if="${hsnTab== 'hsn'}" class="active"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:unless="${hsnTab== 'hsn'}"><a th:href="@{/master/getHSN}">HSN</a></li>
                     <li th:if="${catalogTab== 'catalog'}" class="active"><a th:href="@{/master/getCatalog}">Category</a>
@@ -101,21 +106,24 @@
                     <li th:unless="${catalogTab== 'catalog'}"><a th:href="@{/master/getCatalog}">Category</a></li>
                     <li th:if="${brandTab== 'brand'}" class="active"><a th:href="@{/master/getBrand}">Brand</a></li>
                     <li th:unless="${brandTab== 'brand'}"><a th:href="@{/master/getBrand}">Brand</a></li>
-                    <li><a href="#">Product</a></li>
                     <li th:if="${partyTab == 'party'}" class="active"><a th:href="@{/master/getPartys}">Party</a></li>
                     <li th:unless="${partyTab == 'party'}"><a th:href="@{/master/getPartys}">Party</a></li>
-                    <li><a href="item_party_relation_master.html">Item Party Rate Relation</a></li>
+                    <li th:if="${itemPartyTab == 'itemParty'}" class="active"><a href="#"
+                                                                                 th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
+                    <li th:unless="${itemPartyTab == 'itemParty'}"><a href="#" th:href="@{/master/getItemPartys}">Item
+                        Party Rate Relation</a></li>
                     <li th:if="${priceListTab== 'priceList'}" class="active"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
                     <li th:unless="${priceListTab== 'priceList'}"><a th:href="@{/master/getPriceListMaster}">
                         Price list </a></li>
-                    <li><a href="#">Item Party Rate Relation</a></li>
 
                     <li th:if="${assetTab== 'asset'}" class="active"><a th:href="@{/master/getAssetList}">Assets</a>
                     </li>
                     <li th:unless="${assetTab== 'asset'}"><a th:href="@{/master/getAssetList}">Assets</a></li>
-
                 </ul>
+                    </li>
+
             </li>
 
             <li>
@@ -138,10 +146,11 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Sales</span><span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Sales</span><span
+                        class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li> <a href="#">Sales Order</a></li>
-                    <li> <a href="#">Invoice</a></li>
+                    <li><a href="#">Sales Order</a></li>
+                    <li><a href="#">Invoice</a></li>
                 </ul>
             </li>
             <li>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Item </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">-->
+
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/dropzone/basic.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dropzone/basic.css}">
+    <link href="../resources/css/plugins/dropzone/dropzone.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dropzone/dropzone.css}">
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Item </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="item_master.html">Item List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Item</strong>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <form id="createItemForm" th:action="@{/master/saveProduct}" th:object="${productForm}"
+                                  name="productForm" method="post">
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group  row"><label
+                                                class="col-sm-12 col-form-label">Images</label>
+
+                                            <div class="col-sm-12">
+                                                <div action="#" class="dropzone" id="dropzoneForm">
+                                                    <div class="fallback">
+                                                        <input name="file" type="file" multiple/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-8">
+
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">HSN
+                                                    Code <i class="fa fa-asterisk"></i></label>
+
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control m-b selectHsnCode" name="hsnId">
+                                                            <option value="">select</option>
+                                                            <option th:each="hsnList: ${hsnList}"
+                                                                    th:value="${hsnList.id}"
+                                                                    th:text="${hsnList.hsnCode}"></option>
+                                                        </select></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Brand
+                                                    <i class="fa fa-asterisk"></i></label>
+
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control m-b selectBrandCode" name="brandId">
+                                                            <option value="">select</option>
+                                                            <option th:each="brandList: ${brandList}"
+                                                                    th:value="${brandList.id}"
+                                                                    th:text="${brandList.brandName}"></option>
+                                                        </select></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group  row"><label class="col-sm-6 col-form-label">Loading
+                                                    Charge</label>
+
+                                                    <div class="col-sm-6"><input type="text" class="form-control"
+                                                                                 name="loadingCharge"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group  row">
+                                                    <label class="col-sm-2 col-form-label">Category<i
+                                                            class="fa fa-asterisk"></i></label>
+                                                    <button type="button" class="btn btn-primary col-sm-3   "
+                                                            id="catalogboxbtn">
+                                                        Choose Category
+                                                    </button>
+                                                    <div class="col-sm-7">
+                                                        <input type="hidden" id="subbcatalogId" name="subCategoryId">
+                                                        <h3><span id="cateName"></span>/
+                                                            <span id="subCatessNames">Category</span></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Inspection
+                                                    Type</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control m-b" name="inspectionType">
+                                                            <option value="">Select</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Guarantee</label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="guarantee"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Warranty</label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="warranty"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">dimension<i
+                                                        class="fa fa-asterisk"></i></label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="dimension"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Colour<i
+                                                        class="fa fa-asterisk"></i></label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="colour"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Property
+                                                    Size</label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="propertySize"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Base
+                                                    UOM <i class="fa fa-asterisk"></i></label>
+                                                    <div class="col-sm-8"><select class="form-control m-b"
+                                                                                  name="baseUOM">
+                                                        <option value="">Select</option>
+                                                        <option th:each="uomList: ${uomList}"
+                                                                th:value="${uomList.id}"
+                                                                th:text="${uomList.UOM}"></option>
+                                                    </select></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Base
+                                                    Quantity <i class="fa fa-asterisk"></i></label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="baseQuantity"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group  row"><label class="col-sm-4 col-form-label">Base
+                                                    Price <i class="fa fa-asterisk"></i></label>
+                                                    <div class="col-sm-8"><input type="text" class="form-control"
+                                                                                 name="basePrice"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="uomBox">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 text-right">
+                                                <button class="btn btn-primary dim addUom" type="button">
+                                                    <i class="fa fa-plus-square"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="catalogBox" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close closecatalogbox" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">Catalog</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12 catlog_scroll_box">
+                    <div id="nestable-menu">
+                        <button type="button" data-action="expand-all" class="btn btn-white btn-sm">Expand All</button>
+                        <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">Collapse All
+                        </button>
+                    </div>
+                    <div class="dd" id="nestable2">
+                        <li class="dd-item" data-id="1" th:each="catalogObj,iterator:${catalogList}">
+                            <div class="dd-handle Catalog-bg">
+                                <span class="float-right"></span>
+                                <span class="label label-info"><i class="fa fa-plus"></i></span><span
+                                    th:text="${catalogObj.catalogName}"></span>
+                            </div>
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">
+                                        <span class="float-right catalogIcon"></span>
+                                        <span class="label label-info "><i class="fa fa-plus"></i></span> <strong
+                                            class="text-success">Category </strong>
+                                    </div>
+                                </li>
+                                <span th:each="categoryObj,iterator:${catalogObj.categories}">
+                                    <li class="dd-item" data-id="1" th:if="${categoryObj.categoryDeleteStatus== 0}">
+                                        <div class="dd-handle">
+                                           <!-- <span class="float-right  catalogIcon">
+                                                <input type="radio" class="catalogSelect" value="aaa" id="asd" name="catalogSelect">
+                                            </span>-->
+                                            <span class="label label-info"><i class="fa fa-cog"></i></span>  <span
+                                                th:text="${categoryObj.categoryName}">Angles & Channels</span>
+                                        </div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="3">
+                                                <div class="dd-handle">
+                                                    <span class="float-right catalogIcon">
+                                                        
+                                                    </span>
+                                                    <span class="label label-info"><i
+                                                            class="fa fa-plus"></i></span><strong class="text-success">Sub Category</strong>
+                                                </div>
+                                            </li>
+                                             <span th:each="subcategoryObj,iterator:${categoryObj.subCategories}">
+                                            <li class="dd-item" data-id="2"
+                                                th:if="${subcategoryObj.subCategoryDeleteStatus== 0}">
+                                                <div class="dd-handle">
+                                                    <span class="float-right  catalogIcon">
+                                                        <input type="radio" class="catalogSelect"
+                                                               th:value="${subcategoryObj.id}" id="qwe"
+                                                               th:data-catsubsids="${subcategoryObj.id}"
+                                                               name="catalogSelect">
+                                                    </span>
+                                                    <span class="label label-info"><i
+                                                            class="fa fa-cog"></i></span>    <span
+                                                        th:text="${subcategoryObj.subCategoryName}">Angles</span>
+                                                </div>
+                                            </li>
+                                             </span>
+                                        </ol>
+                                    </li>
+                                    </span>
+                            </ol>
+                        </li>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                 <button type="button" id="itemSubCategory" class="btn btn-primary">Save</button>
+             </div>-->
+        </div>
+    </div>
+</div>
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal inmodal" id="addItemToParty" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="addItemToPartyForm" action="item_party_relation_master.html">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add To Party</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <h3 class="text-center">Do you want add party to this item</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary">YES</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<span id="productDocsUploadUrl" th:data-url="@{/master/productImageSave}"></span>
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<!-- Nestable List -->
+<script src="../resources/js/plugins/nestable/jquery.nestable.js"
+        th:src="@{/resources/js/plugins/nestable/jquery.nestable.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Select2 -->
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+<!-- DROPZONE -->
+<script src="../resources/js/plugins/dropzone/dropzone.js"
+        th:src="@{/resources/js/plugins/dropzone/dropzone.js}"></script>
+
+<!-- Tags Input -->
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
+        th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/mastro/nestable.js" th:src="@{/resources/js/mastro/nestable.js}"></script>
+
+<script>
+$(document).ready(function(){
+
+$("#catalogboxbtn").click(function(){
+    $('#catalogBox').toggle();
+    $('#catalogBox').css({"background-color": "rgb(0 0 0 / 35%)"});
+  });
+     $("body").on('click','.catalogSelect',function (e) {
+
+      var subCatId=$(this).data('catsubsids');
+
+
+       $('#catalogBox').toggle();
+
+  $('#subbcatalogId').val(subCatId);
+  	$.ajax({
+      url: '/master/getSubcategoryDetails',
+      type: 'GET',
+      dataType : 'json',
+      data: { 'subcategoryId':subCatId},
+
+      success: function(data){
+               if(data.success) {
+
+                            $('#cateName').text(data.data.categoryName);
+                            $('#subCatessNames').text(data.data.subCatName);
+
+
+                                }
+
+                           },
+
+  error: function(jqXHR, textStatus)
+   {
+   alert('Error Occured');
+    }
+       });
+
+      });
+       });
+
+      $(document).on('click', '.closecatalogbox', function() {
+     $('#catalogBox').toggle();
+});
+
+
+var productDocsUploadUrl = $('#productDocsUploadUrl').data('url');
+$("#dropzoneForm").dropzone({ url: productDocsUploadUrl});
+
+
+</script>
+</body>
+</html>

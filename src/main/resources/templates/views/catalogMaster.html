@@ -44,7 +44,20 @@
 
                 </ol>
             </div>
-            <div lang="en" th:replace="views/fragments/ipaddress :: div">   </div>
+            <div class="col-lg-5 ">
+
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+
+            </div>
         </div>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
@@ -152,16 +165,21 @@
                                                                     class="text-success">Product </strong>
                                                             </div>
                                                         </li>
-                                                        <!--  <li class="dd-item" data-id="4">
-                                                              <div class="dd-handle">
-                                                                  <span class="float-right  catalogIcon">
+                                                        <span th:each="productObj,iterator:${subcategoryObj.productSet}">
+                                                      <span th:if="${productObj.enabled} == true">
+                                                        <li class="dd-item" data-id="4">
+                                                            <div class="dd-handle">
+                                                                <span class="float-right  catalogIcon">
 
-                                                                       </span>
-                                                                  <span class="label label-info"><i class="fa fa-cog"></i></span>
-                                                                  Angles 25x6 (1x1/4)
-                                                              </div>
+                                                                     </span>
+                                                                <span class="label label-info"><i class="fa fa-cog"></i></span>
+                                                             <a th:href="@{/master/viewProduct?productId=__${productObj.id}__}">  <span
+                                                                     th:text="${productObj.productName}">Angles 25x6 (1x1/4)</span></a>
+                                                            </div>
 
-                                                          </li>-->
+                                                        </li>
+                                                      </span>
+                                                        </span>
                                                     </ol>
                                                 </li>
                                                 </span>
@@ -422,8 +440,6 @@
         </form>
     </div>
 </div>
-
-<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>

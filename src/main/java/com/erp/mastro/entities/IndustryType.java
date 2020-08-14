@@ -29,5 +29,4 @@ public class IndustryType extends Auditable<String> {
     @Column(name = "delete_status", nullable = false)
     private int industryTypeDeleteStatus;
 
-
 }

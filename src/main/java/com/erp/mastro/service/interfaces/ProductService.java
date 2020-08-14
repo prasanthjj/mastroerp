@@ -4,8 +4,11 @@ import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.ProductUOM;
 import com.erp.mastro.entities.SubCategory;
+import com.erp.mastro.exception.FileStoreException;
+import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.ProductRequestModel;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +20,7 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    void saveOrUpdateProduct(ProductRequestModel productRequestModel);
+    Product saveOrUpdateProduct(ProductRequestModel productRequestModel) throws ModelNotFoundException, FileStoreException;
 
     Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product);
 
@@ -25,5 +28,10 @@ public interface ProductService {
 
     void saveOrUpdateProductPartys(Product product, Set<Party> parties);
 
-    void deleteProductDetails(Long id);
+    void enableOrDisableProduct(Long id);
+
+    void productUploasS3(final File folder, String sproductId);
+
+    void deleteProductImage(Long id, String fileName);
+
 }

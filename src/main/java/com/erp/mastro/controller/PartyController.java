@@ -40,7 +40,6 @@ public class PartyController {
     @Autowired
     private PartyRepository partyRepository;
 
-
     /**
      * The method for get the full party list
      *
@@ -182,7 +181,6 @@ public class PartyController {
             String[] stringinterestRates = ArrayUtils.addAll(interestRates, interestRates1);
             String[] stringremarks = ArrayUtils.addAll(remarks, remarks1);
 
-
             partyService.saveOrUpdateParty(partyRequestModel, branchIds, stringcreditlimit, stringdays, stringworthiness, stringinterestRates, stringremarks);
             return "redirect:/master/getPartys";
         } catch (ModelNotFoundException e) {
@@ -221,7 +219,7 @@ public class PartyController {
             for (CreditDetails creditDetails : partyService.getPartyById(partyId).getCreditDetails()) {
                 branches.add(creditDetails.getBranch());
             }
-          Iterator<Branch> finalSet = branchList.iterator();
+            Iterator<Branch> finalSet = branchList.iterator();
             for (Iterator<Branch> it = finalSet; it.hasNext(); ) {
                 Branch fullModel = it.next();
                 if (fullModel != null) {

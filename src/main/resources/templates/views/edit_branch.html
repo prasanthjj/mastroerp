@@ -11,15 +11,23 @@
     <title>Mastro Metals | Edit Branch</title>
 
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
-    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
-    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
-    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet" th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
-    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
-    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet" th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
     <!-- Morris -->
-    <link href="../resources/css/plugins/select2/select2.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2.min.css}">
-    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css"rel="stylesheet" th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
-    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
@@ -50,7 +58,7 @@
                 </ol>
             </div>
 
-            <div lang="en" th:replace="views/fragments/ipaddress :: div">   </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -75,7 +83,8 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label>Branch Name <i class="fa fa-asterisk "></i></label>
-                                                <input type="text" class="form-control required" th:field="*{branchName}">
+                                                <input type="text" class="form-control required"
+                                                       th:field="*{branchName}">
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
@@ -93,8 +102,9 @@
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>City Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b required selectCity"  id="editBranchCityName" th:field="*{cityName}">
+                                                <label>City Name <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b required selectCity"
+                                                        id="editBranchCityName" th:field="*{cityName}">
                                                     <option value="">Select</option>
                                                     <option value="Alappuzha">Alappuzha</option>
                                                     <option value="Idukki">Idukki</option>
@@ -129,8 +139,9 @@
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>Country Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b selectCountry required" id="editBranchCountryName" th:field="*{countryName}">
+                                                <label>Country Name <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b selectCountry required"
+                                                        id="editBranchCountryName" th:field="*{countryName}">
                                                     <option value="">Select</option>
                                                     <option value="India">India</option>
                                                     <option value="America">America</option>
@@ -139,8 +150,9 @@
                                             <div class="hr-line-dashed"></div>
 
                                             <div class="form-group">
-                                                <label>Address  <i class="fa fa-asterisk "></i></label>
-                                                <textarea class="form-control m-b required" th:field="*{branchAddress}"></textarea>
+                                                <label>Address <i class="fa fa-asterisk "></i></label>
+                                                <textarea class="form-control m-b required"
+                                                          th:field="*{branchAddress}"></textarea>
 
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -160,10 +172,11 @@
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label>State Name  <i class="fa fa-asterisk "></i></label>
-                                                <select class="form-control m-b  required selectState"  id="editBranchStateName" th:field="*{stateName}">
+                                                <label>State Name <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b  required selectState"
+                                                        id="editBranchStateName" th:field="*{stateName}">
                                                     <option value="">Select</option>
-                                                    <option value="AndhraPradesh">Andhra Pradesh	</option>
+                                                    <option value="AndhraPradesh">Andhra Pradesh</option>
                                                     <option value="Karnataka">Karnataka</option>
                                                     <option value="Kerala">Kerala</option>
                                                     <option value="Telangana">Telangana</option>
@@ -460,9 +473,10 @@
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
-<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 
 
 <!-- Custom and plugin javascript -->
@@ -472,19 +486,25 @@
 <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 
 <!-- jQuery UI -->
-<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js" th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
 
 
 <!-- Jquery Validate -->
-<script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <!-- Data picker -->
-<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js" th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"
+        th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
 <!-- Tags Input -->
-<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js" th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
-<script src="../resources/js/plugins/select2/select2.full.min.js" th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
+        th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
 
 <!-- Steps -->
-<script src="../resources/js/plugins/steps/jquery.steps.min.js" th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
 <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
 <script src="../resources/js/mastro/branch_step.js" th:src="@{/resources/js/mastro/branch_step.js}"></script>
 </body>

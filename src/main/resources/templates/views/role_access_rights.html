@@ -43,7 +43,7 @@
                     </li>
                 </ol>
             </div>
-            <div lang="en" th:replace="views/fragments/ipaddress :: div">   </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -56,14 +56,15 @@
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label">Role</label>
                                     <div class="col-lg-4">
-                                        <select class="form-control" name="roles"  id="roleAccess" required>
-                                        <option value="">Select Role </option>
-                                        <option th:each="roleObj : ${rolesList}"
-                                                th:data-roleidd="${roleObj.id}"
-                                                th:value="${roleObj.id}"
-                                                th:text="${roleObj.roleName}">Select</option>
-                                    </select></div>
-                              </div>
+                                        <select class="form-control" name="roles" id="roleAccess" required>
+                                            <option value="">Select Role</option>
+                                            <option th:each="roleObj : ${rolesList}"
+                                                    th:data-roleidd="${roleObj.id}"
+                                                    th:value="${roleObj.id}"
+                                                    th:text="${roleObj.roleName}">Select
+                                            </option>
+                                        </select></div>
+                                </div>
 
                                 <div class="ibox-tools">
                                 </div>
@@ -79,9 +80,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                     <tr class="gradeX" th:each="moduleObj,iterator:${modulesList}">
-                                            <td th:text="${moduleObj.moduleName}" th:value="${moduleObj.moduleName}">Select</td>
-                                            <td><input type="checkbox" name="checkboxName" th:value="${moduleObj.id}"/></td>
+                                        <tr class="gradeX" th:each="moduleObj,iterator:${modulesList}">
+                                            <td th:text="${moduleObj.moduleName}" th:value="${moduleObj.moduleName}">
+                                                Select
+                                            </td>
+                                            <td><input type="checkbox" name="checkboxName" th:value="${moduleObj.id}"/>
+                                            </td>
                                         </tr>
 
                                         </tbody>
@@ -109,7 +113,7 @@
             <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
 
         </div>
-      
+
     </div>
 
     <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
@@ -118,11 +122,15 @@
     <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
     <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
     <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
-    <script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-    <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+            th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+            th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 
-    <script src="../resources/js/plugins/dataTables/datatables.min.js" th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
-    <script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js" th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+    <script src="../resources/js/plugins/dataTables/datatables.min.js"
+            th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+    <script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+            th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
     <!-- Flot -->
     <script src="../resources/js/plugins/flot/jquery.flot.js" th:src="@{/resources/js/plugins/flot/jquery.flot.js}"></script>
     <script src="../resources/js/plugins/flot/jquery.flot.tooltip.min.js" th:src="@{/resources/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>

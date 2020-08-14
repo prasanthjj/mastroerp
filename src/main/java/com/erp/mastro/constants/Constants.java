@@ -7,4 +7,5 @@ public class Constants {
 
     public static String TEMPLATE_SAMPLE = "/email/template-thymeleaf.html";
 
+    public static final String PRODUCT = "productPic";
 }

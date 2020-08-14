@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -24,5 +26,10 @@ public class Brand {
 
     @Column(name = "delete_status", nullable = false)
     private int brandDeleteStatus;
+
+    @OneToMany(mappedBy = "brand",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Product> productSet = new HashSet<>();
 
 }

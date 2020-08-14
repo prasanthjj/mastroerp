@@ -250,7 +250,6 @@ public class UserController {
 
     }
 
-
     /**
      * Method for autocomplete employee email address
      *
@@ -415,6 +414,5 @@ public class UserController {
         }
         return userDetails;
     }
-
 
 }

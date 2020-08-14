@@ -11,12 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    @Autowired
-    private UserRepository userRepository;
+	private Map<String, Object> dataMap = new HashMap<>(5);
+	@Autowired
+	private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email)
@@ -35,6 +37,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new CurrentUserDetails(user);
     }
 
+	public Map<String, Object> getDataMap() {
+		return dataMap;
+	}
+
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
+	}
+
+	public Date getCurrentLoginDate(Long id) {
+		User user = userRepository.findById(id).get();
+		user.setLastLogin(user.getCurrentLogin());
+		user.setLoggedIn(true);
+		user.setCurrentLogin(new Date());
+		userRepository.save(user);
+		return user.getCurrentLogin();
+	}
     public Date getCurrentLoginDate(User user) {
 
         user.setLastLogin(user.getCurrentLogin());
@@ -45,3 +63,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 }
+

@@ -114,8 +114,94 @@ $(document).ready(function(){
                                }
                            });
      //hsn create validation start
+  // Add item Start
+
+   $("#createItemForm").validate({
+    rules: {
+       hsnId: {
+            required: true,
+        },
+        baseUOM: {
+           required: true,
+       },
+       baseQuantity: {
+           required: true,
+       },
+       basePrice: {
+        required: true,
+    },
+    colour: {
+            required: true,
+        },
+         dimension: {
+                    required: true,
+                },
+     brandId: {
+                 required: true,
+             }
 
 
+    },
+
+});
+//Add item End
+// item party rate relation add party auto-complete start
+ $.get('../resources/js/api/typehead_collection.json', function(data){
+    $(".addParty_head").typeahead({
+       minLength : 3,
+       source:data.countries });
+},'json');
+// item party rate relation add party auto-complete start
+    // item party rate relation item auto-complete start
+    $.get('../resources/js/api/typehead_collection.json', function(data){
+        $(".item_head").typeahead({
+           minLength : 3,
+           source:data.emails });
+    },'json');
+    // item party rate relation item auto-complete start
+$(".item_head").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		//alert(val);
+		}
+		});
+    // add item party rate table start
+
+    $('.itemPartyRateTable').on('change', ':checkbox', function () {
+    var $inpts = $(this).closest('tr').find('input:text,textarea').prop("disabled", !$(this).is(':checked'));
+    }).find(':checkbox').change();
+
+    // add item party rate table end
+
+    // item party rate relation change tab start
+
+    $('#partyBox').hide();
+
+    $('.relationBtn').click(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        id = this.id;
+        if (id == 'itemBtn') {
+            $('#itemBox').slideToggle("slow");
+            $('#partyBox').hide();
+            $('#itemBtn').toggleClass("active");
+            if ($('#itemBtn').hasClass('active')){
+                $('#partyBtn').removeClass("active");
+            }
+
+        }
+        else if (id == 'partyBtn'){
+
+            $('#itemBox').hide();
+            $('#partyBox').slideToggle("slow");
+            $('#partyBtn').toggleClass("active");
+            if ($('#partyBtn').hasClass('active')){
+                $("#itemBtn").removeClass("active");
+            }
+        }
+    });
+    // item party rate relation change tab start
        $(function(datepicker) {
 
        //Add assets dates Start
@@ -241,7 +327,6 @@ $(document).ready(function(){
                $(this).parents('.assetCharacteristicsBox').remove();
            });
            //add assets Characteristics end
-
             //add Maintenance Activities start
             var count2=1;
             $("#addAssetMaintenanceActivities").click(function(){
@@ -252,7 +337,6 @@ $(document).ready(function(){
                $(this).parents('.assetMaintenanceActivitiesBox').remove();
            });
            //add Maintenance Activities end
-
             //add Other CheckList start
             var count3=1;
             $("#addAssetOtherCheckList").click(function(){
@@ -263,6 +347,28 @@ $(document).ready(function(){
                $(this).parents('.assetOtherCheckListBox').remove();
            });
            //add Other CheckList end
+
+         // add item HSN Code start
+                  $(".selectHsnCode").select2({
+                      theme: 'bootstrap4',
+                  });
+                  // add item HSN Code end
+                    // add item Brand  start
+                                    $(".selectBrandCode").select2({
+                                        theme: 'bootstrap4',
+                                    });
+                                    // add item Brand end
+           // add item uom start
+            var uomcount=0;
+           $(".addUom").click(function(){
+
+               $("#uomBox").append("<div class='row uomDiv'><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction Type <i class='fa fa-asterisk'></i></label><div class='col-sm-12'><select class='form-control m-b' name='productUOMModelList["+uomcount+"].transactionType' required><option value=''>Select</option><option value='Purchase'>Purchase</option><option value='Sales'>Sales</option></select></div></div></div><div class='col-lg-4 '><div class='form-group  row'><label class='col-sm-12 col-form-label'>Transaction UOM <i class='fa fa-asterisk'></i></label><div class='col-sm-12'><select class='form-control m-b' name='productUOMModelList["+uomcount+"].uomId' required><option value=''>Select</option><option value='1'>Kg</option><option value='2'>Piece</option><option value='3'>Meter</option><option value='4'>Pack</option><option value='5'>Square ft</option><option value='6'>Inches</option><option value='7'>Each</option><option value='8'>Dozen</option><option value='9'>Case</option><option value='10'>Box</option><option value='11'>Single</option></select></div></div></div><div class='col-lg-4'><div class='form-group  row'><label class='col-sm-12 col-form-label'>Convention Factor <i class='fa fa-asterisk'></i></label><div class='col-sm-10'><input type='text' required class='form-control' name='productUOMModelList["+uomcount+"].convertionFactor'></div><div class='col-sm-2 text-right'><button class='btn btn-danger dim removeUom' type='button'><i class='fa fa-times-circle'></i></button></div></div></div></div>");
+               uomcount++;
+             });
+             $(document).on('click', '.removeUom', function() {
+               $(this).parents('.uomDiv').remove();
+           });
+           // add item uom end
 
            // add party Industry Type start
                            $(".partyIndustryType").select2({
@@ -307,8 +413,6 @@ $(document).ready(function(){
 
 
        });
-
-
 
             $(function() {
                    //add assets Characteristics in edit start
@@ -506,6 +610,112 @@ $(document).ready(function(){
     });
     // Remove subcategory end
 
+//Enable Product start
+                      $('.enableProduct').click(function () {
+                       var productId=$(this).data('productid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to Enable product!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, enabled!",
+                              closeOnConfirm: false
+                          }, function () {
+
+                          $.ajax({
+                                              url: '/master/enableOrDisableProduct',
+                                              type: 'POST',
+                                              dataType : 'json',
+                                             data: { 'productId': productId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                      var redirectionUrl= "/master/getProduct";
+                                                      window.location.href = redirectionUrl;
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+                             /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                          });
+                      });
+            //Enable Product end
+
+//Disable Product start
+                      $('.disableProduct').click(function () {
+                       var productId=$(this).data('productid');
+                          swal({
+                              title: "Are you sure?",
+                              text: "You want to Disable product!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0094db",
+                              confirmButtonText: "Yes, disabled!",
+                              closeOnConfirm: false
+                          }, function () {
+
+                          $.ajax({
+                                              url: '/master/enableOrDisableProduct',
+                                              type: 'POST',
+                                              dataType : 'json',
+                                             data: { 'productId': productId },
+                                              success: function(data){
+                                                  if(data.success) {
+                                                      var redirectionUrl= "/master/getProduct";
+                                                      window.location.href = redirectionUrl;
+                                                  }
+                                              },
+                                              error: function(jqXHR, textStatus) {
+                                                  alert('Error Occured');
+                                              }
+                                          });
+                             /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                          });
+                      });
+            //Disable Product end
+
+            //remove Product image start
+                                  $('.productImgRemove').click(function () {
+
+                                   var productId=$(this).data('productid');
+                                   var filename=$(this).data('imgname');
+
+
+                                      swal({
+                                          title: "Are you sure?",
+                                          text: "You want to delete!",
+                                          type: "warning",
+                                          showCancelButton: true,
+                                          confirmButtonColor: "#0094db",
+                                          confirmButtonText: "Yes, deleted!",
+                                          closeOnConfirm: false
+                                      }, function () {
+
+                                      $.ajax({
+                                                          url: '/master/deleteProductImages',
+                                                          type: 'POST',
+                                                          dataType : 'json',
+                                                         data: { 'productImgFileName': filename,'productId': productId },
+                                                          success: function(data){
+                                                              if(data.success) {
+
+                                                                  var redirectionUrl= "/master/getProductEdit?productId="+productId;
+                                                                  window.location.href = redirectionUrl;
+                                                              }
+                                                          },
+                                                          error: function(jqXHR, textStatus) {
+                                                              alert('Error Occured');
+                                                          }
+                                                      });
+                                         /* swal("Activated!", "Item has been Activated.", "success");*/
+
+                                      });
+                                  });
+                        //remove Product image end
                //Activate Party
                                      $('.activateParty').click(function () {
                                       var partyId=$(this).data('partyid');
