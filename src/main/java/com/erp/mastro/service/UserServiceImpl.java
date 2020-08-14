@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.UserModel;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +83,7 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userModel.getEmail());
             user.setEnabled(true);
             user.setCreatedBy(employee.getFirstName());
-            user.setCreatedDate(new Date());
+            user.setCreatedDate(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
