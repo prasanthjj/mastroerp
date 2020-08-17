@@ -30,6 +30,7 @@ public class PartyRequestModel {
     private List<BankDetailsModel> bankDetailsModelList = new ArrayList<>();
     private List<CreditDetailsModel> creditDetailsModelList = new ArrayList<>();
     private Long industryid;
+    private String partysname;
 
     public PartyRequestModel() {
 

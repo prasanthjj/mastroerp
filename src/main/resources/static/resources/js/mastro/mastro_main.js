@@ -153,17 +153,50 @@ $(document).ready(function(){
 },'json');
 // item party rate relation add party auto-complete start
     // item party rate relation item auto-complete start
-    $.get('../resources/js/api/typehead_collection.json', function(data){
+  /*  $.get('../resources/js/api/typehead_collection.json', function(data){
         $(".item_head").typeahead({
            minLength : 3,
            source:data.emails });
-    },'json');
+    },'json');*/
     // item party rate relation item auto-complete start
-$(".item_head").keyup(function () {
+     var itemAutopopulateUrl = $('#itemAutopopulateUrl').data('url');
+     $(".itemautocomplete").keyup(function () {
 
 		var val = $(this).val().trim();
 		if (val.length > 2) {
-		//alert(val);
+		     $.ajax({
+              url:itemAutopopulateUrl,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val},
+               success: function(data){
+                 if(data.success) {
+                      alert("okk");
+                      $(".typeahead").html("");
+
+                        $.each(data.data.products, function(i){
+                                      //  $('#itemAutocomplete').append($('<input>').val(this['id']).text(this['productname']));
+                                     $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
+
+                                        });
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+
+		/* $.get(itemAutopopulateUrl,
+                { searchTerm: val },
+                function( data ) {
+
+                  data.data.forEach(function(element){
+                  alert(element.id)
+
+ });
+                           },
+                "json" );*/
 		}
 		});
     // add item party rate table start
@@ -358,6 +391,7 @@ $(".item_head").keyup(function () {
                                         theme: 'bootstrap4',
                                     });
                                     // add item Brand end
+
            // add item uom start
             var uomcount=0;
            $(".addUom").click(function(){

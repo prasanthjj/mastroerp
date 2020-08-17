@@ -13,6 +13,7 @@
           th:src="@{/resources/font-awesome/css/font-awesome.css}">
     <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+
     <!-- Morris -->
     <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
@@ -72,8 +73,17 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
                                             Name</label>
 
-                                            <div class="col-sm-8"><input id="" name="" type="text"
-                                                                         class="form-control item_head"></div>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control itemautocomplete"
+                                                       id="itemAutocomplete">
+                                                <ul class="typeahead dropdown-menu" role="listbox"></ul>
+                                                <!-- <select class="itemautocomplete form-control" id="itemAutocomplete"  required>
+                                                     &lt;!&ndash;<option value="" >Select</option>
+                                                     <option>branch name</option>&ndash;&gt;
+
+                                                 </select>-->
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -297,6 +307,7 @@
         th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
 <script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
         th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
 
 <!-- Custom and plugin javascript -->
 <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>

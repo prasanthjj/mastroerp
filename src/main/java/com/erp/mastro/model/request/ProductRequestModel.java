@@ -28,6 +28,7 @@ public class ProductRequestModel {
     private String inspectionType;
     private Long brandId;
     private List<ProductUOMModel> productUOMModelList = new ArrayList<>();
+    private String productname;
 
     public ProductRequestModel() {
 
