@@ -34,8 +34,5 @@ public class PartyPriceList {
     @Column(name = "credit_days")
     private Integer creditDays;
 
-    /*@OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "price_list_id")
-    private PriceList priceList;*/
 
 }

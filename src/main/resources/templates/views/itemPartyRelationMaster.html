@@ -67,27 +67,31 @@
                             </div>
                         </div>
                         <div class="ibox-content" id="itemBox">
-                            <form>
+                            <form th:action="@{/master/getSelectedProduct}" method="get">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
                                             Name</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control itemautocomplete"
-                                                       id="itemAutocomplete">
-                                                <ul class="typeahead dropdown-menu" role="listbox"></ul>
-                                                <!-- <select class="itemautocomplete form-control" id="itemAutocomplete"  required>
-                                                     &lt;!&ndash;<option value="" >Select</option>
-                                                     <option>branch name</option>&ndash;&gt;
+                                                <!--<input type="text" class="form-control item_head"
+                                                      >-->
+                                                <input type="hidden" name="selectedProduct" id="itemIdInput">
+                                                <input type="text" class="form-control itemautocmoplete"
+                                                       placeholder="Select item">
+                                                <i class="icon-triangle-down"></i>
+                                                <div class="item_dropdown">
+                                                    <ul class="auto-dropdown-menu">
 
-                                                 </select>-->
+                                                    </ul>
+                                                </div>
+
 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <button class="btn btn-primary">Select</button>
+                                        <button class="btn btn-primary" type="submit">Select</button>
 
 
                                     </div>
@@ -99,7 +103,9 @@
                                     <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
                                         Name</label>
 
-                                        <div class="col-sm-8 m-t-sm"><p><b> .47 Red 3.05mtr (10')</b></p></div>
+                                        <div class="col-sm-8 m-t-sm"><p><span th:if="${productDetails!= null}"><b
+                                                th:text="${productDetails.productName}">.47 Red 3.05mtr (10')</b></span>
+                                        </p></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -107,7 +113,9 @@
                                     <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
                                         Code</label>
 
-                                        <div class="col-sm-8 m-t-sm"><p class=""><b>ITM-16586745</b></p></div>
+                                        <div class="col-sm-8 m-t-sm"><p class=""><span th:if="${productDetails!= null}"><b
+                                                th:text="${productDetails.id}">.47 Red 3.05mtr (10')</b></span></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -244,8 +252,22 @@
                     <div class="col-lg-12">
                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Party Name</label>
 
-                            <div class="col-sm-8"><input type="text" required placeholder=""
-                                                         class=" form-control addParty_head"/></div>
+                            <!--<div class="col-sm-8"><input type="text" required placeholder=""
+                                                         class=" form-control addParty_head"/></div>-->
+                            <div class="col-sm-8">
+                                <!--<input type="text" class="form-control item_head"
+                                      >-->
+                                <input type="hidden" name="selectedParty" id="partyIdInput">
+                                <input type="text" class="form-control partyautocmoplete" placeholder="Select party">
+                                <i class="icon-triangle-down"></i>
+                                <div class="party_dropdown">
+                                    <ul class="auto-dropdown-menu">
+
+                                    </ul>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -295,6 +317,7 @@
 </div>
 <!-- Mainly scripts -->
 <span id="itemAutopopulateUrl" th:data-url="@{/master/autopopulate/items}"></span>
+<span id="partyAutopopulateUrl" th:data-url="@{/master/autopopulate/party}"></span>
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>

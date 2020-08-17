@@ -7,23 +7,31 @@ import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.model.request.ProductRequestModel;
+import com.erp.mastro.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Controller to include itemparty methods
+ */
 @Controller
 @RequestMapping("/master")
 public class ItemPartyRelationController {
 
     @Autowired
     AutoPopulateDAO autoPopulateDao;
+
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/getItemPartys")
     public String getItemPartys(Model model) {
@@ -52,6 +60,7 @@ public class ItemPartyRelationController {
     @ResponseBody
     public GenericResponse products(@RequestParam("searchTerm") String searchTerm) {
         try {
+            MastroLogUtils.info(ItemPartyRelationController.class, "Going to get product in autocomplete : {}");
             List<Product> productsFinal = new ArrayList<>();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
@@ -84,6 +93,7 @@ public class ItemPartyRelationController {
     @ResponseBody
     public GenericResponse getPartys(@RequestParam("searchTerm") String searchTerm) {
         try {
+            MastroLogUtils.info(ItemPartyRelationController.class, "Going to get party in autocomplete : {}");
             List<Party> partyFinal = new ArrayList<>();
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
@@ -106,6 +116,30 @@ public class ItemPartyRelationController {
         }
     }
 
+    /**
+     * Method to get product details
+     *
+     * @param model
+     * @param req
+     * @return itemparty page
+     */
+    @GetMapping("/getSelectedProduct")
+    public String getSelectedProduct(Model model, HttpServletRequest req) {
+        Long productId = Long.parseLong(req.getParameter("selectedProduct"));
+        MastroLogUtils.info(ItemPartyRelationController.class, "Going to get Product :{}" + productId);
+        try {
+            Product product = productService.getProductById(productId);
+            model.addAttribute("productDetails", product);
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            return "views/itemPartyRelationMaster";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while getting product : {}", e);
+            throw e;
+        }
+
+    }
 
 }
 
