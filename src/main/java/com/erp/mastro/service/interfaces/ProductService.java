@@ -2,7 +2,6 @@ package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
-import com.erp.mastro.entities.ProductUOM;
 import com.erp.mastro.entities.SubCategory;
 import com.erp.mastro.exception.FileStoreException;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -21,8 +20,6 @@ public interface ProductService {
     Product getProductById(Long id);
 
     Product saveOrUpdateProduct(ProductRequestModel productRequestModel) throws ModelNotFoundException, FileStoreException;
-
-    Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product);
 
     void deleteProduct(Long id);
 

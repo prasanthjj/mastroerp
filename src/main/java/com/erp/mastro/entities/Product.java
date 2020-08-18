@@ -61,7 +61,7 @@ public class Product extends Auditable<String>{
             orphanRemoval = true)
     private Set<ProductImages> productImages = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")})
     private Set<ProductUOM> productUOMSet = new HashSet<>();

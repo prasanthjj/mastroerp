@@ -183,8 +183,8 @@ public class ProductServiceImpl implements ProductService {
      * @param product
      * @return set of productuoms
      */
-    @Transactional(rollbackOn = {Exception.class})
-    public Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product) {
+
+    private Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product) {
 
         MastroLogUtils.info(ProductService.class, "Going to save productuoms   {}" + productRequestModel.toString());
         Set<ProductUOM> productUOMSet = new HashSet<>();
