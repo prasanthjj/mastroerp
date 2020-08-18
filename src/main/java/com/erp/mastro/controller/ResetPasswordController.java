@@ -101,20 +101,28 @@ public class ResetPasswordController {
      */
     @RequestMapping(value = "/confirmPassword", method = RequestMethod.POST)
     public String savePassword(Locale locale, @Valid @ModelAttribute("changepasswordform") ResetPasswordModel resetModel, Errors errors) {
-        MastroLogUtils.info(ResetPasswordController.class, "Going to confirm password : {}");
+        MastroLogUtils.info(ResetPasswordController.class, "Going to create password after registration: {}");
         if (errors.hasErrors()) {
             return "views/create_new_password";
         } else {
             try {
-                User user = userServiceImpl.getUserById(resetModel.getUserId());
-                userServiceImpl.saveChangedPassword(user, resetModel.getPassword());
+                if (resetModel.getUserId() != null) {
+                    User user = userServiceImpl.getUserById(resetModel.getUserId());
+                    userServiceImpl.saveChangedPassword(user, resetModel.getPassword());
+                }
                 return "redirect:/login";
             } catch (Exception e) {
+                MastroLogUtils.error(ResetPasswordController.class, "Errror occurred while creating password :{}", e);
                 return "redirect:/updatePassword";
             }
         }
     }
 
+    /**
+     * @param userModel
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/forgotPasswordAction", method = RequestMethod.POST)
     public String forgotPasswordAction(@Valid @ModelAttribute("forgotpasswordform") UserModel userModel, HttpServletRequest request) {
         MastroLogUtils.info(ResetPasswordController.class, "Going to reset password : {}");
@@ -126,6 +134,7 @@ public class ResetPasswordController {
                 return "views/forgot_password";
             }
         } catch (MastroEntityException e) {
+            MastroLogUtils.error(ResetPasswordController.class, "Error occured while resseting password : {}", e);
             return "views/forgot_password";
         }
 

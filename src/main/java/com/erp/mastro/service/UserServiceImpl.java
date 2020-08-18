@@ -86,8 +86,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) throws MastroEntityException {
 
-        /* mailUtils.sendSimpleMessage("gloridageorge@gmail.com","test mail","Testing mail for mail utility"); */
-
         User user = userRepository.findByEmail(userModel.getEmail());
         if (user == null) {
             user = new User();
@@ -147,6 +145,7 @@ public class UserServiceImpl implements UserService {
      */
 
     private void createPasswordResetTokenForUser(User user, String token) {
+        MastroLogUtils.info(UserServiceImpl.class, "Going to create token for password reset : {}");
         PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordTokenRepository.save(myToken);
     }
@@ -161,7 +160,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     private boolean sentResetPasswordTokenEmail(String contextPath, Locale locale, String token, User user) {
-
+        MastroLogUtils.info(UserServiceImpl.class, "Going to send email : {}");
         String url = contextPath + "changePassword?id=" + user.getId() + "&token=" + token;
         Map emailMap = new HashMap();
         emailMap.put("url", url);
@@ -171,6 +170,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE);
             }
+            MastroLogUtils.info(UserServiceImpl.class, "Email sent to the user : {}");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -209,33 +209,12 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * Activate or Deactivate User
-     *
-     * @param id
-     */
-    @Override
-    public void activateOrDeactivateUser(Long id) {
-        if (id != null) {
-            User user = getUserById(id);
-            if (user.isEnabled()) {
-                user.setEnabled(false);
-            } else {
-                user.setEnabled(true);
-            }
-            userRepository.save(user);
-            MastroLogUtils.info(UserService.class, "Activate or Deactivate " + user.getEmail() + " successfully.");
-        } else {
-            MastroLogUtils.info(UserService.class, "User Id null");
-        }
-    }
-
-
-    /**
      * Enable user
      *
      * @param user
      */
     public void enableUser(User user) {
+        MastroLogUtils.info(UserServiceImpl.class, "Going to enable user : {}");
         user.setEnabled(true);
         userRepository.save(user);
     }
@@ -266,7 +245,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      */
     public void saveChangedPassword(User user, String password) {
-
+        MastroLogUtils.info(UserServiceImpl.class, "Going to encrypt passwod : {}");
         user.setPassword(password);
         user.encryptPassword();
         userRepository.save(user);
@@ -289,6 +268,28 @@ public class UserServiceImpl implements UserService {
             userDetails.setUserSelectedBranch(userSelectedBranch);
             userRepository.save(userDetails);
             MastroLogUtils.info(UserService.class, "Updated current branch successfully.");
+        }
+    }
+
+
+    /**
+     * Activate or Deactivate User
+     *
+     * @param id
+     */
+    @Override
+    public void activateOrDeactivateUser(Long id) {
+        if (id != null) {
+            User user = getUserById(id);
+            if (user.isEnabled()) {
+                user.setEnabled(false);
+            } else {
+                user.setEnabled(true);
+            }
+            userRepository.save(user);
+            MastroLogUtils.info(UserService.class, "Activate or Deactivate " + user.getEmail() + " successfully.");
+        } else {
+            MastroLogUtils.info(UserService.class, "User Id null");
         }
     }
 
