@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,35 @@ public class ItemPartyRelationController {
 
         } catch (Exception e) {
             MastroLogUtils.error(AssetController.class, "Error occured while getting product : {}", e);
+            throw e;
+        }
+
+    }
+
+    /**
+     * Method to addPartyToProduct
+     *
+     * @param model
+     * @param req
+     * @return the result itemparty
+     */
+    @PostMapping("/associatePartyToProduct")
+    public String associatePartyToProduct(Model model, HttpServletRequest req) {
+
+        MastroLogUtils.info(ItemPartyRelationController.class, "Going to associate party to product :{}");
+        try {
+            Long productId = Long.parseLong(req.getParameter("productDetailsId"));
+            Long partyId = Long.parseLong(req.getParameter("selectedParty"));
+            if (productId != null && partyId != null) {
+                productService.addPartyToProduct(productId, partyId);
+                model.addAttribute("productDetails", productService.getProductById(productId));
+            }
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            return "views/itemPartyRelationMaster";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while associate party to product : {}", e);
             throw e;
         }
 

@@ -152,33 +152,56 @@
                                                 <th>allowed price Dev (%) (Lower)</th>
                                             </tr>
                                             </thead>
+                                            <span th:if="${productDetails!= null}">
                                             <tbody>
 
-                                            <tr class="gradeX">
+                                            <tr class="gradeX" th:each="partysObj,iterator:${productDetails.parties}">
                                                 <td><input type="checkbox" class=""/></td>
-                                                <td>1</td>
-                                                <td class="center"><b>Supplier</b></td>
-                                                <td class="center">5383557</td>
-                                                <td class="center"><b>Thomson Pipes Pvt Ltd</b></td>
-                                                <td class="center">
+                                                <td th:text="${iterator.index+1}">1</td>
+                                                <td class="center" th:text="${partysObj.partyType}"><b>Supplier</b></td>
+                                                <td class="center" th:text="${partysObj.id}">5383557</td>
+                                                <td class="center" th:text="${partysObj.partyName}"><b>Thomson Pipes Pvt Ltd</b></td>
+                                                <td class="center" th:text="${partysObj.categoryType}">
                                                     A
                                                 </td>
+
                                                 <td class="center">
                                                     <input type="text" name="" class="form-control">
                                                 </td>
+                                                  <span th:if="${partysObj.partyType=='Customer'}">
+                                                <td class="center">
+                                                   1
+                                                </td>
+                                                  </span>
+                                                 <span th:unless="${partysObj.partyType=='Customer'}">
                                                 <td class="center">
                                                     <input type="text" name="" class="form-control">
                                                 </td>
+                                                  </span>
                                                 <td class="center">
                                                     <input type="text" name="" class="form-control">
                                                 </td>
+                                                 <span th:if="${partysObj.partyType=='Customer'}">
+                                                <td class="center">
+                                                    1
+                                                </td>
+                                                 </span>
+                                                 <span th:unless="${partysObj.partyType=='Customer'}">
                                                 <td class="center">
                                                     <input type="text" name="" class="form-control">
                                                 </td>
+                                                 </span>
+                                                 <span th:if="${partysObj.partyType=='Customer'}">
+                                                <td class="center">
+                                                   1
+                                                </td>
+                                                 </span>
+                                                 <span th:unless="${partysObj.partyType=='Customer'}">
                                                 <td class="center">
                                                     <input type="text" name="" class="form-control">
                                                 </td>
-                                            </tr>
+                                                 </span>
+                                            </tr><!--
                                             <tr class="gradeX">
                                                 <td><input type="checkbox" checked/></td>
                                                 <td>2</td>
@@ -203,8 +226,9 @@
                                                 <td class="center">
                                                     <p></p>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                             </tbody>
+                                                 </span>
                                             <tfoot>
 
                                             </tfoot>
@@ -226,21 +250,14 @@
         </div>
 
 
-        <div class="footer ">
-            <div class="float-right">
-                Designed and Developed By <strong>Halo Technology Solutions</strong>
-            </div>
-            <div>
-                <strong>Copyright</strong> Mastro Metals &copy; 2020
-            </div>
-        </div>
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
 
     </div>
 
 </div>
 <div class="modal inmodal" id="PartyAssociateItem" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="">
+        <form th:action="@{/master/associatePartyToProduct}" method="post">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
@@ -257,6 +274,9 @@
                             <div class="col-sm-8">
                                 <!--<input type="text" class="form-control item_head"
                                       >-->
+                                <span th:if="${productDetails!= null}">
+                                <input type="hidden" name="productDetailsId" th:value="${productDetails.id}">
+                                </span>
                                 <input type="hidden" name="selectedParty" id="partyIdInput">
                                 <input type="text" class="form-control partyautocmoplete" placeholder="Select party">
                                 <i class="icon-triangle-down"></i>
@@ -279,42 +299,7 @@
         </form>
     </div>
 </div>
-
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="branchListForm">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Branch List</h4>
-
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" required>
-                                    <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
 <span id="itemAutopopulateUrl" th:data-url="@{/autopopulate/items}"></span>
 <span id="partyAutopopulateUrl" th:data-url="@{/autopopulate/party}"></span>

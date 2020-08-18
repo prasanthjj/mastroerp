@@ -9,6 +9,7 @@ import com.erp.mastro.exception.FileStoreException;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.repository.*;
+import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.ProductService;
 import com.erp.mastro.service.interfaces.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    private PartyService partyService;
 
     @Autowired
     S3Service s3Services;
@@ -346,4 +350,22 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    /**
+     * Method to add party to product
+     *
+     * @param productId
+     * @param partyId
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void addPartyToProduct(Long productId, Long partyId) {
+
+        if (productId != null && partyId != null) {
+            MastroLogUtils.info(ProductService.class, "Going to add party to party   {}");
+            Product product = getProductById(productId);
+            Party party = partyService.getPartyById(partyId);
+            product.getParties().add(party);
+            productRepository.save(product);
+        }
+
+    }
 }

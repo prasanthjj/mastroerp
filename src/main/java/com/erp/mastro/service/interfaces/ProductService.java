@@ -31,4 +31,6 @@ public interface ProductService {
 
     void deleteProductImage(Long id, String fileName);
 
+    void addPartyToProduct(Long productId, Long partyId);
+
 }
