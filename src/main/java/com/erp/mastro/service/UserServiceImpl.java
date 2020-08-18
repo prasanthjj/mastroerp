@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
             user.setUserName(employee.getEmail());
             user.setEmployee(employee);
             user.setEmail(userModel.getEmail());
-            user.setEnabled(true);
+            user.setEnabled(false);
 
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
@@ -166,7 +166,11 @@ public class UserServiceImpl implements UserService {
         Map emailMap = new HashMap();
         emailMap.put("url", url);
         try {
-            mailUtils.sendMessageUsingThymeleafTemplate("ssoumir04@gmail.com", "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE);
+            if (user.isEnabled()) {
+                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE1);
+            } else {
+                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE);
+            }
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -234,6 +238,25 @@ public class UserServiceImpl implements UserService {
     public void enableUser(User user) {
         user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    /**
+     * Method to check email
+     *
+     * @param email
+     * @return
+     * @throws MastroEntityException
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public boolean isEmailCorrect(String email) throws MastroEntityException {
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**

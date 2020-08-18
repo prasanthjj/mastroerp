@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/addEmployee/**").permitAll()
+                .antMatchers("/updatePassword/**").permitAll()
                 .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
                 .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
                 .anyRequest().authenticated()
@@ -99,7 +100,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         , "/css/**",
                         "/h2-console/**",
                         "/register",
-                        "/addEmployee");
+                        "/addEmployee", "/changePassword",
+                        "/updatePassword",
+                        "/confirmPassword",
+                        "/forgotPassword",
+                        "/forgotPasswordAction");
     }
 
 }

@@ -19,5 +19,6 @@ public class ResetPasswordModel {
     @Size(min = 5, max = 50)
     private String confirmPassword;
 
+    private Long userId;
 
 }

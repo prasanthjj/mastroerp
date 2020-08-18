@@ -7,5 +7,7 @@ public class Constants {
 
     public static String TEMPLATE_SAMPLE = "email/welcome.html";
 
+    public static String TEMPLATE_SAMPLE1 = "views/passwordreset.html";
+
     public static final String PRODUCT = "productPic";
 }
