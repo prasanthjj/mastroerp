@@ -75,7 +75,10 @@ public class ResetPasswordController {
 
     @GetMapping("/updatePassword")
     public String changepassword(Model model, @RequestParam("id") Long id) {
+        User user = userService.getUserById(id);
+        String userName = user.getUserName();
         model.addAttribute("changepasswordform", new ResetPasswordModel());
+        model.addAttribute("userName", userName);
         model.addAttribute("userid", id);
         return "views/create_new_password";
     }
