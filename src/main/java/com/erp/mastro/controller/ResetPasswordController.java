@@ -42,7 +42,6 @@ public class ResetPasswordController {
     @Autowired
     UserRepository userRepository;
 
-
     /**
      * Method to validate token
      *

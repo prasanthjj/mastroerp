@@ -166,9 +166,9 @@ public class UserServiceImpl implements UserService {
         emailMap.put("url", url);
         try {
             if (user.isEnabled()) {
-                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE1);
+                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_FORGOTPASSWORD);
             } else {
-                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_SAMPLE);
+                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_WELCOMEMAIL);
             }
             MastroLogUtils.info(UserServiceImpl.class, "Email sent to the user : {}");
         } catch (MessagingException e) {
@@ -207,7 +207,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     /**
      * Enable user
      *
@@ -235,7 +234,6 @@ public class UserServiceImpl implements UserService {
         } else {
             return false;
         }
-
     }
 
     /**
@@ -270,7 +268,6 @@ public class UserServiceImpl implements UserService {
             MastroLogUtils.info(UserService.class, "Updated current branch successfully.");
         }
     }
-
 
     /**
      * Activate or Deactivate User
