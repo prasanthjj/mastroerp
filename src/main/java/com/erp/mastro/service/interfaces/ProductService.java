@@ -1,7 +1,7 @@
 package com.erp.mastro.service.interfaces;
 
-import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
+import com.erp.mastro.entities.ProductPartyRateRelation;
 import com.erp.mastro.entities.SubCategory;
 import com.erp.mastro.exception.FileStoreException;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -23,8 +23,6 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    void saveOrUpdateProductPartys(Product product, Set<Party> parties);
-
     void enableOrDisableProduct(Long id);
 
     void productUploasS3(final File folder, String sproductId);
@@ -33,4 +31,7 @@ public interface ProductService {
 
     void addPartyToProduct(Long productId, Long partyId);
 
+    void saveOrUpdateItemParty(String[] productPartyRateIds, String[] rates, String[] discounts, String[] creditDays, String[] allowedPriceUpper, String[] allowedDevLower);
+
+    List<ProductPartyRateRelation> getAllProductPartyRateRelation();
 }

@@ -15,10 +15,6 @@ public class PartyPriceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "party_id")
-    private Party party;
-
     @Column(name = "rate")
     private Double rate;
 
@@ -34,5 +30,10 @@ public class PartyPriceList {
     @Column(name = "credit_days")
     private Integer creditDays;
 
+    @OneToOne(mappedBy = "partyPriceList",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    private ProductPartyRateRelation productPartyRateRelation;
 
 }

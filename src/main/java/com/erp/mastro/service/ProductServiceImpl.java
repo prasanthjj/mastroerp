@@ -10,6 +10,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.repository.*;
 import com.erp.mastro.service.interfaces.PartyService;
+import com.erp.mastro.service.interfaces.PriceListService;
 import com.erp.mastro.service.interfaces.ProductService;
 import com.erp.mastro.service.interfaces.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private PartyService partyService;
+
+    @Autowired
+    private PriceListService priceListService;
+
+    @Autowired
+    private PartyPriceListRepository partyPriceListRepository;
+
+    @Autowired
+    private ProductPartyRateRelationRepository productPartyRateRelationRepository;
 
     @Autowired
     S3Service s3Services;
@@ -227,10 +237,10 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
-    public void saveOrUpdateProductPartys(Product product, Set<Party> parties) {
+   /* public void saveOrUpdateProductPartys(Product product, Set<Party> parties) {
         product.setParties(parties);
         productRepository.save(product);
-    }
+    }*/
 
     /**
      * Method to enable or disable product
@@ -361,11 +371,77 @@ public class ProductServiceImpl implements ProductService {
 
         if (productId != null && partyId != null) {
             MastroLogUtils.info(ProductService.class, "Going to add party to party   {}");
-            Product product = getProductById(productId);
-            Party party = partyService.getPartyById(partyId);
-            product.getParties().add(party);
-            productRepository.save(product);
+            Set<ProductPartyRateRelation> productPartyRateRelationsSet = getAllProductPartyRateRelation().stream()
+                    .filter(relationData -> (null != relationData))
+                    .filter(relationData -> (productId == relationData.getProduct().getId()))
+                    .filter(relationData -> (partyId == relationData.getParty().getId()))
+                    .collect(Collectors.toSet());
+            if (productPartyRateRelationsSet.size() == 0) {
+                ProductPartyRateRelation productPartyRateRelation = new ProductPartyRateRelation();
+                Party party = partyService.getPartyById(partyId);
+                productPartyRateRelation.setParty(party);
+                Product product = getProductById(productId);
+                productPartyRateRelation.setProduct(product);
+                productPartyRateRelationRepository.save(productPartyRateRelation);
+            }
+
         }
 
+    }
+
+    /**
+     * method to save the itemparty rate relation data
+     *
+     * @param productPartyRateIds
+     * @param rates
+     * @param discounts
+     * @param creditDays
+     * @param allowedPriceUpper
+     * @param allowedDevLower
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void saveOrUpdateItemParty(String[] productPartyRateIds, String[] rates, String[] discounts, String[] creditDays, String[] allowedPriceUpper, String[] allowedDevLower) {
+
+        MastroLogUtils.info(ProductService.class, "Going to save product party relation details {}" + productPartyRateIds);
+
+        for (int i = 0; i < productPartyRateIds.length; i++) {
+            PartyPriceList partyPriceList = new PartyPriceList();
+
+            ProductPartyRateRelation productPartyRateRelation = productPartyRateRelationRepository.findById(Long.parseLong(productPartyRateIds[i])).get();
+            Party party = productPartyRateRelation.getParty();
+            partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
+            partyPriceList.setRate(Double.parseDouble(rates[i]));
+            if (party.getPartyType().equals("Supplier")) {
+                partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
+                partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
+                partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
+            } else {
+                Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
+                        .filter(priceListData -> (null != priceListData))
+                        .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                        .collect(Collectors.toSet());
+                for (PriceList priceList : priceListSet) {
+                    if (party.getCategoryType().equals(priceList.getCategoryType())) {
+                        partyPriceList.setDiscount(priceList.getDiscountPercentage());
+                        partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
+                        partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                    }
+                }
+            }
+            productPartyRateRelation.setPartyPriceList(partyPriceList);
+            productPartyRateRelationRepository.save(productPartyRateRelation);
+        }
+
+    }
+
+    /**
+     * get all productpartyrate relations
+     *
+     * @return the result set
+     */
+    public List<ProductPartyRateRelation> getAllProductPartyRateRelation() {
+        List<ProductPartyRateRelation> productPartyRateRelations = new ArrayList<ProductPartyRateRelation>();
+        productPartyRateRelationRepository.findAll().forEach(productPartyRateRelation1 -> productPartyRateRelations.add(productPartyRateRelation1));
+        return productPartyRateRelations;
     }
 }

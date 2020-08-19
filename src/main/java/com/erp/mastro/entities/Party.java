@@ -68,17 +68,13 @@ public class Party extends Auditable<String>{
             , inverseJoinColumns = {@JoinColumn(name = "credit_details_id", referencedColumnName = "id")})
     private Set<CreditDetails> creditDetails = new HashSet<>();
 
-    @ManyToMany(mappedBy = "parties")
-    private Set<Product> products = new HashSet<>();
-
-    @OneToOne(mappedBy = "party",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private PartyPriceList partyPriceList;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "industry_id")
     private IndustryType industryType;
+
+    @OneToMany(mappedBy = "party",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
 }

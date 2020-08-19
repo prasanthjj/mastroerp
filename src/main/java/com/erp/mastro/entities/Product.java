@@ -77,12 +77,9 @@ public class Product extends Auditable<String>{
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "product_party",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "party_id")}
-    )
-    Set<Party> parties = new HashSet<>();
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
 }
