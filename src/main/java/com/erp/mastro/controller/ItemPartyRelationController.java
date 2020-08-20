@@ -124,8 +124,9 @@ public class ItemPartyRelationController {
             String[] creditDays = request.getParameterValues("creditDays");
             String[] allowedPriceDevPerUppers = request.getParameterValues("allowedPriceDevPerUpper");
             String[] allowedPriceDevPerLowers = request.getParameterValues("allowedPriceDevPerLower");
-            productService.saveOrUpdateItemParty(productPartyRateIds, ratess, discountss, creditDays, allowedPriceDevPerUppers, allowedPriceDevPerLowers);
-
+            if (productPartyRateIds != null) {
+                productService.saveOrUpdateItemParty(productPartyRateIds, ratess, discountss, creditDays, allowedPriceDevPerUppers, allowedPriceDevPerLowers);
+            }
             return "redirect:/master/getItemPartys";
         } catch (Exception e) {
             MastroLogUtils.error(ItemPartyRelationController.class, "Error occured while save itemparty : {}", e);
@@ -198,8 +199,9 @@ public class ItemPartyRelationController {
             String[] productPartyRateIds = request.getParameterValues("productPartyRateId");
             String[] ratess = request.getParameterValues("rate");
             String[] remarkss = request.getParameterValues("remarks");
-
-            productService.saveOrUpdatePartyItems(productPartyRateIds, ratess, remarkss);
+            if (productPartyRateIds != null) {
+                productService.saveOrUpdatePartyItems(productPartyRateIds, ratess, remarkss);
+            }
 
             return "redirect:/master/getItemPartys";
         } catch (Exception e) {
