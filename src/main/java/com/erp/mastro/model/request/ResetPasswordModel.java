@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 @Getter(AccessLevel.PUBLIC)
 public class ResetPasswordModel {
 
+    private String userName;
+
     @NotEmpty()
     @Size(min = 5, max = 50)
     private String password;
@@ -19,5 +21,6 @@ public class ResetPasswordModel {
     @Size(min = 5, max = 50)
     private String confirmPassword;
 
+    private Long userId;
 
 }

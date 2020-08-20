@@ -8,6 +8,7 @@ import com.erp.mastro.model.request.UserModel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
 
 
 public interface UserService {
@@ -18,6 +19,8 @@ public interface UserService {
 
     void saveOrUpdateUser(UserModel userModel, HttpServletRequest request) throws MastroEntityException;
 
+    void sendResetPasswordEmail(String email, String appUrl, Locale locale) throws MastroEntityException;
+
     void enableUser(User user);
 
     void saveChangedPassword(User user, String password);
@@ -25,6 +28,8 @@ public interface UserService {
     void validatePasswordResetToken(Long id, String token, HttpServletRequest request) throws TokenExpiredException, InvalidTokenException;
 
     void activateOrDeactivateUser(Long id);
+
+    boolean isEmailCorrect(String email) throws MastroEntityException;
 
     void saveCurrentBranch(Long branchId, User userDetails);
 
