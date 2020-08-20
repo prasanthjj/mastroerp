@@ -251,11 +251,123 @@ $(document).ready(function(){
                                 			$(".partyautocmoplete").val(value);
                                 			$("#partyIdInput").val($(e.target).data('partysid'));
 
-                        		$(".item_dropdown").hide();
+                        		$(".party_dropdown").hide();
                         	})
                 		//dynamic click for party in party autocomplete end
-    // add item party rate table start
+                		//get selected party type in partytype autocomplete start
+                         	$("#partysType").on("change", function(e){
+                         	 var typeOfParty =$('#partysType').val();
 
+                         	 $("#partyTypesValue").val(typeOfParty);
+
+
+                                            });
+                                            //get selected party type in partytype autocomplete end
+                	 //  party item rate relation party type auto-complete start
+                                 var partyTypeAutopopulateUrl = $('#partyTypeAutopopulateUrl').data('url');
+
+
+                                 $(".parts_dropdown").hide();
+                                 $(".partyautocmopletes").keyup(function () {
+
+                            		var vals = $(this).val().trim();
+
+                            		if (vals.length > 2) {
+                            		var partsTypee=document.getElementById("partyTypesValue").value;
+
+                            		$(".parts_dropdown ul").empty();
+                            		     $.ajax({
+                                          url:partyTypeAutopopulateUrl,
+                                           type: 'GET',
+                                           dataType : 'json',
+                                           data: {'searchTerm':vals,'partyType':partsTypee},
+                                           success: function(data){
+                                             if(data.success) {
+
+                                                    $.each(data.data.partys, function(i){
+
+                                                                  $(".parts_dropdown ul").append('<li><a class="dynamicClick" data-partyssid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
+                                                                    });
+                                              }
+                                               },
+                                           error: function(jqXHR, textStatus) {
+                                           alert('Error Occured');
+                                           }
+
+                                          });
+                                          $(".parts_dropdown").show();
+                            		}
+                            		else {
+                                    			$(".parts_dropdown").hide();
+                                    		}
+                            		});
+                            		//party item rate relation party type auto-complete end
+
+
+//dynamic click for party in partytype autocomplete start
+                			$(".parts_dropdown").on('click','a.dynamicClick',function (e) {
+                        		e.preventDefault();
+                        		var value = $(this).text();
+
+
+                                			$(".partyautocmopletes").val(value);
+                                			$("#partysIdInput").val($(e.target).data('partyssid'));
+
+                        		$(".parts_dropdown").hide();
+                        	})
+                		//dynamic click for party in partytype autocomplete end
+ // party item rate relation item auto-complete start
+             var itemAutopopulateUrls = $('#itemAutopopulateUrl').data('url');
+                $(".produts_dropdown").hide();
+                $(".productsautocmoplete").keyup(function () {
+
+           		var valu = $(this).val().trim();
+
+           		if (valu.length > 2) {
+
+           		$(".produts_dropdown ul").empty();
+           		     $.ajax({
+                         url:itemAutopopulateUrls,
+                          type: 'GET',
+                          dataType : 'json',
+                          data: {'searchTerm':valu},
+                          success: function(data){
+                            if(data.success) {
+
+                                   $.each(data.data.products, function(i){
+                                                 //  $('#itemAutocomplete').append($('<input>').val(this['id']).text(this['productname']));
+                                                $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
+                                                 $(".produts_dropdown ul").append('<li><a class="dynamicClick" data-itemssid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                                   });
+                             }
+                              },
+                          error: function(jqXHR, textStatus) {
+                          alert('Error Occured');
+                          }
+
+                         });
+                         $(".produts_dropdown").show();
+           		}
+           		else {
+                   			$(".produts_dropdown").hide();
+                   		}
+           		});
+        		//party item rate relation item auto-complete end
+
+        		//dynamic click for item in party item relation autocomplete start
+                			$(".produts_dropdown").on('click','a.dynamicClick',function (e) {
+                        		e.preventDefault();
+                        		var value = $(this).text();
+
+
+                                			$(".productsautocmoplete").val(value);
+                                			$("#productsIdInput").val($(e.target).data('itemssid'));
+
+                        		$(".produts_dropdown").hide();
+                        	})
+                		//dynamic click for item in party item relation autocomplete end
+
+    // add item party rate table start
 
     $('.itemPartyRateTable').on('change', ':checkbox', function () {
     var $inpts = $(this).closest('tr').find('input:text,textarea,input:hidden').prop("disabled", !$(this).is(':checked'));
@@ -263,6 +375,13 @@ $(document).ready(function(){
 
     // add item party rate table end
 
+// add party item rate table start
+
+  $('.partyItemRateTable').on('change', ':checkbox', function () {
+    var $inpts = $(this).closest('tr').find('input:text,textarea').prop("disabled", !$(this).is(':checked'));
+    }).find(':checkbox').change();
+
+    // add party item  rate table end
     // item party rate relation change tab start
 
     $('#partyBox').hide();

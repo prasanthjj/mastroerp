@@ -2,8 +2,10 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.dao.AutoPopulateDAO;
+import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.model.request.ItemPartyRelationModel;
+import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class ItemPartyRelationController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    PartyService partyService;
 
     /**
      * Method to get itemparty page
@@ -126,6 +131,56 @@ public class ItemPartyRelationController {
             MastroLogUtils.error(ItemPartyRelationController.class, "Error occured while save itemparty : {}", e);
             throw e;
         }
+    }
+
+    /**
+     * Method to get selected party details
+     *
+     * @param model
+     * @param req
+     * @return result
+     */
+    @GetMapping("/getSelectedPartyDetails")
+    public String getSelectedPartyDetails(Model model, HttpServletRequest req) {
+        Long partyId = Long.parseLong(req.getParameter("selectedPartys"));
+        MastroLogUtils.info(ItemPartyRelationController.class, "Going to get party :{}" + partyId);
+        try {
+            Party party = partyService.getPartyById(partyId);
+            model.addAttribute("partysDetails", party);
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            return "views/itemPartyRelationMaster";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while getting party : {}", e);
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/associateProductToParty")
+    public String associateProductToParty(Model model, HttpServletRequest req) {
+
+        MastroLogUtils.info(ItemPartyRelationController.class, "Going to  associateProductToParty :{}");
+        try {
+            Long productId = Long.parseLong(req.getParameter("selectedProducts"));
+            Long partyId = Long.parseLong(req.getParameter("partysDetailssId"));
+            if (productId != null && partyId != null) {
+                productService.addPartyToProduct(productId, partyId);
+                model.addAttribute("partysDetails", partyService.getPartyById(partyId));
+
+            }
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            return "views/itemPartyRelationMaster";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(AssetController.class, "Error occured while associate party to product : {}", e);
+            throw e;
+        }
+
     }
 
 }

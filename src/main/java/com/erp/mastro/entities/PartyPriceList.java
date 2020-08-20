@@ -36,4 +36,7 @@ public class PartyPriceList {
             orphanRemoval = true)
     private ProductPartyRateRelation productPartyRateRelation;
 
+    @Column(name = "remarks")
+    private String remarks;
+
 }

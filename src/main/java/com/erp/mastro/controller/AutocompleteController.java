@@ -96,4 +96,39 @@ public class AutocompleteController {
         }
     }
 
+    /**
+     * Party autocomplete with party type
+     *
+     * @param searchTerm
+     * @param partyType
+     * @return the response
+     */
+    @RequestMapping(value = "/party/type", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse getPartysOnType(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyType") String partyType) {
+        try {
+            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete based on type : {}");
+            List<Party> partyFinal = new ArrayList<>();
+            List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
+            partyFinal = partys.stream()
+                    .filter(partysData -> (null != partysData))
+                    .filter(partysData -> (true == partysData.isEnabled()))
+                    .filter(partysData -> (partyType.equals(partysData.getPartyType())))
+                    .collect(Collectors.toList());
+            Set<PartyRequestModel> partyRequestModels = new HashSet<PartyRequestModel>();
+            for (Party party : partyFinal) {
+                PartyRequestModel partyRequestModel = new PartyRequestModel();
+                partyRequestModel.setId(party.getId());
+                partyRequestModel.setPartysname(party.getPartyName());
+                partyRequestModels.add(partyRequestModel);
+            }
+            return new GenericResponse(true, "get partys")
+                    .setProperty("partys", partyRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
 }
