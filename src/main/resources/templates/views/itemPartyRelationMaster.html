@@ -172,11 +172,11 @@
 
                                                 <td class="center">
                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="rate" class="form-control"
+                                                    <input type="text" name="rate" class="form-control" required
                                                            th:value="${productPartyRateObj.partyPriceList.rate}">
                                                     </span>
                                                      <span th:unless="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="rate" class="form-control">
+                                                    <input type="text" name="rate" class="form-control" required>
                                                     </span>
                                                 </td>
                                                   <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
@@ -191,21 +191,21 @@
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="discount" class="form-control"
+                                                    <input type="text" name="discount" class="form-control" required
                                                            th:value="${productPartyRateObj.partyPriceList.discount}">
                                                     </span>
                                                      <span th:unless="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="discount" class="form-control">
+                                                    <input type="text" name="discount" class="form-control" required>
                                                     </span>
                                                 </td>
                                                   </span>
                                                 <td class="center">
                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="creditDays" class="form-control"
+                                                    <input type="text" name="creditDays" class="form-control" required
                                                            th:value="${productPartyRateObj.partyPriceList.creditDays}">
                                                     </span>
                                                     <span th:unless="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="creditDays" class="form-control">
+                                                    <input type="text" name="creditDays" class="form-control" required>
                                                     </span>
                                                 </td>
                                                  <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
@@ -220,12 +220,12 @@
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                       <span th:if="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="allowedPriceDevPerUpper"
+                                                    <input type="text" name="allowedPriceDevPerUpper" required
                                                            th:value="${productPartyRateObj.partyPriceList.allowedPriceDevPerUpper}"
                                                            class="form-control">
                                                       </span>
                                                      <span th:unless="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="allowedPriceDevPerUpper"
+                                                    <input type="text" name="allowedPriceDevPerUpper" required
                                                            class="form-control">
                                                       </span>
                                                 </td>
@@ -242,12 +242,12 @@
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="allowedPriceDevPerLower"
+                                                    <input type="text" name="allowedPriceDevPerLower" required
                                                            th:value="${productPartyRateObj.partyPriceList.allowedPriceDevPerLower}"
                                                            class="form-control">
                                                     </span>
                                                       <span th:unless="${productPartyRateObj.partyPriceList!=null}">
-                                                    <input type="text" name="allowedPriceDevPerLower"
+                                                    <input type="text" name="allowedPriceDevPerLower" required
                                                            class="form-control">
                                                     </span>
                                                 </td>
