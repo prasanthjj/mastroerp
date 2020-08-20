@@ -40,9 +40,11 @@ $(document).ready(function(){
                             number:true
                         },
            allowedPriceDevPerUpper: {
+                    required: true,
                     number:true
                               },
           allowedPriceDevPerLower: {
+                  required: true,
                   number:true
               }
          }
@@ -62,9 +64,11 @@ $(document).ready(function(){
                                        number:true
                                    },
                       allowedPriceDevPerUpper: {
+                               required: true,
                                number:true
                                          },
                      allowedPriceDevPerLower: {
+                            required: true,
                              number:true
                          }
         }
