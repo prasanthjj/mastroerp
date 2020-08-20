@@ -112,8 +112,10 @@ public class UserController {
 
         if(mastroApplicationUtils.isAdminAuthority(auth)) {
 
+            Employee employee = userDetails.getEmployee();
+            String organisation = employee.getOrganisation().getName();
 
-           session.setAttribute("adminBranch", "organisation");
+           session.setAttribute("adminBranch", organisation);
            session.setAttribute("selectedBranch", currentBranch);
            }
          else {

@@ -95,6 +95,6 @@ public class BranchRegistration {
     @Column(name = "cin_no")
     private String cinNo;
 
-    @Column(name = "cin_date")
-    private Date cinDate;
+    @Column(name = "gst_date")
+    private Date gstDate;
 }

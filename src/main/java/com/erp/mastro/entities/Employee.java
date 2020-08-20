@@ -47,6 +47,11 @@ public class Employee {
             orphanRemoval = true)
     private User user;
 
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "organisation_id")
+    private Organisation organisation;
+
 /*    public Employee() { }
 
     public Employee(Long id, String firstName, String lastName, String email, String contactNumber) {

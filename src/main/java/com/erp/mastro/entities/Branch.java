@@ -46,6 +46,9 @@ public class Branch {
     @Column(name = "phone_no")
     private String phoneNo;
 
+    @Column(name = "land_no")
+    private String landNo;
+
     @Column(name = "address")
     private String address;
 

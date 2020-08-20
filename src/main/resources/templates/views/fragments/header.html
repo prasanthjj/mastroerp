@@ -6,7 +6,6 @@
     </div>
     <ul class="nav navbar-top-links navbar-right">
         <li >
-            <script>alert(${adminModule}); </script>
             <a class="" href="#"><span th:switch="${adminModule== 'adminModule' || masterModule== 'masterModule' || #httpServletRequest.requestURI=='/home'}? ${true} : ${false}">
             <span th:case="${false}">Branch : <span th:text="${session.selectedBranch}"></span></span>
             <span th:case="${true}"><span th:text="${session.adminBranch}"></span></span>

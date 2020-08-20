@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Component</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet" th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" th:src="@{/resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css}">
+  <!-- Sweet Alert -->
+  <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+    
+            <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom ">
+                <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+            </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Component</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <strong>Salary Components</strong>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Add Component</strong>
+                    </li>
+                    
+                </ol>
+            </div>
+            <div class="col-lg-5 ">
+               
+                <ul class="last-login m-t-lg">
+                    <li class="">
+                        Your IP Address ::1  (Last Login at :07/06/2020  06:35:00)
+                    </li>
+                </ul>
+                <ul class="last-login m-t-xs">
+                    <li class="">
+                        No Of Active User : 1
+                    </li>
+                </ul>
+               
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title  ">
+                        <div class="ibox-tools">
+                            
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="salary_components_master.html" id="addSalaryComponentsForm">
+                            <div class="row">
+                                <div class="col-lg-6 b-r">
+                                    <div class="form-group  row">
+                                        <label class="col-sm-4 col-form-label">Component Type<i class="fa fa-asterisk "></i></label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="componentType">
+                                                <option value="">Select Component Type</option>
+                                                <option value="Earnings">Earnings</option>
+                                                <option value="Reimbursement">Reimbursement</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-4 col-form-label">Component Name<i class="fa fa-asterisk "></i></label>
+                                        <div class="col-sm-8">
+                                           <input type="text" class="form-control" name="componentName" />
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-4 col-form-label">Name in Payslip<i class="fa fa-asterisk "></i></label>
+                                        <div class="col-sm-8">
+                                           <input type="text" class="form-control" name="nameInPayslip" />
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group  row">
+                                       
+                                        <label class="col-sm-4 col-form-label">Calculation Type<i class="fa fa-asterisk "></i></label>
+                                        <div class="col-sm-8">
+                                            
+                                            <input type="radio" checked id="flatAmount" value="option1" name="calculationType"> Flat Amount <br>
+                                            <input type="radio"  value="option1" name="calculationType"> Percentage of CTC
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group row" id="calculationAmount">
+                                        <label class="col-sm-4 col-form-label">Enter Amount</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group m-b">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-addon">&#8377;</span>
+                                                </div>
+                                                <input type="text" placeholder="" class="form-control" name="calculationAmountRs">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="calculationPercentage">
+                                        <label class="col-sm-4 col-form-label">Enter Percentage</label>
+                                        <div class="col-sm-8">
+                                            <input class="percentageCalculation" type="text" value="" name="calculationAmountPercentage">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="footer ">
+            <div class="float-right">
+                Designed and Developed By <strong>Halo Technology Solutions</strong> 
+            </div>
+            <div>
+                <strong>Copyright</strong> Mastro Metals &copy; 2020
+            </div>
+        </div>
+
+        </div>
+      
+    </div>
+    <div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="branchListForm">
+                <div class="modal-content animated flipInY">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Branch List</h4>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                    <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+    
+                        <div class="col-sm-8">
+                            <select class="form-control" required>
+                                <option value="" >Select branch </option>
+                                <option>Thrissur</option>
+                                <option>Ernakulam</option>
+                                <option>Kozhikode</option>
+                                <option>Kannur</option>
+                            </select>
+                    </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+    </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+    <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+    <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+    <script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+    <script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+    <!-- jQuery UI -->
+    <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js" th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+    <script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+    <!-- Tags Input -->
+  <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js" th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<!-- TouchSpin -->
+<script src="../resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js" th:src="@{/resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+</body>
+</html>
