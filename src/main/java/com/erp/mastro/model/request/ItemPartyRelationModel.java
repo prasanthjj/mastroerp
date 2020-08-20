@@ -15,4 +15,5 @@ public class ItemPartyRelationModel {
     private Double allowedPriceDevPerUpper;
     private Double allowedPriceDevPerLower;
     private Integer creditDays;
+    private String remarks;
 }

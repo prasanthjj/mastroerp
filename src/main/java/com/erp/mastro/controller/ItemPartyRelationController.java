@@ -159,6 +159,13 @@ public class ItemPartyRelationController {
 
     }
 
+    /**
+     * method to associate product to party
+     *
+     * @param model
+     * @param req
+     * @return the result list
+     */
     @PostMapping("/associateProductToParty")
     public String associateProductToParty(Model model, HttpServletRequest req) {
 
@@ -181,6 +188,24 @@ public class ItemPartyRelationController {
             throw e;
         }
 
+    }
+
+    @PostMapping("/savePartyItem")
+    public String savePartyItem(@ModelAttribute("itemPartyForm") @Valid ItemPartyRelationModel itemPartyRelationModel, HttpServletRequest request, Model model) {
+        MastroLogUtils.info(ItemPartyRelationController.class, "Going to save itemparty datas : {}");
+        try {
+
+            String[] productPartyRateIds = request.getParameterValues("productPartyRateId");
+            String[] ratess = request.getParameterValues("rate");
+            String[] remarkss = request.getParameterValues("remarks");
+
+            productService.saveOrUpdatePartyItems(productPartyRateIds, ratess, remarkss);
+
+            return "redirect:/master/getItemPartys";
+        } catch (Exception e) {
+            MastroLogUtils.error(ItemPartyRelationController.class, "Error occured while save partyitem relations : {}", e);
+            throw e;
+        }
     }
 
 }

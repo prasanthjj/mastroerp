@@ -34,4 +34,6 @@ public interface ProductService {
     void saveOrUpdateItemParty(String[] productPartyRateIds, String[] rates, String[] discounts, String[] creditDays, String[] allowedPriceUpper, String[] allowedDevLower);
 
     List<ProductPartyRateRelation> getAllProductPartyRateRelation();
+
+    void saveOrUpdatePartyItems(String[] productPartyRateIds, String[] rates, String[] remarks);
 }
