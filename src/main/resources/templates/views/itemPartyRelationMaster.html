@@ -313,6 +313,28 @@
                                 </div>
                                 <div class="hr-line-dashed"></div>
                             </form>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Party
+                                        Name</label>
+
+                                        <div class="col-sm-8 m-t-sm"><p><span th:if="${partysDetails!= null}"><b
+                                                th:text="${partysDetails.partyName}">.47 Red 3.05mtr (10')</b></span>
+                                        </p></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Party
+                                        Code</label>
+
+                                        <div class="col-sm-8 m-t-sm"><p class=""><span
+                                                th:if="${partysDetails!= null}"><b
+                                                th:text="${partysDetails.id}">.47 Red 3.05mtr (10')</b></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-12 text-right m-b-sm ">
                                 <div class="btn-group">
                                     <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
