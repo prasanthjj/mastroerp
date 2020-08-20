@@ -171,43 +171,85 @@
                                                 </td>
 
                                                 <td class="center">
+                                                    <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                    <input type="text" name="rate" class="form-control"
+                                                           th:value="${productPartyRateObj.partyPriceList.rate}">
+                                                    </span>
+                                                     <span th:unless="${productPartyRateObj.partyPriceList!=null}">
                                                     <input type="text" name="rate" class="form-control">
+                                                    </span>
                                                 </td>
                                                   <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                  <input type="hidden" name="discount" class="form-control">
+                                                    <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                        <span th:text="${productPartyRateObj.partyPriceList.discount}"></span>
+                                                    </span>
+
                                                 </td>
                                                   </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
+                                                    <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                    <input type="text" name="discount" class="form-control"
+                                                           th:value="${productPartyRateObj.partyPriceList.discount}">
+                                                    </span>
+                                                     <span th:unless="${productPartyRateObj.partyPriceList!=null}">
                                                     <input type="text" name="discount" class="form-control">
+                                                    </span>
                                                 </td>
                                                   </span>
                                                 <td class="center">
+                                                    <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                    <input type="text" name="creditDays" class="form-control"
+                                                           th:value="${productPartyRateObj.partyPriceList.creditDays}">
+                                                    </span>
+                                                    <span th:unless="${productPartyRateObj.partyPriceList!=null}">
                                                     <input type="text" name="creditDays" class="form-control">
+                                                    </span>
                                                 </td>
                                                  <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
-                                              <input type="hidden" name="allowedPriceDevPerUpper" class="form-control"
-                                              >
+                                              <input type="hidden" name="allowedPriceDevPerUpper" class="form-control">
+                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                        <span th:text="${productPartyRateObj.partyPriceList.allowedPriceDevPerUpper}"></span>
+                                                    </span>
+
                                                 </td>
                                                  </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
+                                                      <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                    <input type="text" name="allowedPriceDevPerUpper"
+                                                           th:value="${productPartyRateObj.partyPriceList.allowedPriceDevPerUpper}"
+                                                           class="form-control">
+                                                      </span>
+                                                     <span th:unless="${productPartyRateObj.partyPriceList!=null}">
                                                     <input type="text" name="allowedPriceDevPerUpper"
                                                            class="form-control">
+                                                      </span>
                                                 </td>
                                                  </span>
                                                  <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                     <input type="hidden" name="allowedPriceDevPerLower"
                                                            class="form-control">
+                                                     <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                        <span th:text="${productPartyRateObj.partyPriceList.allowedPriceDevPerLower}"></span>
+                                                    </span>
                                                 </td>
                                                  </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
+                                                    <span th:if="${productPartyRateObj.partyPriceList!=null}">
+                                                    <input type="text" name="allowedPriceDevPerLower"
+                                                           th:value="${productPartyRateObj.partyPriceList.allowedPriceDevPerLower}"
+                                                           class="form-control">
+                                                    </span>
+                                                      <span th:unless="${productPartyRateObj.partyPriceList!=null}">
                                                     <input type="text" name="allowedPriceDevPerLower"
                                                            class="form-control">
+                                                    </span>
                                                 </td>
                                                  </span>
                                             </tr>
