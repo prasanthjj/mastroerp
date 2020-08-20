@@ -405,26 +405,51 @@ public class ProductServiceImpl implements ProductService {
         MastroLogUtils.info(ProductService.class, "Going to save product party relation details {}" + productPartyRateIds);
 
         for (int i = 0; i < productPartyRateIds.length; i++) {
-            PartyPriceList partyPriceList = new PartyPriceList();
-
+            PartyPriceList partyPriceList;
             ProductPartyRateRelation productPartyRateRelation = productPartyRateRelationRepository.findById(Long.parseLong(productPartyRateIds[i])).get();
-            Party party = productPartyRateRelation.getParty();
-            partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
-            partyPriceList.setRate(Double.parseDouble(rates[i]));
-            if (party.getPartyType().equals("Supplier")) {
-                partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
-                partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
-                partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
+            if (productPartyRateRelation.getPartyPriceList() == null) {
+                partyPriceList = new PartyPriceList();
+                Party party = productPartyRateRelation.getParty();
+                partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
+                partyPriceList.setRate(Double.parseDouble(rates[i]));
+                if (party.getPartyType().equals("Supplier")) {
+                    partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
+                    partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
+                    partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
+                } else {
+                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .collect(Collectors.toSet());
+                    for (PriceList priceList : priceListSet) {
+                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
+                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
+                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
+                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                        }
+                    }
+                }
             } else {
-                Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
-                        .filter(priceListData -> (null != priceListData))
-                        .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
-                        .collect(Collectors.toSet());
-                for (PriceList priceList : priceListSet) {
-                    if (party.getCategoryType().equals(priceList.getCategoryType())) {
-                        partyPriceList.setDiscount(priceList.getDiscountPercentage());
-                        partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
-                        partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                MastroLogUtils.info(ProductService.class, "Going to edit product party relation details {}" + productPartyRateIds);
+                partyPriceList = productPartyRateRelation.getPartyPriceList();
+                Party party = productPartyRateRelation.getParty();
+                partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
+                partyPriceList.setRate(Double.parseDouble(rates[i]));
+                if (party.getPartyType().equals("Supplier")) {
+                    partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
+                    partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
+                    partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
+                } else {
+                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .collect(Collectors.toSet());
+                    for (PriceList priceList : priceListSet) {
+                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
+                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
+                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
+                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                        }
                     }
                 }
             }

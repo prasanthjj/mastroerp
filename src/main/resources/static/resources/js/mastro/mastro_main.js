@@ -258,7 +258,7 @@ $(document).ready(function(){
 
 
     $('.itemPartyRateTable').on('change', ':checkbox', function () {
-    var $inpts = $(this).closest('tr').find('input:text,textarea').prop("disabled", !$(this).is(':checked'));
+    var $inpts = $(this).closest('tr').find('input:text,textarea,input:hidden').prop("disabled", !$(this).is(':checked'));
     }).find(':checkbox').change();
 
     // add item party rate table end

@@ -175,7 +175,7 @@
                                                 </td>
                                                   <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
-                                                 <input type="hidden" name="discount" class="form-control" value="">
+                                                 <input type="hidden" name="discount" class="form-control">
                                                 </td>
                                                   </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
@@ -189,7 +189,7 @@
                                                  <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                               <input type="hidden" name="allowedPriceDevPerUpper" class="form-control"
-                                                     value="">
+                                              >
                                                 </td>
                                                  </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
@@ -201,7 +201,7 @@
                                                  <span th:if="${productPartyRateObj.party.partyType=='Customer'}">
                                                 <td class="center">
                                                     <input type="hidden" name="allowedPriceDevPerLower"
-                                                           class="form-control" value="">
+                                                           class="form-control">
                                                 </td>
                                                  </span>
                                                  <span th:unless="${productPartyRateObj.party.partyType=='Customer'}">
