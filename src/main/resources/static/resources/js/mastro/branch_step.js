@@ -71,7 +71,37 @@ $(document).ready(function(){
                        element.before(error);
                    },
                    rules: {
-
+                            branchName: {
+                                required: true,
+                            },
+                            emailId: {
+                              required: true,
+                            },
+                            cityName: {
+                                required: true,
+                            },
+                            phoneNo: {
+                                 maxlength:12,
+                                 number: true,
+                                 required: true,
+                                        },
+                             countryName: {
+                             required: true,
+                             },
+                             branchAddress: {
+                              required: true,
+                              },
+                               stateName: {
+                              required: true,
+                             },
+                              pinCode: {
+                             required: true,
+                            maxlength:6,
+                            number: true
+                              },
+                               gstIn: {
+                             required: true,
+                            },
 
                     }
                });
@@ -145,15 +175,46 @@ $("#editBranchform").steps({
         form.submit();
     }
 }).validate({
-            errorPlacement: function (error, element)
-            {
-                element.before(error);
-            },
-            rules: {
-                
-               
-             }
-        });
+                      errorPlacement: function (error, element)
+                      {
+                          element.before(error);
+                      },
+                      rules: {
+                               branchName: {
+                                   required: true,
+                               },
+                               emailId: {
+                                required: true,
+
+                               },
+                               cityName: {
+                                   required: true,
+                               },
+                               phoneNo: {
+                                    maxlength:12,
+                                    number: true,
+                                    required: true
+                                           },
+                                countryName: {
+                                required: true,
+                                },
+                                branchAddress: {
+                                 required: true,
+                                 },
+                                  stateName: {
+                                 required: true,
+                                },
+                                 pinCode: {
+                                required: true,
+                               maxlength:6,
+                               number: true
+                                 },
+                                gstIn: {
+                                required: true,
+                               },
+
+                       }
+                  });
 //edit branch end
 
 // View branch start

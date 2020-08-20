@@ -13,8 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.erp.mastro.constants.Constants.ROLE_ADMIN;
-import static com.erp.mastro.constants.Constants.ROLE_SUPERADMIN;
+import static com.erp.mastro.constants.Constants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -67,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addEmployee/**").permitAll()
                 .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
                 .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/hr/**").hasAnyRole(ROLE_HR, ROLE_ADMIN)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
