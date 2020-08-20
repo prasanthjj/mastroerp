@@ -6,7 +6,9 @@ public class Constants {
     public static String ROLE_SUPERADMIN = "SUPERADMIN";
     public static String ROLE_HR = "HR";
 
-    public static String TEMPLATE_SAMPLE = "email/welcome.html";
+    public static String TEMPLATE_WELCOMEMAIL = "email/welcome.html";
+
+    public static String TEMPLATE_FORGOTPASSWORD = "views/passwordreset.html";
 
     public static final String PRODUCT = "productPic";
 }
