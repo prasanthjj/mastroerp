@@ -388,7 +388,6 @@ $(document).ready(function(){
     // add party item  rate table end
     // item party rate relation change tab start
 
-    $('#partyBox').hide();
 
     $('.relationBtn').click(function (event) {
         event.preventDefault();
@@ -413,7 +412,7 @@ $(document).ready(function(){
             }
         }
     });
-    // item party rate relation change tab start
+    // item party rate relation change tab end
        $(function(datepicker) {
 
        //Add assets dates Start
