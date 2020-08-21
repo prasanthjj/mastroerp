@@ -52,8 +52,6 @@ public class PriceListServiceImpl implements PriceListService {
         } else {
             PriceList priceList = priceListRepository.findById(priceListRequestModel.getId()).get();
             priceList.setPricelistName(priceListRequestModel.getPricelistName());
-            priceList.setCategoryType(priceListRequestModel.getCategoryType());
-            priceList.setPartyType(priceListRequestModel.getPartyType());
             priceList.setDiscountPercentage(priceListRequestModel.getDiscountPercentage());
             priceList.setAllowedPriceDevPerUpper(priceListRequestModel.getAllowedPriceDevPerUpper());
             priceList.setAllowedPriceDevPerLower(priceListRequestModel.getAllowedPriceDevPerLower());

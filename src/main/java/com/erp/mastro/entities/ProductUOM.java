@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
+
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
@@ -25,9 +27,9 @@ public class ProductUOM {
     @JoinColumn(name = "uom_id")
     private Uom uom;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
-    private Product product;
+    private Set<Product> product;
 
 }

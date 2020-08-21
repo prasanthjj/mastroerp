@@ -61,7 +61,7 @@ public class Product extends Auditable<String>{
             orphanRemoval = true)
     private Set<ProductImages> productImages = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")})
     private Set<ProductUOM> productUOMSet = new HashSet<>();
@@ -77,12 +77,9 @@ public class Product extends Auditable<String>{
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "product_party",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "party_id")}
-    )
-    Set<Party> parties = new HashSet<>();
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
 }

@@ -345,6 +345,9 @@ $("#createAssetsForm").steps({
                          partyName: {
                             required:true
                          },
+                          categoryType: {
+                                 required:true
+                                     },
                      type:{
                      required:true,
                     },
