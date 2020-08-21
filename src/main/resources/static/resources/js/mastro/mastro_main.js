@@ -144,6 +144,21 @@ $(document).ready(function(){
     },
 
 });
+
+// Add stock details Start
+
+$("#addStockDetailsForm").validate({
+    rules: {
+        currentStock: {
+            required: true,
+        },
+        openingStock: {
+           required: true,
+       },
+
+    },
+});
+//Add stock details End
 //Add item End
 // item party rate relation add party auto-complete start
  $.get('../resources/js/api/typehead_collection.json', function(data){
@@ -825,7 +840,24 @@ $(".item_head").keyup(function () {
                           });
 
 
-$("#indtype").click(function (e) {
+                          //Remove stock details start
+                          $('.removeStockDetails').click(function () {
+                              swal({
+                                  title: "Are you sure?",
+                                  text: "You will not be able to recover this Item!",
+                                  type: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#0094db",
+                                  confirmButtonText: "Yes, delete it!",
+                                  closeOnConfirm: false
+                              }, function () {
+                                  swal("Deleted!", "Item has been deleted.", "success");
+                              });
+                          });
+                          //Remove stock details End
+
+//Industry type start
+                       $("#indtype").click(function (e) {
 
                                                 e.preventDefault();
 
@@ -860,7 +892,7 @@ $("#indtype").click(function (e) {
                                                                      });
                           });
 
-
+//Industry type end
 
 
 

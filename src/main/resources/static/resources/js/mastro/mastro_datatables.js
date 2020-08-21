@@ -135,5 +135,15 @@ $('.dataTables-itemParty').DataTable({
 });
 //item party rate  Data-table End
 
+//stock details Data-table start
+$('.dataTables-stockDetails').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [    ]
+});
+//stock details  Data-table End
+
+
 });
 

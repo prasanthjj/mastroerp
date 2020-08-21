@@ -123,11 +123,13 @@
 
             </li>
 
-            <li>
+            <li class="active" th:if="${inventoryModule== 'inventoryModule'}">
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Stock Details</a></li>
+                    <li th:if="${stockTab== 'stock'}" class="active"><a th:href="@{/inventory/getStock}">Stock
+                        Details</a></li>
+                    <li th:unless="${stockTab== 'stock'}"><a th:href="@{/inventory/getStock}">Stock Details</a></li>
                     <li><a href="#">Stock Transfer</a></li>
                     <li><a href="#">Indent</a></li>
                     <li><a href="#">Gate Pass</a></li>
