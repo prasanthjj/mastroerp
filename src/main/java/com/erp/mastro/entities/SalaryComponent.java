@@ -28,7 +28,9 @@ public class SalaryComponent {
     private String calculation_Type;
 
     @Column(name = "amount")
-    private String amount;
+    private Double amount;
 
+    @Column(name = "status", nullable = false)
+    protected boolean status;
 
 }

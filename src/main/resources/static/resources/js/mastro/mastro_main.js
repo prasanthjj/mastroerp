@@ -153,7 +153,7 @@ $(document).ready(function(){
 
 
 // add salary components percentage calculation stat
-$(".percentageCalculation").TouchSpin({
+/*$(".percentageCalculation").TouchSpin({
 min:0,
 max:100,
 step:0.1,
@@ -163,7 +163,7 @@ maxboostedstep:10,
 postfix:'%',
 buttondown_class:'btn btn-white',
 buttonup_class:'btn btn-white'
-});
+});*/
 $("#calculationPercentage").hide();
 $("input[name='calculationType']").click(function() {
 if ($("#flatAmount").is(":checked")) {
@@ -851,7 +851,7 @@ $("#calculationAmount").hide();
         });
     });
     // Remove subcategory end
-
+/*
     //Remove salary components start
     $('.removeSalaryComponents').click(function () {
         swal({
@@ -866,7 +866,7 @@ $("#calculationAmount").hide();
             swal("Deleted!", "Item has been deleted.", "success");
         });
     });
-    //Remove salary components End
+    //Remove salary components End*/
 
 //Enable Product start
                       $('.enableProduct').click(function () {

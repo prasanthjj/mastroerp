@@ -46,20 +46,8 @@
                     
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-               
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1  (Last Login at :07/06/2020  06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-               
-            </div>
+
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -72,7 +60,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <form action="salary_components_master.html" id="addSalaryComponentsForm">
+                        <form  id="addSalaryComponentsForm" th:action="@{/hr/saveSalryComponent}" th:object="${salryComponentForm}"    name="salryComponentForm" method="post" class="wizard-big" >
                             <div class="row">
                                 <div class="col-lg-6 b-r">
                                     <div class="form-group  row">
@@ -89,14 +77,14 @@
                                     <div class="form-group  row">
                                         <label class="col-sm-4 col-form-label">Component Name<i class="fa fa-asterisk "></i></label>
                                         <div class="col-sm-8">
-                                           <input type="text" class="form-control" name="componentName" />
+                                            <input  type="text" class="form-control "  name="componentName" th:field="*{componentName}">
                                         </div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
                                     <div class="form-group  row">
                                         <label class="col-sm-4 col-form-label">Name in Payslip<i class="fa fa-asterisk "></i></label>
                                         <div class="col-sm-8">
-                                           <input type="text" class="form-control" name="nameInPayslip" />
+                                            <input  type="text" class="form-control "  name="payslipName" th:field="*{payslipName}">
                                         </div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
@@ -107,8 +95,8 @@
                                         <label class="col-sm-4 col-form-label">Calculation Type<i class="fa fa-asterisk "></i></label>
                                         <div class="col-sm-8">
                                             
-                                            <input type="radio" checked id="flatAmount" value="option1" name="calculationType"> Flat Amount <br>
-                                            <input type="radio"  value="option1" name="calculationType"> Percentage of CTC
+                                            <input type="radio"  checked id="flatAmount" th:value=${"Flat-Amount"} name="calculationType"> Flat Amount <br>
+                                            <input type="radio" th:value=${"Percentage"} name="calculationType"> Percentage of CTC
                                         </div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
@@ -119,14 +107,15 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-addon">&#8377;</span>
                                                 </div>
-                                                <input type="text" placeholder="" class="form-control" name="calculationAmountRs">
+                                                <!--<input type="text" class="form-control " th:field="*{amount}" name="amount">-->
+                                                <input type="text" class="form-control " th:field="*{amount}" name="amount">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row" id="calculationPercentage">
                                         <label class="col-sm-4 col-form-label">Enter Percentage</label>
                                         <div class="col-sm-8">
-                                            <input class="percentageCalculation" type="text" value="" name="calculationAmountPercentage">
+                                            <input class="percentageCalculation" type="text" th:field="*{percentageAmount}">
                                         </div>
                                     </div>
                                     
@@ -145,52 +134,12 @@
         </div>
 
 
-        <div class="footer ">
-            <div class="float-right">
-                Designed and Developed By <strong>Halo Technology Solutions</strong> 
-            </div>
-            <div>
-                <strong>Copyright</strong> Mastro Metals &copy; 2020
-            </div>
-        </div>
+                <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
 
         </div>
       
     </div>
-    <div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="branchListForm">
-                <div class="modal-content animated flipInY">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Branch List</h4>
-                        
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                    <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-    
-                        <div class="col-sm-8">
-                            <select class="form-control" required>
-                                <option value="" >Select branch </option>
-                                <option>Thrissur</option>
-                                <option>Ernakulam</option>
-                                <option>Kozhikode</option>
-                                <option>Kannur</option>
-                            </select>
-                    </div>
-            </div>
-            <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-    </form>
-    </div>
-    </div>
+    <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
     <!-- Mainly scripts -->
     <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
     <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
@@ -209,5 +158,19 @@
   <script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js" th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
 <!-- TouchSpin -->
 <script src="../resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js" th:src="@{/resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+<script>
+    // add salary components percentage calculation stat
+$(".percentageCalculation").TouchSpin({
+    min: 0,
+    max: 100,
+    step: 0.1,
+    decimals: 2,
+    boostat: 5,
+    maxboostedstep: 10,
+    postfix: '%',
+    buttondown_class: 'btn btn-white',
+    buttonup_class: 'btn btn-white'
+});
+</script>
 </body>
 </html>

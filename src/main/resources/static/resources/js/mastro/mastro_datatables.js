@@ -143,40 +143,23 @@ $('.dataTables-partyItem').DataTable({
 });
 //party item rate  Data-table End
 
-//Department Data-table start
+//Department  Data-table start
 $('.dataTables-department').DataTable({
     pageLength: 25,
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
-    buttons: [
-        { extend: 'copy'},
-        {extend: 'csv'},
-        {extend: 'excel', title: 'ExampleFile'},
-        {extend: 'pdf', title: 'ExampleFile'},
-
-        {extend: 'print',
-         customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-
-                $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-        }
-        }
-    ]
-
+    buttons: [    ]
 });
-//Department  Data-table End
+//Department   Data-table End
 
-//salary components Data-table start
+//Salary  Data-table start
 $('.dataTables-salaryComponents').DataTable({
     pageLength: 25,
     responsive: true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [    ]
 });
-//salary components Data-table End
+//Salary   Data-table End
 
 });
 

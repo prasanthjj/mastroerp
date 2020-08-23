@@ -112,10 +112,10 @@ public class UserController {
 
         if(mastroApplicationUtils.isAdminAuthority(auth)) {
 
-            Employee employee = userDetails.getEmployee();
-            String organisation = employee.getOrganisation().getName();
+           /*Employee employee = userDetails.getEmployee();
+           String organisation = employee.getOrganisation().getName();*/
 
-           session.setAttribute("adminBranch", organisation);
+           session.setAttribute("adminBranch", "MASTRO");
            session.setAttribute("selectedBranch", currentBranch);
            }
          else {
@@ -162,7 +162,7 @@ public class UserController {
      */
     @RequestMapping("/admin/addUser")
     public String addUser(Model model) {
-        MastroLogUtils.info(UserController.class, "Going to add User :{}");
+        MastroLogUtils.info(UserController.class, "Going to create User :{}");
         try {
 
             List<String> emailList = new ArrayList<String>();

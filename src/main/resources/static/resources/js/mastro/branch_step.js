@@ -217,6 +217,7 @@ $("#editBranchform").steps({
                   });
 //edit branch end
 
+
 // View branch start
 $("#viewBranchform").steps({
     bodyTag: "fieldset",

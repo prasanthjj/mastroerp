@@ -79,66 +79,42 @@
                         <th class="mastro-blue-bg txt-white">Component Name</th>
                         <th>Component Type</th>
                         <th>Calculation Type</th>
-                       
                         <th>Status</th>
                         <th>Controls</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="gradeX">
-                        <td>Basic</td>
-                        <td>Earnings</td>
-                        <td>Fixed; 50% of CTC</td>
-                        <td>Active</td>
+                    <tr class="gradeX" th:each="salaryObj,iterator:${salaryComponentList}">
+                        <td th:text="${salaryObj.componentName}"></td>
+                        <td th:text="${salaryObj.componentType}">
+                        <td th:text="${salaryObj.calculation_Type}"></td>
+                        <td><span th:if="${salaryObj.status} == true">Active</span>
+                            <span th:unless="${salaryObj.status} == true">Deactive</span>
+                        </td>
                         <td class="center">
-                             <div class="btn-group">
+                            <div class="btn-group">
                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item font-bold" href="#" ><i class="fa fa-eye"></i> Browse</a></li>
+                                    <li><a class="dropdown-item font-bold"   th:href="@{/hr/viewSalaryComponent?salrycomponentid=__${salaryObj.id}__}"><i class="fa fa-eye"></i> Browse</a></li>
                                     <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold" href="#"><i class="fa fa-edit"></i> Manage</a></li>
+                                    <li><a class="dropdown-item font-bold"  th:href="@{/hr/getSalaryComponentForEdit?salrycomponentid=__${salaryObj.id}__}"><i class="fa fa-edit"></i> Manage</a></li>
                                     <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold removeSalaryComponents"  href="#"><i class="fa fa-trash"></i> Remove</a></li>
+                                   <!-- <li><a class="dropdown-item font-bold removeSalaryComponents"  href="#"><i class="fa fa-trash"></i> Remove</a></li>-->
+                                    <span th:if="${salaryObj.status} != true">
+                                    <li><a class="dropdown-item font-bold activatecomponent txt-white"  href="#" th:data-salrycomponentid="${salaryObj.id}"><i class="fa fa-user"></i> Acitive</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
+                                    <span th:unless="${salaryObj.status} != true">
+                                    <li><a class="dropdown-item font-bold deactivecomponent txt-white "  href="#" th:data-salrycomponentid="${salaryObj.id}"><i class="fa fa-user"></i> Deactive</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    </span>
                                 </ul>
                             </div>
                         </td>
+
+
                     </tr>
-                    <tr class="gradeX">
-                        <td>Fuel Reimbursement</td>
-                        <td>Reimbursements</td>
-                        <td>Fuel Reimbursement</td>
-                        <td>Active</td>
-                        <td class="center">
-                             <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item font-bold" href="#" ><i class="fa fa-eye"></i> Browse</a></li>
-                                    <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold" href="#"><i class="fa fa-edit"></i> Manage</a></li>
-                                    <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold removeSalaryComponents"  href="#"><i class="fa fa-trash"></i> Remove</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="gradeX">
-                        <td>House Rent Allowance</td>
-                        <td>Earnings</td>
-                        <td>Fixed; 50% of Basic</td>
-                        <td>Active</td>
-                        <td class="center">
-                             <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item font-bold" href="#" ><i class="fa fa-eye"></i> Browse</a></li>
-                                    <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold" href="#"><i class="fa fa-edit"></i> Manage</a></li>
-                                    <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item font-bold removeSalaryComponents"  href="#"><i class="fa fa-trash"></i> Remove</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+
                     </tbody>
                     <tfoot>
                    
@@ -154,14 +130,7 @@
         </div>
 
 
-        <div class="footer ">
-            <div class="float-right">
-                Designed and Developed By <strong>Halo Technology Solutions</strong>
-            </div>
-            <div>
-                <strong>Copyright</strong> Mastro Metals &copy; 2020
-            </div>
-        </div>
+                <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
 
         </div>
       
@@ -185,7 +154,8 @@
     <!-- jQuery UI -->
     <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js" th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
     <script src="../resources/js/plugins/validate/jquery.validate.min.js" th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
-    <script src="../resources/js/mastro/mastro_main.js" th:src="@{resources/js/mastro/mastro_main.js}"></script>
+    <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+    <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
     <script src="../resources/js/mastro/mastro_datatables.js" th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
 </body>
 </html>

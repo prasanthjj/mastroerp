@@ -201,6 +201,75 @@ $(document).ready(function(){
    });
     //End Deactive Department
 
+      //Activate Salary Component
+
+            $('.activatecomponent').click(function () {
+                var salryComponentId=$(this).data('salrycomponentid');
+                alert(salryComponentId);
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to activate user!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#0094db",
+                    confirmButtonText: "Yes, activated!",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: '/hr/activateOrDeactivateSalaryComponent',
+                        type: 'GET',
+                        dataType : 'json',
+                        data: { 'salryComponentId':salryComponentId },
+                        success: function(data) {
+                            if(data.success) {
+                                var redirectionUrl= "/hr/getSalaryComponent";
+                                window.location.href = redirectionUrl;
+                            }
+                        },
+                        error: function(jqXHR, textStatus) {
+                            alert('Error Occured');
+                        }
+                    });
+                    /* swal("Activated!", "Item has been Activated.", "success");*/
+                });
+            });
+    // End salry Component
+
+
+     //Deactivate Salry Component
+       $('.deactivecomponent').click(function () {
+           var salryComponentId=$(this).data('salrycomponentid');
+
+            swal({
+                  title: "Are you sure?",
+                  text: "You want to deactivate Salary component!",
+                   type: "warning",
+                   showCancelButton: true,
+                   confirmButtonColor: "#0094db",
+                   confirmButtonText: "Yes, deactivate it!",
+                   closeOnConfirm: false
+                      }, function () {
+
+                       $.ajax({
+                               url: '/hr/activateOrDeactivateSalaryComponent',
+                               type: 'GET',
+                               dataType : 'json',
+                                data: { 'salryComponentId': salryComponentId },
+                                success: function(data){
+                                if(data.success) {
+                                          var redirectionUrl= "/hr/getSalaryComponent";
+                                           window.location.href = redirectionUrl;
+                                         }
+                                        },
+                                 error: function(jqXHR, textStatus) {
+                                  alert('Error Occured');
+                                      }
+                                     });
+                               //swal("Activated!", "Item has been Activated.", "success");
+              });
+       });
+        //End Deactive Salary Component
+
   // Add Branch start
     $(function(datepicker) {
 

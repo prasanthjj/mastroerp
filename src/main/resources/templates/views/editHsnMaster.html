@@ -42,7 +42,7 @@
                         <a href="#">Master</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="hsn_master.html">HSN List </a>
+                        <a th:href="@{/master/getHSN}">HSN List </a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Manage HSN </strong>
@@ -141,11 +141,20 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST (%) <i
+                                                class="fa fa-asterisk "></i></label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control" onfocusout="igstFunction()" id="igst" required
+                                                                         th:field="*{igst}">
+                                            </div>
+                                        </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">SGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control"  id="sgst"required readonly
                                                                          th:field="*{sgst}">
                                             </div>
                                         </div>
@@ -153,19 +162,12 @@
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">CGST (%) <i
                                                 class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
+                                            <div class="col-sm-8"><input type="text" class="form-control" id="cgst" required readonly
                                                                          th:field="*{cgst}">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
-                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">IGST (%) <i
-                                                class="fa fa-asterisk "></i></label>
 
-                                            <div class="col-sm-8"><input type="text" class="form-control" required
-                                                                         th:field="*{igst}">
-                                            </div>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">UTGST
                                             (%)</label>
 
@@ -228,6 +230,17 @@
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 <script src="../resources/js/plugins/validate/jquery.validate.min.js"
         th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+
+<script>
+    function igstFunction() {
+  var igstVar = document.getElementById("igst").value;
+  var cgstVar = igstVar/2;
+   $('#cgst').val(cgstVar);
+   $('#sgst').val(cgstVar);
+
+
+}
+</script>
 
 
 </body>

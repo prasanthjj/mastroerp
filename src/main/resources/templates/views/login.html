@@ -15,91 +15,64 @@
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
-    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
-          th:src="@{/resources/css/plugins/select2/select2.min.css}">
-    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
-          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+
+
 
 
 </head>
 
-<body class="mastro-white-bg">
-
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
-            <div>
-
-                <h1 class="logo-name">
-                    <img src="../resources/img/logo-img.png">
-                </h1>
-
+<body  style="background-color:#e6e6e6 ; ">
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-lg-6 animated fadeInLeft">
+                <img src="../resources/img/login.png" style='width: 100%;height:auto;margin-top:15%;'>
             </div>
-            <form class="m-t" role="form" th:action="@{/login}" method="post">
-                <div th:if="${param.error}">
-                    <div class="alert alert-danger">
-                        Invalid username or password.
-                    </div>
-                </div>
-                <div th:if="${param.logout}">
-                    <div class="alert alert-info">
-                        You have been logged out.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+            <div class="col-lg-6 animated fadeInRight">
+                <div class="ibox-content login">
+                    <div class="middle-box text-center loginscreen animated fadeInDown ">
+                        <div>
 
-                <a href="#" th:href="@{/forgotPassword}"><small>Forgot password?</small></a>
+                            <img src="../resources/img/logo-img.png">
 
-            </form>
-            <p class="m-t"><small>Designed and Developed By Halo Technology Solutions &copy; 2020</small></p>
-        </div>
-    </div>
-    <div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="branchListForm">
-                <div class="modal-content animated flipInY">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                                class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Branch List</h4>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                                <div class="col-sm-8">
-                                    <select class="form-control branchList" multiple="multiple" required>
-                                        <option value="">Select branch</option>
-                                        <option>Thrissur</option>
-                                        <option>Ernakulam</option>
-                                        <option>Kozhikode</option>
-                                        <option>Kannur</option>
-                                    </select>
+                            <form class="m-t" role="form" th:action="@{/login}" method="post">
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger">
+                                        Invalid username or password.
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Select</button>
+                                <div th:if="${param.logout}">
+                                    <div class="alert alert-info">
+                                        You have been logged out.
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                </div>
+                                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                                <a href="#" th:href="@{/forgotPassword}"><small>Forgot password?</small></a>
+
+                            </form>
+                            <p class="m-t"> <small>Designed and Developed By Halo Technology Solutions &copy; 2020</small> </p>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
+</div>
+
     <!-- Mainly scripts -->
     <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
     <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
     <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
-    <script src="../resources/js/plugins/select2/select2.full.min.js"
-            th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 
 
 </body>
