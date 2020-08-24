@@ -35,6 +35,4 @@ public interface PartyService {
 
     IndustryType saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
 
-    void saveOrUpdatePartyProducts(Party party, Set<Product> products);
-
 }

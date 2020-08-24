@@ -189,7 +189,7 @@
                         <a href="#">Inventory </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="#">Stock List</a>
+                        <a href="stockDetails.html" th:href="@{/inventory/getStock}">Stock List</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Manage Stock Details </strong>
@@ -220,13 +220,14 @@
                             <form action="" id="selectStockItemForm">
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label">Item Name</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" placeholder="Enter Item Name">
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <button type="button" class="btn btn-primary">Select</button>
-                                    </div>
-
+                                    <h4></h4>
+                                    <!--  <div class="col-lg-4">
+                                         <p></p>
+                                      </div>
+                                      <div class="col-lg-2">
+                                          <button type="button" class="btn btn-primary">Select</button>
+                                      </div>
+  -->
                                 </div>
                             </form>
                             <div class="ibox-tools">
@@ -234,65 +235,68 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form action="">
+                            <form id="stockForm" th:action="@{/inventory/saveStock}" th:object="${stockForm}"
+                                  name="stockForm" method="post">
+                                <input type="hidden" name="id" th:field="*{id}"/>
                                 <h2>Stock Details</h2>
                                 <div class="row">
 
                                     <div class="col-lg-4">
-                                        <div class="form-group"><label>Opening Stock</label>
-                                            <input type="text" class="form-control">
+                                        <div class="form-group"><label>Opening Stock <i
+                                                class="fa fa-asterisk "></i></label>
+                                            <input type="text" th:field="*{openingStock}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Rejected Stock</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{rejectedStock}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Min. Lead Time</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{minimumLeadTime}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Rate</label>
-
-                                            <input type="text" class="form-control">
+                                            <h4></h4>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="form-group"><label>Current Stock</label>
-                                            <input type="text" class="form-control">
+                                        <div class="form-group"><label>Current Stock <i
+                                                class="fa fa-asterisk "></i></label>
+                                            <input type="text" th:field="*{currentStock}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Reserve Stock</label>
 
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{reserveStock}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Max. Lead Time</label>
 
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{maximumLeadTime}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Minimum Stock Qty</label>
 
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{minimumStockQuantity}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group"><label>Reorder Level</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{reorderLevel}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label> Minimum Order Qty</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{minimumOrderQuantity}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Opening Stock Base UOM2</label>
-                                            <input type="text" class="form-control">
+                                        <div class="form-group"><label>Base UOM</label>
+                                            <h4></h4>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group"><label>Maximum Stock Qty</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" th:field="*{maximumStockQuantity}" class="form-control">
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>

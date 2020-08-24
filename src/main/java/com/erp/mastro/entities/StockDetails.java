@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "stock_details")
-public class StockDetails {
+public class StockDetails extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,11 +53,17 @@ public class StockDetails {
     @Column(name = "maximum_stock_qunatity")
     private Long maximumStockQuantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_selected_branch_id")
-    private UserSelectedBranch userSelectedBranch;
+    @Column(name = "delete_status", nullable = false)
+    private int stockDeleteStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product product;*/
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 

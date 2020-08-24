@@ -379,17 +379,6 @@ public class PartyServiceImpl implements PartyService {
         return creditDetailsSet;
     }
 
-    /**
-     * save and edit Party Products
-     *
-     * @param party
-     * @param products
-     */
-    public void saveOrUpdatePartyProducts(Party party, Set<Product> products) {
-        party.setProducts(products);
-        partyRepository.save(party);
-    }
-
     public void deleteParty(Long id) {
 
         partyRepository.deleteById(id);

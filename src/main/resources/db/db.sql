@@ -11,3 +11,4 @@ INSERT INTO `mastroERP`.`uom` (`id`, `uom`) VALUES ('8', 'Dozen');
 INSERT INTO `mastroERP`.`uom` (`id`, `uom`) VALUES ('9', 'Case');
 INSERT INTO `mastroERP`.`uom` (`id`, `uom`) VALUES ('10', 'Box');
 INSERT INTO `mastroERP`.`uom` (`id`, `uom`) VALUES ('11', 'Single');
+INSERT INTO `mastroERP`.`uom` (`id`, `uom`) VALUES ('12', 'Feet');

@@ -134,6 +134,14 @@ $('.dataTables-itemParty').DataTable({
     buttons: [    ]
 });
 //item party rate  Data-table End
+//party item rate  Data-table start
+$('.dataTables-partyItem').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [    ]
+});
+//party item rate  Data-table End
 
 //stock details Data-table start
 $('.dataTables-stockDetails').DataTable({

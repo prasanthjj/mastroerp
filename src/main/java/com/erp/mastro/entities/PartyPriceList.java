@@ -15,15 +15,28 @@ public class PartyPriceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "party_id")
-    private Party party;
-
     @Column(name = "rate")
-    private double rate;
+    private Double rate;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "price_list_id")
-    private PriceList priceList;
+    @Column(name = "allowed_price_dev_per_upper")
+    private Double allowedPriceDevPerUpper;
+
+    @Column(name = "allowed_price_dev_per_lower")
+    private Double allowedPriceDevPerLower;
+
+    @Column(name = "discount")
+    private Double discount;
+
+    @Column(name = "credit_days")
+    private Integer creditDays;
+
+    @OneToOne(mappedBy = "partyPriceList",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    private ProductPartyRateRelation productPartyRateRelation;
+
+    @Column(name = "remarks")
+    private String remarks;
 
 }

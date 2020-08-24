@@ -45,20 +45,7 @@
                     </li>
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -66,13 +53,14 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title  ">
-                            <form action="" id="selectStockItemForm">
+                            <form th:action="@{/inventory/getStockSelectedProduct}" method="get"
+                                  id="selectStockItemForm">
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label">Item Name</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" name="selectedProduct" id="itemIdInput">
+                                        <input type="hidden" name="selectedStockProduct" id="itemIdInput">
                                         <input type="text" class="form-control stockitemautocomplete"
-                                               placeholder="Select item" id="itemAutocomplete">
+                                               placeholder="Select item">
                                         <div class="stockitem_dropdown">
                                             <ul class="auto-dropdown-menu">
 
@@ -80,7 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
-                                        <button type="button" class="btn btn-primary">Select</button>
+                                        <button type="submit" class="btn btn-primary">Select</button>
                                     </div>
 
                                 </div>
@@ -90,11 +78,13 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form th:action="@{/master/saveStock}" th:object="${stockForm}" id="addStockDetailsForm"
+                            <form th:action="@{/inventory/saveStock}" th:object="${stockForm}" id="addStockDetailsForm"
                                   name="stockForm" method="post">
                                 <h2>Stock Details</h2>
                                 <div class="row">
-
+                                    <span th:if="${productDetails!= null}">
+                                    <input type="hidden" name="productId" th:value="${productDetails.id}">
+                                    </span>
                                     <div class="col-lg-4">
                                         <div class="form-group"><label>Opening Stock <i
                                                 class="fa fa-asterisk "></i></label>
@@ -171,7 +161,7 @@
 </div>
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
-<span id="stockAutopopulateUrl" th:data-url="@{/autopopulate/items}"></span>
+<span id="stockAutopopulateUrl" th:data-url="@{/autopopulate/stock}"></span>
 <script src="../resources/js/jquery-3.1.1.min.js"
         th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js"
@@ -204,8 +194,7 @@
 
         var val = $(this).val().trim();
         if (val.length > 2) {
-        $(".item_dropdown ul").empty();
-         alert(val);
+        $(".stockitem_dropdown ul").empty();
              $.ajax({
               url:stockAutopopulateUrl,
                type: 'GET',
@@ -215,9 +204,9 @@
                  if(data.success) {
 
                         $.each(data.data.products, function(i){
-                                      //  $('#itemAutocomplete').append($('<input>').val(this['id']).text(this['productname']));
+
                                      $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
-                                      $(".item_dropdown ul").append('<li><a class="dynamicClick" data-itemsid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                      $(".stockitem_dropdown ul").append('<li><a class="dynamicClick" data-stockitemsid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
                                         });
 
                   }
@@ -240,7 +229,7 @@
                 e.preventDefault();
                 var value = $(this).text();
              $(".stockitemautocomplete").val(value);
-                            $("#itemIdInput").val($(e.target).data('itemsid'));
+                            $("#itemIdInput").val($(e.target).data('stockitemsid'));
                 $(".stockitem_dropdown").hide();
             })
         //dynamic click for item in item autocomplete end

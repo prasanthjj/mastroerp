@@ -102,12 +102,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
+                                    <tr class="gradeX" th:each="stockObj,iterator:${stockDetailsList}">
+                                        <td th:text="${iterator.index+1}">1</td>
                                         <td></td>
-                                        <td>Oxy .47 Red 3.05mtr (10')</td>
-                                        <td>200</td>
-                                        <td class="center">120</td>
-                                        <td class="center">50</td>
+                                        <td th:text="${stockObj.openingStock}"></td>
+                                        <td class="center" th:text="${stockObj.currentStock}"></td>
+                                        <td class="center" th:text="${stockObj.reorderLevel}"></td>
                                         <td class="center">003202689</td>
                                         <td class="center">30/06/2020</td>
                                         <td class="center">
@@ -116,65 +116,16 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/inventory/viewStock?stockId=__${stockObj.id}__}"><i
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/inventory/getEditStock?stockId=__${stockObj.id}__}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item font-bold removeStockDetails"
-                                                           href="#"><i class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td></td>
-                                        <td>Angles 25x6 (1x1/4)</td>
-                                        <td>300</td>
-                                        <td class="center">170</td>
-                                        <td class="center">75</td>
-                                        <td class="center">0020212709</td>
-                                        <td class="center">26/05/2020</td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeStockDetails " href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td></td>
-                                        <td>Oxy .47 Red 3.05mtr (10')</td>
-                                        <td>300</td>
-                                        <td class="center">170</td>
-                                        <td class="center">75</td>
-                                        <td class="center">0020200089</td>
-                                        <td class="center">28/06/2020</td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeStockDetails " href="#"><i
+                                                           href="#" th:data-stockids="${stockObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
