@@ -40,11 +40,14 @@ public class Branch {
     @Column(name = "local_currency")
     private String localCurrency;
 
-    @Column(name="email_id")
+    @Column(name = "email_id")
     private String emailId;
 
     @Column(name = "phone_no")
     private String phoneNo;
+
+    @Column(name = "land_no")
+    private String landNo;
 
     @Column(name = "address")
     private String address;
@@ -73,5 +76,10 @@ public class Branch {
 
     @ManyToMany(mappedBy = "branch")
     private Set<User> user = new HashSet<>();
+
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Indent> indentSet = new HashSet<>();
 
 }

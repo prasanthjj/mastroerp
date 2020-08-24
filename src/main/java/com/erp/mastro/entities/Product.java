@@ -82,16 +82,9 @@ public class Product extends Auditable<String>{
             orphanRemoval = true)
     private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
-    /*@OneToOne(mappedBy = "product",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private StockDetails stockdetails;*/
-
     @OneToMany(mappedBy = "product",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
             orphanRemoval = true)
-    private Set<StockDetails> stockDetailsSet = new HashSet<>();
+    private Set<Stock> stockSet = new HashSet<>();
 
 }

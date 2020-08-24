@@ -9,12 +9,12 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name = "stock_details")
-public class StockDetails extends Auditable<String> {
+@Table(name = "stock")
+public class Stock extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "opening_stock")
     private Long openingStock;
@@ -60,9 +60,6 @@ public class StockDetails extends Auditable<String> {
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;*/
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;

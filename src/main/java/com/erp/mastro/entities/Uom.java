@@ -29,6 +29,6 @@ public class Uom {
     @OneToMany(mappedBy = "uom",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<StockDetails> stockDetails = new HashSet<>();
+    private Set<Stock> stockDetails = new HashSet<>();
 
 }

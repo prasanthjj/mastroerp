@@ -1,6 +1,6 @@
 package com.erp.mastro.model.request;
 
-import com.erp.mastro.entities.StockDetails;
+import com.erp.mastro.entities.Stock;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +26,7 @@ public class StockRequestModel {
 
     }
 
-    public StockRequestModel(StockDetails stockDetails) {
+    public StockRequestModel(Stock stockDetails) {
         if (stockDetails != null) {
             this.id = stockDetails.getId();
             this.openingStock = stockDetails.getOpeningStock();

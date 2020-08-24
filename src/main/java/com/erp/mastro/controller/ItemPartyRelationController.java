@@ -49,6 +49,7 @@ public class ItemPartyRelationController {
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            model.addAttribute("showtab", "itemtab");
             return "views/itemPartyRelationMaster";
 
         } catch (Exception e) {
@@ -75,6 +76,7 @@ public class ItemPartyRelationController {
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            model.addAttribute("showtab", "itemtab");
             return "views/itemPartyRelationMaster";
 
         } catch (Exception e) {
@@ -105,6 +107,7 @@ public class ItemPartyRelationController {
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            model.addAttribute("showtab", "itemtab");
             return "views/itemPartyRelationMaster";
 
         } catch (Exception e) {
@@ -128,7 +131,17 @@ public class ItemPartyRelationController {
             if (productPartyRateIds != null) {
                 productService.saveOrUpdateItemParty(productPartyRateIds, ratess, discountss, creditDays, allowedPriceDevPerUppers, allowedPriceDevPerLowers);
             }
-            return "redirect:/master/getItemPartys";
+
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            model.addAttribute("showtab", "itemtab");
+            String productId = request.getParameter("showedItem");
+            if (productId != null) {
+                Product product = productService.getProductById(Long.parseLong(productId));
+                model.addAttribute("productDetails", product);
+            }
+            return "views/itemPartyRelationMaster";
         } catch (Exception e) {
             MastroLogUtils.error(ItemPartyRelationController.class, "Error occured while save itemparty : {}", e);
             throw e;
@@ -152,6 +165,7 @@ public class ItemPartyRelationController {
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            model.addAttribute("showtab", "partytab");
             return "views/itemPartyRelationMaster";
 
         } catch (Exception e) {
@@ -180,6 +194,7 @@ public class ItemPartyRelationController {
                 model.addAttribute("partysDetails", partyService.getPartyById(partyId));
 
             }
+            model.addAttribute("showtab", "partytab");
             model.addAttribute("masterModule", "masterModule");
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
@@ -203,8 +218,17 @@ public class ItemPartyRelationController {
             if (productPartyRateIds != null) {
                 productService.saveOrUpdatePartyItems(productPartyRateIds, ratess, remarkss);
             }
+            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute("itemPartyTab", "itemParty");
+            model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
+            String partyId = request.getParameter("showedParty");
+            if (partyId != null) {
+                Party party = partyService.getPartyById(Long.parseLong(partyId));
+                model.addAttribute("partysDetails", party);
+            }
+            model.addAttribute("showtab", "partytab");
+            return "views/itemPartyRelationMaster";
 
-            return "redirect:/master/getItemPartys";
         } catch (Exception e) {
             MastroLogUtils.error(ItemPartyRelationController.class, "Error occured while save partyitem relations : {}", e);
             throw e;

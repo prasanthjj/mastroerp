@@ -25,7 +25,7 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request, HttpServletResponse response,
                        Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated()) {
+        if ((authentication != null) && (authentication.isAuthenticated())) {
             CurrentUserDetails currentUser = (CurrentUserDetails) authentication.getPrincipal();
             User user = currentUser.getUser();
             user.setLoggedIn(false);

@@ -16,6 +16,7 @@ import com.erp.mastro.service.interfaces.EmployeeService;
 import com.erp.mastro.service.interfaces.RolesService;
 import com.erp.mastro.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,13 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+    @Bean
+    public MastroApplicationUtils mastroApplicationUtils() {
+        return new MastroApplicationUtils();
+    }
+
+    @Autowired
+    MastroApplicationUtils mastroApplicationUtils;
 
     @Autowired
     private MailUtils mailUtils;
@@ -53,6 +61,7 @@ public class UserController {
 
     @Autowired
     HttpSession session;
+
 
 
     /**
@@ -100,9 +109,21 @@ public class UserController {
                 .filter(userData -> (false != userData.isLoggedIn()))
                 .collect(Collectors.toSet());
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (mastroApplicationUtils.isAdminAuthority(auth)) {
+
+           /*Employee employee = userDetails.getEmployee();
+           String organisation = employee.getOrganisation().getName();*/
+
+            session.setAttribute("adminBranch", "MASTRO");
+            session.setAttribute("selectedBranch", currentBranch);
+        } else {
+            session.setAttribute("selectedBranch", currentBranch);
+
+        }
         session.setAttribute("ActiveUser", userListCount.size());
         session.setAttribute("lastLoginDate", userDetails.getLastLogin());
-        session.setAttribute("selectedBranch", currentBranch);
         session.setAttribute("branchList", branchList);
 
         return "views/dashboard";
@@ -141,7 +162,7 @@ public class UserController {
      */
     @RequestMapping("/admin/addUser")
     public String addUser(Model model) {
-        MastroLogUtils.info(UserController.class, "Going to add User :{}");
+        MastroLogUtils.info(UserController.class, "Going to create User :{}");
         try {
 
             List<String> emailList = new ArrayList<String>();
@@ -199,9 +220,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("soumyar@halo.ae");
-        user.setEmail("soumyar@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("password"));
+        user.setUserName("anju@halo.ae");
+        user.setEmail("anju@halo.ae");
+        user.setPassword(bCryptPasswordEncoder.encode("anju"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();
@@ -399,8 +420,14 @@ public class UserController {
         if(auth.isAuthenticated()) {
             CurrentUserDetails currentUser = (CurrentUserDetails) auth.getPrincipal();
             userDetails = userService.findByEmail(currentUser.getUser().getEmail());
+
+          /* CurrentUserDetails currentRole = (CurrentUserDetails) ((CurrentUserDetails) auth.getPrincipal()).getAuthorities();
+              System.out.println("Current Role:"+currentRole);*/
+
         }
         return userDetails;
     }
 
 }
+
+

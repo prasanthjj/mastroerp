@@ -3,7 +3,7 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Product;
-import com.erp.mastro.entities.StockDetails;
+import com.erp.mastro.entities.Stock;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.StockRequestModel;
 import com.erp.mastro.service.interfaces.ProductService;
@@ -40,9 +40,10 @@ public class StockController {
     public String getStock(Model model) {
         MastroLogUtils.info(StockController.class, "Going to get all stocks : {}");
         try {
-            List<StockDetails> stockDetailsList = stockService.getAllStockDetails().stream()
+            List<Stock> stockDetailsList = stockService.getAllStockDetails().stream()
                     .filter(stockData -> (null != stockData))
-                    .sorted(Comparator.comparing(StockDetails::getId).reversed())
+                    .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                    .sorted(Comparator.comparing(Stock::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("stockTab", "stock");
@@ -137,7 +138,7 @@ public class StockController {
     public String getViewStock(Model model, @RequestParam("stockId") Long stockId, HttpServletRequest req) {
         MastroLogUtils.info(StockController.class, "Going to view Stock : {}" + stockId);
         try {
-            StockDetails stockDetails = stockService.getStockById(stockId);
+            Stock stockDetails = stockService.getStockById(stockId);
             model.addAttribute("stockDetails", stockDetails);
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("stockTab", "stock");

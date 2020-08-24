@@ -4,7 +4,7 @@ import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Product;
-import com.erp.mastro.entities.StockDetails;
+import com.erp.mastro.entities.Stock;
 import com.erp.mastro.entities.User;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.StockRequestModel;
@@ -30,8 +30,8 @@ public class StockServiceImpl implements StockService {
     @Autowired
     UserController userController;
 
-    public List<StockDetails> getAllStockDetails() {
-        List<StockDetails> stockDetailsList = new ArrayList<>();
+    public List<Stock> getAllStockDetails() {
+        List<Stock> stockDetailsList = new ArrayList<>();
         stockRepository.findAll().forEach(stockDetails -> stockDetailsList.add(stockDetails));
         return stockDetailsList;
     }
@@ -43,8 +43,8 @@ public class StockServiceImpl implements StockService {
      * @return
      */
 
-    public StockDetails getStockById(Long id) {
-        StockDetails stockDetails = new StockDetails();
+    public Stock getStockById(Long id) {
+        Stock stockDetails = new Stock();
         if (id != null) {
             MastroLogUtils.info(StockService.class, "Going to get all stock by id : {}" + id);
             stockDetails = stockRepository.findById(id).get();
@@ -59,8 +59,8 @@ public class StockServiceImpl implements StockService {
      */
 
     @Transactional(rollbackOn = {Exception.class})
-    public StockDetails saveOrUpdateStockDetails(StockRequestModel stockRequestModel) throws ModelNotFoundException {
-        StockDetails stockDetails = new StockDetails();
+    public Stock saveOrUpdateStockDetails(StockRequestModel stockRequestModel) throws ModelNotFoundException {
+        Stock stockDetails = new Stock();
         if (stockRequestModel == null) {
             throw new ModelNotFoundException("StockRequest Model is empty");
         } else {
@@ -127,9 +127,9 @@ public class StockServiceImpl implements StockService {
      * @return
      */
     @Transactional(rollbackOn = {Exception.class})
-    public StockDetails deleteStockDetails(Long id) {
+    public Stock deleteStockDetails(Long id) {
         MastroLogUtils.info(StockService.class, "Going to delete StockDetails by id : {}" + id);
-        StockDetails stockDetails = new StockDetails();
+        Stock stockDetails = new Stock();
         if (id != null) {
             stockDetails = getStockById(id);
             stockDetails.setStockDeleteStatus(1);
