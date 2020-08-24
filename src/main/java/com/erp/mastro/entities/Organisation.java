@@ -24,13 +24,19 @@ public class Organisation {
     @Column(name="address")
     private String address;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="phone_no")
+    @Column(name = "phone_no")
     private String phoneNo;
 
-    @Column(name="creation_date")
+    @Column(name = "creation_date")
     private Date creationDate;
+
+    @OneToOne(mappedBy = "organisation",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    private Employee employee;
 
 }

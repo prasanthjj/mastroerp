@@ -40,11 +40,14 @@ public class Branch {
     @Column(name = "local_currency")
     private String localCurrency;
 
-    @Column(name="email_id")
+    @Column(name = "email_id")
     private String emailId;
 
     @Column(name = "phone_no")
     private String phoneNo;
+
+    @Column(name = "land_no")
+    private String landNo;
 
     @Column(name = "address")
     private String address;

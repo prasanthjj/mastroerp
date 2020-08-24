@@ -6,7 +6,11 @@
                 <div class="dropdown profile-element">
                     <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Admin @  <span th:text="${session.selectedBranch}"></span>></span>
+                        <span class="block m-t-xs font-bold">Admin @ <span
+                                th:switch="${adminModule== 'adminModule' || masterModule== 'masterModule' || #httpServletRequest.requestURI=='/home'}? ${true} : ${false}">
+            <span th:case="${false}"><span th:text="${session.selectedBranch}"></span></span>
+            <span th:case="${true}"><span th:text="${session.adminBranch}"></span></span>
+            </span></span>
                         <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -168,12 +172,36 @@
                     <li><a href="#">Invoice</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="active" th:if="${hrModule== 'hrModule'}">
                 <a href="#"><i class="fa fa-users"></i> <span class="nav-label">HR </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Department</a></li>
-                    <li><a href="#">Salary Components</a></li>
+                    <li th:if="${departmentTab== 'department'}" class="active"><a th:href="@{/hr/getDepartment}">Department</a>
+                    </li>
+                    <li th:unless="${departmentTab== 'department'}"><a th:href="@{/hr/getDepartment}">Department</a>
+                    </li>
+                    <li th:if="${salaryComponentTab== 'salaryComponent'}" class="active"><a
+                            th:href="@{/hr/getSalaryComponent}">Salary Components</a></li>
+                    <li th:unless="${salaryComponentTab== 'salaryComponent'}"><a th:href="@{/hr/getSalaryComponent}">Salary
+                        Components</a></li>
+                    <li><a href="#">Salary Templates</a></li>
+                    <li><a href="#">Employees</a></li>
+                    <li><a href="#">Attendance</a></li>
+                    <li><a href="#">Pay Runs</a></li>
+                </ul>
+            </li>
+            <li class="" th:unless="${hrModule== 'hrModule'}">
+                <a href="#"><i class="fa fa-users"></i> <span class="nav-label">HR </span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li th:if="${departmentTab== 'department'}" class="active"><a th:href="@{/hr/getDepartment}">Department</a>
+                    </li>
+                    <li th:unless="${departmentTab== 'department'}"><a th:href="@{/hr/getDepartment}">Department</a>
+                    </li>
+                    <li th:if="${salaryComponentTab== 'salaryComponent'}" class="active"><a
+                            th:href="@{/hr/getSalaryComponent}">Salary Components</a></li>
+                    <li th:unless="${salaryComponentTab== 'salaryComponent'}"><a th:href="@{/hr/getSalaryComponent}">Salary
+                        Components</a></li>
                     <li><a href="#">Salary Templates</a></li>
                     <li><a href="#">Employees</a></li>
                     <li><a href="#">Attendance</a></li>

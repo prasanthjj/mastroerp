@@ -11,6 +11,13 @@
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg') format('svg');
 }
+ @font-face {
+   font-family: 'Conv_Shanti-Regular';
+   src: url('../fonts/Shanti-Regular.eot');
+   src: local('☺'), url('../fonts/Shanti-Regular.woff') format('woff'), url('../fonts/Shanti-Regular.ttf') format('truetype'), url('../fonts/Shanti-Regular.svg') format('svg');
+   font-weight: normal;
+   font-style: normal;
+ }
 .glyphicon {
   position: relative;
   top: 1px;
@@ -836,7 +843,7 @@ h3 {
   font-size: 16px;
 }
 h4 {
-  font-size: 14px;
+  font-size: 16px;
 }
 h5 {
   font-size: 12px;
@@ -852,7 +859,7 @@ h5 {
 }
 .nav > li > a {
   color: #a7b1c2;
-  font-weight: 600;
+/*  font-weight: 600;*/
   padding: 14px 20px 14px 25px;
   display: block;
 }
@@ -912,7 +919,7 @@ h5 {
   box-shadow: 0 0 3px rgba(86, 96, 117, 0.7);
   display: none;
   float: left;
-  font-size: 12px;
+  font-size: 14px;
   left: 0;
   list-style: none outside none;
   padding: 0;
@@ -946,7 +953,7 @@ h5 {
   outline: 0;
 }
 .dropdown-menu > li > a.font-bold {
-  font-weight: 600;
+  /*font-weight: 600;*/
 }
 .navbar-top-links .dropdown-menu li {
   display: block;
@@ -1038,7 +1045,7 @@ ul.nav-second-level {
 .minimalize-styl-2 {
   padding: 4px 12px;
   margin: 14px 5px 5px 20px;
-  font-size: 14px;
+  font-size: 16px;
   float: left;
 }
 .navbar-form-custom {
@@ -1052,12 +1059,12 @@ ul.nav-second-level {
   margin-bottom: 0;
 }
 .nav.navbar-top-links a {
-  font-size: 14px;
+  font-size: 16px;
 }
 .navbar-form-custom .form-control {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
   border: medium none;
-  font-size: 14px;
+  font-size: 16px;
   height: 60px;
   margin: 0;
   z-index: 2000;
@@ -1474,7 +1481,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   background-color: #1ab394;
   color: #fff;
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 16px;
   margin: 8px;
 }
 .top-navigation .navbar-nav .open .dropdown-menu > li > a,
@@ -2700,7 +2707,7 @@ div.dt-button-info {
   list-style: none outside none;
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 .todo-list.small-list {
   font-size: 12px;
@@ -2823,7 +2830,7 @@ select.form-control:not([size]):not([multiple]) {
   border: 1px solid #E5E6E7;
   border-radius: 1px;
   color: inherit;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1;
   padding: 9px 12px 4px 12px;
@@ -3750,7 +3757,7 @@ a.forum-item-title:hover {
     width: 100%;
     left: 122%;
     top: 2px;
-    font-size: 14px;
+    font-size: 16px;
   }
   .center-orientation .vertical-timeline-block:nth-child(even) .vertical-timeline-content {
     float: right;
@@ -3973,7 +3980,7 @@ a.forum-item-title:hover {
 }
 .jvectormap-legend-title {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 .jvectormap-legend-cnt {
@@ -4990,7 +4997,7 @@ table.table-mail tr td {
 }
 .ibox-title h5 {
   display: inline-block;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0 0 7px;
   padding: 0;
   text-overflow: ellipsis;
@@ -6212,7 +6219,7 @@ dd.project-people {
   height: 32px;
 }
 .project-title a {
-  font-size: 14px;
+  font-size: 16px;
   color: #676a6c;
   font-weight: 600;
 }
@@ -6588,7 +6595,7 @@ table.shoping-cart-table tr td:last-child {
   color: #1ab394;
 }
 .product-price {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #ffffff;
   background-color: #1ab394;
@@ -6664,7 +6671,7 @@ table.shoping-cart-table tr td:last-child {
   margin-right: 10px;
 }
 .social-avatar .media-body a {
-  font-size: 14px;
+  font-size: 16px;
   display: block;
 }
 .social-body {
@@ -7955,7 +7962,7 @@ body.landing-page {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 16px;
 }
 .landing-page .navbar-nav > li > a {
   padding-top: 25px;
@@ -7993,7 +8000,7 @@ body.landing-page {
   color: #fff;
   height: auto;
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   background: #1ab394;
   padding: 15px 20px 15px 20px;
   border-radius: 0 0 5px 5px;
@@ -8281,7 +8288,7 @@ body.landing-page {
 }
 .landing-page .comments-avatar .commens-name {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
 }
 .landing-page .comments-avatar img {
   width: 42px;
@@ -8298,7 +8305,7 @@ body.landing-page {
   -moz-border-radius: 10px;
   border-radius: 10px;
   font-style: italic;
-  font-size: 14px;
+  font-size: 16px;
 }
 .landing-page .bubble:after {
   content: '';
@@ -8323,7 +8330,7 @@ body.landing-page {
   background-color: #1ab394;
   border-color: #1ab394;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 16px;
   padding: 10px 20px;
   font-weight: 600;
 }
@@ -8378,7 +8385,7 @@ body.landing-page {
   }
   .landing-page .carousel-caption p {
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.4;
   }
   .landing-page .featurette-heading {

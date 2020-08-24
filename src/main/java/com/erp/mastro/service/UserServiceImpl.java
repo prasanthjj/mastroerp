@@ -91,12 +91,13 @@ public class UserServiceImpl implements UserService {
             user = new User();
             MastroLogUtils.info(UserService.class, "Going to Add User {}" + userModel.toString());
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
-            System.out.println("employee :: " + employee);
-            user.setUserName(employee.getEmail());
-            user.setEmployee(employee);
-            user.setEmail(userModel.getEmail());
-            user.setEnabled(false);
-
+            if (employee != null) {
+                System.out.println("employee :: " + employee);
+                user.setUserName(employee.getEmail());
+                user.setEmployee(employee);
+                user.setEmail(userModel.getEmail());
+                user.setEnabled(false);
+            }
             Set<Roles> roles = userModel.getRoles();
             user.setRoles(roles);
             Set<Branch> branches = userModel.getBranch();
@@ -114,8 +115,10 @@ public class UserServiceImpl implements UserService {
             user.setBranch(branches);
         }
         userRepository.save(user);
-        String email = userModel.getEmail();
-        sendResetPasswordEmail(email, UrlUtils.getAppurl(request), request.getLocale());
+        if (!user.isEnabled()) {
+            String email = userModel.getEmail();
+            sendResetPasswordEmail(email, UrlUtils.getAppurl(request), request.getLocale());
+        }
         MastroLogUtils.info(UserService.class, "Save or Update " + userModel.getEmail() + " successfully.");
     }
 
@@ -166,7 +169,7 @@ public class UserServiceImpl implements UserService {
         emailMap.put("url", url);
         try {
             if (user.isEnabled()) {
-                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_FORGOTPASSWORD);
+                mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Reset Password from Mastro Metals", emailMap, Constants.TEMPLATE_FORGOTPASSWORD);
             } else {
                 mailUtils.sendMessageUsingThymeleafTemplate(user.getEmail(), "Welcome Email From Mastro Metals", emailMap, Constants.TEMPLATE_WELCOMEMAIL);
             }

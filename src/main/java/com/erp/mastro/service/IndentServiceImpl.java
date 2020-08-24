@@ -10,14 +10,16 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentModel;
 import com.erp.mastro.repository.IndentRepository;
 import com.erp.mastro.repository.StockRepository;
+import com.erp.mastro.repository.UOMRepository;
+import com.erp.mastro.service.interfaces.AssetService;
 import com.erp.mastro.service.interfaces.IndentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +33,9 @@ public class IndentServiceImpl implements IndentService {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Autowired
+    private UOMRepository uomRepository;
 
     /**
      * method to get all indents
@@ -117,6 +122,100 @@ public class IndentServiceImpl implements IndentService {
             return indent;
         }
 
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public Indent saveOrUpdateIndentItemDetails(IndentModel indentModel) throws ModelNotFoundException {
+
+        Indent indent = new Indent();
+
+        if (indentModel == null) {
+            throw new ModelNotFoundException("AssetRequestModel model is empty");
+        } else {
+
+            MastroLogUtils.info(IndentService.class, "Going to edit indent Items {}" + indentModel.toString());
+            indent = indentRepository.findById(indentModel.getId()).get();
+            Set<ItemStockDetails> itemStockDetails = saveOrUpdateIndentItems(indentModel, indent);
+            indent.setItemStockDetailsSet(itemStockDetails);
+            indentRepository.save(indent);
+
+            MastroLogUtils.info(AssetService.class, "Save " + indent.getId() + " succesfully.");
+
+        }
+        return indent;
+
+    }
+
+    private Set<ItemStockDetails> saveOrUpdateIndentItems(IndentModel indentModel, Indent indent) throws ModelNotFoundException {
+
+        MastroLogUtils.info(IndentService.class, "Going to edit indent items  {}" + indentModel.toString());
+        Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
+
+        if (indentModel.getIndentItemStockDetailsModels().isEmpty() == false) {
+
+            indentModel.getIndentItemStockDetailsModels().parallelStream()
+                    .filter(intentInModel -> null != intentInModel)
+                    .forEach(intentInModel -> {
+                        ItemStockDetails itemStockDetails = indent.getItemStockDetailsSet().stream()
+                                .filter(indentItem -> (null != indentItem))
+                                .peek(
+                                        indentItem -> {
+                                            if (null != indentItem) {
+                                                indentItem.getId().equals(intentInModel.getId());
+                                            }
+                                        }
+                                )
+                                .findFirst().get();
+
+                        itemStockDetails.setQuantityToIndent(intentInModel.getQuantityToIndent());
+                        itemStockDetails.setSoReferenceNo(intentInModel.getSoReferenceNo());
+                        if (intentInModel.getUomId() != null) {
+                            itemStockDetails.setPurchaseUOM(uomRepository.findById(intentInModel.getUomId()).get());
+                        }
+                        String sDate1 = intentInModel.getSrequiredByDate();
+                        if (sDate1 != "") {
+                            Date date1 = null;
+                            try {
+                                date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            itemStockDetails.setRequiredByDate(date1);
+                        }
+                        itemStockDetailsSet.add(itemStockDetails);
+
+                    });
+        } else {
+            throw new ModelNotFoundException("Indent item model is empty");
+        }
+        /* removeBlankItems(itemStockDetailsSet);*/
+        return itemStockDetailsSet;
+
+    }
+
+    public void removeIndentItem(Long indentId, Long indentItemId) {
+
+        Indent indent = getIndentById(indentId);
+        if (indent.getItemStockDetailsSet() != null) {
+            MastroLogUtils.info(IndentService.class, "Going to remove indent item  {}" + indentItemId);
+            Set<ItemStockDetails> itemStockDetails = indent.getItemStockDetailsSet();
+            Iterator<ItemStockDetails> itemStockDetailSet = itemStockDetails.iterator();
+            for (Iterator<ItemStockDetails> itemStockDetailsIterator = itemStockDetailSet; itemStockDetailsIterator.hasNext(); ) {
+                ItemStockDetails itemStockDetails1 = itemStockDetailsIterator.next();
+                if (itemStockDetails1 != null) {
+                    if (itemStockDetails1.getId().equals(indentItemId)) {
+                        itemStockDetailSet.remove();
+                    }
+                }
+            }
+
+        }
+        indentRepository.save(indent);
+
+    }
+
+    private void removeBlankItems(Set<ItemStockDetails> itemStockDetails) {
+        itemStockDetails.removeIf(x -> x.getQuantityToIndent() == null);
     }
 
 }

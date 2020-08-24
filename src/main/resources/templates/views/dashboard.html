@@ -33,8 +33,11 @@
                     <div class="dropdown profile-element">
                         <img alt="image" class="rounded-circle" src="../resources/img/profile_small.jpg"/>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold">Admin @    <span
-                                    th:text="${session.selectedBranch}"></span></span>
+                            <span class="block m-t-xs font-bold">Admin @   <span
+                                    th:switch="${adminModule== 'adminModule' || masterModule== 'masterModule' || #httpServletRequest.requestURI=='/home'}? ${true} : ${false}">
+            <span th:case="${false}">Branch : <span th:text="${session.selectedBranch}"></span></span>
+            <span th:case="${true}"><span th:text="${session.adminBranch}"></span></span>
+            </span></span>
                             <span class="text-muted text-xs block">Mastro Metals <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -127,7 +130,7 @@
 
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="#" class="accessDenied">
+                                    <a th:href="@{/hr/getDepartment}">
                                         <div class="widget lazur-bg p-md text-center">
                                             <div class="p-md">
                                                 <i class="fa fa-users fa-3x m-b-sm"></i>
@@ -233,6 +236,7 @@
 <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
 
 <!-- <script th:if="${#authentication.getPrincipal().getUser().getUserSelectedBranch()==null}">-->
+<!--<script th:if="${session.selectedBranch != null && adminModule== 'adminModule' && masterModule== 'masterModule' }">-->
 <script th:if="${session.selectedBranch == null}">
   function switchBranch() {
    $("#loginBranchList").toggle();

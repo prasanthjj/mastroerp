@@ -1,5 +1,10 @@
 package com.erp.mastro.common;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -10,6 +15,8 @@ import java.util.Date;
  * Class that included all common Util methods
  */
 public class MastroApplicationUtils {
+    private final GrantedAuthority adminAuthority = new SimpleGrantedAuthority(
+            "ROLE_ADMIN");
 
     /**
      * Returns converted Date String
@@ -33,6 +40,12 @@ public class MastroApplicationUtils {
     public static Timestamp converttoTimestamp(LocalDateTime date) {
         Timestamp timestamp = Timestamp.valueOf(date);
         return timestamp;
+    }
+
+    public boolean isAdminAuthority(final Authentication authentication) {
+        return CollectionUtils.isNotEmpty(authentication.getAuthorities())
+                && authentication.getAuthorities().contains(adminAuthority);
+        /* || authentication.getAuthorities().contains(Constants.ROLE_SUPERADMIN)*/
     }
 
 }

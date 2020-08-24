@@ -1,5 +1,7 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.entities.Indent;
+import com.erp.mastro.entities.ItemStockDetails;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,19 @@ public class IndentModel {
     private Long productId;
     private List<IndentModel.IndentItemStockDetailsModel> indentItemStockDetailsModels = new ArrayList<>();
 
+    public IndentModel() {
+
+    }
+
+    public IndentModel(Indent indent) {
+        if (indent != null) {
+            this.id = indent.getId();
+
+            indent.getItemStockDetailsSet().parallelStream().forEach(x -> this.indentItemStockDetailsModels.add(new IndentModel.IndentItemStockDetailsModel(x)));
+
+        }
+    }
+
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class IndentItemStockDetailsModel {
@@ -30,6 +45,13 @@ public class IndentModel {
         private Long stockId;
         private Long uomId;
 
+        public IndentItemStockDetailsModel() {
+        }
+
+        public IndentItemStockDetailsModel(ItemStockDetails itemStockDetails) {
+
+            this.id = itemStockDetails.getId();
+        }
     }
 
     @Override

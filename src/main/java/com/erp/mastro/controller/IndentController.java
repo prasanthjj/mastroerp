@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Indent;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentModel;
@@ -9,10 +10,7 @@ import com.erp.mastro.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -87,6 +85,7 @@ public class IndentController {
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentDetails", indent);
+            model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
             return "views/addIndent";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "Indentmodel empty", e);
@@ -95,6 +94,39 @@ public class IndentController {
             MastroLogUtils.error(IndentController.class, e.getMessage());
             throw e;
         }
+    }
+
+    @PostMapping("/saveIndent")
+    public String saveIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
+        MastroLogUtils.info(IndentController.class, "Going to save indent item details: {}" + indentModel.toString());
+        try {
+            indentService.saveOrUpdateIndentItemDetails(indentModel);
+            return "redirect:/indent/getIndentList";
+        } catch (ModelNotFoundException e) {
+            MastroLogUtils.error(this, "indent model empty", e);
+            return "redirect:/master/getAssetList";
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while save indent item details : {}", e);
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/removeIndentItem")
+    @ResponseBody
+    public GenericResponse removeIndentItem(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId) {
+        MastroLogUtils.info(IndentController.class, "Going to remove indent item" + indentItemId);
+        try {
+
+            indentService.removeIndentItem(indentId, indentItemId);
+            return new GenericResponse(true, "delete indent item details");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured while deleting indent item details :{}", e);
+
+            throw e;
+        }
+
     }
 
 }

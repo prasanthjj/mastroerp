@@ -149,6 +149,35 @@ $(document).ready(function(){
 
 });
 //Add item End
+
+
+
+// add salary components percentage calculation stat
+/*$(".percentageCalculation").TouchSpin({
+min:0,
+max:100,
+step:0.1,
+decimals:2,
+boostat:5,
+maxboostedstep:10,
+postfix:'%',
+buttondown_class:'btn btn-white',
+buttonup_class:'btn btn-white'
+});*/
+$("#calculationPercentage").hide();
+$("input[name='calculationType']").click(function() {
+if ($("#flatAmount").is(":checked")) {
+$("#calculationAmount").show();
+$("#calculationPercentage").hide();
+} else {
+$("#calculationPercentage").show();
+$("#calculationAmount").hide();
+}
+});
+// add salary components percentage calculation end
+
+
+
 // item party rate relation add party auto-complete start
  $.get('../resources/js/api/typehead_collection.json', function(data){
     $(".addParty_head").typeahead({
@@ -821,6 +850,22 @@ $(document).ready(function(){
         });
     });
     // Remove subcategory end
+/*
+    //Remove salary components start
+    $('.removeSalaryComponents').click(function () {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this Item!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Deleted!", "Item has been deleted.", "success");
+        });
+    });
+    //Remove salary components End*/
 
 //Enable Product start
                       $('.enableProduct').click(function () {

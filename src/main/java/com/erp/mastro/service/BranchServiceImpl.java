@@ -73,6 +73,7 @@ public class BranchServiceImpl implements BranchService {
             branch.setLocalCurrency(branchRequestModel.getLocalCurrency());
             branch.setEmailId(branchRequestModel.getEmailId());
             branch.setPhoneNo(branchRequestModel.getPhoneNo());
+            branch.setLandNo(branchRequestModel.getLandNo());
             branch.setBranchAddress(branchRequestModel.getBranchAddress());
             branch.setWebsite(branchRequestModel.getWebsite());
             branch.setFaxNo(branchRequestModel.getFaxNo());
@@ -129,10 +130,10 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setLimit(branchRequestModel.getLimit());
             branchRegistration.setGstIn(branchRequestModel.getGstIn());
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
-            String sDate7 = branchRequestModel.getsCinDate();
+            String sDate7 = branchRequestModel.getsGstDate();
             if (sDate7 != "") {
                 Date date7 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
-                branchRegistration.setCinDate(date7);
+                branchRegistration.setGstDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);
             branchRepository.save(branch);
@@ -150,6 +151,7 @@ public class BranchServiceImpl implements BranchService {
             branch.setLocalCurrency(branchRequestModel.getLocalCurrency());
             branch.setEmailId(branchRequestModel.getEmailId());
             branch.setPhoneNo(branchRequestModel.getPhoneNo());
+            branch.setLandNo(branchRequestModel.getLandNo());
             branch.setBranchAddress(branchRequestModel.getBranchAddress());
             branch.setWebsite(branchRequestModel.getWebsite());
             branch.setFaxNo(branchRequestModel.getFaxNo());
@@ -206,10 +208,10 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setLimit(branchRequestModel.getLimit());
             branchRegistration.setGstIn(branchRequestModel.getGstIn());
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
-            String sDate7 = branchRequestModel.getsCinDate();
+            String sDate7 = branchRequestModel.getsGstDate();
             if (sDate7 != "") {
                 Date date7 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate7);
-                branchRegistration.setCinDate(date7);
+                branchRegistration.setGstDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);
             branchRepository.save(branch);

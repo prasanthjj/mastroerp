@@ -26,6 +26,7 @@ public class BranchRequestModel {
     private String localCurrency;
     private String emailId;
     private String phoneNo;
+    private String landNo;
     private String address;
     private String website;
     private String branchAddress;
@@ -58,7 +59,7 @@ public class BranchRequestModel {
     private Date panDate;
     private Date pfDate;
     private Date esicDate;
-    private Date cinDate;
+    private Date gstDate;
     private String sCreationDate;
     private String sVatDate;
     private String sCstdate;
@@ -66,7 +67,7 @@ public class BranchRequestModel {
     private String sPanDate;
     private String sPfDate;
     private String sEsicDate;
-    private String sCinDate;
+    private String sGstDate;
 
     public BranchRequestModel(Branch branch) {
         this.id = branch.getId();
@@ -79,6 +80,7 @@ public class BranchRequestModel {
         this.localCurrency = branch.getLocalCurrency();
         this.emailId = branch.getEmailId();
         this.phoneNo = branch.getPhoneNo();
+        this.landNo = branch.getLandNo();
         this.address = branch.getAddress();
         this.website = branch.getWebsite();
         this.branchAddress = branch.getBranchAddress();
@@ -122,8 +124,8 @@ public class BranchRequestModel {
         this.limit = branch.getBranchRegistration().getLimit();
         this.gstIn = branch.getBranchRegistration().getGstIn();
         this.cinNo = branch.getBranchRegistration().getCinNo();
-        if (branch.getBranchRegistration().getCinDate() != null) {
-            this.cinDate = branch.getBranchRegistration().getCinDate();
+        if (branch.getBranchRegistration().getGstDate() != null) {
+            this.gstDate = branch.getBranchRegistration().getGstDate();
         }
     }
 
@@ -183,12 +185,12 @@ public class BranchRequestModel {
         this.sEsicDate = sEsicDate;
     }
 
-    public String getsCinDate() {
-        return MastroApplicationUtils.getStringFromDate(sCinDate, getCinDate());
+    public String getsGstDate() {
+        return MastroApplicationUtils.getStringFromDate(sGstDate, getGstDate());
     }
 
-    public void setsCinDate(String sCinDate) {
-        this.sCinDate = sCinDate;
+    public void setsGstDate(String sGstDate) {
+        this.sGstDate = sGstDate;
     }
 
     @Override
@@ -205,6 +207,7 @@ public class BranchRequestModel {
                 ", localCurrency='" + localCurrency + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", phoneNo='" + phoneNo + '\'' +
+                ", phoneNo='" + landNo + '\'' +
                 ", address='" + address + '\'' +
                 ", website='" + website + '\'' +
                 ", branchAddress='" + branchAddress + '\'' +
@@ -237,7 +240,7 @@ public class BranchRequestModel {
                 ", limit='" + limit + '\'' +
                 ", gstIn='" + gstIn + '\'' +
                 ", cinNo='" + cinNo + '\'' +
-                ", cinDate=" + cinDate +
+                ", gstDate=" + gstDate +
                 '}';
     }
 

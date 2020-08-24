@@ -142,5 +142,24 @@ $('.dataTables-partyItem').DataTable({
     buttons: [    ]
 });
 //party item rate  Data-table End
+
+//Department  Data-table start
+$('.dataTables-department').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [    ]
+});
+//Department   Data-table End
+
+//Salary  Data-table start
+$('.dataTables-salaryComponents').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [    ]
+});
+//Salary   Data-table End
+
 });
 
