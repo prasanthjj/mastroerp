@@ -74,4 +74,9 @@ public class Branch {
     @ManyToMany(mappedBy = "branch")
     private Set<User> user = new HashSet<>();
 
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Indent> indentSet = new HashSet<>();
+
 }
