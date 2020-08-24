@@ -164,6 +164,35 @@ $("#addStockDetailsForm").validate({
 });
 //Add stock details End
 //Add item End
+
+
+
+// add salary components percentage calculation stat
+/*$(".percentageCalculation").TouchSpin({
+min:0,
+max:100,
+step:0.1,
+decimals:2,
+boostat:5,
+maxboostedstep:10,
+postfix:'%',
+buttondown_class:'btn btn-white',
+buttonup_class:'btn btn-white'
+});*/
+$("#calculationPercentage").hide();
+$("input[name='calculationType']").click(function() {
+if ($("#flatAmount").is(":checked")) {
+$("#calculationAmount").show();
+$("#calculationPercentage").hide();
+} else {
+$("#calculationPercentage").show();
+$("#calculationAmount").hide();
+}
+});
+// add salary components percentage calculation end
+
+
+
 // item party rate relation add party auto-complete start
  $.get('../resources/js/api/typehead_collection.json', function(data){
     $(".addParty_head").typeahead({
@@ -403,7 +432,6 @@ $("#addStockDetailsForm").validate({
     // add party item  rate table end
     // item party rate relation change tab start
 
-    $('#partyBox').hide();
 
     $('.relationBtn').click(function (event) {
         event.preventDefault();
@@ -428,7 +456,7 @@ $("#addStockDetailsForm").validate({
             }
         }
     });
-    // item party rate relation change tab start
+    // item party rate relation change tab end
        $(function(datepicker) {
 
        //Add assets dates Start
@@ -837,6 +865,22 @@ $("#addStockDetailsForm").validate({
         });
     });
     // Remove subcategory end
+/*
+    //Remove salary components start
+    $('.removeSalaryComponents').click(function () {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this Item!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Deleted!", "Item has been deleted.", "success");
+        });
+    });
+    //Remove salary components End*/
 
 //Enable Product start
                       $('.enableProduct').click(function () {
@@ -1074,7 +1118,7 @@ $("#addStockDetailsForm").validate({
 
                                                                        success: function(data){
                                                                                 if(data.success) {
-                                                                                alert(stockId);
+
 
                                                                  var redirectionUrl= "/inventory/getStock";
                                                                  window.location.href = redirectionUrl;

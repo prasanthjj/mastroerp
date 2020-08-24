@@ -134,30 +134,145 @@ $(document).ready(function(){
    });
     //End Deactive User
 
+
+//Activate Department
+
+    $('.activateDepartment').click(function () {
+        var departmentId=$(this).data('departmentid');
+        swal({
+            title: "Are you sure?",
+            text: "You want to activate user!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, activated!",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                url: '/hr/activateOrDeactivateDepartment',
+                type: 'GET',
+                dataType : 'json',
+                data: { 'departmentId': departmentId },
+                success: function(data) {
+                    if(data.success) {
+                        var redirectionUrl= "/hr/getDepartment";
+                        window.location.href = redirectionUrl;
+                    }
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('Error Occured');
+                }
+            });
+            /* swal("Activated!", "Item has been Activated.", "success");*/
+        });
+    });
+
+
+ //Deactivate Department
+   $('.deactiveDepartment').click(function () {
+       var departmentId=$(this).data('departmentid');
+        swal({
+              title: "Are you sure?",
+              text: "You want to deactivate Department!",
+               type: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#0094db",
+               confirmButtonText: "Yes, deactivate it!",
+               closeOnConfirm: false
+                  }, function () {
+
+                   $.ajax({
+                           url: '/hr/activateOrDeactivateDepartment',
+                           type: 'GET',
+                           dataType : 'json',
+                            data: { 'departmentId': departmentId },
+                            success: function(data){
+                            if(data.success) {
+                                      var redirectionUrl= "/hr/getDepartment";
+                                       window.location.href = redirectionUrl;
+                                     }
+                                    },
+                             error: function(jqXHR, textStatus) {
+                              alert('Error Occured');
+                                  }
+                                 });
+                           //swal("Activated!", "Item has been Activated.", "success");
+          });
+   });
+    //End Deactive Department
+
+      //Activate Salary Component
+
+            $('.activatecomponent').click(function () {
+                var salryComponentId=$(this).data('salrycomponentid');
+                alert(salryComponentId);
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to activate user!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#0094db",
+                    confirmButtonText: "Yes, activated!",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: '/hr/activateOrDeactivateSalaryComponent',
+                        type: 'GET',
+                        dataType : 'json',
+                        data: { 'salryComponentId':salryComponentId },
+                        success: function(data) {
+                            if(data.success) {
+                                var redirectionUrl= "/hr/getSalaryComponent";
+                                window.location.href = redirectionUrl;
+                            }
+                        },
+                        error: function(jqXHR, textStatus) {
+                            alert('Error Occured');
+                        }
+                    });
+                    /* swal("Activated!", "Item has been Activated.", "success");*/
+                });
+            });
+    // End salry Component
+
+
+     //Deactivate Salry Component
+       $('.deactivecomponent').click(function () {
+           var salryComponentId=$(this).data('salrycomponentid');
+
+            swal({
+                  title: "Are you sure?",
+                  text: "You want to deactivate Salary component!",
+                   type: "warning",
+                   showCancelButton: true,
+                   confirmButtonColor: "#0094db",
+                   confirmButtonText: "Yes, deactivate it!",
+                   closeOnConfirm: false
+                      }, function () {
+
+                       $.ajax({
+                               url: '/hr/activateOrDeactivateSalaryComponent',
+                               type: 'GET',
+                               dataType : 'json',
+                                data: { 'salryComponentId': salryComponentId },
+                                success: function(data){
+                                if(data.success) {
+                                          var redirectionUrl= "/hr/getSalaryComponent";
+                                           window.location.href = redirectionUrl;
+                                         }
+                                        },
+                                 error: function(jqXHR, textStatus) {
+                                  alert('Error Occured');
+                                      }
+                                     });
+                               //swal("Activated!", "Item has been Activated.", "success");
+              });
+       });
+        //End Deactive Salary Component
+
   // Add Branch start
     $(function(datepicker) {
-        $('#vatEffectFrmDate .input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true,
-            //keepEmptyValues:true
-        });
-        $('#cstEffectFrmDate .input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        });
-        $('#sTaxEffectFrmDate .input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        });
+
         $('#incomeTaxEffectFrmDate .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: false,
@@ -179,7 +294,7 @@ $(document).ready(function(){
             calendarWeeks: true,
             autoclose: true
         });
-        $('#cinEffectFrmDate .input-group.date').datepicker({
+        $('#gstEffectFrmDate .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: false,
             forceParse: false,
@@ -277,6 +392,29 @@ $(document).ready(function(){
 
 });
    //Edit Role End
+
+//Edit Department Start
+   $("body").on('click','.departmentEdit',function (e) {
+    e.preventDefault();
+    var departmentId =$(this).data('departmentid');
+    $.ajax({
+        url: '/hr/getDepartmentForEdit',
+        type: 'GET',
+        dataType : 'json',
+        data: { 'departmentId': departmentId },
+        success: function(data){
+            if(data.success) {
+                $('#departmentId').val(data.data.departmentId);
+                $('#departmentname').val(data.data.departmentName);
+                $('#departmenthead').val(data.data.departmentHead);
+            }
+        },
+        error: function(jqXHR, textStatus) {
+            alert('Error Occured');
+        }
+    });
+});
+//Edit Department End
 
    //Edit User Start
    $("body").on('click','.userEdit',function (e) {
