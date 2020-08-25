@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * controller include all indent methods
  */
 @Controller
-@RequestMapping("/indent")
+@RequestMapping("/inventory")
 public class IndentController {
 
     @Autowired
@@ -98,7 +98,7 @@ public class IndentController {
      */
     @PostMapping("/createIndent")
     public String createIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
-        MastroLogUtils.info(IndentController.class, "Going to createIndent and indent items : {}");
+        MastroLogUtils.info(IndentController.class, "Going to createIndent and indent items : {}" + indentModel.toString());
         try {
             Indent indent = indentService.createIndent(indentModel);
             model.addAttribute("inventoryModule", "inventoryModule");
@@ -128,10 +128,10 @@ public class IndentController {
         MastroLogUtils.info(IndentController.class, "Going to save indent item details: {}" + indentModel.toString());
         try {
             indentService.saveOrUpdateIndentItemDetails(indentModel);
-            return "redirect:/indent/getIndentList";
+            return "redirect:/inventory/getIndentList";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "indent model empty", e);
-            return "redirect:/indent/getIndentList";
+            return "redirect:/inventory/getIndentList";
         } catch (Exception e) {
             MastroLogUtils.error(IndentController.class, "Error occured while save indent item details : {}", e);
             throw e;

@@ -135,9 +135,9 @@
                         Details</a></li>
                     <li th:unless="${stockTab== 'stock'}"><a th:href="@{/inventory/getStock}">Stock Details</a></li>
                     <li><a href="#">Stock Transfer</a></li>
-                    <li th:if="${indentTab=='indent'}" class="active"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
+                    <li th:if="${indentTab=='indent'}" class="active"><a href="#" th:href="@{/inventory/getIndentList}">Indent</a>
                     </li>
-                    <li th:unless="${indentTab== 'indent'}"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
+                    <li th:unless="${indentTab== 'indent'}"><a href="#" th:href="@{/inventory/getIndentList}">Indent</a>
                     </li>
                     <li><a href="#">Gate Pass</a></li>
                     <li><a href="#">DC /Sales Slip</a></li>
@@ -152,9 +152,10 @@
                         Details</a></li>
                     <li th:unless="${stockTab== 'stock'}"><a th:href="@{/inventory/getStock}">Stock Details</a></li>
                     <li><a href="#">Stock Transfer</a></li>
-                    <li th:if="${indentTab== 'indent'}" class="active"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
+                    <li th:if="${indentTab== 'indent'}" class="active"><a href="#"
+                                                                          th:href="@{/inventory/getIndentList}">Indent</a>
                     </li>
-                    <li th:unless="${indentTab== 'indent'}"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
+                    <li th:unless="${indentTab== 'indent'}"><a href="#" th:href="@{/inventory/getIndentList}">Indent</a>
                     </li>
                     <li><a href="#">Gate Pass</a></li>
                     <li><a href="#">DC /Sales Slip</a></li>

@@ -124,6 +124,13 @@ public class IndentServiceImpl implements IndentService {
 
     }
 
+    /**
+     * Method to save or update indent
+     *
+     * @param indentModel
+     * @return indent
+     * @throws ModelNotFoundException
+     */
     @Transactional(rollbackOn = {Exception.class})
     public Indent saveOrUpdateIndentItemDetails(IndentModel indentModel) throws ModelNotFoundException {
 
@@ -146,6 +153,14 @@ public class IndentServiceImpl implements IndentService {
 
     }
 
+    /**
+     * Method to save or update indent item
+     *
+     * @param indentModel
+     * @param indent
+     * @return
+     * @throws ModelNotFoundException
+     */
     private Set<ItemStockDetails> saveOrUpdateIndentItems(IndentModel indentModel, Indent indent) throws ModelNotFoundException {
 
         MastroLogUtils.info(IndentService.class, "Going to edit indent items  {}" + indentModel.toString());
@@ -188,6 +203,12 @@ public class IndentServiceImpl implements IndentService {
 
     }
 
+    /**
+     * Method to remove indent item
+     *
+     * @param indentId
+     * @param indentItemId
+     */
     public void removeIndentItem(Long indentId, Long indentItemId) {
 
         Indent indent = getIndentById(indentId);

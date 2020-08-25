@@ -45,7 +45,7 @@
                         <a href="#">Inventory </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="#" th:href="@{/indent/getIndentList}">Indent List</a>
+                        <a href="#" th:href="@{/inventory/getIndentList}">Indent List</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Add Indent</strong>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form th:action="@{/indent/createIndent}" th:object="${indentForm}"
+                            <form th:action="@{/inventory/createIndent}" th:object="${indentForm}"
                                   name="indentForm" method="post">
                                          <span th:if="${indentDetails!= null}">
                                          <input type="hidden" name="id" th:value="${indentDetails.id}"/>
@@ -169,7 +169,7 @@
                              </div>-->
                             <h2>Item Details</h2>
                             <div class="row">
-                                <form id="indentForm" th:action="@{/indent/saveIndent}" th:object="${indentForm}"
+                                <form id="indentForm" th:action="@{/inventory/saveIndent}" th:object="${indentForm}"
                                       name="indentForm" method="post">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
@@ -402,7 +402,7 @@ var indentItemId=$(this).data('indentitemss');
              type: "success"
              }, function () {
            	$.ajax({
-                   url: '/indent/removeIndentItem',
+                   url: '/inventory/removeIndentItem',
                    type: 'POST',
                    dataType : 'json',
                    data: { 'indentItemId': indentItemId,'indentId': indentId },
