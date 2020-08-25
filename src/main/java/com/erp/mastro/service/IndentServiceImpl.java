@@ -95,8 +95,8 @@ public class IndentServiceImpl implements IndentService {
                 ItemStockDetails itemStockDetails = new ItemStockDetails();
                 Set<Stock> stockSet = getAllStocks().stream()
                         .filter(stockData -> (null != stockData))
-                        .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
-                        .filter(stockData -> (indentModel.getProductId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
                         .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                         .collect(Collectors.toSet());
                 itemStockDetails.setStock(stockSet.stream().findFirst().get());
@@ -113,8 +113,8 @@ public class IndentServiceImpl implements IndentService {
                 ItemStockDetails itemStockDetails = new ItemStockDetails();
                 Set<Stock> stockSet = getAllStocks().stream()
                         .filter(stockData -> (null != stockData))
-                        .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
-                        .filter(stockData -> (indentModel.getProductId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
                         .collect(Collectors.toSet());
                 itemStockDetails.setStock(stockSet.stream().findFirst().get());
                 indent.getItemStockDetailsSet().add(itemStockDetails);

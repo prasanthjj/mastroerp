@@ -140,6 +140,30 @@ public class IndentController {
     }
 
     /**
+     * Method To View Indent
+     *
+     * @param model
+     * @param indentId
+     * @param req
+     * @return
+     */
+
+    @GetMapping("/viewIndent")
+    public String getViewIndent(Model model, @RequestParam("indentId") Long indentId, HttpServletRequest req) {
+        MastroLogUtils.info(IndentController.class, "Going to view Indent : {}" + indentId);
+        try {
+            Indent indent = indentService.getIndentById(indentId);
+            model.addAttribute("indentDetails", indent);
+            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute("indentTab", "indent");
+            return "views/view_indent";
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while viewing Indent : {}" + indentId, e);
+            throw e;
+        }
+    }
+
+    /**
      * Method to remove indent item
      *
      * @param model
