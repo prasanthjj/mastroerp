@@ -97,6 +97,7 @@ public class IndentServiceImpl implements IndentService {
                         .filter(stockData -> (null != stockData))
                         .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
                         .filter(stockData -> (indentModel.getProductId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                         .collect(Collectors.toSet());
                 itemStockDetails.setStock(stockSet.stream().findFirst().get());
                 indent.getItemStockDetailsSet().add(itemStockDetails);
