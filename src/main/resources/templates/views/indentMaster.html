@@ -80,84 +80,27 @@
                                     <tr>
                                         <th class="mastro-blue-bg txt-white">No</th>
                                         <th>Indent No.</th>
-                                        <th>Indent Type</th>
+                                        <th>Indent Priority</th>
                                         <th>Indent Date</th>
-                                        <th>Item Name</th>
-                                        <th>Brand</th>
-                                        <th>Current Stock</th>
-                                        <th>Indent Qty</th>
-                                        <th>Required By Date</th>
+                                        <!--<th>Item Name</th>-->
+                                        <!-- <th>Brand</th>-->
+                                        <!--<th>Current Stock</th>
+                                        <th>Indent Qty</th>-->
+                                        <!--<th>Required By Date</th>-->
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>1</td>
-                                        <td>IND-0021560</td>
-                                        <td>Direct</td>
-                                        <td>23/06/2020</td>
-                                        <td>Oxy .47 Red 3.05mtr (10')</td>
-                                        <td></td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>30/06/2020</td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeIndent" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>1</td>
-                                        <td>IND-0802020</td>
-                                        <td>Auto</td>
-                                        <td>28/06/2020</td>
-                                        <td>Angles 25x6 (1x1/4)</td>
-                                        <td></td>
-                                        <td>400</td>
-                                        <td>300</td>
-                                        <td>30/06/2020</td>
-                                        <td class="center">
-                                            <div class="btn-group">
-                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeIndent" href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
-
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>1</td>
-                                        <td>IND-0021560</td>
-                                        <td>Direct</td>
-                                        <td>23/06/2020</td>
-                                        <td>Oxy .35 Red 3.05mtr (10')</td>
-                                        <td></td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>30/06/2020</td>
+                                    <tr class="gradeX" th:each="indentObj,iterator:${indentList}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td th:text="${indentObj.id}">IND-0021560</td>
+                                        <td th:text="${indentObj.indentPriority}">Direct</td>
+                                        <td>----</td>
+                                        <!-- <td th:text="${indentObj.id}">Oxy .35 Red 3.05mtr (10')</td>-->
+                                        <!-- <td></td>-->
+                                        <!-- <td>200</td>
+                                         <td>300</td>-->
+                                        <!--  <td>30/06/2020</td>-->
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">

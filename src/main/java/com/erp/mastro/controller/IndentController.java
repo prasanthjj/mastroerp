@@ -2,6 +2,7 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Indent;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentModel;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * controller include all indent methods
@@ -30,6 +32,9 @@ public class IndentController {
     @Autowired
     private IndentService indentService;
 
+    @Autowired
+    private UserController userController;
+
     /**
      * method to get indent details
      *
@@ -40,7 +45,13 @@ public class IndentController {
     public String getIndentList(Model model) {
         MastroLogUtils.info(IndentController.class, "Going to get indent list: {}");
         try {
-            List<Indent> indentList = new ArrayList<>();
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            List<Indent> indentList = indentService.getAllIndents().stream()
+                    .filter(indentData -> (null != indentData))
+                    .filter(indentItem -> (indentItem.getBranch().getId().equals(currentBranch.getId())))
+                    .sorted(Comparator.comparing(
+                            Indent::getId).reversed())
+                    .collect(Collectors.toList());
             model.addAttribute("indentForm", new IndentModel());
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("indentTab", "indent");
