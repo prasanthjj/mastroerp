@@ -164,8 +164,8 @@ public class AutocompleteController {
             for (Product product : productsFinal) {
                 Set<Stock> stocksSet = indentService.getAllStocks().stream()
                         .filter(stockData -> (null != stockData))
-                        .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
-                        .filter(stockData -> (product.getId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (product.getId().equals(stockData.getProduct().getId())))
                         .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                         .collect(Collectors.toSet());
                 if (stocksSet.isEmpty() == false) {
@@ -214,8 +214,8 @@ public class AutocompleteController {
             for (Product product : productsFinal) {
                 Set<Stock> stocksSet = stockService.getAllStockDetails().stream()
                         .filter(stockData -> (null != stockData))
-                        .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
-                        .filter(stockData -> (product.getId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (product.getId().equals(stockData.getProduct().getId())))
                         .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                         .collect(Collectors.toSet());
                 if (stocksSet.isEmpty() == true) {

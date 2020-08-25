@@ -373,8 +373,8 @@ public class ProductServiceImpl implements ProductService {
             MastroLogUtils.info(ProductService.class, "Going to add party to party   {}");
             Set<ProductPartyRateRelation> productPartyRateRelationsSet = getAllProductPartyRateRelation().stream()
                     .filter(relationData -> (null != relationData))
-                    .filter(relationData -> (productId == relationData.getProduct().getId()))
-                    .filter(relationData -> (partyId == relationData.getParty().getId()))
+                    .filter(relationData -> (productId.equals(relationData.getProduct().getId())))
+                    .filter(relationData -> (partyId.equals(relationData.getParty().getId())))
                     .collect(Collectors.toSet());
             if (productPartyRateRelationsSet.size() == 0) {
                 ProductPartyRateRelation productPartyRateRelation = new ProductPartyRateRelation();
