@@ -77,6 +77,14 @@ public class IndentController {
 
     }
 
+    /**
+     * Method to create indent
+     *
+     * @param indentModel
+     * @param request
+     * @param model
+     * @return indent page
+     */
     @PostMapping("/createIndent")
     public String createIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(IndentController.class, "Going to createIndent and indent items : {}");
@@ -96,6 +104,14 @@ public class IndentController {
         }
     }
 
+    /**
+     * method to save indent items
+     *
+     * @param indentModel
+     * @param request
+     * @param model
+     * @return indent list
+     */
     @PostMapping("/saveIndent")
     public String saveIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(IndentController.class, "Going to save indent item details: {}" + indentModel.toString());
@@ -104,7 +120,7 @@ public class IndentController {
             return "redirect:/indent/getIndentList";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "indent model empty", e);
-            return "redirect:/master/getAssetList";
+            return "redirect:/indent/getIndentList";
         } catch (Exception e) {
             MastroLogUtils.error(IndentController.class, "Error occured while save indent item details : {}", e);
             throw e;
@@ -112,6 +128,15 @@ public class IndentController {
 
     }
 
+    /**
+     * Method to remove indent item
+     *
+     * @param model
+     * @param request
+     * @param indentItemId
+     * @param indentId
+     * @return removed response
+     */
     @PostMapping("/removeIndentItem")
     @ResponseBody
     public GenericResponse removeIndentItem(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId) {

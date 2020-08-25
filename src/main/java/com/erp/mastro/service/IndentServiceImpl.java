@@ -153,42 +153,37 @@ public class IndentServiceImpl implements IndentService {
 
         if (indentModel.getIndentItemStockDetailsModels().isEmpty() == false) {
 
-            indentModel.getIndentItemStockDetailsModels().parallelStream()
-                    .filter(intentInModel -> null != intentInModel)
-                    .forEach(intentInModel -> {
-                        ItemStockDetails itemStockDetails = indent.getItemStockDetailsSet().stream()
-                                .filter(indentItem -> (null != indentItem))
-                                .peek(
-                                        indentItem -> {
-                                            if (null != indentItem) {
-                                                indentItem.getId().equals(intentInModel.getId());
-                                            }
-                                        }
-                                )
-                                .findFirst().get();
+            for (IndentModel.IndentItemStockDetailsModel itemStockDetailsModel : indentModel.getIndentItemStockDetailsModels()) {
 
-                        itemStockDetails.setQuantityToIndent(intentInModel.getQuantityToIndent());
-                        itemStockDetails.setSoReferenceNo(intentInModel.getSoReferenceNo());
-                        if (intentInModel.getUomId() != null) {
-                            itemStockDetails.setPurchaseUOM(uomRepository.findById(intentInModel.getUomId()).get());
-                        }
-                        String sDate1 = intentInModel.getSrequiredByDate();
-                        if (sDate1 != "") {
-                            Date date1 = null;
-                            try {
-                                date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            itemStockDetails.setRequiredByDate(date1);
-                        }
-                        itemStockDetailsSet.add(itemStockDetails);
+                if (itemStockDetailsModel.getId() != null) {
+                    ItemStockDetails itemStockDetails = indent.getItemStockDetailsSet().stream()
+                            .filter(indentItem -> (null != indentItem))
+                            .filter(indentItem -> (indentItem.getId().equals(itemStockDetailsModel.getId())))
+                            .findFirst().get();
 
-                    });
+                    itemStockDetails.setQuantityToIndent(itemStockDetailsModel.getQuantityToIndent());
+                    itemStockDetails.setSoReferenceNo(itemStockDetailsModel.getSoReferenceNo());
+                    if (itemStockDetailsModel.getUomId() != null) {
+                        itemStockDetails.setPurchaseUOM(uomRepository.findById(itemStockDetailsModel.getUomId()).get());
+                    }
+                    String sDate1 = itemStockDetailsModel.getSrequiredByDate();
+                    if (!sDate1.equals("")) {
+                        Date date1 = null;
+                        try {
+                            date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        itemStockDetails.setRequiredByDate(date1);
+                    }
+                    itemStockDetailsSet.add(itemStockDetails);
+                }
+            }
+
         } else {
             throw new ModelNotFoundException("Indent item model is empty");
         }
-        /* removeBlankItems(itemStockDetailsSet);*/
+
         return itemStockDetailsSet;
 
     }
@@ -214,8 +209,5 @@ public class IndentServiceImpl implements IndentService {
 
     }
 
-    private void removeBlankItems(Set<ItemStockDetails> itemStockDetails) {
-        itemStockDetails.removeIf(x -> x.getQuantityToIndent() == null);
-    }
 
 }

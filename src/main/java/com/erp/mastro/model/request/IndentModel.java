@@ -2,6 +2,7 @@ package com.erp.mastro.model.request;
 
 import com.erp.mastro.entities.Indent;
 import com.erp.mastro.entities.ItemStockDetails;
+import com.erp.mastro.entities.Stock;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,13 +45,16 @@ public class IndentModel {
         private String soReferenceNo;
         private Long stockId;
         private Long uomId;
+        private Stock stock;
 
         public IndentItemStockDetailsModel() {
         }
 
         public IndentItemStockDetailsModel(ItemStockDetails itemStockDetails) {
-
-            this.id = itemStockDetails.getId();
+            if (itemStockDetails != null) {
+                this.id = itemStockDetails.getId();
+                this.stock = itemStockDetails.getStock();
+            }
         }
     }
 

@@ -191,49 +191,50 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody id="indentItemDetails">
-                                                <span th:if="${indentDetails!= null}">
+                                                <span th:if="${indentForm!= null}">
                                                  <input type="hidden" th:field="*{id}">
                                         <tr class="gradeX indentItemDetailsBox"
-                                            th:each="indentStockItemObj,iterator:${indentDetails.itemStockDetailsSet}">
+                                            th:each="indentStockItemModelObj,iterator:${indentForm.indentItemStockDetailsModels}">
                                          <input type="hidden"
-                                                th:field="*{indentItemStockDetailsModels[__${iterator.index}__].id}">
+                                                th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].id}">
                                             <td th:text="${iterator.index+1}">1</td>
                                             <td class="center"><b
-                                                    th:text="${indentStockItemObj.stock.product.productName}">Oxy .47 Red 3.05mtr (10')</b></td>
+                                                    th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.productName}">Oxy .47 Red 3.05mtr (10')</b></td>
 
-                                            <td class="center" th:text="${indentStockItemObj.stock.currentStock}">
+                                            <td class="center"
+                                                th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.currentStock}">
                                                 300
                                             </td>
                                             <td class="center">
                                                 <input class="form-control"
-                                                       th:field="*{indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
+                                                       th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
                                             </td>
                                                <td class="center indentRequiredDate">
                                                    <div class="input-group date">
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input
                                                            class="form-control" type="text"
-                                                           th:field="*{indentItemStockDetailsModels[__${iterator.index}__].srequiredByDate}">
+                                                           th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].srequiredByDate}">
                                                 </div>
 
                                             </td>
                                             <td class="center">
                                                 <input class="form-control"
-                                                       th:field="*{indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
+                                                       th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
                                             </td>
-                                            <td th:text="${indentStockItemObj.stock.product.uom.UOM}">Kg</td>
+                                            <td th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.uom.UOM}">Kg</td>
                                             <td class="center">
                                                    <select class="form-control"
-                                                           th:field="*{indentItemStockDetailsModels[__${iterator.index}__].uomId}">
+                                                           th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].uomId}">
                                                    <option value="">select</option>
-                                                            <option th:each="productuomList: ${indentStockItemObj.stock.product.productUOMSet}"
+                                                            <option th:each="productuomList: ${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.productUOMSet}"
                                                                     th:value="${productuomList.uom.id}"
                                                                     th:text="${productuomList.uom.UOM}"></option>
                                                 </select>
                                             </td>
                                             <td><a type='button'
                                                    class='btn btn-danger dim removeIndentItemDetailsBtn'
-                                                   th:data-indentitemss="${indentStockItemObj.id}"
+                                                   th:data-indentitemss="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].id}"
                                                    th:data-indentids="${indentDetails.id}"><i
                                                     class='fa fa-times-circle'></i></a></td>
                                         </tr>
