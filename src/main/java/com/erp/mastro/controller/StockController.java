@@ -2,6 +2,7 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.Stock;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -29,6 +30,9 @@ public class StockController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    UserController userController;
+
     /**
      * Method to load stock page
      *
@@ -40,8 +44,10 @@ public class StockController {
     public String getStock(Model model) {
         MastroLogUtils.info(StockController.class, "Going to get all stocks : {}");
         try {
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<Stock> stockDetailsList = stockService.getAllStockDetails().stream()
                     .filter(stockData -> (null != stockData))
+                    .filter(stockItem -> stockItem.getBranch().getId().equals(currentBranch.getId()))
                     .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                     .sorted(Comparator.comparing(Stock::getId).reversed())
                     .collect(Collectors.toList());
