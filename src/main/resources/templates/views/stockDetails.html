@@ -49,20 +49,7 @@
                     </li>
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
@@ -104,7 +91,7 @@
                                     <tbody>
                                     <tr class="gradeX" th:each="stockObj,iterator:${stockDetailsList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td></td>
+                                        <td th:text="${stockObj.product.productName}">></td>
                                         <td th:text="${stockObj.openingStock}"></td>
                                         <td class="center" th:text="${stockObj.currentStock}"></td>
                                         <td class="center" th:text="${stockObj.reorderLevel}"></td>

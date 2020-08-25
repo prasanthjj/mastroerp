@@ -38,7 +38,7 @@
                         <a href="#">Inventory </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="stockDetails.html">Stock List</a>
+                        <a href="stockDetails.html" th:href="@{/inventory/getStock}">Stock List</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Add Stock Details </strong>
@@ -73,6 +73,17 @@
 
                                 </div>
                             </form>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
+                                        Name</label>
+
+                                        <div class="col-sm-8 m-t-sm"><p><span th:if="${productDetails!= null}"><b
+                                                th:text="${productDetails.productName}">.47 Red 3.05mtr (10')</b></span>
+                                        </p></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="ibox-tools">
 
                             </div>
