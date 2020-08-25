@@ -397,18 +397,11 @@ var indentId=$(this).data('indentids');
 var indentItemId=$(this).data('indentitemss');
 
   swal({
-            title: "Are you sure?",
-  text: "You want to remove!",
-           type: "warning",                        showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-       confirmButtonText: "Yes, delete it!",
-               cancelButtonText: "No, cancel plx!",
-               closeOnConfirm: false,
-     closeOnCancel: false },
-            function (isConfirm) {
-    if (isConfirm) {
-      var formData = new FormData(document.getElementById("indentForm"));
-    	$.ajax({
+            title: "Item deleted",
+           text: "",
+             type: "success"
+             }, function () {
+           	$.ajax({
                    url: '/indent/removeIndentItem',
                    type: 'POST',
                    dataType : 'json',
@@ -416,7 +409,7 @@ var indentItemId=$(this).data('indentitemss');
 
                    success: function(data){
                             if(data.success) {
-                                               swal("Deleted!", " deleted.", "success");
+
 
                                              }
 
@@ -427,9 +420,7 @@ var indentItemId=$(this).data('indentitemss');
                 alert('Error Occured');
                  }
                     });
-                        } else {
-                            swal("Cancelled", " :)", "error");
-                        }
+
 
 
     });
