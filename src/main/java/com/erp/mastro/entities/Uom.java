@@ -26,4 +26,9 @@ public class Uom {
             orphanRemoval = true)
     private Set<Product> productSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "uom",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Stock> stockDetails = new HashSet<>();
+
 }

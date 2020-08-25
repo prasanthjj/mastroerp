@@ -148,6 +148,21 @@ $(document).ready(function(){
     },
 
 });
+
+// Add stock details Start
+
+$("#addStockDetailsForm").validate({
+    rules: {
+        currentStock: {
+            required: true,
+        },
+        openingStock: {
+           required: true,
+       },
+
+    },
+});
+//Add stock details End
 //Add item End
 
 
@@ -1082,7 +1097,47 @@ $("#calculationAmount").hide();
                           });
 
 
-$("#indtype").click(function (e) {
+                          //Remove stock details start
+                          $('.removeStockDetails').click(function () {
+                           var stockId=$(this).data('stockids');
+                              swal({
+                                  title: "Are you sure?",
+                                  text: "You will not be able to recover this Item!",
+                                  type: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#0094db",
+                                  confirmButtonText: "Yes, delete it!",
+                                  closeOnConfirm: false
+                              }, function () {
+
+                              	$.ajax({
+                                                                       url: '/inventory/deleteStockDetails',
+                                                                       type: 'POST',
+                                                                       dataType : 'json',
+                                                                       data: { 'stockId': stockId },
+
+                                                                       success: function(data){
+                                                                                if(data.success) {
+
+
+                                                                 var redirectionUrl= "/inventory/getStock";
+                                                                 window.location.href = redirectionUrl;
+                                                                                                 }
+
+                                                                                            },
+
+                                                                   error: function(jqXHR, textStatus)
+                                                                    {
+                                                                    alert('Error Occured');
+                                                                     }
+                                                                        });
+                                  swal("Deleted!", "Item has been deleted.", "success");
+                              });
+                          });
+                          //Remove stock details End
+
+//Industry type start
+                       $("#indtype").click(function (e) {
 
                                                 e.preventDefault();
 
@@ -1117,7 +1172,7 @@ $("#indtype").click(function (e) {
                                                                      });
                           });
 
-
+//Industry type end
 
 
 

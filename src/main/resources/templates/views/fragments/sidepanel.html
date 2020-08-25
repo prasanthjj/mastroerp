@@ -127,11 +127,13 @@
 
             </li>
 
-            <li th:if="${inventoryModule=='inventoryModule'}" class="active">
+            <li class="active" th:if="${inventoryModule== 'inventoryModule'}">
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Stock Details</a></li>
+                    <li th:if="${stockTab== 'stock'}" class="active"><a th:href="@{/inventory/getStock}">Stock
+                        Details</a></li>
+                    <li th:unless="${stockTab== 'stock'}"><a th:href="@{/inventory/getStock}">Stock Details</a></li>
                     <li><a href="#">Stock Transfer</a></li>
                     <li th:if="${indentTab=='indent'}" class="active"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
                     </li>
@@ -146,7 +148,9 @@
                 <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Inventory </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Stock Details</a></li>
+                    <li th:if="${stockTab== 'stock'}" class="active"><a th:href="@{/inventory/getStock}">Stock
+                        Details</a></li>
+                    <li th:unless="${stockTab== 'stock'}"><a th:href="@{/inventory/getStock}">Stock Details</a></li>
                     <li><a href="#">Stock Transfer</a></li>
                     <li th:if="${indentTab== 'indent'}" class="active"><a href="#" th:href="@{/indent/getIndentList}">Indent</a>
                     </li>

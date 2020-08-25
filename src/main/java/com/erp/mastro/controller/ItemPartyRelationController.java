@@ -61,6 +61,7 @@ public class ItemPartyRelationController {
 
     /**
      * Method to get selected product details
+     *
      * @param model
      * @param req
      * @return selected product details
