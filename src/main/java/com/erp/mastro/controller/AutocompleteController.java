@@ -3,13 +3,11 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dao.AutoPopulateDAO;
-import com.erp.mastro.entities.Branch;
-import com.erp.mastro.entities.Party;
-import com.erp.mastro.entities.Product;
-import com.erp.mastro.entities.Stock;
+import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.service.IndentServiceImpl;
+import com.erp.mastro.service.interfaces.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +36,9 @@ public class AutocompleteController {
 
     @Autowired
     UserController userController;
+
+    @Autowired
+    StockService stockService;
 
     /**
      * Method to get autopopulate items
@@ -172,6 +173,55 @@ public class AutocompleteController {
                     productSet.add(stock.getProduct());
                 } else {
                     MastroLogUtils.info(AutocompleteController.class, "stock set is empty for the product" + product.getId() + "in branch" + currentBranch.getId());
+                }
+            }
+            Set<ProductRequestModel> productRequestModels = new HashSet<ProductRequestModel>();
+            for (Product product : productSet) {
+                ProductRequestModel productRequestModel = new ProductRequestModel();
+                productRequestModel.setId(product.getId());
+                productRequestModel.setProductname(product.getProductName());
+                productRequestModels.add(productRequestModel);
+            }
+            return new GenericResponse(true, "get items")
+                    .setProperty("products", productRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    /**
+     * Method to get autopopulate items
+     *
+     * @param searchTerm
+     * @return item list
+     */
+    @RequestMapping(value = "/stock", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse productsInStock(@RequestParam("searchTerm") String searchTerm) {
+        try {
+            MastroLogUtils.info(com.erp.mastro.controller.AutocompleteController.class, "Going to get product in autocomplete : {}");
+            User userDetails = userController.getCurrentUser();
+            List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
+            List<Product> productsFinal = products.stream()
+                    .filter(productData -> (null != productData))
+                    .filter(productData -> (true == productData.isEnabled()))
+                    .collect(Collectors.toList());
+
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            Set<Product> productSet = new HashSet<>();
+            for (Product product : productsFinal) {
+                Set<Stock> stocksSet = stockService.getAllStockDetails().stream()
+                        .filter(stockData -> (null != stockData))
+                        .filter(stockData -> (currentBranch.getId() == stockData.getBranch().getId()))
+                        .filter(stockData -> (product.getId() == stockData.getProduct().getId()))
+                        .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                        .collect(Collectors.toSet());
+                if (stocksSet.isEmpty() == true) {
+                    productSet.add(product);
+                } else {
+                    MastroLogUtils.info(AutocompleteController.class, "product" + product.getId() + "in branch" + currentBranch.getId() + "already in stock");
                 }
             }
             Set<ProductRequestModel> productRequestModels = new HashSet<ProductRequestModel>();
