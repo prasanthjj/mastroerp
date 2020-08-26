@@ -48,6 +48,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
 
     @Override
     public SalaryComponent getSalaryComponentId(Long id) {
+
         return salaryComponentRepository.findById(id).get();
     }
 
@@ -66,7 +67,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             salaryComponent.setComponentType(salaryComponentRequestModel.getComponentType());
             salaryComponent.setComponentName(salaryComponentRequestModel.getComponentName());
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());
-            //salaryComponent.setCalculation_Type(salaryComponentRequestModel.getCalculation_Type());
+
 
             salaryComponent.setCalculation_Type(value);
             if(salaryComponent.getCalculation_Type().equals("Flat-Amount")){
@@ -75,13 +76,13 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             else {
                 salaryComponent.setAmount(salaryComponentRequestModel.getPercentageAmount());
             }
-
+            salaryComponent.setStatus(true);
             salaryComponentRepository.save(salaryComponent);
             MastroLogUtils.info(SalaryComponentService.class, "Saved " + salaryComponent.getComponentName() + " successfully.");
 
         }else{
             MastroLogUtils.info(SalaryComponentService.class, "Going to edit Salary Component {}" + salaryComponentRequestModel.toString());
-            SalaryComponent salaryComponent = salaryComponentRepository.findById(salaryComponentRequestModel.getId()).get();
+            SalaryComponent salaryComponent = getSalaryComponentId(salaryComponentRequestModel.getId());
             salaryComponent.setComponentType(salaryComponentRequestModel.getComponentType());
             salaryComponent.setComponentName(salaryComponentRequestModel.getComponentName());
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());

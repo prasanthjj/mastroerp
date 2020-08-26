@@ -93,11 +93,11 @@ public class SalaryComponentController {
      */
     @RequestMapping(value = "/getSalaryComponentForEdit", method = RequestMethod.GET)
     public String getSalaryComponentForEdit(HttpServletRequest request, @RequestParam("salrycomponentid") Long salryComponentId, Model model) {
-        MastroLogUtils.info(SalaryComponentController.class, "Going to edit salry Component : {}" + salryComponentId);
+        MastroLogUtils.info(SalaryComponentController.class, "Going to edit salary Component : {}" + salryComponentId);
         try {
             if (salryComponentId != null) {
 
-                SalaryComponent salaryComponent = salaryComponentService.getSalaryComponentId(salryComponentId);
+               // SalaryComponent salaryComponent = salaryComponentService.getSalaryComponentId(salryComponentId);
                 model.addAttribute("hrModule", "hrModule");
                 model.addAttribute("salaryComponentTab", "salaryComponent");
                 model.addAttribute("salryComponentForm", new SalaryComponentRequestModel(salaryComponentService.getSalaryComponentId(salryComponentId)));
@@ -147,7 +147,6 @@ public class SalaryComponentController {
         MastroLogUtils.info(SalaryComponentController.class, "Going to view Salry Component :{}" + salryComponentId);
         try {
             SalaryComponent salaryComponent = salaryComponentService.getSalaryComponentId(salryComponentId);
-            //model.addAttribute("assetDetails", assets);
             model.addAttribute("salryComponentForm", salaryComponentService.getSalaryComponentId(salryComponentId));
             model.addAttribute("hrModule", "hrModule");
             model.addAttribute("salaryComponentTab", "salaryComponent");

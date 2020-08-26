@@ -22,7 +22,7 @@ public class SalaryComponentRequestModel {
     }
 
     public SalaryComponentRequestModel(SalaryComponent salaryComponent) {
-        if (salaryComponent==null) {
+        if (salaryComponent!=null) {
             this.id = salaryComponent.getId();
             this.componentType = salaryComponent.getComponentType();
             this.componentName = salaryComponent.getComponentName();

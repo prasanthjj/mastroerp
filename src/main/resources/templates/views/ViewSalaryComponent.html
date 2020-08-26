@@ -75,13 +75,16 @@
                                             <label class="col-sm-5 col-form-label"><strong>Calculation Type</strong></label>
                                             <label class="col-sm-7 col-form-label" th:text="${salryComponentForm.calculation_Type}">: </label>
                                         </div>
-                                        <div class="row">
+                                        <div class="row"  th:if="${salryComponentForm.calculation_Type == 'Percentage'}" >
                                             <label class="col-sm-5 col-form-label"><strong>Amount</strong></label>
-                                            <label class="col-sm-7 col-form-label"  th:text="${salryComponentForm.amount}">: </label>
+                                            <label class="col-sm-7 col-form-label"  >:<span th:text="${salryComponentForm.amount}" ></span> <i class="fa fa-percent"></i> </label>
+                                        </div>
+                                        <div class="row" th:unless="${salryComponentForm.calculation_Type == 'Percentage'}">
+                                            <label class="col-sm-5 col-form-label"><strong>Amount</strong></label>
+                                            <label class="col-sm-7 col-form-label"  >: <i class="fa fa-inr"></i> <span th:text="${salryComponentForm.amount}" ></span> </label>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

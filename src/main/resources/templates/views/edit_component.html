@@ -67,7 +67,7 @@
                                         <div class="form-group  row">
                                             <label class="col-sm-4 col-form-label">Component Type<i class="fa fa-asterisk "></i></label>
                                             <div class="col-sm-8">
-                                                <select class="form-control" name="componentType">
+                                                <select class="form-control" name="componentType" th:feild="*{componentType}">
                                                     <option value="">Select Component Type</option>
                                                     <option value="Earnings">Earnings</option>
                                                     <option value="Reimbursement">Reimbursement</option>
@@ -95,12 +95,27 @@
 
                                             <label class="col-sm-4 col-form-label">Calculation Type<i class="fa fa-asterisk "></i></label>
                                             <div class="col-sm-8">
+                                                <span th:if="${salryComponentForm.calculation_Type == 'Percentage'}" >
+                                                <input type="radio" id="flatAmount"  th:value=${"Flat-Amount"}  name="calculationType"> Flat Amount <br>
+                                                    <input type="radio" checked  th:value=${"Percentage"} name="calculationType"> Percentage of CTC
+                                                </span>
 
-                                                <input type="radio"  checked id="flatAmount" th:value=${"Flat-Amount"} name="calculationType"> Flat Amount <br>
-                                                <input type="radio" th:value=${"Percentage"} name="calculationType"> Percentage of CTC
+                                                <span th:unless="${salryComponentForm.calculation_Type == 'Percentage'}" >
+                                                <input type="radio"  id="flatAmount" checked  th:value=${"Flat-Amount"} name="calculationType"> Flat Amount <br>
+                                                    <input type="radio"  th:value=${"Percentage"} name="calculationType"> Percentage of CTC
+                                                </span>
+
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
+
+
+                                       <div class="form-group row" id="calculationPercentage">
+                                            <label class="col-sm-4 col-form-label">Enter Percentage</label>
+                                            <div class="col-sm-8">
+                                                <input class="percentageCalculation" type="text"  th:field="*{percentageAmount}">
+                                            </div>
+                                        </div>
                                         <div class="form-group row" id="calculationAmount">
                                             <label class="col-sm-4 col-form-label">Enter Amount</label>
                                             <div class="col-sm-8">
@@ -113,12 +128,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       <div class="form-group row" id="calculationPercentage">
-                                            <label class="col-sm-4 col-form-label">Enter Percentage</label>
-                                            <div class="col-sm-8">
-                                                <input class="percentageCalculation" type="text"  th:field="*{percentageAmount}">
-                                            </div>
-                                        </div>
+
+
 
                                     </div>
                                     <div class="col-lg-12 text-right">
@@ -160,6 +171,17 @@
 <!-- TouchSpin -->
 <script src="../resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js" th:src="@{/resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
 <script>
+$(document).ready(function(){
+if ($("#flatAmount").is(":checked")) {
+$("#calculationAmount").show();
+$("#calculationPercentage").hide();
+}
+else{
+$("#calculationAmount").hide();
+$("#calculationPercentage").show();
+}
+
+});
     // add salary components percentage calculation stat
 $(".percentageCalculation").TouchSpin({
     min: 0,
