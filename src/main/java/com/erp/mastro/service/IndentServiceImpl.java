@@ -138,7 +138,7 @@ public class IndentServiceImpl implements IndentService {
         Indent indent = new Indent();
 
         if (indentModel == null) {
-            throw new ModelNotFoundException("AssetRequestModel model is empty");
+            throw new ModelNotFoundException("indentRequestModel model is empty");
         } else {
 
             MastroLogUtils.info(IndentService.class, "Going to edit indent Items {}" + indentModel.toString());
@@ -231,5 +231,27 @@ public class IndentServiceImpl implements IndentService {
 
     }
 
+    public void deleteIndent(Long id) {
+        indentRepository.deleteById(id);
+    }
+
+    /**
+     * Method to delete IndentDetails by id
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public Indent deleteIndentDetails(Long id) {
+        MastroLogUtils.info(IndentService.class, "Going to delete IndentDetails by id : {}" + id);
+        Indent indentDetails = new Indent();
+        if (id != null) {
+            indentDetails = getIndentById(id);
+            indentDetails.setIndentDeleteStatus(1);
+            indentRepository.save(indentDetails);
+        }
+        return indentDetails;
+
+    }
 
 }

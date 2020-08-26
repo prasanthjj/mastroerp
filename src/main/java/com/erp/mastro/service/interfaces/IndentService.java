@@ -17,4 +17,9 @@ public interface IndentService {
     Indent saveOrUpdateIndentItemDetails(IndentModel indentModel) throws ModelNotFoundException;
 
     void removeIndentItem(Long indentId, Long indentItemId);
+
+    void deleteIndent(Long id);
+
+    Indent deleteIndentDetails(Long id);
+
 }

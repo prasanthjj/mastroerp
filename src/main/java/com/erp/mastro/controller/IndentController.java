@@ -48,6 +48,7 @@ public class IndentController {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<Indent> indentList = indentService.getAllIndents().stream()
                     .filter(indentData -> (null != indentData))
+                    .filter(indentData -> (1 != indentData.getIndentDeleteStatus()))
                     .filter(indentItem -> (indentItem.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
                             Indent::getId).reversed())
@@ -164,6 +165,49 @@ public class IndentController {
     }
 
     /**
+     * @param model
+     * @param
+     * @param
+     * @return
+     */
+
+    @RequestMapping(value = "/getEditIndent", method = RequestMethod.GET)
+    public String getEditIndent(Model model, @RequestParam("indentId") Long indentId, HttpServletRequest req) {
+        MastroLogUtils.info(StockController.class, "Going to edit indent : {}" + indentId);
+        try {
+            Indent indent = indentService.getIndentById(indentId);
+            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute("indentTab", "indent");
+            model.addAttribute("indentDetails", indent);
+            model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
+            return "views/editIndent";
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while editing Indent : {}" + indentId, e);
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/createEditIndent")
+    public String createEditIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
+        MastroLogUtils.info(IndentController.class, "Going to edit indent : {}" + indentModel.toString());
+        try {
+            Indent indent = indentService.createIndent(indentModel);
+            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute("indentTab", "indent");
+            model.addAttribute("indentDetails", indent);
+            model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
+            return "views/editIndent";
+        } catch (ModelNotFoundException e) {
+            MastroLogUtils.error(this, "Indentmodel empty", e);
+            return "views/editIndent";
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
      * Method to remove indent item
      *
      * @param model
@@ -185,6 +229,31 @@ public class IndentController {
             MastroLogUtils.error(this, "Error Occured while deleting indent item details :{}", e);
 
             throw e;
+        }
+
+    }
+
+    /**
+     * Method to Delete Indentdetails by id
+     *
+     * @param model
+     * @param request
+     * @param indentId
+     * @return
+     */
+    @PostMapping("/deleteIndentDetails")
+    @ResponseBody
+    public GenericResponse deleteIndentDetails(Model model, HttpServletRequest request, @RequestParam("indentId") Long indentId) {
+        MastroLogUtils.info(IndentController.class, "Going to delete IndentDetails by id :{}" + indentId);
+        try {
+
+            indentService.deleteIndentDetails(indentId);
+            return new GenericResponse(true, "delete indent details");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while deleting indent details :{}" + indentId, e);
+            return new GenericResponse(false, e.getMessage());
+
         }
 
     }

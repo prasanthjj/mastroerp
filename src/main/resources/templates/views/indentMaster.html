@@ -112,10 +112,12 @@
                                                            th:href="@{/inventory/viewIndent?indentId=__${indentObj.id}__}"><i
                                                             class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                    <li><a class="dropdown-item font-bold" href="#"
+                                                           th:href="@{/inventory/getEditIndent?indentId=__${indentObj.id}__}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold removeIndent" href="#"><i
+                                                    <li><a class="dropdown-item font-bold removeIndent" href="#"
+                                                           th:data-indentids="${indentObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
@@ -243,7 +245,8 @@
 
 <script>
         $(document).ready(function(){
-            $('.removeIntent').click(function () {
+            $('.removeIndent').click(function () {
+            var indentId=$(this).data('indentids');
             swal({
                 title: "Are you sure?",
                 text: "You will not be able to recover this Item!",
@@ -253,7 +256,28 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             }, function () {
-                swal("Deleted!", "Item has been deleted.", "success");
+            $.ajax({
+                                                                  url: '/inventory/deleteIndentDetails',
+                                                                       type: 'POST',
+                                                                       dataType : 'json',
+                                                                       data: { 'indentId': indentId },
+
+                                                                       success: function(data){
+                                                                                if(data.success) {
+
+
+                                                                 var redirectionUrl= "/inventory/getIndentList";
+                                                                 window.location.href = redirectionUrl;
+                                                                                                 }
+
+                                                                                            },
+
+                                                                   error: function(jqXHR, textStatus)
+                                                                    {
+                                                                    alert('Error Occured');
+                                                                     }
+                                                                        });
+                                                            swal("Deleted!", "Item has been deleted.", "success");
             });
         });
             $('.dataTables-example').DataTable({
