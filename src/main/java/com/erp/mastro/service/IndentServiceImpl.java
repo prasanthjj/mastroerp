@@ -192,6 +192,13 @@ public class IndentServiceImpl implements IndentService {
                             e.printStackTrace();
                         }
                         itemStockDetails.setRequiredByDate(date1);
+                    } else if (sDate1.equals("")) {
+                        Date date1 = new Date();
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(date1);
+                        c.add(Calendar.DATE, 7);
+                        Date date1PlusSeven = c.getTime();
+                        itemStockDetails.setRequiredByDate(date1PlusSeven);
                     }
                     itemStockDetailsSet.add(itemStockDetails);
                 }
