@@ -61,4 +61,14 @@ public class IndentItemPartyGroupRequestModel {
                 ", indentItemPartyGroupRequestModels=" + indentItemPartyGroupRequestModels +
                 '}';
     }
+
+    @Setter(AccessLevel.PUBLIC)
+    @Getter(AccessLevel.PUBLIC)
+    public static class IndentIteamPartGroupsView {
+        private Integer id;
+        private String partyname;
+        private Double qty;
+        private Double rate;
+
+    }
 }

@@ -5,6 +5,7 @@ import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
+import com.erp.mastro.repository.ItemStockDetailsRepository;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +33,9 @@ public class PurchaseOrderController {
 
     @Autowired
     private PurchaseOrderService purchaseOrderService;
+
+    @Autowired
+    private ItemStockDetailsRepository itemStockDetailsRepository;
 
     /**
      * method to get purchase order list
@@ -223,4 +224,38 @@ public class PurchaseOrderController {
         }
 
     }
+
+    @GetMapping("/getIndentItemForView")
+    @ResponseBody
+    public GenericResponse getIndentItemForView(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId) {
+
+        try {
+
+            ItemStockDetails itemStockDetails = itemStockDetailsRepository.findById(indentItemId).get();
+            List<IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView> indentItemPartyGroupRequestModels = new ArrayList<>();
+            int count = 1;
+
+            for (IndentItemPartyGroup indentItemPartyGroup : itemStockDetails.getIndentItemPartyGroups()) {
+                IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView indentItemPartyGroupRequestModelsView = new IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView();
+                indentItemPartyGroupRequestModelsView.setId(count);
+                indentItemPartyGroupRequestModelsView.setPartyname(indentItemPartyGroup.getParty().getPartyName());
+                indentItemPartyGroupRequestModelsView.setQty(indentItemPartyGroup.getQuantity());
+                indentItemPartyGroupRequestModelsView.setRate(indentItemPartyGroup.getRate());
+
+                indentItemPartyGroupRequestModels.add(indentItemPartyGroupRequestModelsView);
+
+                count++;
+            }
+
+            return new GenericResponse(true, "get booking details")
+                    .setProperty("indentiteamgroup", indentItemPartyGroupRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured while getting indent iteam group view:{}", e);
+            return new GenericResponse(false, e.getMessage());
+
+        }
+
+    }
+
 }
