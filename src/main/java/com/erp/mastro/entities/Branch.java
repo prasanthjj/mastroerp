@@ -82,4 +82,9 @@ public class Branch {
             orphanRemoval = true)
     private Set<Indent> indentSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
+
 }

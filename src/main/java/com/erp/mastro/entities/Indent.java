@@ -25,9 +25,17 @@ public class Indent extends Auditable<String> {
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
+    @Column(name = "indent_status")
+    private String indentStatus;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "indent_indentitemstockdetails", joinColumns = {@JoinColumn(name = "indent_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "item_stock_deatils_id", referencedColumnName = "id")})
     private Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "indent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
 
 }

@@ -77,4 +77,9 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
+    @OneToMany(mappedBy = "party",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
+
 }

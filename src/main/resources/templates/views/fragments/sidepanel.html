@@ -162,11 +162,28 @@
                     <li><a href="#">GRN</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="active" th:if="${purchaseModule== 'purchaseModule'}">
                 <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Purchase </span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Purchase Order</a></li>
+                    <li class="active" th:if="${purchaseTab== 'purchase'}"><a href="#"
+                                                                              th:href="@{/purchase/getPurchaseOrderList}">Purchase
+                        Order</a></li>
+                    <li class="" th:unless="${purchaseTab== 'purchase'}"><a href="#"
+                                                                            th:href="@{/purchase/getPurchaseOrderList}">Purchase
+                        Order</a></li>
+                </ul>
+            </li>
+            <li class="" th:unless="${purchaseModule== 'purchaseModule'}">
+                <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Purchase </span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="active" th:if="${purchaseTab== 'purchase'}"><a href="#"
+                                                                              th:href="@{/purchase/getPurchaseOrderList}">Purchase
+                        Order</a></li>
+                    <li class="" th:unless="${purchaseTab== 'purchase'}"><a href="#"
+                                                                            th:href="@{/purchase/getPurchaseOrderList}">Purchase
+                        Order</a></li>
                 </ul>
             </li>
             <li>
