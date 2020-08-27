@@ -89,7 +89,7 @@
                                         <div class="form-group">
                                             <label>Indent Priority</label>
                                             <span th:if="${indentDetails== null}">
-                                                <select class="form-control" name="indentPriority">
+                                                <select class="form-control" name="indentPriority" required>
                                                      <option value="">Select Priority</option>
                                                      <option value="Low">Low</option>
                                                      <option value="Medium">Medium</option>
@@ -206,7 +206,7 @@
                                                 300
                                             </td>
                                             <td class="center">
-                                                <input class="form-control"
+                                                <input class="form-control" required
                                                        th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
                                             </td>
                                                <td class="center indentRequiredDate">
