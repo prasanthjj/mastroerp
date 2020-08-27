@@ -21,6 +21,9 @@ public class Indent extends Auditable<String> {
     @Column(name = "indent_priority")
     private String indentPriority;
 
+    @Column(name = "delete_status", nullable = false)
+    private int indentDeleteStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private Branch branch;

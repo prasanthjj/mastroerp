@@ -1,5 +1,6 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.entities.Indent;
 import com.erp.mastro.entities.ItemStockDetails;
 import com.erp.mastro.entities.Stock;
@@ -28,6 +29,7 @@ public class IndentModel {
     public IndentModel(Indent indent) {
         if (indent != null) {
             this.id = indent.getId();
+            this.indentPriority = indent.getIndentPriority();
 
             indent.getItemStockDetailsSet().parallelStream().forEach(x -> this.indentItemStockDetailsModels.add(new IndentModel.IndentItemStockDetailsModel(x)));
 
@@ -50,11 +52,33 @@ public class IndentModel {
         public IndentItemStockDetailsModel() {
         }
 
+        public Date getRequiredByDate() {
+            return requiredByDate;
+        }
+
+        public void setRequiredByDate(Date requiredByDate) {
+            this.requiredByDate = requiredByDate;
+        }
+
+        public String getSrequiredByDate() {
+            return MastroApplicationUtils.getStringFromDate(srequiredByDate, getRequiredByDate());
+        }
+
+        public void setSrequiredByDate(String srequiredByDate) {
+            this.srequiredByDate = srequiredByDate;
+        }
+
         public IndentItemStockDetailsModel(ItemStockDetails itemStockDetails) {
             if (itemStockDetails != null) {
                 this.id = itemStockDetails.getId();
                 this.stock = itemStockDetails.getStock();
+                this.quantityToIndent = itemStockDetails.getQuantityToIndent();
+                if (itemStockDetails.getRequiredByDate() != null) {
+                    this.requiredByDate = itemStockDetails.getRequiredByDate();
+                }
+                this.soReferenceNo = itemStockDetails.getSoReferenceNo();
             }
+
         }
     }
 
