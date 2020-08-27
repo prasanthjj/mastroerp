@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
@@ -201,6 +202,23 @@ public class PurchaseOrderController {
             return "redirect:/purchase/getPurchaseOrderList";
         } catch (Exception e) {
             MastroLogUtils.error(PurchaseOrderController.class, "Error occured while creating purchase orders : {}", e);
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/removeIndentItemGroup")
+    @ResponseBody
+    public GenericResponse removeIndentItemGroup(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentItemGroupId") Long indentItemGroupId) {
+        MastroLogUtils.info(IndentController.class, "Going to remove indent item group" + indentItemGroupId);
+        try {
+
+            purchaseOrderService.removeIndentItemGroup(indentItemId, indentItemGroupId);
+            return new GenericResponse(true, "delete indent item group details");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured while deleting indent item group details :{}", e);
+
             throw e;
         }
 

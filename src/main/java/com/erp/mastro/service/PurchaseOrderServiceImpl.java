@@ -201,4 +201,24 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrderRepository.findAll().forEach(po -> purchaseOrderList.add(po));
         return purchaseOrderList;
     }
+
+    public void removeIndentItemGroup(Long indentIteamId, Long indentItemGroupId) {
+
+        if (indentItemGroupId != null) {
+            MastroLogUtils.info(PurchaseOrderService.class, "Going to remove indent item group {}" + indentItemGroupId);
+            indentItemPartyGroupRepository.deleteById(indentItemGroupId);
+
+        }
+
+    }
+
+    private ItemStockDetails getIndentItemStockById(Long id) {
+
+        ItemStockDetails itemStockDetails = new ItemStockDetails();
+        if (id != null) {
+            MastroLogUtils.info(PurchaseOrderService.class, "Going to getIndentIteamBy Id : {}" + id);
+            itemStockDetails = itemStockDetailsRepository.findById(id).get();
+        }
+        return itemStockDetails;
+    }
 }

@@ -22,6 +22,8 @@
           th:src="@{/resources/css/plugins/select2/select2.min.css}">
     <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
@@ -110,12 +112,13 @@
                                                     <th>Party Name</th>
                                                     <th>Qty</th>
                                                     <th>Rate</th>
+                                                    <th>Controls</th>
 
                                                 </tr>
                                                 </thead>
                                                 <tbody class="indentItemPartyDetails">
                                                 <span th:if="${indentItemPartyGroupForm!= null}">
-                                        <tr class="gradeX"
+                                        <tr class="gradeX indentItemGroupDeleteBox"
                                             th:each="indentItemGroupModelObj,iterator:${indentItemPartyGroupForm.indentItemPartyGroupRequestModels}">
                                             <td th:text="${iterator.index+1}"></td>
                                              <input type="hidden"
@@ -138,6 +141,16 @@
                                                 th:text="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].rate}">
                                                <!-- <input class="form-control" type="text"/>-->
                                             </td>
+                                            <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                            <td><a type='button'
+                                                   class='btn btn-danger dim removeSplitIndentItemDetailsBtn'
+                                                   th:data-splitindentitemsgroup="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].id}"
+                                                   th:data-indentitemsids="${indentItemPartyGroupForm.indentItemId}"><i
+                                                    class='fa fa-times-circle'></i></a></td>
+                                            </span>
+                                            <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                            <td></td>
+                                            </span>
                                         </tr>
                                         </span>
                                                 </tbody>
@@ -195,6 +208,8 @@
 <!-- Jquery Validate -->
 <script src="../resources/js/plugins/validate/jquery.validate.min.js"
         th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
 <script>
 $(document).ready(function(){
     $('.dataTables-split').DataTable({
@@ -214,7 +229,45 @@ $(document).ready(function(){
 
 
 
+ $(document).on('click', '.removeSplitIndentItemDetailsBtn', function() {
+    $(this).parents(".indentItemGroupDeleteBox").remove();
+});
 
+
+$('.removeSplitIndentItemDetailsBtn').click(function () {
+var indentItemId=$(this).data('indentitemsids');
+
+var indentItemGroupId=$(this).data('splitindentitemsgroup');
+
+  swal({
+            title: "Item gropu deleted",
+           text: "",
+             type: "success"
+             }, function () {
+           	$.ajax({
+                   url: '/purchase/removeIndentItemGroup',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'indentItemId': indentItemId,'indentItemGroupId': indentItemGroupId },
+
+                   success: function(data){
+                            if(data.success) {
+
+
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+
+
+
+    });
+       });
 
 </script>
 </body>
