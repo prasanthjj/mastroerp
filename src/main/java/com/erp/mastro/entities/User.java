@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
@@ -79,5 +80,8 @@ public class User extends Auditable<String> {
         return this;
     }
 
-
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
 }

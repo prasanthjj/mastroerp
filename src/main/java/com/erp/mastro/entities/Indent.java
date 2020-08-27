@@ -41,4 +41,9 @@ public class Indent extends Auditable<String> {
             orphanRemoval = true)
     private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
 
+    @OneToMany(mappedBy = "indent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
+
 }

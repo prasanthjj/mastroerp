@@ -67,8 +67,9 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form action="purchase_order.html">
-
+                            <form th:action="@{/purchase/createPO}"
+                                  method="post">
+                                <input type="hidden" name="purchaseIndentId" th:value="${indentDetails.id}">
 
                                 <div class="row">
 

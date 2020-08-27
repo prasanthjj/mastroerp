@@ -5,9 +5,10 @@ import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
+import com.erp.mastro.repository.IndentItemPartyGroupRepository;
 import com.erp.mastro.repository.IndentRepository;
 import com.erp.mastro.repository.ItemStockDetailsRepository;
-import com.erp.mastro.service.interfaces.AssetService;
+import com.erp.mastro.repository.PurchaseOrderRepository;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
@@ -15,8 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
@@ -35,6 +39,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Autowired
     private IndentService indentService;
+
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    private IndentItemPartyGroupRepository indentItemPartyGroupRepository;
 
     @Transactional(rollbackOn = {Exception.class})
     public ItemStockDetails IndentItemPartyGroup(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
@@ -89,7 +99,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             itemStockDetails.setPurchaseQuantity(purchaseQuantity);
             itemStockDetailsRepository.save(itemStockDetails);
 
-            MastroLogUtils.info(AssetService.class, "Save " + itemStockDetails.getId() + " succesfully.");
+            MastroLogUtils.info(PurchaseOrderService.class, "Save " + itemStockDetails.getId() + " succesfully.");
 
         }
         return itemStockDetails;
@@ -124,4 +134,71 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    @Transactional(rollbackOn = {Exception.class})
+    public void generatePurchaseOrders(String indentIds) {
+
+        MastroLogUtils.info(PurchaseOrderService.class, "Going to createPurchaseOrders" + indentIds);
+        Long indentId = Long.parseLong(indentIds);
+        Indent indent = indentService.getIndentById(indentId);
+        Set<ItemStockDetails> indentIteamStockDetails = indent.getItemStockDetailsSet();
+        Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
+        for (ItemStockDetails itemStockDetails : indentIteamStockDetails) {
+            Set<IndentItemPartyGroup> indentItemPartyGroupsss = itemStockDetails.getIndentItemPartyGroups().stream()
+                    .filter(indentItemPartyGroup -> (null != indentItemPartyGroup))
+                    .filter(indentItemPartyGroup -> (!indentItemPartyGroup.isEnabled()))
+                    .collect(Collectors.toSet());
+
+            indentItemPartyGroups.addAll(indentItemPartyGroupsss);
+        }
+        if (indentItemPartyGroups.isEmpty() == false) {
+            Set<Party> partySet = new HashSet();
+
+            for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
+                partySet.add(indentItemPartyGroup.getParty());
+            }
+            for (Party party : partySet) {
+
+                Set<IndentItemPartyGroup> indentItemPartyGroups1 = indentItemPartyGroups.stream()
+                        .filter(indentItemPartyGroup -> (null != indentItemPartyGroup))
+                        .filter(indentItemPartyGroup -> (indentItemPartyGroup.getParty().getId().equals(party.getId())))
+                        .collect(Collectors.toSet());
+
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                purchaseOrder.setParty(party);
+                purchaseOrder.setIndent(indent);
+                purchaseOrder.setStatus("Draft");
+                Set<ItemStockDetails> itemStockDetailsSet1 = new HashSet<>();
+                for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups1) {
+                    itemStockDetailsSet1.add(indentItemPartyGroup.getItemStockDetails());
+                    indentItemPartyGroup.setEnabled(true);
+                    indentItemPartyGroupRepository.save(indentItemPartyGroup);
+                }
+                purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);
+                purchaseOrderRepository.save(purchaseOrder);
+            }
+
+        }
+
+        int count = 0;
+        for (ItemStockDetails itemStockDetailss : indentIteamStockDetails) {
+            if (itemStockDetailss.getPurchaseQuantity() != null) {
+                if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
+                    count = count + 1;
+                }
+            }
+        }
+        if (count == 0) {
+            indent.setIndentStatus("CLOSED");
+            indentRepository.save(indent);
+        }
+
+        MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");
+
+    }
+
+    public List<PurchaseOrder> getAllPurchaseOrders() {
+        List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
+        purchaseOrderRepository.findAll().forEach(po -> purchaseOrderList.add(po));
+        return purchaseOrderList;
+    }
 }

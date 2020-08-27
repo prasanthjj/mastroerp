@@ -48,4 +48,7 @@ public class ItemStockDetails {
 
     @Column(name = "purchase_quantity")
     private Double purchaseQuantity;
+
+    @ManyToMany(mappedBy = "itemStockDetailsSet")
+    private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
 }

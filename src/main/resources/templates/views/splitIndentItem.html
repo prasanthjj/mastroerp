@@ -125,8 +125,14 @@
                                               dhdthtfh
                                             </td>
                                             <td class="center">
+                                                <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
                                                 <input class="form-control" type="text"
                                                        th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
+                                                </span>
+                                                 <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                                <input class="form-control" type="text" readonly
+                                                       th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
+                                                </span>
                                             </td>
                                             <td class="center"
                                                 th:text="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].rate}">

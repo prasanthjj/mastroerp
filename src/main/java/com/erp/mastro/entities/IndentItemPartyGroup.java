@@ -38,4 +38,7 @@ public class IndentItemPartyGroup extends Auditable<String> {
     @JoinColumn(name = "indent_id")
     private Indent indent;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
 }

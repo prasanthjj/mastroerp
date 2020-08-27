@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -16,9 +18,13 @@ public class PurchaseOrder extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   /* @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "party_id")
     private Party party;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "indent_id")
+    private Indent indent;
 
     @Column(name = "status")
     private String status;
@@ -29,10 +35,10 @@ public class PurchaseOrder extends Auditable<String> {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "product_party",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "party_id")}
+            name = "purchaseorder_indent_iteam",
+            joinColumns = {@JoinColumn(name = "purchase_order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "indent_iteam_id")}
     )
-    Set<Party> parties = new HashSet<>();*/
+    Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
 
 }
