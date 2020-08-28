@@ -6,6 +6,7 @@ import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
 import com.erp.mastro.repository.ItemStockDetailsRepository;
+import com.erp.mastro.repository.PurchaseOrderRepository;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class PurchaseOrderController {
 
     @Autowired
     private ItemStockDetailsRepository itemStockDetailsRepository;
+
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
 
     /**
      * method to get purchase order list
@@ -243,7 +247,7 @@ public class PurchaseOrderController {
     @PostMapping("/removeIndentItemGroup")
     @ResponseBody
     public GenericResponse removeIndentItemGroup(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentItemGroupId") Long indentItemGroupId) {
-        MastroLogUtils.info(IndentController.class, "Going to remove indent item group" + indentItemGroupId);
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to remove indent item group" + indentItemGroupId);
         try {
 
             purchaseOrderService.removeIndentItemGroup(indentItemId, indentItemGroupId);
@@ -308,7 +312,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/getPurchaseOrderPreview", method = RequestMethod.GET)
     public String getPurchaseOrderPreview(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
-        MastroLogUtils.info(IndentController.class, "Going to get PurchaseOrderPreview :{}" + poId);
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to get PurchaseOrderPreview :{}" + poId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -349,8 +353,55 @@ public class PurchaseOrderController {
             return "views/purchaseOrderPreview";
 
         } catch (Exception e) {
-            MastroLogUtils.error(HSNController.class, "Error occured while getPurchaseOrderPreview :{}" + poId, e);
+            MastroLogUtils.error(PurchaseOrderController.class, "Error occured while getPurchaseOrderPreview :{}" + poId, e);
             throw e;
         }
+    }
+
+    /**
+     * Method to approve po
+     *
+     * @param model
+     * @param request
+     * @param reason
+     * @param poId
+     * @return response
+     */
+    @PostMapping("/poApprove")
+    @ResponseBody
+    public GenericResponse poApprove(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("poids") Long poId) {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to approve po" + poId);
+        try {
+            PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            purchaseOrder.setStatus("Approve");
+            purchaseOrder.setReason(reason);
+            purchaseOrderRepository.save(purchaseOrder);
+            return new GenericResponse(true, "approve po");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on approve po:{}", e);
+
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/poDiscard")
+    @ResponseBody
+    public GenericResponse poDiscard(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("poids") Long poId) {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to poDiscard po" + poId);
+        try {
+            PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            purchaseOrder.setStatus("Discard");
+            purchaseOrder.setReason(reason);
+            purchaseOrderRepository.save(purchaseOrder);
+            return new GenericResponse(true, "poDiscard ");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on poDiscard :{}", e);
+
+            throw e;
+        }
+
     }
 }

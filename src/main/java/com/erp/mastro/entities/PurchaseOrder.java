@@ -46,4 +46,7 @@ public class PurchaseOrder extends Auditable<String> {
             orphanRemoval = true)
     private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
 
+    @Column(name = "reason")
+    private String reason;
+
 }
