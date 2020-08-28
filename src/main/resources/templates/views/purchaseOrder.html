@@ -105,7 +105,8 @@
                                         </td>
                                         <!-- <td class="center">Ft</td>-->
                                         <!-- <td class="center">200</td>-->
-                                        <td><a href="#" data-toggle="modal" data-target="#poDraft"><b
+                                        <td><a href="#"
+                                               th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
                                                 th:text="${purchaseObj.status}">Draft</b></a></td>
                                         <td class="center">
                                             <div class="btn-group">

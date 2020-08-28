@@ -146,6 +146,14 @@ public class PurchaseOrderController {
         }
     }
 
+    /**
+     * Method to create indent item party group
+     *
+     * @param indentItemPartyGroupRequestModel
+     * @param request
+     * @param model
+     * @return the list
+     */
     @PostMapping("/createIndentItemPartyGroup")
     public String createIndent(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(PurchaseOrderController.class, "Going to create IndentItemPartyGroup : {}" + indentItemPartyGroupRequestModel.toString());
@@ -178,6 +186,14 @@ public class PurchaseOrderController {
         }
     }
 
+    /**
+     * Method to save indent item group data
+     *
+     * @param indentItemPartyGroupRequestModel
+     * @param request
+     * @param model
+     * @return the result
+     */
     @PostMapping("/saveIndentItemGroupData")
     public String saveIndentItemGroupData(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(PurchaseOrderController.class, "Going to save additional  details: {}" + indentItemPartyGroupRequestModel.toString());
@@ -194,6 +210,13 @@ public class PurchaseOrderController {
 
     }
 
+    /**
+     * Method to create purchase order
+     *
+     * @param request
+     * @param model
+     * @return purchase order list
+     */
     @PostMapping("/createPO")
     public String createPO(HttpServletRequest request, Model model) {
         String indentId = request.getParameter("purchaseIndentId");
@@ -208,6 +231,15 @@ public class PurchaseOrderController {
 
     }
 
+    /**
+     * Method to remove indent item group
+     *
+     * @param model
+     * @param request
+     * @param indentItemId
+     * @param indentItemGroupId
+     * @return the response
+     */
     @PostMapping("/removeIndentItemGroup")
     @ResponseBody
     public GenericResponse removeIndentItemGroup(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentItemGroupId") Long indentItemGroupId) {
@@ -225,6 +257,14 @@ public class PurchaseOrderController {
 
     }
 
+    /**
+     * Method to get indent item view
+     *
+     * @param model
+     * @param request
+     * @param indentItemId
+     * @return view
+     */
     @GetMapping("/getIndentItemForView")
     @ResponseBody
     public GenericResponse getIndentItemForView(Model model, HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId) {
@@ -258,4 +298,59 @@ public class PurchaseOrderController {
 
     }
 
+    /**
+     * Method to get purchase order preview
+     *
+     * @param request
+     * @param poId
+     * @param model
+     * @return preview
+     */
+    @RequestMapping(value = "/getPurchaseOrderPreview", method = RequestMethod.GET)
+    public String getPurchaseOrderPreview(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
+        MastroLogUtils.info(IndentController.class, "Going to get PurchaseOrderPreview :{}" + poId);
+        try {
+            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute("purchaseTab", "purchase");
+            if (poId != null) {
+                PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+                model.addAttribute("purchaseOrderDetails", purchaseOrder);
+                Party party = purchaseOrder.getParty();
+                ContactDetails contactDetails = party.getContactDetails().stream().filter(contactItem -> (null != contactItem))
+                        .findFirst().get();
+                model.addAttribute("partyContactDetails", contactDetails);
+
+                List<IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView> indentItemPartyGroupRequestModels = new ArrayList<>();
+                Set<IndentItemPartyGroup> indentItemPartyGroups = purchaseOrder.getIndentItemPartyGroups();
+                Double subTotal = 0d;
+                Double tax = 0d;
+                for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
+                    IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView indentItemPartyGroupRequestModelsView = new IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView();
+                    indentItemPartyGroupRequestModelsView.setQty(indentItemPartyGroup.getQuantity());
+                    indentItemPartyGroupRequestModelsView.setItemname(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductName());
+                    indentItemPartyGroupRequestModelsView.setRate(indentItemPartyGroup.getRate());
+                    indentItemPartyGroupRequestModelsView.setHsnno(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getId());
+                    Double itemTotalAmount = 0d;
+                    itemTotalAmount = indentItemPartyGroup.getQuantity() * indentItemPartyGroup.getRate();
+                    indentItemPartyGroupRequestModelsView.setTotal(itemTotalAmount);
+                    indentItemPartyGroupRequestModels.add(indentItemPartyGroupRequestModelsView);
+                    subTotal = subTotal + itemTotalAmount;
+                    Double taxCalculationPercentage = 0d;
+                    taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst();
+                    tax = tax + ((itemTotalAmount * taxCalculationPercentage) / 100);
+                }
+                model.addAttribute("indentItemPartyGroupData", indentItemPartyGroupRequestModels);
+                model.addAttribute("subTotal", subTotal);
+                model.addAttribute("tax", tax);
+                Double finalTotal = subTotal + tax;
+                model.addAttribute("finalTotal", finalTotal);
+            }
+
+            return "views/purchaseOrderPreview";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(HSNController.class, "Error occured while getPurchaseOrderPreview :{}" + poId, e);
+            throw e;
+        }
+    }
 }

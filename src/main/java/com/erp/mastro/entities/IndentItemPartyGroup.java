@@ -38,6 +38,10 @@ public class IndentItemPartyGroup extends Auditable<String> {
     @JoinColumn(name = "indent_id")
     private Indent indent;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "po_id")
+    private PurchaseOrder purchaseOrder;
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 

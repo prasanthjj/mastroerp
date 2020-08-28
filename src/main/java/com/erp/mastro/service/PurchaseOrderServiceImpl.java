@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * All methods for purchase order
+ */
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
@@ -46,6 +49,29 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Autowired
     private IndentItemPartyGroupRepository indentItemPartyGroupRepository;
 
+    /**
+     * Method to get a purchase order by if
+     *
+     * @param id
+     * @return purchase order
+     */
+    public PurchaseOrder getPurchaseOrderById(Long id) {
+
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        if (id != null) {
+            MastroLogUtils.info(PurchaseOrderService.class, "Going to getPurchaseOrderBy Id : {}" + id);
+            purchaseOrder = purchaseOrderRepository.findById(id).get();
+        }
+        return purchaseOrder;
+    }
+
+    /**
+     * Method to create indent item party group
+     *
+     * @param indentItemPartyGroupRequestModel
+     * @return
+     * @throws ModelNotFoundException
+     */
     @Transactional(rollbackOn = {Exception.class})
     public ItemStockDetails IndentItemPartyGroup(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
 
@@ -80,6 +106,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    /**
+     * Method to save indent item party group data
+     *
+     * @param indentItemPartyGroupRequestModel
+     * @return item stock details
+     * @throws ModelNotFoundException
+     */
     @Transactional(rollbackOn = {Exception.class})
     public ItemStockDetails IndentItemGroupDatas(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
 
@@ -106,6 +139,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    /**
+     * Method to set indent item party group values
+     *
+     * @param indentItemPartyGroupRequestModel
+     * @param itemStockDetails
+     * @return
+     * @throws ModelNotFoundException
+     */
     private Set<IndentItemPartyGroup> saveOrUpdateIndentItemsPartyGroups(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, ItemStockDetails itemStockDetails) throws ModelNotFoundException {
 
         MastroLogUtils.info(PurchaseOrderService.class, "Going to edit indent items party group data {}" + indentItemPartyGroupRequestModel.toString());
@@ -134,6 +175,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    /**
+     * Method to create purchase order
+     *
+     * @param indentIds
+     */
     @Transactional(rollbackOn = {Exception.class})
     public void generatePurchaseOrders(String indentIds) {
 
@@ -171,6 +217,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups1) {
                     itemStockDetailsSet1.add(indentItemPartyGroup.getItemStockDetails());
                     indentItemPartyGroup.setEnabled(true);
+                    indentItemPartyGroup.setPurchaseOrder(purchaseOrder);
                     indentItemPartyGroupRepository.save(indentItemPartyGroup);
                 }
                 purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);
@@ -196,12 +243,23 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    /**
+     * Method to list all purchase orders
+     *
+     * @return purchase order list
+     */
     public List<PurchaseOrder> getAllPurchaseOrders() {
         List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
         purchaseOrderRepository.findAll().forEach(po -> purchaseOrderList.add(po));
         return purchaseOrderList;
     }
 
+    /**
+     * Method to remove an indent item before save
+     *
+     * @param indentIteamId
+     * @param indentItemGroupId
+     */
     public void removeIndentItemGroup(Long indentIteamId, Long indentItemGroupId) {
 
         if (indentItemGroupId != null) {
@@ -212,6 +270,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     }
 
+    /**
+     * Method to get an indent item stock by id
+     *
+     * @param id
+     * @return the item
+     */
     private ItemStockDetails getIndentItemStockById(Long id) {
 
         ItemStockDetails itemStockDetails = new ItemStockDetails();

@@ -41,4 +41,9 @@ public class PurchaseOrder extends Auditable<String> {
     )
     Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "purchaseOrder",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
+
 }

@@ -19,4 +19,6 @@ public interface PurchaseOrderService {
 
     void removeIndentItemGroup(Long indentIteamId, Long indentItemGroupId);
 
+    PurchaseOrder getPurchaseOrderById(Long id);
+
 }

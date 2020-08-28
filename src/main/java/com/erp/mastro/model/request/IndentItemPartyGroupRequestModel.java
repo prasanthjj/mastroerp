@@ -69,6 +69,9 @@ public class IndentItemPartyGroupRequestModel {
         private String partyname;
         private Double qty;
         private Double rate;
+        private String itemname;
+        private Long hsnno;
+        private Double total;
 
     }
 }
