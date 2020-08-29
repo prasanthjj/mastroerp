@@ -285,4 +285,101 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }
         return itemStockDetails;
     }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public ItemStockDetails IndentItemGroupDatasInEdit(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
+
+        ItemStockDetails itemStockDetails = itemStockDetailsRepository.findById(indentItemPartyGroupRequestModel.getIndentItemId()).get();
+
+        if (indentItemPartyGroupRequestModel == null) {
+            throw new ModelNotFoundException("indentItemPartyGroupRequestModel model is empty");
+        } else {
+
+            MastroLogUtils.info(PurchaseOrderService.class, "Going to edit indentItemPartyGroup Items {}" + indentItemPartyGroupRequestModel.toString());
+            Double purchaseQuantity = 0d;
+            purchaseQuantity = itemStockDetails.getPurchaseQuantity();
+            for (IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels indentItemPartyGroupRequestModels : indentItemPartyGroupRequestModel.getIndentItemPartyGroupRequestModels()) {
+                if (indentItemPartyGroupRequestModels.getId() != null) {
+                    IndentItemPartyGroup indentItemPartyGroup = itemStockDetails.getIndentItemPartyGroups().stream()
+                            .filter(indentItemPartyGrou -> (null != indentItemPartyGrou))
+                            .filter(indentItemPartyGrou -> (indentItemPartyGrou.getId().equals(indentItemPartyGroupRequestModels.getId())))
+                            .findFirst().get();
+
+                    purchaseQuantity = purchaseQuantity - indentItemPartyGroup.getQuantity();
+
+                }
+            }
+            Set<IndentItemPartyGroup> indentItemPartyGroups = saveOrUpdateIndentItemsPartyGroupsEdit(indentItemPartyGroupRequestModel, itemStockDetails);
+            for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
+                purchaseQuantity = purchaseQuantity + indentItemPartyGroup.getQuantity();
+            }
+            itemStockDetails.setPurchaseQuantity(purchaseQuantity);
+            itemStockDetailsRepository.save(itemStockDetails);
+
+            MastroLogUtils.info(PurchaseOrderService.class, "Save " + itemStockDetails.getId() + " succesfully.");
+
+        }
+        return itemStockDetails;
+
+    }
+
+    private Set<IndentItemPartyGroup> saveOrUpdateIndentItemsPartyGroupsEdit(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, ItemStockDetails itemStockDetails) throws ModelNotFoundException {
+
+        MastroLogUtils.info(PurchaseOrderService.class, "Going to edit indent items party group data {}" + indentItemPartyGroupRequestModel.toString());
+        Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
+
+        if (indentItemPartyGroupRequestModel.getIndentItemPartyGroupRequestModels().isEmpty() == false) {
+
+            for (IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels indentItemPartyGroupRequestModels : indentItemPartyGroupRequestModel.getIndentItemPartyGroupRequestModels()) {
+
+                if (indentItemPartyGroupRequestModels.getId() != null) {
+                    IndentItemPartyGroup indentItemPartyGroup = itemStockDetails.getIndentItemPartyGroups().stream()
+                            .filter(indentItemPartyGrou -> (null != indentItemPartyGrou))
+                            .filter(indentItemPartyGrou -> (indentItemPartyGrou.getId().equals(indentItemPartyGroupRequestModels.getId())))
+                            .findFirst().get();
+
+                    indentItemPartyGroup.setQuantity(indentItemPartyGroupRequestModels.getQuantity());
+                    indentItemPartyGroupRepository.save(indentItemPartyGroup);
+                    indentItemPartyGroups.add(indentItemPartyGroup);
+                }
+            }
+
+        } else {
+            throw new ModelNotFoundException("Indent item model is empty");
+        }
+
+        return indentItemPartyGroups;
+
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public void editGeneratePurchaseOrders(String indentIds, String purchaseId) {
+
+        MastroLogUtils.info(PurchaseOrderService.class, "Going to createPurchaseOrders" + indentIds);
+        Long indentId = Long.parseLong(indentIds);
+        Indent indent = indentService.getIndentById(indentId);
+        Set<ItemStockDetails> indentIteamStockDetails = indent.getItemStockDetailsSet();
+        Set<IndentItemPartyGroup> indentItemPartyGroups = getPurchaseOrderById(Long.parseLong(purchaseId)).getIndentItemPartyGroups();
+        int count = 0;
+        for (ItemStockDetails itemStockDetailss : indentIteamStockDetails) {
+            if (itemStockDetailss.getPurchaseQuantity() != null) {
+                if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
+                    count = count + 1;
+                }
+            }
+        }
+        if (count == 0) {
+            indent.setIndentStatus("CLOSED");
+
+        } else {
+            indent.setIndentStatus("OPEN");
+        }
+        indentRepository.save(indent);
+        PurchaseOrder purchaseOrder = getPurchaseOrderById(Long.parseLong(purchaseId));
+        purchaseOrder.setStatus("Draft");
+        purchaseOrderRepository.save(purchaseOrder);
+        MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");
+
+    }
+
 }

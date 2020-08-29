@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="reason"
+                                        <input type="text" class="form-control" id="reason" required
                                                placeholder="Approvel / Rejection Remarks"/>
                                     </div>
                                 </div>
@@ -65,11 +65,23 @@
                                     <p class="text-left">
                                         <button class="btn btn-primary dim poApproved"
                                                 th:data-poids="${purchaseOrderDetails.id}">Approve</button>
-                                        <button class="btn btn-primary dim">Review</button>
+                                        <button class="btn btn-primary dim poReview"
+                                                th:data-poids="${purchaseOrderDetails.id}">Review</button>
                                         <button class="btn btn-danger dim poDiscard"
                                                 th:data-poids="${purchaseOrderDetails.id}">Discard</button>
 
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                        </span>
+                        <span th:if="${purchaseOrderDetails.status== 'Approve'}">
+                        <div class="ibox-title  ">
+                             <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary ">
+                                        <i class="fa fa-print "></i></button>
+
                                 </div>
                             </div>
                         </div>
@@ -260,6 +272,46 @@
 
                  	$.ajax({
                    url: '/purchase/poDiscard',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'poids':poids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/purchase/getPurchaseOrderList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+
+$('.poReview').click(function(){
+            var reason=document.getElementById("reason").value;
+            var poids=$(this).data('poids');
+            swal({
+                title: "Discard!",
+                text: "You want to Review Purchase Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Review it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/purchase/poReview',
                    type: 'POST',
                    dataType : 'json',
                    data: { 'reason': reason,'poids':poids },

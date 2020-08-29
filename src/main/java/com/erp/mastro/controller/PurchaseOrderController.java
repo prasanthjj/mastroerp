@@ -386,6 +386,43 @@ public class PurchaseOrderController {
 
     }
 
+    /**
+     * Method to review po
+     *
+     * @param model
+     * @param request
+     * @param reason
+     * @param poId
+     * @return response
+     */
+    @PostMapping("/poReview")
+    @ResponseBody
+    public GenericResponse poReview(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("poids") Long poId) {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to Review po" + poId);
+        try {
+            PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            purchaseOrder.setStatus("Review");
+            purchaseOrder.setReason(reason);
+            purchaseOrderRepository.save(purchaseOrder);
+            return new GenericResponse(true, "poReview");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on poReview :{}", e);
+
+            throw e;
+        }
+
+    }
+
+    /**
+     * Method to discard po
+     *
+     * @param model
+     * @param request
+     * @param reason
+     * @param poId
+     * @return response
+     */
     @PostMapping("/poDiscard")
     @ResponseBody
     public GenericResponse poDiscard(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("poids") Long poId) {
@@ -400,6 +437,104 @@ public class PurchaseOrderController {
         } catch (Exception e) {
             MastroLogUtils.error(this, "Error Occured on poDiscard :{}", e);
 
+            throw e;
+        }
+
+    }
+
+    @RequestMapping(value = "/getPurchaseOrderOnReview", method = RequestMethod.GET)
+    public String getPurchaseOrderOnReview(HttpServletRequest request, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
+        MastroLogUtils.info(IndentController.class, "Going to get indent :{}" + indentId);
+        try {
+            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute("purchaseTab", "purchase");
+            if (indentId != null) {
+                Indent indent = indentService.getIndentById(indentId);
+                model.addAttribute("indentDetails", indent);
+            }
+            PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            model.addAttribute("purchaseOrderDetails", purchaseOrder);
+            return "views/editPoOnReview";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(HSNController.class, "Error occured while getPurchaseOrderViaIndent :{}" + indentId, e);
+            throw e;
+        }
+    }
+
+    @RequestMapping(value = "/splitIndentItemReviewEdit", method = RequestMethod.GET)
+    public String getsplitIndentItemReviewEdit(HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
+        MastroLogUtils.info(IndentController.class, "Going to get indent item supplyers edit:{}" + indentItemId);
+        try {
+            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute("indentItemId", indentItemId);
+            model.addAttribute("poId", poId);
+
+            if (indentId != null) {
+                Indent indent = indentService.getIndentById(indentId);
+                model.addAttribute("indentDetails", indent);
+            }
+            ItemStockDetails itemStockDetails = indentService.getIndentById(indentId).getItemStockDetailsSet().stream()
+                    .filter(indentItem -> (null != indentItem))
+                    .filter(indentItem -> (indentItem.getId().equals(indentItemId)))
+                    .findFirst().get();
+            Set<IndentItemPartyGroup> indentItemPartyGroups = itemStockDetails.getIndentItemPartyGroups().stream()
+                    .filter(indentItemGroup -> (null != indentItemGroup))
+                    .filter(indentItemGroup -> (indentItemGroup.getPurchaseOrder().getId().equals(poId)))
+                    .collect(Collectors.toSet());
+            IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel = new IndentItemPartyGroupRequestModel();
+            indentItemPartyGroupRequestModel.setIndentItemId(itemStockDetails.getId());
+            List<IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels> indentItemPartyGroupRequestModelsSet = new ArrayList<IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels>();
+            for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
+                IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels indentItemPartyGroupRequestModels = new IndentItemPartyGroupRequestModel.IndentItemPartyGroupRequestModels();
+                indentItemPartyGroupRequestModels.setId(indentItemPartyGroup.getId());
+                indentItemPartyGroupRequestModels.setParty(indentItemPartyGroup.getParty());
+                indentItemPartyGroupRequestModels.setRate(indentItemPartyGroup.getRate());
+                indentItemPartyGroupRequestModels.setQuantity(indentItemPartyGroup.getQuantity());
+                indentItemPartyGroupRequestModelsSet.add(indentItemPartyGroupRequestModels);
+
+            }
+            indentItemPartyGroupRequestModel.setIndentItemPartyGroupRequestModels(indentItemPartyGroupRequestModelsSet);
+
+            model.addAttribute("itemStockDetails", itemStockDetails);
+            model.addAttribute("indentItemPartyGroupForm", indentItemPartyGroupRequestModel);
+            model.addAttribute("indentItemId", itemStockDetails.getId());
+            return "views/splitIndentItemonReviewEdit";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while get indent item split :{}" + indentItemId, e);
+            throw e;
+        }
+    }
+
+    @PostMapping("/saveIndentItemGroupDataOnEdit")
+    public String saveIndentItemGroupDataOnEdit(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to save additional  details in edit: {}" + indentItemPartyGroupRequestModel.toString());
+        String poId = request.getParameter("poId");
+        try {
+            purchaseOrderService.IndentItemGroupDatasInEdit(indentItemPartyGroupRequestModel);
+            return "redirect:/purchase/getPurchaseOrderOnReview?indentId=" + indentItemPartyGroupRequestModel.getIndentId() + "&poId=" + poId;
+        } catch (ModelNotFoundException e) {
+            MastroLogUtils.error(this, "indentItemPartyGroupRequestModel empty", e);
+            return "redirect:/purchase/getPurchaseOrderOnReview?indentId=" + indentItemPartyGroupRequestModel.getIndentId() + "&poId=" + poId;
+        } catch (Exception e) {
+            MastroLogUtils.error(PurchaseOrderController.class, "Error occured while save indent item group details in edit : {}", e);
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/editPO")
+    public String editPO(HttpServletRequest request, Model model) {
+        String indentId = request.getParameter("purchaseIndentId");
+        String purchaseId = request.getParameter("purchasesId");
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to edit purchase order for the indent: {}" + indentId);
+        try {
+            purchaseOrderService.editGeneratePurchaseOrders(indentId, purchaseId);
+            return "redirect:/purchase/getPurchaseOrderList";
+        } catch (Exception e) {
+            MastroLogUtils.error(PurchaseOrderController.class, "Error occured while edit purchase orders : {}", e);
             throw e;
         }
 

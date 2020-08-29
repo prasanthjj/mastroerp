@@ -116,14 +116,13 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
+
+                                                    <span th:if="${purchaseObj.status== 'Review'}">
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="${'/purchase/getPurchaseOrderOnReview?indentId='+{purchaseObj.indent.id}+'&poId='+{purchaseObj.id}}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold " href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
+                                                    </span>
+
                                                 </ul>
                                             </div>
                                         </td>
