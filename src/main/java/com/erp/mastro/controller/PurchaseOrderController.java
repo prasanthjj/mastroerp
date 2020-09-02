@@ -54,6 +54,8 @@ public class PurchaseOrderController {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<PurchaseOrder> purchaseList = purchaseOrderService.getAllPurchaseOrders().stream()
                     .filter(po -> (null != po))
+                    .filter(po -> (!po.getStatus().equals("Discard")))
+                    .filter(po -> (po.getIndent().getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
                             PurchaseOrder::getId).reversed())
                     .collect(Collectors.toList());
@@ -428,10 +430,12 @@ public class PurchaseOrderController {
     public GenericResponse poDiscard(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("poids") Long poId) {
         MastroLogUtils.info(PurchaseOrderController.class, "Going to poDiscard po" + poId);
         try {
+
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             purchaseOrder.setStatus("Discard");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
+            purchaseOrderService.poDiscardChange(purchaseOrder.getId());
             return new GenericResponse(true, "poDiscard ");
 
         } catch (Exception e) {

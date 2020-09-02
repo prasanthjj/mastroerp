@@ -24,4 +24,6 @@ public interface PurchaseOrderService {
     ItemStockDetails IndentItemGroupDatasInEdit(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException;
 
     void editGeneratePurchaseOrders(String indentIds, String purchaseId);
+
+    void poDiscardChange(Long id);
 }

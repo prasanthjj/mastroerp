@@ -359,7 +359,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         Long indentId = Long.parseLong(indentIds);
         Indent indent = indentService.getIndentById(indentId);
         Set<ItemStockDetails> indentIteamStockDetails = indent.getItemStockDetailsSet();
-        Set<IndentItemPartyGroup> indentItemPartyGroups = getPurchaseOrderById(Long.parseLong(purchaseId)).getIndentItemPartyGroups();
+
         int count = 0;
         for (ItemStockDetails itemStockDetailss : indentIteamStockDetails) {
             if (itemStockDetailss.getPurchaseQuantity() != null) {
@@ -379,6 +379,43 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrder.setStatus("Draft");
         purchaseOrderRepository.save(purchaseOrder);
         MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");
+
+    }
+
+    /**
+     * po discard method
+     *
+     * @param id
+     */
+    public void poDiscardChange(Long id) {
+
+        MastroLogUtils.info(PurchaseOrderService.class, "Going to discard po items poId : {}" + id);
+        PurchaseOrder purchaseOrder = getPurchaseOrderById(id);
+        Set<IndentItemPartyGroup> indentItemPartyGroups = purchaseOrder.getIndentItemPartyGroups();
+        for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
+            ItemStockDetails itemStockDetails = indentItemPartyGroup.getItemStockDetails();
+            Double itemPurchaseQty = itemStockDetails.getPurchaseQuantity() - indentItemPartyGroup.getQuantity();
+            itemStockDetails.setPurchaseQuantity(itemPurchaseQty);
+            itemStockDetailsRepository.save(itemStockDetails);
+            indentItemPartyGroupRepository.deleteById(indentItemPartyGroup.getId());
+        }
+        Indent indent = purchaseOrder.getIndent();
+        Set<ItemStockDetails> indentIteamStockDetails = indent.getItemStockDetailsSet();
+        int count = 0;
+        for (ItemStockDetails itemStockDetailss : indentIteamStockDetails) {
+            if (itemStockDetailss.getPurchaseQuantity() != null) {
+                if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
+                    count = count + 1;
+                }
+            }
+        }
+        if (count == 0) {
+            indent.setIndentStatus("CLOSED");
+
+        } else {
+            indent.setIndentStatus("OPEN");
+        }
+        indentRepository.save(indent);
 
     }
 
