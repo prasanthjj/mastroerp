@@ -1,12 +1,9 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
-import com.erp.mastro.entities.Department;
 import com.erp.mastro.entities.SalaryComponent;
 import com.erp.mastro.model.request.SalaryComponentRequestModel;
 import com.erp.mastro.repository.SalaryComponentRepository;
-import com.erp.mastro.service.interfaces.BranchService;
-import com.erp.mastro.service.interfaces.DepartmentService;
 import com.erp.mastro.service.interfaces.SalaryComponentService;
 import com.erp.mastro.service.interfaces.UserService;
 import org.slf4j.Logger;
@@ -22,7 +19,7 @@ import java.util.List;
 @Service
 public class SalaryComponentServiceImpl implements SalaryComponentService {
 
-    private Logger logger = LoggerFactory.getLogger(RolesServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(SalaryComponentServiceImpl.class);
 
     @Autowired
     SalaryComponentRepository salaryComponentRepository;
@@ -48,8 +45,6 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
 
     @Override
     public SalaryComponent getSalaryComponentId(Long id) {
-        System.out.println("id  " + id);
-        System.out.println(" SalaryComponent : " + salaryComponentRepository.findById(id).get().getComponentName());
         return salaryComponentRepository.findById(id).get();
     }
 
@@ -69,7 +64,6 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             salaryComponent.setComponentName(salaryComponentRequestModel.getComponentName());
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());
             //salaryComponent.setCalculation_Type(salaryComponentRequestModel.getCalculation_Type());
-
             salaryComponent.setCalculation_Type(value);
             if(salaryComponent.getCalculation_Type().equals("Flat-Amount")){
                 salaryComponent.setAmount(salaryComponentRequestModel.getAmount());

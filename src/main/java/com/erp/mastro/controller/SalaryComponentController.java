@@ -1,11 +1,10 @@
 package com.erp.mastro.controller;
 
-
 import com.erp.mastro.common.MastroLogUtils;
 
 
 import com.erp.mastro.custom.responseBody.GenericResponse;
-import com.erp.mastro.entities.Assets;
+
 import com.erp.mastro.entities.SalaryComponent;
 
 import com.erp.mastro.model.request.SalaryComponentRequestModel;
@@ -20,7 +19,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequestMapping("/hr")
@@ -97,11 +95,9 @@ public class SalaryComponentController {
         try {
             if (salryComponentId != null) {
 
-               // SalaryComponent salaryComponent = salaryComponentService.getSalaryComponentId(salryComponentId);
                 model.addAttribute("hrModule", "hrModule");
                 model.addAttribute("salaryComponentTab", "salaryComponent");
                 model.addAttribute("salryComponentForm", new SalaryComponentRequestModel(salaryComponentService.getSalaryComponentId(salryComponentId)));
-
 
             }
             return "views/edit_component";

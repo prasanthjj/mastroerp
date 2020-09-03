@@ -14,7 +14,7 @@ public class SalaryComponentRequestModel {
     private String payslipName;
     private String calculation_Type;
     private Double amount;
-    private  Double percentageAmount;
+    private Double percentageAmount;
     private boolean status;
 
     public  SalaryComponentRequestModel(){

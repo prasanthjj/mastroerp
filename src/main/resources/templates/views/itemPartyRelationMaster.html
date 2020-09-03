@@ -51,13 +51,13 @@
 
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title mastro-ibox-title ">
                             <div class="col-md-12 text-center">
                                 <fieldset>
-                                    <button id="itemBtn" class="btn btn-primary  relationBtn btn-outline active "
+                                    <button id="itemBtn" class="btn btn-default  relationBtn btn-outline active "
                                             type="button">Item Party Relation
                                     </button>
-                                    <button class="btn  relationBtn btn-primary btn-outline" id="partyBtn"
+                                    <button class="btn  relationBtn btn-default btn-outline" id="partyBtn"
                                             type="button">Party Item Relation
                                     </button>
 
@@ -66,7 +66,7 @@
                             <div class="ibox-tools">
                             </div>
                         </div>
-                        <div class="ibox-content" id="itemBox">
+                        <div class="ibox-content mastro-ibox-content" id="itemBox">
                             <form th:action="@{/master/getSelectedProduct}" method="get">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -268,7 +268,7 @@
                             </div>
                         </div>
 
-                        <div class="ibox-content" id="partyBox">
+                        <div class="ibox-content mastro-ibox-content" id="partyBox">
                             <form th:action="@{/master/getSelectedPartyDetails}" method="get">
                                 <div class="row">
                                     <div class="col-lg-5">
@@ -558,18 +558,7 @@
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 <script src="../resources/js/mastro/mastro_datatables.js"
         th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
-<script>
 
-$(document).ready(function(){
-
-
-
-    
-});
-
-
-
-</script>
 
 </body>
 </html>
