@@ -397,7 +397,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             Double itemPurchaseQty = itemStockDetails.getPurchaseQuantity() - indentItemPartyGroup.getQuantity();
             itemStockDetails.setPurchaseQuantity(itemPurchaseQty);
             itemStockDetailsRepository.save(itemStockDetails);
-            indentItemPartyGroupRepository.deleteById(indentItemPartyGroup.getId());
+            indentItemPartyGroup.setItemStockDetails(null);
+            indentItemPartyGroup.setPurchaseOrder(null);
+            indentItemPartyGroup.setIndent(null);
+            indentItemPartyGroupRepository.save(indentItemPartyGroup);
         }
         Indent indent = purchaseOrder.getIndent();
         Set<ItemStockDetails> indentIteamStockDetails = indent.getItemStockDetailsSet();
