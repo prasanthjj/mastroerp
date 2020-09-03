@@ -346,10 +346,10 @@ public class PurchaseOrderController {
                     tax = tax + ((itemTotalAmount * taxCalculationPercentage) / 100);
                 }
                 model.addAttribute("indentItemPartyGroupData", indentItemPartyGroupRequestModels);
-                model.addAttribute("subTotal", subTotal);
-                model.addAttribute("tax", tax);
+                model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
+                model.addAttribute("tax", Math.round(tax * 100.0) / 100.0);
                 Double finalTotal = subTotal + tax;
-                model.addAttribute("finalTotal", finalTotal);
+                model.addAttribute("finalTotal", Math.round(finalTotal * 100.0) / 100.0);
             }
 
             return "views/purchaseOrderPreview";
