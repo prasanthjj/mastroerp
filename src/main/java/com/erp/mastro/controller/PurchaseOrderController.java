@@ -342,7 +342,11 @@ public class PurchaseOrderController {
                     indentItemPartyGroupRequestModels.add(indentItemPartyGroupRequestModelsView);
                     subTotal = subTotal + itemTotalAmount;
                     Double taxCalculationPercentage = 0d;
-                    taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst();
+                    if (indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
+                        taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess();
+                    } else {
+                        taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst();
+                    }
                     tax = tax + ((itemTotalAmount * taxCalculationPercentage) / 100);
                 }
                 model.addAttribute("indentItemPartyGroupData", indentItemPartyGroupRequestModels);

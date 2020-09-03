@@ -2,13 +2,11 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
-import com.erp.mastro.entities.Branch;
-import com.erp.mastro.entities.GRN;
-import com.erp.mastro.entities.Party;
-import com.erp.mastro.entities.PurchaseOrder;
+import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
+import com.erp.mastro.repository.GRNRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.UserService;
@@ -43,6 +41,9 @@ public class GRNController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GRNRepository grnRepository;
 
     /**
      * Method to get all GRN
@@ -180,6 +181,103 @@ public class GRNController {
             return "redirect:/inventory/getGRNList";
         } catch (Exception e) {
             MastroLogUtils.error(GRNController.class, "Error occured while save grn item details : {}", e);
+            throw e;
+        }
+
+    }
+
+    @RequestMapping(value = "/getGRNPreview", method = RequestMethod.GET)
+    public String getGRNPreview(HttpServletRequest request, @RequestParam("grnId") Long grnId, Model model) {
+        MastroLogUtils.info(GRNController.class, "Going to get grnPreview :{}" + grnId);
+        try {
+            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute("GRNTab", "GRN");
+            if (grnId != null) {
+                GRN grn = grnService.getGRNById(grnId);
+                model.addAttribute("grnDetails", grn);
+                Party party = grn.getParty();
+                ContactDetails contactDetails = party.getContactDetails().stream().filter(contactItem -> (null != contactItem))
+                        .findFirst().get();
+                model.addAttribute("partyContactDetails", contactDetails);
+                Double subTotal = 0d;
+                Double tax = 0d;
+                for (GRNItems grnItems : grn.getGrnItems()) {
+                    subTotal = subTotal + grnItems.getTotalPrice();
+                    Double taxCalculationPercentage = 0d;
+                    if (grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
+                        taxCalculationPercentage = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getSgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCess();
+
+                    } else {
+                        taxCalculationPercentage = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getSgst();
+                    }
+                    tax = tax + ((grnItems.getTotalPrice() * taxCalculationPercentage) / 100);
+                }
+                model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
+                model.addAttribute("tax", Math.round(tax * 100.0) / 100.0);
+                Double finalTotal = subTotal + tax;
+                model.addAttribute("finalTotal", Math.round(finalTotal * 100.0) / 100.0);
+            }
+
+            return "views/GRNPreview";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(PurchaseOrderController.class, "Error occured while getGRNPreview :{}" + grnId, e);
+            throw e;
+        }
+    }
+
+    @PostMapping("/grnApprove")
+    @ResponseBody
+    public GenericResponse grnApprove(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("grnids") Long grnId) {
+        MastroLogUtils.info(GRNController.class, "Going to approve GRN" + grnId);
+        try {
+            GRN grn = grnService.getGRNById(grnId);
+            grn.setStatus("Approve");
+            grn.setReason(reason);
+            grnRepository.save(grn);
+            return new GenericResponse(true, "approve grn");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on approve grn:{}", e);
+
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/grnReview")
+    @ResponseBody
+    public GenericResponse grnReview(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("grnids") Long grnId) {
+        MastroLogUtils.info(GRNController.class, "Going to Review GRN" + grnId);
+        try {
+            GRN grn = grnService.getGRNById(grnId);
+            grn.setStatus("Review");
+            grn.setReason(reason);
+            grnRepository.save(grn);
+            return new GenericResponse(true, "Review grn");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on Review grn:{}", e);
+
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/grnDiscard")
+    @ResponseBody
+    public GenericResponse grnDiscard(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("grnids") Long grnId) {
+        MastroLogUtils.info(GRNController.class, "Going to Discard GRN" + grnId);
+        try {
+            GRN grn = grnService.getGRNById(grnId);
+            grn.setStatus("Discard");
+            grn.setReason(reason);
+            grnRepository.save(grn);
+            return new GenericResponse(true, "Discard grn");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on Discard grn:{}", e);
+
             throw e;
         }
 
