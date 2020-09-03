@@ -28,7 +28,7 @@ public class ItemStockDetails {
     @Column(name = "so_reference_no")
     private String soReferenceNo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 

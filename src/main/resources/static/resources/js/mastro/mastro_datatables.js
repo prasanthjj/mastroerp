@@ -171,6 +171,13 @@ $('.dataTables-stockDetails').DataTable({
 });
 //stock details  Data-table End
 
-
+//GRN Data-table start
+$('.dataTables-grn').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [    ]
+});
+//GRN Data-table End
 });
 

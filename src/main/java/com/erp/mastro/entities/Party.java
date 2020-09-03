@@ -72,7 +72,7 @@ public class Party extends Auditable<String>{
     @JoinColumn(name = "industry_id")
     private IndustryType industryType;
 
-    @OneToMany(mappedBy = "party",
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
@@ -86,5 +86,10 @@ public class Party extends Auditable<String>{
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
+
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GRN> grnSet = new HashSet<>();
 
 }

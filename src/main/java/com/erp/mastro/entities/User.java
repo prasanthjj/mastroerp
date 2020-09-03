@@ -84,4 +84,9 @@ public class User extends Auditable<String> {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GRN> grnSet = new HashSet<>();
 }

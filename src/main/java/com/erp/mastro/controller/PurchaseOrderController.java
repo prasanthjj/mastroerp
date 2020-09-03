@@ -375,6 +375,8 @@ public class PurchaseOrderController {
         MastroLogUtils.info(PurchaseOrderController.class, "Going to approve po" + poId);
         try {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            User user = userController.getCurrentUser();
+            purchaseOrder.setUser(user);
             purchaseOrder.setStatus("Approve");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
@@ -403,6 +405,8 @@ public class PurchaseOrderController {
         MastroLogUtils.info(PurchaseOrderController.class, "Going to Review po" + poId);
         try {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            User user = userController.getCurrentUser();
+            purchaseOrder.setUser(user);
             purchaseOrder.setStatus("Review");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
@@ -432,6 +436,8 @@ public class PurchaseOrderController {
         try {
 
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            User user = userController.getCurrentUser();
+            purchaseOrder.setUser(user);
             purchaseOrder.setStatus("Discard");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);

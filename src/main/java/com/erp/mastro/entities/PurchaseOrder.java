@@ -49,4 +49,9 @@ public class PurchaseOrder extends Auditable<String> {
     @Column(name = "reason")
     private String reason;
 
+    @OneToMany(mappedBy = "purchaseOrder",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GRN> grnSet = new HashSet<>();
+
 }

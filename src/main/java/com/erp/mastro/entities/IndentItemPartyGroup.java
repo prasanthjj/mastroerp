@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -26,7 +28,7 @@ public class IndentItemPartyGroup extends Auditable<String> {
     @JoinColumn(name = "indent_item_id")
     private ItemStockDetails itemStockDetails;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "party_id")
     private Party party;
 
@@ -44,5 +46,10 @@ public class IndentItemPartyGroup extends Auditable<String> {
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
+
+    @OneToMany(mappedBy = "indentItemPartyGroup",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GRNItems> grnItems = new HashSet<>();
 
 }
