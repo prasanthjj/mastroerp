@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -36,6 +38,11 @@ public class PriceList {
 
     @Column(name = "delete_status", nullable = false)
     private int pricelistDeleteStatus;
+
+    @OneToMany(mappedBy = "priceList",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Party> partySet = new HashSet<>();
 
     public PriceList(long l, String s, String s1, String s2, double v, double v1, double v2) {
 

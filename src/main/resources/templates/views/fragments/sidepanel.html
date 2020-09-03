@@ -169,11 +169,25 @@
                     <li><a href="#">Purchase Order</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="active" th:if="${salesModule== 'salesModule'}">
                 <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Sales</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Sales Order</a></li>
+                    <li th:if="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                        Order</a></li>
+                    <li th:unless="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                        Order</a></li>
+                    <li><a href="#">Invoice</a></li>
+                </ul>
+            </li>
+            <li class="" th:unless="${salesModule== 'salesModule'}">
+                <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Sales</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li th:if="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                        Order</a></li>
+                    <li th:unless="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                        Order</a></li>
                     <li><a href="#">Invoice</a></li>
                 </ul>
             </li>

@@ -19,6 +19,8 @@ public interface PartyService {
 
     IndustryType getIndustryTypeById(Long id);
 
+    PriceList getPriceListById(Long id);
+
     Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException, ParseException;
 
     void deleteParty(Long id);

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Sales Order</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Sales Order</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Sales</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a th:href="@{/sales/getSalesOrder}">Sales Order List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Sales Order
+
+                        </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <form th:action="@{/sales/getSelectedPartyDetails}" method="get">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group"><label>Type</label>
+                                                    <select class="form-control" id="partysType">
+                                                        <option>Select</option>
+                                                        <option>Customer</option>
+                                                        <option>Supplier</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group"><label>Party Name</label>
+                                                    <input type="hidden" id="partyTypesValue">
+                                                    <input type="hidden" name="selectedPartys" id="partysIdInput">
+                                                    <input type="text" class="form-control partyautocmopletes"
+                                                           placeholder="Select party">
+
+                                                    <div class="parts_dropdown">
+                                                        <ul class="auto-dropdown-menu">
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group text-right">
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Delivery Address</label>
+                                                    <span th:if="${partysDetails!= null}">
+                                              <address>
+                                                 <span th:text="${partyContactDetails.address}"></span>
+                                                  <!--<strong>Mastro Metals Pvt Ltd.</strong><br>
+                                                   TMC. 1. 203 , 2nd floor
+                                                  106 Jorg Avenu, 600/10,<br>
+                                                  compass point,<br>Chiravakku, NH Taliparamba <br>
+                                                  <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204-->
+                                                </address>
+
+                                                    </span>
+                                                </div>
+                                                <div class="form-group">
+                                                  <span th:if="${partysDetails!= null}">
+                                                    <label>Pin Code :</label>
+                                                     <span th:text="${partyBillingDetails.pinCode}"></span>
+                                                 </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="row">
+
+                                        <div class="col-lg-12  ">
+                                            <div class="form-group"><label>Billing Address</label>
+                                                <span th:if="${partysDetails!= null}">
+                                                <address>
+                                                    <span th:text="${partyBillingDetails.contactPersonName}"></span>
+                                                       <span th:text="${partyBillingDetails.street}"></span>
+                                                    <!--  <strong>Mastro Metals Pvt Ltd.</strong><br>
+                                                       TMC. 1. 203 , 2nd floor
+                                                      106 Jorg Avenu, 600/10,<br>
+                                                      compass point,<br>Chiravakku, NH Taliparamba <br>
+                                                      <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204-->
+                                                </address>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                     <span th:if="${partysDetails!= null}">
+                                                         <label>Country :</label>
+                                                    <span th:text="${partyBillingDetails.country}"></span>
+                                                     </span>
+                                            </div>
+                                            <div class="form-group">
+                                                     <span th:if="${partysDetails!= null}">
+                                                         <label>Pin Code :</label>
+                                                    <span th:text="${partyBillingDetails.pinCode}"></span>
+                                                     </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ibox">
+                                <div class="ibox-title  ">
+                                    <form th:action="@{/sales/saveSelectedProduct}" th:object="${salesForm}"
+                                          name="salesForm" method="post">
+                                     <span th:if="${salesDetails!= null}">
+                                    <input type="hidden" name="salesIds" th:value="${salesDetails.id}">
+                                    </span>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>Item Name</label>
+                                            </div>
+                                            <div class="col-lg-4">
+
+                                                <input type="hidden" name="selectedProduct" id="itemIdInput">
+                                                <input type="text" class="form-control itemautocmoplete"
+                                                       placeholder="Select item">
+
+                                                <div class="item_dropdown">
+                                                    <ul class="auto-dropdown-menu">
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <label>Quantity</label>
+                                            </div>
+                                            <div class="col-lg-2">
+
+                                                <input type="text" name="quantity" class="form-control"/>
+
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="">
+                                                    <button type="submit" class=" btn btn-primary">Add Item</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="ibox-tools">
+
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                </div>
+                                <!-- <div class="ibox-content">
+                                     <form th:action="@{/sales/saveSalesOrder}" th:object="${salesForm}"
+                                           name="salesForm" method="post">
+                                         <span th:if="${productDetails!= null}">
+                                         <input type="hidden" name="productId" th:value="${productDetails.id}">
+                                         </span>
+                                         <span th:if="${partysDetails!= null}">
+                                         <input type="hidden" name="partyId" th:value="${partysDetails.id}">
+                                         </span>
+                                         <div class="row">
+                                             <div class="col-lg-4">
+                                                 <div class="form-group"><label>Item Name</label>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                 <div class="form-group"><label>HSN / SAC</label>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                 <div class="form-group"><label>Quantity</label>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-3">
+                                                 <div class="form-group"><label>Rate</label>
+
+                                                 </div>
+                                             </div>
+
+                                         </div>
+                                         <div class="row">
+                                             <div class="col-lg-4">
+                                                 <div class="form-group">
+                                                     <div class="col-sm-8 m-t-sm"><p><span th:if="${productDetails!= null}"><b
+                                                             th:text="${productDetails.productName}">.47 Red 3.05mtr (10')</b></span>
+                                                     </p></div>
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                 <div class="form-group">
+                                                     <span th:if="${productDetails!= null}">
+                                                 <p><strong th:text="${productDetails.hsn.id}">HSN-03246687</strong></p>
+                                                 </span>
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                 <div class="form-group">
+                                                     <input type="text" name="salesOrderProductModels[0].quantity" class="form-control" />
+                                                 </div>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                 <div class="form-group">
+                                                     <span th:if="${productDetails!= null}">
+                                                 <p><strong th:text="${productDetails.basePrice}"> 230 </strong></p>
+                                                     </span>
+                                                 </div>
+                                             </div>
+
+                                         </div>
+                                         <div class="row">
+                                             <div class="col-lg-12 text-right">
+                                                 <button type="submit" class="btn btn-primary">Add Items</button>
+                                             </div>
+                                         </div>
+
+                                     </form>
+                                 </div> -->
+                            </div>
+                            <form th:action="@{/sales/saveSalesOrderProductInTable}" th:object="${salesForm}"
+                                  name="salesForm" method="post">
+                             <span th:if="${productDetails!= null}">
+                                    <input type="hidden" name="productId" th:value="${productDetails.id}">
+                                    </span>
+                                <span th:if="${salesDetails!= null}">
+                                    <input type="hidden" name="salesIds" th:value="${salesDetails.id}">
+                                    </span>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered  ">
+                                        <thead class="mastro-blue-bg ">
+                                        <tr class="mastro-blue-bg txt-white">
+                                            <th class="mastro-blue-bg ">No</th>
+                                            <th class="mastro-blue-bg txt-white">Item</th>
+                                            <th class="mastro-blue-bg txt-white">HSN / SAC</th>
+                                            <th class="mastro-blue-bg txt-white">GST</th>
+                                            <th class="mastro-blue-bg txt-white">Quantity</th>
+                                            <th class="mastro-blue-bg txt-white">Unit Rate</th>
+                                            <th class="mastro-blue-bg txt-white">Taxable Value</th>
+                                            <th class="mastro-blue-bg txt-white">CGST</th>
+                                            <th class="mastro-blue-bg txt-white">SGST</th>
+                                            <th class="mastro-blue-bg txt-white">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <span th:if="${salesDetails!= null}">
+                                                 <input type="hidden" th:field="*{id}">
+                                <tr class="gradeX" th:each="salesObj,iterator:${salesDetails.salesOrderProductSet}">
+                                        <td th:text="${iterator.index+1}">3</td>
+                                        <td th:text="${salesObj.product.productName}">Angles 25x6 (1x1/4)</td>
+                                        <td th:text="${salesObj.product.hsn.hsnCode}">HSN-0265</td>
+                                        <td>18</td>
+                                        <td th:text="${salesObj.quantity}">3.00 nos</td>
+                                        <td th:text="${salesObj.product.basePrice}">280</td>
+                                        <td>711.8580</td>
+                                        <td th:text="${salesObj.product.hsn.cgst}">64.0672</td>
+                                        <td th:text="${salesObj.product.hsn.sgst}">64.0672</td>
+                                        <td>839.9924</td>
+                                        
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
+                                       
+                                    </tr>
+                                    <tr class="m-t-lg">
+                                        <td>&nbsp;</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Sub Total</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>839.9924</td>
+                                        
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td>7314</td>
+                                        <td>Loading Charges@18%(Sales)</td>
+                                        <td></td>
+                                        <td>18</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>4.0000</td>
+                                        <td>0.3600</td>
+                                        <td>0.3600</td>
+                                        <td>0.7200</td>
+                                        
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Kerala Flood Cess</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>7.1586</td>
+                                        
+                                       
+                                    </tr>
+                                </span>
+                                        </tbody>
+                                        <tfoot>
+
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                                <div class="row m-t-md">
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <label class="col-lg-10 text-right">Round Off</label>
+                                            <div class=" col-lg-2"><input type="text" class="form-control"
+                                                                          value="(-)1.8710"/></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <h3 class="">Grand Total : 850.0000</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group"><label>Special instructions</label>
+                                            <textarea class="form-control" rows="6">
+        
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group"><label>Remarks</label>
+                                            <textarea class="form-control" rows="6">
+
+                                    </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-primary btn-sm createSalesOrder" type="button">Create Sales
+                                        Order
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<span id="partyAutopopulateUrl" th:data-url="@{/autopopulate/party}"></span>
+<span id="partyTypeAutopopulateUrl" th:data-url="@{/autopopulate/party/type}"></span>
+<span id="itemAutopopulateUrl" th:data-url="@{/autopopulate/items}"></span>
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+
+<script>
+        $(document).ready(function(){
+        $('.createSalesOrder').click(function(){
+            swal({
+                title: "Sales Order Created!",
+                text: "",
+                type: "success",
+            });
+        });
+
+ // item party rate relation item auto-complete start
+     var itemAutopopulateUrl = $('#itemAutopopulateUrl').data('url');
+     $(".item_dropdown").hide();
+     $(".itemautocmoplete").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		$(".item_dropdown ul").empty();
+		     $.ajax({
+              url:itemAutopopulateUrl,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val},
+               success: function(data){
+                 if(data.success) {
+
+                        $.each(data.data.products, function(i){
+                                      //  $('#itemAutocomplete').append($('<input>').val(this['id']).text(this['productname']));
+                                     $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
+                                      $(".item_dropdown ul").append('<li><a class="dynamicClick" data-itemsid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                        });
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".item_dropdown").show();
+		}
+		else {
+        			$(".item_dropdown").hide();
+        		}
+		});
+		//item autocomplete end
+
+		//dynamic click for item in item autocomplete start
+			$(".item_dropdown").on('click','a.dynamicClick',function (e) {
+        		e.preventDefault();
+        		var value = $(this).text();
+
+
+                			$(".itemautocmoplete").val(value);
+                			$("#itemIdInput").val($(e.target).data('itemsid'));
+
+        		$(".item_dropdown").hide();
+        	})
+		//dynamic click for item in item autocomplete end
+
+        		 // item party rate relation party auto-complete start
+             var partyAutopopulateUrl = $('#partyAutopopulateUrl').data('url');
+             $(".party_dropdown").hide();
+             $(".partyautocmoplete").keyup(function () {
+
+        		var vals = $(this).val().trim();
+        		if (vals.length > 2) {
+        		$(".party_dropdown ul").empty();
+        		     $.ajax({
+                      url:partyAutopopulateUrl,
+                       type: 'GET',
+                       dataType : 'json',
+                       data: {'searchTerm':vals},
+                       success: function(data){
+                         if(data.success) {
+
+                                $.each(data.data.partys, function(i){
+
+                                              $(".party_dropdown ul").append('<li><a class="dynamicClick" data-partysid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
+                                                });
+                          }
+                           },
+                       error: function(jqXHR, textStatus) {
+                       alert('Error Occured');
+                       }
+
+                      });
+                      $(".party_dropdown").show();
+        		}
+        		else {
+                			$(".party_dropdown").hide();
+                		}
+        		});
+        		//party autocomplete end
+
+        		//dynamic click for party in party autocomplete start
+                			$(".party_dropdown").on('click','a.dynamicClick',function (e) {
+                        		e.preventDefault();
+                        		var value = $(this).text();
+
+
+                                			$(".partyautocmoplete").val(value);
+                                			$("#partyIdInput").val($(e.target).data('partysid'));
+
+                        		$(".party_dropdown").hide();
+                        	})
+                		//dynamic click for party in party autocomplete end
+                		//get selected party type in partytype autocomplete start
+                         	$("#partysType").on("change", function(e){
+                         	 var typeOfParty =$('#partysType').val();
+
+                         	 $("#partyTypesValue").val(typeOfParty);
+
+
+                                            });
+                                            //get selected party type in partytype autocomplete end
+                	 //  party item rate relation party type auto-complete start
+                                 var partyTypeAutopopulateUrl = $('#partyTypeAutopopulateUrl').data('url');
+
+
+                                 $(".parts_dropdown").hide();
+                                 $(".partyautocmopletes").keyup(function () {
+
+                            		var vals = $(this).val().trim();
+
+                            		if (vals.length > 2) {
+                            		var partsTypee=document.getElementById("partyTypesValue").value;
+
+                            		$(".parts_dropdown ul").empty();
+                            		     $.ajax({
+                                          url:partyTypeAutopopulateUrl,
+                                           type: 'GET',
+                                           dataType : 'json',
+                                           data: {'searchTerm':vals,'partyType':partsTypee},
+                                           success: function(data){
+                                             if(data.success) {
+
+                                                    $.each(data.data.partys, function(i){
+
+                                                                  $(".parts_dropdown ul").append('<li><a class="dynamicClick" data-partyssid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
+                                                                    });
+                                              }
+                                               },
+                                           error: function(jqXHR, textStatus) {
+                                           alert('Error Occured');
+                                           }
+
+                                          });
+                                          $(".parts_dropdown").show();
+                            		}
+                            		else {
+                                    			$(".parts_dropdown").hide();
+                                    		}
+                            		});
+                            		//party item rate relation party type auto-complete end
+
+
+//dynamic click for party in partytype autocomplete start
+                			$(".parts_dropdown").on('click','a.dynamicClick',function (e) {
+                        		e.preventDefault();
+                        		var value = $(this).text();
+
+
+                                			$(".partyautocmopletes").val(value);
+                                			$("#partysIdInput").val($(e.target).data('partyssid'));
+
+                        		$(".parts_dropdown").hide();
+                        	})
+                		//dynamic click for party in partytype autocomplete end
+    });
+
+
+</script>
+</body>
+</html>

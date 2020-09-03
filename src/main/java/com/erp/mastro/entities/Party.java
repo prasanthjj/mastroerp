@@ -77,4 +77,13 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pricelist_id")
+    private PriceList priceList;
+
+    @OneToMany(mappedBy = "party",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesOrder> salesOrderSet = new HashSet<>();
+
 }

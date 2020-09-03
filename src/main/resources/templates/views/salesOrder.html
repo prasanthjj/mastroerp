@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Sales Order List</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Sales Order List</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Sales</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Sales Order List </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+                            <!-- <h5 class="text-info"> <strong> <i class="fa fa-barcode"></i> HSN List</strong></h5> -->
+                            <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item font-bold"
+                                               th:href="@{/sales/getCreateSalesOrder}"><i class="fa fa-plus-square"></i>
+                                            Add Sales Order </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-salesOrder">
+                                    <thead class="mastro-blue-bg txt-white">
+                                    <tr>
+                                        <th class="mastro-blue-bg txt-white">No</th>
+                                        <th>Sales Order No.</th>
+                                        <th>Sales Order Date</th>
+                                        <th>Party Name</th>
+                                        <th>HSN Code</th>
+                                        <th>Status</th>
+                                        <th>Controls</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeX">
+                                        <td>1</td>
+                                        <td>SO-060820</td>
+                                        <td>24/06/2020</td>
+                                        <td></td>
+                                        <td>100</td>
+                                        <td><a href="#" data-toggle="modal" data-target="#poDraft"><b>Draft</b></a></td>
+                                        <td class="center">
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                            class="fa fa-eye"></i> Browse</a></li>
+                                                    <li class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                            class="fa fa-edit"></i> Manage</a></li>
+                                                    <li class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item font-bold " href="#"><i
+                                                            class="fa fa-trash"></i> Remove</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="poDraft" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Sales Order Preview</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Approvel / Rejection Remarks"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <p class="text-left">
+                                <button class="btn btn-primary dim salesOrderApproved">Approve</button>
+                                <button class="btn btn-primary dim">Review</button>
+                                <button class="btn btn-danger dim">Discard</button>
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ibox-content p-xl">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5>From:</h5>
+                                <address>
+                                    <strong>Mastro Metals</strong><br>
+                                    TMC. 1. 203 , 2nd floor
+                                    106 Jorg Avenu, 600/10,<br>
+                                    compass point,<br>Chiravakku, NH Taliparamba <br>
+                                    <abbr title="Phone">P:</abbr> (123) 601-4590
+                                </address>
+                            </div>
+
+                            <div class="col-sm-6 text-right">
+                                <h4>IN No.</h4>
+                                <h4 class="text-navy">IN-000567F7-00</h4>
+                                <span>To:</span>
+                                <address>
+                                    <strong>Corporate, Inc.</strong><br>
+                                    112 Street Avenu, 1080<br>
+                                    Miami, CT 445611<br>
+                                    <abbr title="Phone">P:</abbr> (120) 9000-4321
+                                </address>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive m-t">
+                            <table class="table invoice-table">
+                                <thead>
+                                <tr>
+                                    <th>Item List</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Tax</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div><strong>Oxy .47 Red 3.05mtr (10')</strong></div>
+                                    </td>
+                                    <td>1</td>
+                                    <td>26.00</td>
+                                    <td>5.98</td>
+                                    <td>31,98</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div><strong>Angles 25x6 (1x1/4)</strong></div>
+                                    </td>
+                                    <td>2</td>
+                                    <td>80.00</td>
+                                    <td>36.80</td>
+                                    <td>196.80</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div><strong> Oxy .47 Red 3.05mtr (10')</strong></div>
+                                    </td>
+                                    <td>3</td>
+                                    <td>420.00</td>
+                                    <td>193.20</td>
+                                    <td>1033.20</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div><!-- /table-responsive -->
+
+                        <table class="table invoice-total">
+                            <tbody>
+                            <tr>
+                                <td><strong>Sub Total :</strong></td>
+                                <td>$1026.00</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TAX :</strong></td>
+                                <td>$235.98</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL :</strong></td>
+                                <td>$1261.98</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="well m-t"><strong>Comments</strong>
+                            It is a long established fact that a reader will be distracted by the readable content of a
+                            page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                            more-or-less
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button> -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<script>
+        $(document).ready(function(){
+            $('.salesOrderApproved').click(function(){
+            swal({
+                title: "Approved!",
+                text: "You Approved Purchase Order!",
+                type: "success"
+            });
+        });
+            $('.dataTables-salesOrder').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [ ]
+            });
+
+        });
+
+
+</script>
+</body>
+</html>
