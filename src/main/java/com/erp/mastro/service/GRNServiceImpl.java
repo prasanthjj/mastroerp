@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +39,17 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private CalculateService calculateService;
+
+    /**
+     * Method to get all grns
+     *
+     * @return grn list
+     */
+    public List<GRN> getAllGRNs() {
+        List<GRN> grnList = new ArrayList<GRN>();
+        grnRepository.findAll().forEach(grn -> grnList.add(grn));
+        return grnList;
+    }
 
     /**
      * Method to create GRN
@@ -120,6 +128,7 @@ public class GRNServiceImpl implements GRNService {
             grn.setRemarks(grnRequestModel.getRemarks());
             grn.setUser(userController.getCurrentUser());
             Set<GRNItems> grnItemsSet = saveOrUpdateGRNItems(grnRequestModel, grn);
+            grn.setStatus("Draft");
             grn.setGrnItems(grnItemsSet);
 
             grnRepository.save(grn);

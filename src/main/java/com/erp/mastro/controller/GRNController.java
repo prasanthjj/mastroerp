@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,14 +58,14 @@ public class GRNController {
             model.addAttribute("grnForm", new GRNRequestModel());
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("GRNTab", "GRN");
-              /* List<Indent> indentList = indentService.getAllIndents().stream()
-                    .filter(indentData -> (null != indentData))
-                    .filter(indentData -> (1 != indentData.getIndentDeleteStatus()))
-                    .filter(indentItem -> (indentItem.getBranch().getId().equals(currentBranch.getId())))
+            List<GRN> grnList = grnService.getAllGRNs().stream()
+                    .filter(grn -> (null != grn))
+                    .filter(grn -> (!grn.getStatus().equals("Discard")))
+                    .filter(grn -> (grn.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
-                            Indent::getId).reversed())
-                    .collect(Collectors.toList());*/
-            // model.addAttribute("indentList", indentList);
+                            GRN::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("grnList", grnList);
 
             return "views/GRNMaster";
 

@@ -57,4 +57,7 @@ public class GRN extends Auditable<String> {
             cascade = CascadeType.ALL
     )
     private Set<GRNItems> grnItems = new HashSet<>();
+
+    @Column(name = "status")
+    private String status;
 }
