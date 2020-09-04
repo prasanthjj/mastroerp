@@ -60,7 +60,6 @@ public class SalaryComponentController {
     public String addSalaryComponent(Model model) {
         MastroLogUtils.info(SalaryComponentController.class, "Going to add Salary component list : {}");
 
-
         try {
             List<SalaryComponent> salaryComponentList = salaryComponentService.getAllSalaryComonents().stream()
                     .filter(salarycomponentData -> (null != salarycomponentData))

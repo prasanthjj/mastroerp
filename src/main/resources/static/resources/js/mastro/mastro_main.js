@@ -418,33 +418,40 @@ $("#calculationAmount").hide();
     // item party rate relation change tab start
 
     $('#partyBox').hide();
-
-    $('.relationBtn').click(function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        id = this.id;
-        if (id == 'itemBtn') {
-            $('#itemBox').slideToggle("slow");
-            $('#partyBox').hide();
-            $('#itemBtn').toggleClass("active");
-            if ($('#itemBtn').hasClass('active')){
-                $('#partyBtn').removeClass("active");
-                $('#partyBtn').removeClass("btn-default");
-            }
-
+  $('.relationBtn').click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    id = this.id;
+    if (id == 'itemBtn') {
+        $('#itemBox').slideToggle("slow");
+        $('#partyBox').hide();
+        $('#itemBtn').toggleClass("btn-outline");
+        $('#itemBtn').toggleClass("txt-white");
+        $('#itemBtn').toggleClass("active");
+        $('#partyBtn').addClass("txt-white ");
+        $('#partyBtn').addClass("btn-outline");
+        if ($('#itemBtn').hasClass('active')){
+            $('#partyBtn').removeClass("active");
 
         }
-        else if (id == 'partyBtn'){
 
-            $('#itemBox').hide();
-            $('#partyBox').slideToggle("slow");
-            $('#partyBtn').toggleClass("active");
-            if ($('#partyBtn').hasClass('active')){
-                $("#itemBtn").removeClass("active");
-                $('#itemBtn').removeClass("btn-default");
-            }
+    }
+    else if (id == 'partyBtn'){
+
+        $('#itemBox').hide();
+        $('#partyBox').slideToggle("slow");
+        $('#partyBtn').toggleClass("btn-outline");
+        $('#partyBtn').toggleClass("txt-white");
+        $('#partyBtn').toggleClass("active");
+        $('#itemBtn').addClass("txt-white ");
+        $('#itemBtn').addClass("btn-outline");
+        //$('#partyBtn').removeClass("btn-outline");
+        if ($('#partyBtn').hasClass('active')){
+            $('#itemBtn').removeClass("active");
+
         }
-    });
+    }
+});
     // item party rate relation change tab start
        $(function(datepicker) {
 
