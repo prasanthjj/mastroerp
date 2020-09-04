@@ -51,28 +51,29 @@
                 <div class="col-lg-12">
                     <form th:action="@{/admin/saveRoleAccess}" id="roleAccessForm" th:object="${moduleForm}" name="moduleForm" method="post">
                         <div class="ibox ">
-                            <div class="ibox-title  ">
 
-                                <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Role</label>
-                                    <div class="col-lg-4">
-                                        <select class="form-control" name="roles" id="roleAccess" required>
-                                            <option value="">Select Role</option>
-                                            <option th:each="roleObj : ${rolesList}"
-                                                    th:data-roleidd="${roleObj.id}"
-                                                    th:value="${roleObj.id}"
-                                                    th:text="${roleObj.roleName}">Select
-                                            </option>
-                                        </select></div>
+                            <div class="ibox-content mastro-step-ibox-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row ">
+                                            <label class="col-lg-2 col-form-label">Role</label>
+                                            <div class="col-lg-4">
+                                                <select class="form-control" name="roles" id="roleAccess" required>
+                                                    <option value="">Select Role</option>
+                                                    <option th:each="roleObj : ${rolesList}"
+                                                            th:data-roleidd="${roleObj.id}"
+                                                            th:value="${roleObj.id}"
+                                                            th:text="${roleObj.roleName}">Select
+                                                    </option>
+                                                </select></div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="ibox-tools">
-                                </div>
-                            </div>
-                            <div class="ibox-content">
+                                <div class="hr-line-dashed"></div>
                                 <div class="table-responsive">
 
-                                    <table class="table table-striped table-bordered table-hover dataTables-role-access" id="moduleCheckId" >
+                                    <table class="table table-striped table-bordered table-hover dataTables-role-access"
+                                           id="moduleCheckId">
                                         <thead class="mastro-blue-bg txt-white">
                                         <tr>
                                             <th class="mastro-blue-bg txt-white">Module Name</th>
@@ -131,25 +132,7 @@
             th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
     <script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
             th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
-    <!-- Flot -->
-    <script src="../resources/js/plugins/flot/jquery.flot.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.js}"></script>
-    <script src="../resources/js/plugins/flot/jquery.flot.tooltip.min.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
-    <script src="../resources/js/plugins/flot/jquery.flot.spline.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.spline.js}"></script>
-    <script src="../resources/js/plugins/flot/jquery.flot.resize.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.resize.js}"></script>
-    <script src="../resources/js/plugins/flot/jquery.flot.pie.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.pie.js}"></script>
-    <script src="../resources/js/plugins/flot/jquery.flot.symbol.js"
-            th:src="@{/resources/js/plugins/flot/jquery.flot.symbol.js}"></script>
-    <script src="../resources/js/plugins/flot/curvedLines.js"
-            th:src="@{/resources/js/plugins/flot/curvedLines.js}"></script>
 
-    <!-- Peity -->
-<script src="../resources/js/plugins/peity/jquery.peity.min.js" th:src="@{/resources/js/plugins/peity/jquery.peity.min.js}"></script>
-<script src="../resources/js/demo/peity-demo.js" th:src="@{/resources/js/demo/peity-demo.js}"></script>
 
 <!-- Custom and plugin javascript -->
 <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>

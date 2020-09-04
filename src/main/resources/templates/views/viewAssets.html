@@ -49,107 +49,109 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <h5></h5>
-                            <div class="ibox-tools">
-
-                            </div>
-                        </div>
-                        <div class="ibox-content">
+                        <div class="ibox-content mastro-step-ibox-content">
                             <form id="viewAssetsForm" action="#" class="wizard-big">
                                 <h1>General Details</h1>
                                 <fieldset>
                                     <h2>General Details</h2>
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Asset No</label>
-                                                <h4 th:text="${assetDetails.id}">Ast-23568749</h4>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset No</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetDetails.id}">:
+                                                    HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Asset Location</label>
-                                                <h4 th:text="${assetDetails.assetLocation}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Location</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetLocation}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Hours Utilized</label>
-                                                <h4 th:text="${assetDetails.hoursUtilized}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Hours
+                                                    Utilized</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.hoursUtilized}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Capacity</label>
-                                                <h4 th:text="${assetDetails.capacity}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Capacity</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.capacity}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-
-                                                <label>Is Active</label>
-                                                <span th:if="${assetDetails.active==true}">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Is
+                                                    Active</strong></label>
+                                                <label class="col-sm-7 col-form-label"> <span
+                                                        th:if="${assetDetails.active==true}">
                                                 <h4>Yes</h4>
                                                     </span>
-                                                <span th:unless="${assetDetails.active== true}">
+                                                    <span th:unless="${assetDetails.active== true}">
                                                 <h4>No</h4>
-                                                    </span>
+                                                    </span></label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Type</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetType}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Party No</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.partyNo}">: HSN001</label>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Asset Name</label>
-                                                <h4 th:text="${assetDetails.assetName}">Ast-23568749</h4>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Name</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetName}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Asset Sub Location</label>
-                                                <h4 th:text="${assetDetails.subLocation}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset Sub
+                                                    Location</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.subLocation}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Installation Date</label>
-                                                <h4 th:text="${#dates.format(assetDetails.installationDate, 'dd-MMMM-yyyy')}">
-                                                    Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Installation
+                                                    Date</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${#dates.format(assetDetails.installationDate, 'dd-MMMM-yyyy')}">:
+                                                    HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Maintenance Priority</label>
-                                                <h4 th:text="${assetDetails.maintenancePriority}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Maintenance
+                                                    Priority</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.maintenancePriority}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Maintenance
+                                                    Required</strong></label>
+                                                <label class="col-sm-7 col-form-label">:
+                                                    <span th:if="${assetDetails.maintenanceRequired==true}">
+                                                Yes
+                                                </span>
+                                                    <span th:unless="${assetDetails.maintenanceRequired==true}">
+                                                No
+                                                </span>
+                                                </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Effective
+                                                    Date</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${#dates.format(assetDetails.effectiveDate, 'dd-MMMM-yyyy')}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Make</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetDetails.make}">:
+                                                    HSN001</label>
+                                            </div>
 
-                                                <label>Maintenance Required</label>
-                                                <span th:if="${assetDetails.maintenanceRequired==true}">
-                                                <h4>Yes</h4>
-                                                </span>
-                                                <span th:unless="${assetDetails.maintenanceRequired==true}">
-                                                <h4>No</h4>
-                                                </span>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Asset Type</label>
-                                                <h4 th:text="${assetDetails.assetType}">Ast-23568749</h4>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Party No</label>
-                                                <h4 th:text="${assetDetails.partyNo}">Ast-23568749</h4>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Effective Date</label>
-                                                <h4 th:text="${#dates.format(assetDetails.effectiveDate, 'dd-MMMM-yyyy')}">
-                                                    Ast-23568749</h4>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Make</label>
-                                                <h4 th:text="${assetDetails.make}">Ast-23568749</h4>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -158,108 +160,105 @@
                                     <h2>Characteristics</h2>
                                     <span th:each="assetObjList,iterator:${assetDetails.assetCharacteristics}">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            
-                                            <div class="form-group">
-                                                <label>Characteristics</label>
-                                                <h4 th:text="${assetObjList.character}">Ast-23568749</h4>
-                                               
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Characteristics</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjList.character}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Value</label>
-                                              <h4 th:text="${assetObjList.value}">Ast-23568749</h4>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
+
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Remarks</label>
-                                                <h4 th:text="${assetObjList.assetRemarks}">Ast-23568749</h4>
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Remarks</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjList.assetRemarks}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Value</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetObjList.value}">: HSN001</label>
+                                            </div>
                                         </div>
                                     </div>
                                     </span>
 
                                 </fieldset>
 
-                                <h1>Maintenance Activities</h1>
+                                <h1>Maintenance </h1>
                                 <fieldset>
-                                    <h2>Maintenance Activities</h2>
+                                    <h2>Maintenance</h2>
                                     <span th:each="assetObjMainList,iterator:${assetDetails.assetMaintenanceActivities}">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                          
-                                            <div class="form-group">
-                                                <label> Activity Name</label>
-                                                <h4 th:text="${assetObjMainList.activityName}">Ast-23568749</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Activity Name</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.activityName}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label> Upper Limit</label>
-                                                <h4 th:text="${assetObjMainList.upperLimit}">Ast-23568749</h4>
-                                               
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Upper Limit</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.upperLimit}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Category</label>
-                                                 <h4 th:text="${assetObjMainList.category}">Ast-23568749</h4>
-                                            </div> 
-                                            <div class="hr-line-dashed"></div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Category</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.category}">: HSN001</label>
+                                            </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Standard Observation</label>
-                                                   <h4 th:text="${assetObjMainList.standardObservation}">Ast-23568749</h4>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Standard Observation</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.standardObservation}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Tolerance(%)</label>
-                                                 <h4 th:text="${assetObjMainList.tolerence}">Ast-23568749</h4>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Tolerance(%)</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.tolerence}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
+
+
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Lower Limit</label>
-                                                  <h4 th:text="${assetObjMainList.tolerenceLowerlimit}">Ast-23568749</h4>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Lower Limit</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.tolerenceLowerlimit}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="form-group">
-                                                <label>Frequency(In Days)</label>
-                                                <h4 th:text="${assetObjMainList.frequency}">Ast-23568749</h4>
+                                           <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Frequency(In Days)</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.frequency}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
+
                                         </div>
                                     </div>
                                     </span>
-                                </fieldset>
-
-                                <h1>Other CheckList</h1>
-                                <fieldset>
+                                    <div class="hr-line-dashed"></div>
                                     <h2>Other CheckList</h2>
                                     <span th:each="assetObjCheckList,iterator:${assetDetails.assetChecklists}">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            
-                                            <div class="form-group">
-                                                <label>CheckList</label>
-                                                <h4 th:text="${assetObjCheckList.checkList}">Ast-23568749</h4>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>CheckList</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjCheckList.checkList}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
+
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Remarks</label>
-                                                <h4 th:text="${assetObjCheckList.remarks}">Ast-23568749</h4>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Remarks</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjCheckList.remarks}">: HSN001</label>
                                             </div>
-                                            <div class="hr-line-dashed"></div>
                                         </div>
                                     </div>
                                     </span>
                                 </fieldset>
-
                             </form>
                         </div>
                     </div>

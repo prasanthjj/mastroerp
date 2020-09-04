@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mastro Metals | Branch List</title>
+    <title>Mastro Metals | Gate Pass List</title>
 
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
     <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
@@ -20,7 +20,7 @@
     <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
-    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
 </head>
 
@@ -35,13 +35,13 @@
 
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-7">
-                <h2 class="text-info"><i class="fa fa-barcode"></i> Branch List</h2>
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Gate Pass List</h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Admin</a>
+                        <a href="#">Inventory</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <strong>Branch List </strong>
+                        <strong>Gate Pass List </strong>
                     </li>
                 </ol>
             </div>
@@ -56,55 +56,59 @@
                             <!-- <h5 class="text-info"> <strong> <i class="fa fa-barcode"></i> HSN List</strong></h5> -->
                             <div class="ibox-tools">
                                 <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i
+                                    <button data-toggle="dropdown" class="btn  btn-default dropdown-toggle"><i
                                             class="fa fa-cogs "></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-bold" th:href="@{/admin/addBranch}"><i
-                                                class="fa fa-plus-square"></i>Add Branch</a></li>
+                                        <li><a class="dropdown-item font-bold" th:href="@{/inventory/addGatePass}"></i>
+                                            Add Gate Pass</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="ibox-content mastro-ibox-content">
+                        <div class="ibox-content mastro-ibox-content ">
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-Branch">
+                                <table class="table table-striped table-bordered table-hover dataTables-gatepass">
                                     <thead class="mastro-blue-bg txt-white">
                                     <tr>
                                         <th class="mastro-blue-bg txt-white">No</th>
-                                        <th>Branch Name</th>
-                                        <!-- <th>Branch Code</th>-->
-                                        <th>Branch Prefix</th>
-                                        <th>Address</th>
-                                        <th>Phone No.</th>
+                                        <th>Vehicle Movement Type</th>
+                                        <th>Empty/With Material</th>
+                                        <th>Entry No.</th>
+                                        <th>Entry Date</th>
+                                        <th>Vehicle No.</th>
+                                        <th>Reference Document No.</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX" th:each="branchObj,iterator:${branchList}">
+                                    <tr class="gradeX" th:each="gatepassObj,iterator:${gatePassList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td th:text="${branchObj.branchName}"></td>
-                                        <!--   <td th:text="${branchObj.branchCode}"></td>-->
-                                        <td th:text="${branchObj.branchPrefix}"></td>
-                                        <td th:text="${branchObj.branchAddress}"></td>
-                                        <td th:text="${branchObj.phoneNo}"></td>
+                                        <td th:text="${gatepassObj.vehicleMovementType}"></td>
+                                        <td th:text="${gatepassObj.emptyMaterial}"></td>
+                                        <td th:text="${gatepassObj.id}"></td>
+                                        <!-- <td th:text="${gatepassObj.entryDate}"></td>-->
+                                        <td><p class="m-t-md"
+                                               th:text="${#dates.format(gatepassObj.entryDate,'MM/dd/yyyy')}"></p></td>
+                                        <td th:text="${gatepassObj.vehicleNo}"></td>
+                                        <td th:text="${gatepassObj.referenceDocumentNo}"></td>
+
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold "
-                                                           th:href="@{/admin/viewBranch?branchId=__${branchObj.id}__}"><i
-                                                            class="fa fa-plus-square"></i> Browse </a></li>
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/inventory/viewGatePass?gatePassid=__${gatepassObj.id}__}"><i
+                                                            class="fa fa-eye"></i> Browse</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold "
-                                                           th:href="@{/admin/editBranch?branchId=__${branchObj.id}__}"><i
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/inventory/getGatePassEdit?gatePassid=__${gatepassObj.id}__}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-
-                                                    <li><a class="dropdown-item font-bold removeBranch" href="#"
-                                                           th:data-branchsid="${branchObj.id}"><i
+                                                    <li><a class="dropdown-item font-bold removeGatePass" href="#"
+                                                           th:data-gatepassids="${gatepassObj.id}"><i
                                                             class="fa fa-trash"></i> Remove</a></li>
                                                 </ul>
                                             </div>
@@ -126,13 +130,15 @@
 
         </div>
 
+
         <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
 
     </div>
 
 </div>
-
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
 
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
@@ -157,9 +163,10 @@
 <!-- jQuery UI -->
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<!-- Custom Mastro Admin -->
+<script src="../resources/js/mastro/mastro_datatables.js"
+        th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
 <script src="../resources/js/mastro/admin.js" th:src="@{/resources/js/mastro/admin.js}"></script>
-<script src="../resources/js/mastro/admin_datatable.js" th:src="@{/resources/js/mastro/admin_datatable.js}"></script>
+
 
 </body>
 </html>
