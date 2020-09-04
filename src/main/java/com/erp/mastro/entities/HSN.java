@@ -60,7 +60,7 @@ public class HSN {
     @Column(name = "cess")
     private Double cess;
 
-    @OneToMany(mappedBy = "hsn",
+    @OneToMany(mappedBy = "hsn", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<Product> productSet = new HashSet<>();

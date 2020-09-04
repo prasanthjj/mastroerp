@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Preview Purchase Order</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Preview Purchase Order </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Purchase</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Preview Purchase Order </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <span th:if="${purchaseOrderDetails.status== 'Draft'}">
+                        <div class="ibox-title  ">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="reason" required
+                                               placeholder="Approvel / Rejection Remarks"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <p class="text-left">
+                                        <button class="btn btn-primary dim poApproved"
+                                                th:data-poids="${purchaseOrderDetails.id}">Approve</button>
+                                        <button class="btn btn-primary dim poReview"
+                                                th:data-poids="${purchaseOrderDetails.id}">Review</button>
+                                        <button class="btn btn-danger dim poDiscard"
+                                                th:data-poids="${purchaseOrderDetails.id}">Discard</button>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        </span>
+                        <span th:if="${purchaseOrderDetails.status== 'Approve'}">
+                        <div class="ibox-title  ">
+                             <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary ">
+                                        <i class="fa fa-print "></i></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        </span>
+                        <div class="ibox-content">
+
+
+                            <div class="ibox-content p-xl">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>From:</h5>
+                                        <address>
+                                            <span th:text="${purchaseOrderDetails.indent.branch.branchAddress}"></span><br>
+                                            <!--  <strong>Mastro Metals</strong><br>
+                                              TMC. 1. 203 , 2nd floor
+                                              106 Jorg Avenu, 600/10,<br>
+                                              compass point,<br>Chiravakku, NH Taliparamba <br>-->
+                                            <abbr title="Phone">P:</abbr> <span
+                                                th:text="${purchaseOrderDetails.indent.branch.phoneNo}"></span>
+                                        </address>
+                                    </div>
+
+                                    <div class="col-sm-6 text-right">
+                                        <h4>PO No.</h4>
+                                        <h4 class="text-navy" th:text="${purchaseOrderDetails.id}">PO-000567F7-00</h4>
+                                        <span>To:</span>
+                                        <address>
+                                            <span th:text="${partyContactDetails.address}"></span>
+                                            <!--<strong>Corporate, Inc.</strong><br>
+                                            112 Street Avenu, 1080<br>
+                                            Miami, CT 445611--><br>
+                                            <abbr title="Phone">P:</abbr> <span
+                                                th:text="${partyContactDetails.mobileNo}"></span>
+                                        </address>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive m-t">
+                                    <table class="table invoice-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Item List</th>
+                                            <th>HSN/SAC</th>
+                                            <th>Indent Quantity</th>
+                                            <th> Unit Rate</th>
+                                            <th>Total Price</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="poPreview,iterator:${indentItemPartyGroupData}">
+                                            <td>
+                                                <div><strong th:text="${poPreview.itemname}">Oxy .47 Red 3.05mtr
+                                                    (10')</strong></div>
+                                            </td>
+                                            <td th:text="${poPreview.hsnno}">1</td>
+                                            <td th:text="${poPreview.qty}">26.00</td>
+                                            <td th:text="${poPreview.rate}">5.98</td>
+                                            <td th:text="${poPreview.total}">31,98</td>
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div><!-- /table-responsive -->
+
+                                <table class="table invoice-total">
+                                    <tbody>
+                                    <tr>
+                                        <td><strong>Sub Total :</strong></td>
+                                        <td>Rs <span th:text="${subTotal}">1026.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TAX :</strong></td>
+                                        <td>Rs <span th:text="${tax}"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TOTAL :</strong></td>
+                                        <td>Rs <span th:text="${finalTotal}"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+
+                                <div class="well m-t"><strong>Comments</strong>
+                                    It is a long established fact that a reader will be distracted by the readable
+                                    content of a
+                                    page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                                    more-or-less
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<script>
+        $(document).ready(function(){
+            $('.poApproved').click(function(){
+            var reason=document.getElementById("reason").value;
+            var poids=$(this).data('poids');
+            swal({
+                title: "Approved!",
+                text: "You want to Approved Purchase Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Approve it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/purchase/poApprove',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'poids':poids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/purchase/getPurchaseOrderList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+         $('.poDiscard').click(function(){
+            var reason=document.getElementById("reason").value;
+            var poids=$(this).data('poids');
+            swal({
+                title: "Discard!",
+                text: "You want to Discard Purchase Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Discard it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/purchase/poDiscard',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'poids':poids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/purchase/getPurchaseOrderList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+
+$('.poReview').click(function(){
+            var reason=document.getElementById("reason").value;
+            var poids=$(this).data('poids');
+            swal({
+                title: "Review!",
+                text: "You want to Review Purchase Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Review it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/purchase/poReview',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'poids':poids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/purchase/getPurchaseOrderList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+        });
+
+
+
+
+
+</script>
+</body>
+</html>

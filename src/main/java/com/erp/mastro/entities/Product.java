@@ -66,7 +66,7 @@ public class Product extends Auditable<String>{
             , inverseJoinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")})
     private Set<ProductUOM> productUOMSet = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hsn_id")
     private HSN hsn;
 

@@ -91,6 +91,7 @@ public class IndentServiceImpl implements IndentService {
                 indent.setIndentPriority(indentModel.getIndentPriority());
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 indent.setBranch(currentBranch);
+                indent.setIndentStatus("OPEN");
 
                 ItemStockDetails itemStockDetails = new ItemStockDetails();
                 Set<Stock> stockSet = getAllStocks().stream()

@@ -519,6 +519,16 @@ $("#calculationAmount").hide();
                });
                //party creation date end
 
+               //add Grn Dc/Invoice Date start
+               $('#addGrnDcOrInvoiceDate .input-group.date').datepicker({
+                   todayBtn: "linked",
+                   keyboardNavigation: false,
+                   forceParse: false,
+                   calendarWeeks: true,
+                   autoclose: true
+               });
+               //add Grn Dc/Invoice Date end
+
 
        });
 
