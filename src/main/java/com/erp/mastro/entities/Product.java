@@ -87,4 +87,9 @@ public class Product extends Auditable<String>{
             orphanRemoval = true)
     private Set<Stock> stockSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlipItems> salesSlipItems = new HashSet<>();
+
 }

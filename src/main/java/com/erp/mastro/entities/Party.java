@@ -92,4 +92,9 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private Set<GRN> grnSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlip> salesSlips = new HashSet<>();
+
 }
