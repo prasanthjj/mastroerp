@@ -3,6 +3,7 @@ package com.erp.mastro.model.request;
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.entities.Indent;
 import com.erp.mastro.entities.ItemStockDetails;
+import com.erp.mastro.entities.ProductUOM;
 import com.erp.mastro.entities.Stock;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,6 +12,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -48,6 +51,7 @@ public class IndentModel {
         private Long stockId;
         private Long uomId;
         private Stock stock;
+        private Set<ProductUOM> productUOMS;
 
         public IndentItemStockDetailsModel() {
         }
@@ -77,6 +81,10 @@ public class IndentModel {
                     this.requiredByDate = itemStockDetails.getRequiredByDate();
                 }
                 this.soReferenceNo = itemStockDetails.getSoReferenceNo();
+                this.productUOMS = itemStockDetails.getStock().getProduct().getProductUOMSet().stream()
+                        .filter(productuomData -> (null != productuomData))
+                        .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                        .collect(Collectors.toSet());
             }
 
         }

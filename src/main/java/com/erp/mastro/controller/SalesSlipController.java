@@ -5,11 +5,13 @@ import com.erp.mastro.model.request.SalesSlipRequestModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller include sales slip methods
  */
 @Controller
+@RequestMapping("/inventory")
 public class SalesSlipController {
 
     /**
@@ -23,7 +25,7 @@ public class SalesSlipController {
         MastroLogUtils.info(SalesSlipController.class, "Going to add sales slip : {}");
         try {
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
-            return "views/addSalesSlip";
+            return "views/addPurchaseSlip";
 
         } catch (Exception e) {
             MastroLogUtils.error(SalesSlipController.class, "Error occured while adding sales slip: { }", e);

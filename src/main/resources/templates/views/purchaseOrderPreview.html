@@ -126,7 +126,7 @@
                                             <th>Item List</th>
                                             <th>HSN/SAC</th>
                                             <th>Indent Quantity</th>
-                                            <th> Unit Rate</th>
+                                            <th> Unit Rate(per base UOM)</th>
                                             <th>Total Price</th>
                                         </tr>
                                         </thead>
@@ -137,8 +137,10 @@
                                                     (10')</strong></div>
                                             </td>
                                             <td th:text="${poPreview.hsnno}">1</td>
-                                            <td th:text="${poPreview.qty}">26.00</td>
-                                            <td th:text="${poPreview.rate}">5.98</td>
+                                            <td><span th:text="${poPreview.qty}">26.00</span> /<span
+                                                    th:text="${poPreview.purchaseuom}"></span></td>
+                                            <td><span th:text="${poPreview.rate}">26.00</span>/<span
+                                                    th:text="${poPreview.baseuom}"></span></td>
                                             <td th:text="${poPreview.total}">31,98</td>
 
                                         </tr>
