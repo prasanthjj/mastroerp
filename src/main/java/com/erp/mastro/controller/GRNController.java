@@ -235,6 +235,7 @@ public class GRNController {
             grn.setStatus("Approve");
             grn.setReason(reason);
             grnRepository.save(grn);
+            grnService.stockUpdationBasedOnGRN(grn);
             return new GenericResponse(true, "approve grn");
 
         } catch (Exception e) {

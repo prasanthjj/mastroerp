@@ -20,7 +20,7 @@ public class Stock extends Auditable<String> {
     private Long openingStock;
 
     @Column(name = "current_stock")
-    private Long currentStock;
+    private Double currentStock;
 
     @Column(name = "reorder_level")
     private int reorderLevel;

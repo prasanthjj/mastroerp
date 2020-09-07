@@ -7,6 +7,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.repository.GRNRepository;
 import com.erp.mastro.repository.IndentItemPartyGroupRepository;
+import com.erp.mastro.repository.StockRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
@@ -39,6 +40,9 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private CalculateService calculateService;
+
+    @Autowired
+    private StockRepository stockRepository;
 
     /**
      * Method to get all grns
@@ -232,6 +236,30 @@ public class GRNServiceImpl implements GRNService {
     private boolean containsInList(Long id, Collection<Long> ids) {
         return id != null
                 && ids.stream().anyMatch(x -> x.equals(id));
+    }
+
+    /**
+     * Method to updation in stock based on grn approve
+     *
+     * @param grn
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void stockUpdationBasedOnGRN(GRN grn) {
+
+        MastroLogUtils.info(GRNService.class, "Going to stockUpdationBasedOnGRN  {}" + grn.getId());
+        Set<GRNItems> grnItemsSet = grn.getGrnItems();
+        for (GRNItems grnItems : grnItemsSet) {
+            Stock stock = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock();
+            Uom purchaseUOM = grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+            ProductUOM productUOMPurchase = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                    .filter(productuomData -> (null != productuomData))
+                    .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                    .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                    .findFirst().get();
+            stock.setCurrentStock(stock.getCurrentStock() + grnItems.getAccepted() * productUOMPurchase.getConvertionFactor());
+            stockRepository.save(stock);
+        }
+
     }
 
 }

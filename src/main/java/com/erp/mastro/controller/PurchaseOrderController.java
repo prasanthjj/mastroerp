@@ -336,7 +336,7 @@ public class PurchaseOrderController {
                     indentItemPartyGroupRequestModelsView.setBaseuom(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getUom().getUOM());
                     indentItemPartyGroupRequestModelsView.setPurchaseuom(indentItemPartyGroup.getItemStockDetails().getPurchaseUOM().getUOM());
                     indentItemPartyGroupRequestModelsView.setRate(indentItemPartyGroup.getRate());
-                    indentItemPartyGroupRequestModelsView.setHsnno(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getId());
+                    indentItemPartyGroupRequestModelsView.setHsnnoo(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
                     Double itemTotalAmount = 0d;
                     Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
                     ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
