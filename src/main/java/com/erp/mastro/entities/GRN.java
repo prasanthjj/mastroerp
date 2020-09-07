@@ -54,6 +54,7 @@ public class GRN extends Auditable<String> {
     private User user;
 
     @OneToMany(mappedBy = "grn",
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
     private Set<GRNItems> grnItems = new HashSet<>();

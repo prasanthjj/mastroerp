@@ -142,7 +142,6 @@ public class PurchaseOrderController {
             model.addAttribute("supplierList", partySet);
             model.addAttribute("itemStockDetails", itemStockDetails);
             model.addAttribute("indentItemPartyGroupForm", new IndentItemPartyGroupRequestModel());
-            // model.addAttribute("indentItemPartyGroupForm", new IndentItemPartyGroupRequestModel(itemStockDetails));
             model.addAttribute("indentItemId", itemStockDetails.getId());
             return "views/splitIndentItem";
 

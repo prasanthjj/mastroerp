@@ -327,28 +327,27 @@
                                             <td style="padding: 0px;margin: 0px;">
                                                 <table width="100%">
                                                     <tr>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}"/>
+                                                        <td th:text="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}">
+                                                            11
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].quantityDc}"/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].shortage}"/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].accepted}"/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].rejected}"/>
                                                         </td>
                                                     </tr>

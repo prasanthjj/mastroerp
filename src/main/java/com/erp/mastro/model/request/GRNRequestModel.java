@@ -1,16 +1,12 @@
 package com.erp.mastro.model.request;
 
-import com.erp.mastro.entities.GRN;
-import com.erp.mastro.entities.IndentItemPartyGroup;
-import com.erp.mastro.entities.Product;
-import com.erp.mastro.entities.ProductPartyRateRelation;
+import com.erp.mastro.entities.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -68,6 +64,34 @@ public class GRNRequestModel {
                 this.itemId = indentItemPartyGroup.getItemStockDetails().getStock().getProduct();
                 this.quantity = indentItemPartyGroup.getQuantity();
                 this.rate = indentItemPartyGroup.getRate();
+                Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
+                        .filter(grnData -> (null != grnData))
+                        .filter(grnData -> (!grnData.getStatus().equals("Discard")))
+                        .collect(Collectors.toSet());
+                if (grns.isEmpty() == false) {
+                    Set<GRNItems> grnItemsSet = new HashSet<>();
+                    for (GRN grn : grns) {
+                        if (grn.getGrnItems().isEmpty() == false) {
+                            GRNItems grnItem = grn.getGrnItems().stream()
+                                    .filter(grnItemData -> (null != grnItemData))
+                                    .filter(grnItemData -> (grnItemData.getIndentItemPartyGroup().getId().equals(indentItemPartyGroup.getId())))
+                                    .findFirst().get();
+
+                            grnItemsSet.add(grnItem);
+                        }
+                    }
+                    if (grnItemsSet.isEmpty() == false) {
+                        Double totalAccepted = 0.0d;
+                        for (GRNItems grnItems : grnItemsSet) {
+                            totalAccepted = totalAccepted + grnItems.getAccepted();
+                        }
+                        this.pending = indentItemPartyGroup.getQuantity() - totalAccepted;
+                    } else {
+                        this.pending = indentItemPartyGroup.getQuantity();
+                    }
+                } else {
+                    this.pending = indentItemPartyGroup.getQuantity();
+                }
                 ProductPartyRateRelation productPartyRateRelation = indentItemPartyGroup.getParty().getProductPartyRateRelations().stream()
                         .filter(productPartyRateRelation1 -> (null != productPartyRateRelation1))
                         .filter(productPartyRateRelation1 -> (productPartyRateRelation1.getProduct().getId().equals(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getId())))

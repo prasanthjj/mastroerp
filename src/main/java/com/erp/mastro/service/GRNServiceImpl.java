@@ -157,7 +157,6 @@ public class GRNServiceImpl implements GRNService {
                 if (!containsInList(x.getId(), grn.getGrnItems().stream().filter(grndata -> (null != grndata)).map(y -> y.getId()).collect(Collectors.toList()))) {
                     grnItems = new GRNItems();
                     grnItems.setAccepted(x.getAccepted());
-                    grnItems.setPending(x.getPending());
                     grnItems.setReceived(x.getReceived());
                     grnItems.setShortage(x.getShortage());
                     grnItems.setRejected(x.getRejected());
@@ -178,13 +177,46 @@ public class GRNServiceImpl implements GRNService {
                     }
                     grnItems.setIgstRate(productPartyRateRelation.getProduct().getHsn().getIgst());
                     Double total = 0d;
-                    total = calculateService.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted(), productPartyRateRelation.getPartyPriceList().getDiscount());
+                    Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
+                    ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .findFirst().get();
+                    total = calculateService.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted() * productUOMPurchase.getConvertionFactor(), productPartyRateRelation.getPartyPriceList().getDiscount());
                     grnItems.setTotalPrice(total);
                     grnItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setGrn(grn);
+                    Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
+                            .filter(grnData -> (null != grnData))
+                            .filter(grnData -> (!grnData.getStatus().equals("Discard")))
+                            .collect(Collectors.toSet());
+
+                    if (grns.isEmpty() == false) {
+                        Set<GRNItems> grnItemsSets = new HashSet<>();
+                        for (GRN grnn : grns) {
+                            if (grnn.getGrnItems().isEmpty() == false) {
+                                GRNItems grnItem = grnn.getGrnItems().stream()
+                                        .filter(grnItemData -> (null != grnItemData))
+                                        .filter(grnItemData -> (grnItemData.getIndentItemPartyGroup().getId().equals(indentItemPartyGroup.getId())))
+                                        .findFirst().get();
+
+                                grnItemsSets.add(grnItem);
+                            }
+                        }
+                        if (grnItemsSets.isEmpty() == false) {
+                            Double totalAccepted = 0.0d;
+                            for (GRNItems grnItems1s : grnItemsSets) {
+                                totalAccepted = totalAccepted + grnItems1s.getAccepted();
+                            }
+                            grnItems.setPending(indentItemPartyGroup.getQuantity() - (totalAccepted + x.getAccepted()));
+                        } else {
+                            grnItems.setPending(indentItemPartyGroup.getQuantity() - (x.getAccepted()));
+                        }
+                    }
                     grnItemsSet.add(grnItems);
                 }
             });

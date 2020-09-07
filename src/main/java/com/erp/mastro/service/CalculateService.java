@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalculateService {
 
-    public Double calculateTotalPrice(Double rate, Double dcQty, Double discountPer) {
-        Double total = dcQty * rate;
+    public Double calculateTotalPrice(Double rate, Double acceptQty, Double discountPer) {
+        Double total = acceptQty * rate;
         Double discountAmount = total * (discountPer / 100);
         total = total - discountAmount;
         return Math.round(total * 100.0) / 100.0;
