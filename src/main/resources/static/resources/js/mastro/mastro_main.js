@@ -430,33 +430,7 @@ $("#calculationAmount").hide();
     }).find(':checkbox').change();
 
     // add party item  rate table end
-    // item party rate relation change tab start
 
-
-    $('.relationBtn').click(function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        id = this.id;
-        if (id == 'itemBtn') {
-            $('#itemBox').slideToggle("slow");
-            $('#partyBox').hide();
-            $('#itemBtn').toggleClass("active");
-            if ($('#itemBtn').hasClass('active')){
-                $('#partyBtn').removeClass("active");
-            }
-
-        }
-        else if (id == 'partyBtn'){
-
-            $('#itemBox').hide();
-            $('#partyBox').slideToggle("slow");
-            $('#partyBtn').toggleClass("active");
-            if ($('#partyBtn').hasClass('active')){
-                $("#itemBtn").removeClass("active");
-            }
-        }
-    });
-    // item party rate relation change tab end
        $(function(datepicker) {
 
        //Add assets dates Start
@@ -511,6 +485,15 @@ $("#calculationAmount").hide();
            // Edit HSN end
            // party creation date start
                $('#partyCreationDate .input-group.date').datepicker({
+                   todayBtn: "linked",
+                   keyboardNavigation: false,
+                   forceParse: false,
+                   calendarWeeks: true,
+                   autoclose: true,
+               });
+               //party creation date end
+   // party creation date start
+               $('#addGatePassDate .input-group.date').datepicker({
                    todayBtn: "linked",
                    keyboardNavigation: false,
                    forceParse: false,
@@ -1067,7 +1050,46 @@ $("#calculationAmount").hide();
                                      });
 
                    //End Deactive Party
+//remove brand start
+    $('.removeBrand').click(function () {
+      var brandId=$(this).data('brandids');
 
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this Brand!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+
+
+             	$.ajax({
+                   url: '/master/deleteBrandDetails',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'brandId': brandId },
+
+                   success: function(data){
+                            if(data.success) {
+
+             var redirectionUrl= "/master/getBrand";
+             window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            swal("Deleted!", "Item has been deleted.", "success");
+        });
+
+    });
+//remove brand end
 
                    $('.removeHsn').click(function () {
                           var hsnId=$(this).data('hsnids');
@@ -1187,7 +1209,31 @@ $("#calculationAmount").hide();
 
 
  });
+ //get brand edit start
+  $("body").on('click','.brandEdit',function (e) {
 
+    e.preventDefault();
+     var brandId=$(this).data('brandid');
+
+     	$.ajax({
+            url: '/master/getBrandForEdit',
+            type: 'GET',
+            dataType : 'json',
+            data: { 'brandId': brandId },
+            success: function(data){
+                     if(data.success) {
+                                  $('#brandId').val(data.data.brandId);
+                                  $('#brandnames').val(data.data.brandName);
+                                  $('#branddescription').val(data.data.brandDescription);
+                                      }
+                                 },
+        error: function(jqXHR, textStatus)
+         {
+         alert('Error Occured');
+          }
+             });
+              });
+              //get brand edit end
  //get pricelist edit start
   $("body").on('click','.pricelistEdit',function (e) {
 

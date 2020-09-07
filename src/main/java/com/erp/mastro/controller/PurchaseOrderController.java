@@ -334,10 +334,19 @@ public class PurchaseOrderController {
                     IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView indentItemPartyGroupRequestModelsView = new IndentItemPartyGroupRequestModel.IndentIteamPartGroupsView();
                     indentItemPartyGroupRequestModelsView.setQty(indentItemPartyGroup.getQuantity());
                     indentItemPartyGroupRequestModelsView.setItemname(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductName());
+                    indentItemPartyGroupRequestModelsView.setBaseuom(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getUom().getUOM());
+                    indentItemPartyGroupRequestModelsView.setPurchaseuom(indentItemPartyGroup.getItemStockDetails().getPurchaseUOM().getUOM());
                     indentItemPartyGroupRequestModelsView.setRate(indentItemPartyGroup.getRate());
                     indentItemPartyGroupRequestModelsView.setHsnno(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getId());
                     Double itemTotalAmount = 0d;
-                    itemTotalAmount = indentItemPartyGroup.getQuantity() * indentItemPartyGroup.getRate();
+                    Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
+                    ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .findFirst().get();
+
+                    itemTotalAmount = indentItemPartyGroup.getQuantity() * productUOMPurchase.getConvertionFactor() * indentItemPartyGroup.getRate();
                     indentItemPartyGroupRequestModelsView.setTotal(itemTotalAmount);
                     indentItemPartyGroupRequestModels.add(indentItemPartyGroupRequestModelsView);
                     subTotal = subTotal + itemTotalAmount;

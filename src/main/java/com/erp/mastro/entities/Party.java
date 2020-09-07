@@ -101,4 +101,9 @@ public class Party extends Auditable<String>{
             orphanRemoval = true)
     private Set<SalesOrder> salesOrderSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlip> salesSlips = new HashSet<>();
+
 }

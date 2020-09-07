@@ -52,55 +52,19 @@
             <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title  ">
-                            <!-- <h5 class="text-info"><i class="fa fa-barcode"></i> Manage HSN</h5> -->
+                        <div class="ibox-title  mastro-ibox-title">
+
                             <div class="ibox-tools">
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Item Name</label>
-                                            <p class="m-t-sm" th:text="${productDetails.productName}">Angles 25x6
-                                                (1x1/4)</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Item Code</label>
-                                            <p class="m-t-sm" th:text="${productDetails.id}">15092020</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>HSN Code</label>
-                                            <p class="m-t-sm" th:text="${productDetails.hsn.hsnCode}">Code</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <p class="m-t-sm"><span
-                                                    th:text="${productDetails.subCategory.category.categoryName}">Angles & Channels</span>
-                                                <i class="fa fa-arrow-right"></i> <span
-                                                        th:text="${productDetails.subCategory.subCategoryName}">35x6 (1 1/4x1/4)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="col-lg-6">
-                                        <div class="hr-line-dashed"></div>
+                        <div class="ibox-content mastro-ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
                                         <div class="product-images">
 
                                             <div th:each="productFiles: ${productFilePath}" class="item_img">
@@ -108,122 +72,180 @@
                                                      th:src="@{__${productFiles}__}"/>
 
                                             </div>
-                                            <!--<div>
-                                                <img alt="image" class="img-responsive" src="../resources/img/roof2.jpg"/>
-                                                
-                                            </div>
-                                            <div>
-                                                <img alt="image" class="img-responsive" src="../resources/img/roof2.jpg"/>
-                                                
-                                            </div>-->
                                         </div>
                                         <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Colour</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.colour}">:
+                                                HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Dimension</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.dimension}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Property
+                                                Size</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.propertySize}">: HSN001</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Item Name </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.productName}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Item Code </strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.id}">:
+                                                HSN001</label>
+                                        </div>
+
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>HSN Code</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.hsn.hsnCode}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Category</strong></label>
+                                            <label class="col-sm-7 col-form-label"> <span
+                                                    th:text="${productDetails.subCategory.category.categoryName}"></span>
+                                                <i class="fa fa-arrow-right"></i> <span
+                                                        th:text="${productDetails.subCategory.subCategoryName}"></span></label>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Inspection
+                                                Type</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.inspectionType}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Guarantee</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.guarantee}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Warranty</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.warranty}">:
+                                                HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Base UOM</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.uom.UOM}">:
+                                                HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Base
+                                                Quantity</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.baseQuantity}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Base Price</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.basePrice}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Loading
+                                                Charge</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.loadingCharge}">: HSN001</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 m-t-lg">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row"
+                                             th:each="productUOMList,iterator:${productDetails.productUOMSet}">
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="col-sm-7 col-form-label"><strong>Transaction
+                                                        Type </strong></label>
+                                                    <label class="col-sm-5 col-form-label"
+                                                           th:text="${productUOMList.transactionType}">: HSN001</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="col-sm-7 col-form-label"><strong>Transaction
+                                                        UOM </strong></label>
+                                                    <label class="col-sm-5 col-form-label"
+                                                           th:text="${productUOMList.uom.UOM}">: HSN001</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="col-sm-7 col-form-label"><strong>Convention
+                                                        Factor</strong></label>
+                                                    <label class="col-sm-5 col-form-label"
+                                                           th:text="${productUOMList.convertionFactor}">: HSN001</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hr-line-dashed"></div>
+                                            </div>
+                                        </div>
 
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Colour</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.colour}">Colour</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Dimension</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.dimension}">
-                                                        Dimension</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Property Size</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.propertySize}">Property
-                                                        Size</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Inspection Type</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.inspectionType}">
-                                                        Inspection Type</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Guarantee</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.guarantee}">
-                                                        Guarantee</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group"><label>Warranty</label>
-                                                    <p class="m-t-sm" th:text="${productDetails.warranty}">Warranty</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Base UOM</label>
-                                            <p class="m-t-sm" th:text="${productDetails.uom.UOM}">Base UOM</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Base Quantity</label>
-                                            <p class="m-t-sm" th:text="${productDetails.baseQuantity}">Base Quantity</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Base Price </label>
-                                            <p class="m-t-sm" th:text="${productDetails.basePrice}">Base Price </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Loading Charge</label>
-                                            <p class="m-t-sm" th:text="${productDetails.loadingCharge}">Loading
-                                                Charge</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" th:each="productUOMList,iterator:${productDetails.productUOMSet}">
-                                    <div class="col-lg-4">
-                                        <div class="form-group row">
-                                            <label class="col-sm-6 col-form-label">Transaction Type </label>
-                                            <p class="col-sm-6 col-form-label"
-                                               th:text="${productUOMList.transactionType}">Transaction Type</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group row">
-                                            <label class="col-sm-6 col-form-label">Transaction UOM</label>
-                                            <p class="col-sm-6 col-form-label" th:text="${productUOMList.uom.UOM}">
-                                                Transaction UOM</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group row">
-                                            <label class="col-sm-6 col-form-label">Convention Factor</label>
-                                            <p class="col-sm-6 col-form-label"
-                                               th:text="${productUOMList.convertionFactor}">Convention Factor </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--            <div class="row">
+                            <div  class="col-lg-12">
+                                <div  class="ibox ">
+                                    <div class="ibox-title  mastro-ibox-title">
+
+                                        <div class="ibox-tools">
+
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content mastro-ibox-content">
+                                        <div class="row">
+                                            <div  class="col-lg-12">
+                                                <div class="ibox-content mastro-sub-ibox-content ">
 
 
+
+
+                                                    <div class="row" th:each="productUOMList,iterator:${productDetails.productUOMSet}">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-6 col-form-label">Transaction Type </label>
+                                                                <p class="col-sm-6 col-form-label"
+                                                                   th:text="${productUOMList.transactionType}">Transaction Type</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-6 col-form-label">Transaction UOM</label>
+                                                                <p class="col-sm-6 col-form-label" th:text="${productUOMList.uom.UOM}">
+                                                                    Transaction UOM</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-6 col-form-label">Convention Factor</label>
+                                                                <p class="col-sm-6 col-form-label"
+                                                                   th:text="${productUOMList.convertionFactor}">Convention Factor </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
         </div>
 
 
@@ -232,41 +254,8 @@
     </div>
 
 </div>
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="branchListForm">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Branch List</h4>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" required>
-                                    <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>

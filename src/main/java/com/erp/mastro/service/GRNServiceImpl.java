@@ -72,6 +72,7 @@ public class GRNServiceImpl implements GRNService {
                 grn.setPurchaseOrder(purchaseOrderService.getPurchaseOrderById(grnRequestModel.getPoId()));
                 grn.setReceivedThrough(grnRequestModel.getReceivedThrough());
                 grn.setReceivedAs(grnRequestModel.getReceivedAs());
+                grn.setStatus("Draft");
                 grn.setNumber(grnRequestModel.getPartyInvoiceNo());
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 grn.setBranch(currentBranch);

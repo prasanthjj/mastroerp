@@ -38,88 +38,85 @@
                         <a href="#">Master</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a href="partyMaster.html" th:href="@{/master/getPartys}">Party List</a>
+                        <a href="partyMaster.html">Party List</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong> Browse Party</strong>
                     </li>
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content">
 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                        <div class="ibox-title">
-                            <div class="ibox-tools">
-
-                            </div>
-                        </div>
-                        <div class="ibox-content">
+                        <div class="ibox-content  mastro-step-ibox-content ">
                             <form id="viewPartyForm" th:action="@{/master/getPartys}" class="wizard-big">
                                 <h1>General Details</h1>
                                 <fieldset>
                                     <h2>General Details</h2>
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Party Type</label>
-                                                <h4 th:text="${partyDetails.partyType}"></h4>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Party
+                                                    Type </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.partyType}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Party
+                                                    Name </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.partyName}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Party
+                                                    Code </strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${partyDetails.id}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Category
+                                                    Type </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.categoryType}">: HSN001</label>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label>Party Name</label>
-                                                <h4 th:text="${partyDetails.partyName}">Party Name </h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Category Type</label>
-                                                <h4 th:text="${partyDetails.categoryType}">Category Type</h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Payment
+                                                    Terms</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.paymentTerms}">: HSN001</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Party Code</label>
-                                                <h4 th:text="${partyDetails.id}">Party Code</h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Payment Terms</label>
-                                                <h4 th:text="${partyDetails.paymentTerms}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Old Ref. Code</label>
-                                                <h4 th:text="${partyDetails.oldReferCode}"></h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Relationship Manager</label>
-                                                <h4 th:text="${partyDetails.relationshipMananger}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Date</label>
-                                                <h4 th:text="${#dates.format(partyDetails.partyDate, 'dd-MMMM-yyyy')}"></h4>
-                                            </div>
+                                        <div class="col-lg-6 ">
 
-                                            <div class="form-group">
-                                                <label>Industry Type</label>
-                                                <span th:if="${partyDetails.industryType != null}">
-                                                <h4 th:text="${partyDetails.industryType.industryType}"></h4>
-                                                </span>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Old Ref.
+                                                    Code</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.oldReferCode}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Relationship
+                                                    Manager</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.relationshipMananger}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Date</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${#dates.format(partyDetails.partyDate, 'dd-MMMM-yyyy')}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Industry
+                                                    Type</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyDetails.industryType.industryType}">:
+                                                    HSN001</label>
                                             </div>
                                         </div>
                                     </div>
@@ -128,52 +125,64 @@
                                 <fieldset>
                                     <div id="partyContactDetails">
                                         <h2>Contact Details</h2>
+
                                         <div class="row" th:each="partyObjList,iterator:${partyDetails.contactDetails}">
                                             <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label>Contact Person Name</label>
-                                                    <h4 th:text="${partyObjList.contactPersonName}"></h4>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Contact Person
+                                                        Name</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.contactPersonName}">: HSN001</label>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Address</label>
-                                                    <h4 th:text="${partyObjList.address}"></h4>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Address</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.address}">: HSN001</label>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label>Designation</label>
-                                                    <h4 th:text="${partyObjList.designation}"></h4>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Telephone No.</label>
-                                                    <h4 th:text="${partyObjList.telephoneNo}"></h4>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Mobile No.</label>
-                                                    <h4 th:text="${partyObjList.mobileNo}"></h4>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Fax No.</label>
-                                                    <h4 th:text="${partyObjList.faxNo}"></h4>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
 
-                                                <div class="form-group">
-                                                    <label>Department</label>
-                                                    <h4 th:text="${partyObjList.department}"></h4>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Designation</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.designation}">: HSN001</label>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Alt Telephone No.</label>
-                                                    <h4 th:text="${partyObjList.altTelephoneNo}"></h4>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Telephone
+                                                        No.</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.telephoneNo}">: HSN001</label>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Alt Mobile No.</label>
-                                                    <h4 th:text="${partyObjList.altMobileNo}"></h4>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Mobile
+                                                        No.</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.mobileNo}">: HSN001</label>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label> Email ID</label>
-                                                    <h4 th:text="${partyObjList.emailId}"></h4>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Fax
+                                                        No.</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.faxNo}">: HSN001</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Department</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.department}">: HSN001</label>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong>Alt Telephone
+                                                        No.</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.altTelephoneNo}">: HSN001</label>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-sm-5 col-form-label"><strong> Email
+                                                        ID</strong></label>
+                                                    <label class="col-sm-7 col-form-label"
+                                                           th:text="${partyObjList.emailId}">: HSN001</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -183,59 +192,76 @@
                                     </div>
 
                                 </fieldset>
-                                <h1>Billing/Dispatch Details</h1>
+                                <h1>Billing Details</h1>
                                 <fieldset>
                                     <h2>Address Details</h2>
+
                                     <div class="row" th:each="partyBillingList,iterator:${partyDetails.billingDetails}">
                                         <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>Type </label>
-                                                <h4 th:text="${partyBillingList.type}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong> Type</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.type}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Cont. Person Name </label>
-                                                <h4 th:text="${partyBillingList.contactPersonName}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong> Cont. Person
+                                                    Name</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.contactPersonName}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Designation</label>
-                                                <h4 th:text="${partyBillingList.designation}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>
+                                                    Designation</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.designation}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Telephone No. </label>
-                                                <h4 th:text="${partyBillingList.telephoneNo}"></h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label> Email ID</label>
-                                                <h4 th:text="${partyBillingList.emailId}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Fax No.</label>
-                                                <h4 th:text="${partyBillingList.faxNo}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Country </label>
-                                                <h4 th:text="${partyBillingList.country}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label> State </label>
-                                                <h4 th:text="${partyBillingList.state}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Telephone
+                                                    No.</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.telephoneNo}">: HSN001</label>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label>City </label>
-                                                <h4 th:text="${partyBillingList.city}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Email ID</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.emailId}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Pin Code </label>
-                                                <h4 th:text="${partyBillingList.pinCode}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Fax No.</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.faxNo}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Street/Lane</label>
-                                                <h4 th:text="${partyBillingList.street}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Country </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.country}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>State</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.state}">: HSN001</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>City</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.city}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Pin Code</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.pinCode}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Street/Lane</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBillingList.street}">: HSN001</label>
                                             </div>
                                         </div>
                                     </div>
@@ -246,33 +272,41 @@
                                     <h2>Bank Details</h2>
                                     <div class="row" th:each="partyBankList,iterator:${partyDetails.bankDetails}">
                                         <div class="col-lg-4">
-
-                                            <div class="form-group">
-                                                <label>Account No. </label>
-                                                <h4 th:text="${partyBankList.accountNo}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Account
+                                                    No.</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBankList.accountNo}">: HSN001</label>
                                             </div>
-                                            <div class="form-group">
-                                                <label>IFSC Code </label>
-                                                <h4 th:text="${partyBankList.ifscCode}"></h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-
-                                            <div class="form-group">
-                                                <label>Bank Name </label>
-                                                <h4 th:text="${partyBankList.bankName}"></h4>
-                                            </div>
-                                            <div class="form-group">
-                                                <label> Branch Name </label>
-                                                <h4 th:text="${partyBankList.branchName}"></h4>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>IFSC
+                                                    Code </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBankList.ifscCode}">: HSN001</label>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Bank
+                                                    Name </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBankList.bankName}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong> Branch
+                                                    Name </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBankList.branchName}">: HSN001</label>
+                                            </div>
 
-                                            <div class="form-group">
-                                                <label> Bank Address</label>
-                                                <h4 th:text="${partyBankList.bankAddress}"></h4>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong> Bank
+                                                    Address </strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${partyBankList.bankAddress}">: HSN001</label>
                                             </div>
                                         </div>
                                     </div>

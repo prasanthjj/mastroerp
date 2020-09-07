@@ -20,6 +20,14 @@
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+    <style>
+        .activeBtn{  background-color: #ffffff !important;
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
+        }
+
+
+    </style>
 </head>
 
 <body>
@@ -51,17 +59,16 @@
 
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title mastro-ibox-title ">
                             <div class="col-md-12 text-center">
                                 <fieldset>
                                     <input type="hidden" id="showedtab" th:value="${showtab}">
 
-                                    <button id="itemBtn" class="btn btn-primary  relationBtn btn-outline active "
+
+                                    <button id="itemBtn" class="btn btn-outline btn-default  relationBtn txt-white"
                                             type="button">Item Party Relation
                                     </button>
-
-
-                                    <button class="btn  relationBtn btn-primary btn-outline" id="partyBtn"
+                                    <button class="btn btn-outline btn-default relationBtn txt-white" id="partyBtn"
                                             type="button">Party Item Relation
                                     </button>
 
@@ -70,7 +77,7 @@
                             <div class="ibox-tools">
                             </div>
                         </div>
-                        <div class="ibox-content" id="itemBox">
+                        <div class="ibox-content mastro-ibox-content" id="itemBox">
                             <form th:action="@{/master/getSelectedProduct}" method="get">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -276,7 +283,7 @@
                             </form>
                         </div>
 
-                        <div class="ibox-content" id="partyBox">
+                        <div class="ibox-content mastro-ibox-content" id="partyBox">
                             <form th:action="@{/master/getSelectedPartyDetails}" method="get">
                                 <div class="row">
                                     <div class="col-lg-5">
@@ -570,20 +577,50 @@
         th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
 <script>
 
+
 $(document).ready(function(){
+
+
+    $('.relationBtn').click(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        id = this.id;
+        if (id == 'itemBtn') {
+            $('#itemBox').slideToggle("slow");
+            $('#partyBox').hide();
+            $('#itemBtn').toggleClass("activeBtn");
+            if ($('#itemBtn').hasClass('activeBtn')){
+                $('#partyBtn').removeClass("activeBtn");
+            }
+
+        }
+        else if (id == 'partyBtn'){
+
+            $('#itemBox').hide();
+            $('#partyBox').slideToggle("slow");
+            $('#partyBtn').toggleClass("activeBtn");
+            if ($('#partyBtn').hasClass('activeBtn')){
+                $("#itemBtn").removeClass("activeBtn");
+            }
+        }
+    });
+
+
  var showtab= document.getElementById("showedtab").value;
 
   if(showtab=='itemtab')
   {
    $('#partyBox').hide();
-     $('#itemBtn').addClass("active");
-     $('#partyBtn').removeClass("active");
+     $('#itemBtn').addClass("activeBtn");
+     $('#partyBtn').removeClass("activeBtn");
+
   }
    else
      {
       $('#itemBox').hide();
-       $('#partyBtn').addClass("active");
-        $('#itemBtn').removeClass("active");
+       $('#partyBtn').addClass("activeBtn");
+        $('#itemBtn').removeClass("activeBtn");
+
      }
 
 

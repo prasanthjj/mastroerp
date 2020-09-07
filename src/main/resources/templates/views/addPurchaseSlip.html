@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Sales Slip</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Sales Slip</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="#">DC / Sales List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Sales Slip</strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-content mastro-step-inbox-content">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Party Name</label>
+                                            <select class="form-control">
+                                                <option>Mastro Metals Pvt Ltd</option>
+                                                <option>Cash Customer</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group"><label>Category</label>
+                                            <h4>A</h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
+                                                    <td>
+                                                        <input type="text" class="form-control"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white">vehicle No</td>
+                                                    <td>
+                                                        <input type="text" class="form-control"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary" type="button">Select</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Delivery Address</label>
+                                            <textarea class="form-control" rows="5" placeholder=""> Mastro Metals Pvt Ltd. TMC. 1. 203 , 2nd floor106 Jorg Avenu, 600/10,compass point, Chiravakku, NH Taliparamba Phone: (+91) 9745 981 204, Pin Code :680502
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Billing Address</label>
+                                            <address>
+                                                <strong>Mastro Metals Pvt Ltd.</strong><br>
+                                                TMC. 1. 203 , 2nd floor
+                                                106 Jorg Avenu, 600/10,<br>
+                                                compass point,<br>Chiravakku, NH Taliparamba <br>
+                                                <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204
+                                            </address>
+                                        </div>
+                                        <div class="form-group"><label>Pin Code :</label>
+                                            680502
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="ibox">
+                                <div class="ibox-title  ">
+                                    <h3>Item Particulars</h3>
+                                    <div class="ibox-tools">
+
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group"><label>Item Name</label>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2">
+                                            <div class="form-group"><label>UOM</label>
+                                                <select class="form-control">
+                                                    <option value="">Select Uom</option>
+                                                    <option>Mtr</option>
+                                                    <option>Kg</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group"><label>Quantity</label>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2">
+                                            <div class="form-group"><label>Rate</label>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 m-t-lg">
+                                            <button type="button" class="right-sidebar-toggle btn btn-primary">Add
+                                                Item
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered  ">
+                                    <thead class="mastro-blue-bg ">
+                                    <tr class="mastro-blue-bg txt-white">
+                                        <th class="mastro-blue-bg ">No</th>
+                                        <th class="mastro-blue-bg txt-white">Item</th>
+                                        <th class="mastro-blue-bg txt-white">HSN / SAC</th>
+                                        <th class="mastro-blue-bg txt-white">Quantity</th>
+                                        <th class="mastro-blue-bg txt-white">Unit Rate</th>
+                                        <th class="mastro-blue-bg txt-white">Amount</th>
+                                        <th class="mastro-blue-bg txt-white" style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
+                                                        colspan="2">CGST
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                        <th style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
+                                                        colspan="2">SGST
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                        <th style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
+                                                        colspan="2">IGST
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                        <th style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
+                                                        colspan="2">CESS
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
+                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Oxy .47 Red 3.05mtr (10')</td>
+                                        <td>HSN-0265</td>
+                                        <td>10</td>
+                                        <td>35</td>
+                                        <td>3500</td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>10 %</td>
+                                                    <td>350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">10%</td>
+                                                    <td width="50%">350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Flat 25x6mm (1x1/4)</td>
+                                        <td>HSN-0265</td>
+                                        <td>10</td>
+                                        <td>35</td>
+                                        <td>3500</td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>10 %</td>
+                                                    <td>350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">10%</td>
+                                                    <td width="50%">350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Angles 25x6 (1x1/4)</td>
+                                        <td>HSN-0265</td>
+                                        <td>10</td>
+                                        <td>35</td>
+                                        <td>3500</td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>10 %</td>
+                                                    <td>350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">5%</td>
+                                                    <td width="50%">175</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px;margin: 0px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%">10%</td>
+                                                    <td width="50%">350</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row m-t-md">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <label class="col-lg-10 text-right">Round Off</label>
+                                        <div class=" col-lg-2"><input type="text" class="form-control"/></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 text-right">
+                                    <h3 class="">Grand Total : 500.00</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group"><label>Special instructions</label>
+                                        <textarea class="form-control" rows="6">
+        
+                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group"><label>Remarks</label>
+                                        <textarea class="form-control" rows="6">
+
+                                    </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 text-right">
+                                <button class="btn btn-primary btn-sm grn" type="button">Create Purchase Slip</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+    <div id="right-sidebar" class="animated">
+        <div class="sidebar-container">
+
+
+            <div class="tab-content">
+
+
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="sidebar-title">
+                        <h3><i class="fa fa-barcode"></i> Oxy .47 Red 3.05mtr (10')</h3>
+
+                    </div>
+
+                    <div>
+
+                        <div class="sidebar-message">
+                            <div class="table-responsive">
+                                <table class="table table-bordered ">
+                                    <tr class="mastro-blue-bg txt-white">
+                                        <th>GRN No</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>GRN0246875</td>
+                                        <td>24</td>
+                                        <td><a href="#" class="btn btn-primary">Select</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>GRN0235985</td>
+                                        <td>28</td>
+                                        <td><a href="#" class="btn btn-primary">Select</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>GRN0245687</td>
+                                        <td>32</td>
+                                        <td><a href="#" class="btn btn-primary">Select</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="branchListForm">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Branch List</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" required>
+                                    <option value="">Select branch</option>
+                                    <option>Thrissur</option>
+                                    <option>Ernakulam</option>
+                                    <option>Kozhikode</option>
+                                    <option>Kannur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Mainly scripts -->
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+</body>
+</html>

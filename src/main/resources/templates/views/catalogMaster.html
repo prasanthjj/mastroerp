@@ -44,71 +44,69 @@
 
                 </ol>
             </div>
-            <div class="col-lg-5 ">
-
-                <ul class="last-login m-t-lg">
-                    <li class="">
-                        Your IP Address ::1 (Last Login at :07/06/2020 06:35:00)
-                    </li>
-                </ul>
-                <ul class="last-login m-t-xs">
-                    <li class="">
-                        No Of Active User : 1
-                    </li>
-                </ul>
-
-            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
-                <div class="col-md-4">
-                    <div id="nestable-menu">
-                        <button type="button" data-action="expand-all" class="btn btn-white btn-sm">Expand All</button>
-                        <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">Collapse All
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5><i class="fa fa-barcode"></i> Catalog List</h5>
-                            <div class="ibox-tools">
-                                <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
-                                            class="fa fa-cogs "></i></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item font-bold" data-toggle="modal"
-                                               data-target="#addCatalog" href="#"><i class="fa fa-eye"></i> Add Catalog</a>
-                                        </li>
-                                    </ul>
+                        <div class="ibox-content mastro-step-ibox-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div id="nestable-menu">
+                                        <button type="button" data-action="expand-all" class="btn btn-white btn-sm">
+                                            Expand All
+                                        </button>
+                                        <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">
+                                            Collapse All
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="dd" id="nestable2">
-                                <li class="dd-item" data-id="1" th:each="catalogObj,iterator:${catalogList}">
-                                    <div class="dd-handle Catalog-bg">
-                                        <span class="float-right"></span>
-                                        <span class="label label-info"><i class="fa fa-plus"></i></span><span
-                                            th:text="${catalogObj.catalogName}"></span>
-                                    </div>
-                                    <ol class="dd-list">
-                                        <li class="dd-item" data-id="1">
-                                            <div class="dd-handle">
+                            <div class="row">
+
+                                <div class="col-lg-8">
+                                    <div class="ibox ">
+                                        <div class="ibox-title">
+                                            <h5><i class="fa fa-barcode"></i> Catalog List</h5>
+                                            <div class="ibox-tools">
+                                                <div class="btn-group">
+                                                    <button data-toggle="dropdown"
+                                                            class="btn btn-primary dropdown-toggle"><i
+                                                            class="fa fa-cogs "></i></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item font-bold" data-toggle="modal"
+                                                               data-target="#addCatalog" href="#"><i
+                                                                class="fa fa-eye"></i> Add Catalog</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="dd" id="nestable2">
+                                                <li class="dd-item" data-id="1"
+                                                    th:each="catalogObj,iterator:${catalogList}">
+                                                    <div class="dd-handle Catalog-bg">
+                                                        <span class="float-right"></span>
+                                                        <span class="label label-info"><i class="fa fa-plus"></i></span><span
+                                                            th:text="${catalogObj.catalogName}"></span>
+                                                    </div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="1">
+                                                            <div class="dd-handle">
                                                 <span class="float-right catalogIcon"><a data-toggle="modal"
                                                                                          class="addCategoyss"
                                                                                          data-target="#addCategory"
                                                                                          href="#"
                                                                                          th:data-catalogid="${catalogObj.id}">  <i
                                                         class="fa fa-plus-square"></i> </a></span>
-                                                <span class="label label-info "><i class="fa fa-plus"></i></span>
-                                                <strong class="text-success">Category </strong>
-                                            </div>
-                                        </li>
-                                        <span th:each="categoryObj,iterator:${catalogObj.categories}">
+                                                                <span class="label label-info "><i
+                                                                        class="fa fa-plus"></i></span>
+                                                                <strong class="text-success">Category </strong>
+                                                            </div>
+                                                        </li>
+                                                        <span th:each="categoryObj,iterator:${catalogObj.categories}">
                                         <li class="dd-item" data-id="1" th:if="${categoryObj.categoryDeleteStatus== 0}">
 
                                             <div class="dd-handle">
@@ -186,17 +184,21 @@
                                             </ol>
                                         </li>
                                         </span>
-                                    </ol>
-                                </li>
-                                <!--  <li class="dd-item" data-id="1">
-                                      <div class="dd-handle Catalog-bg">
-                                          <span class="float-right"></span>
-                                                  <span class="label label-info"><i class="fa fa-plus"></i></span>Root Catalog 2
-                                      </div>
-                                      </li>-->
+                                                    </ol>
+                                                </li>
+                                                <!--  <li class="dd-item" data-id="1">
+                                                      <div class="dd-handle Catalog-bg">
+                                                          <span class="float-right"></span>
+                                                                  <span class="label label-info"><i class="fa fa-plus"></i></span>Root Catalog 2
+                                                      </div>
+                                                      </li>-->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -338,6 +338,40 @@ $(document).ready(function(){
     });
     // Remove Branch End
 
+    // Remove Gate Pass Start
+    $('.removeGatePass').click(function () {
+       var gatepassIds=$(this).data('gatepassids');
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this Gate Pass!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+
+        $.ajax({
+            url: '/inventory/deleteGatePass',
+            type: 'POST',
+            dataType : 'json',
+            data: { 'gatepassids': gatepassIds },
+            success: function(data){
+                if(data.success) {
+                      var redirectionUrl= "/inventory/getGatePass";
+                      window.location.href = redirectionUrl;
+                   }
+                     },
+             error: function(jqXHR, textStatus) {
+             alert('Error Occured');
+                    }
+               });
+            swal("Deleted!", "Item has been deleted.", "success");
+
+        });
+    });
+    // Remove Gate Pass End
+
    //Role access starts
    $('#roleAccess').change(function (e) {
    e.preventDefault();
