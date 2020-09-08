@@ -186,144 +186,15 @@
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer">
+               <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                </div>-->
             </div>
         </form>
     </div>
 </div>
-<div class="modal inmodal" id="poDraft" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <form action="">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Purchase Order Preview</h4>
 
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Approvel / Rejection Remarks"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <p class="text-left">
-                                <button class="btn btn-primary dim poApproved">Approve</button>
-                                <button class="btn btn-primary dim">Review</button>
-                                <button class="btn btn-danger dim">Discard</button>
-
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ibox-content p-xl">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h5>From:</h5>
-                                <address>
-                                    <strong>Mastro Metals</strong><br>
-                                    TMC. 1. 203 , 2nd floor
-                                    106 Jorg Avenu, 600/10,<br>
-                                    compass point,<br>Chiravakku, NH Taliparamba <br>
-                                    <abbr title="Phone">P:</abbr> (123) 601-4590
-                                </address>
-                            </div>
-
-                            <div class="col-sm-6 text-right">
-                                <h4>PO No.</h4>
-                                <h4 class="text-navy">PO-000567F7-00</h4>
-                                <span>To:</span>
-                                <address>
-                                    <strong>Corporate, Inc.</strong><br>
-                                    112 Street Avenu, 1080<br>
-                                    Miami, CT 445611<br>
-                                    <abbr title="Phone">P:</abbr> (120) 9000-4321
-                                </address>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive m-t">
-                            <table class="table invoice-table">
-                                <thead>
-                                <tr>
-                                    <th>Item List</th>
-                                    <th>Indent Quantity</th>
-                                    <th>Rate</th>
-                                    <th>Tax</th>
-                                    <th>Total Price</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <div><strong>Oxy .47 Red 3.05mtr (10')</strong></div>
-                                    </td>
-                                    <td>1</td>
-                                    <td>26.00</td>
-                                    <td>5.98</td>
-                                    <td>31,98</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div><strong>Angles 25x6 (1x1/4)</strong></div>
-                                    </td>
-                                    <td>2</td>
-                                    <td>80.00</td>
-                                    <td>36.80</td>
-                                    <td>196.80</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div><strong> Oxy .47 Red 3.05mtr (10')</strong></div>
-                                    </td>
-                                    <td>3</td>
-                                    <td>420.00</td>
-                                    <td>193.20</td>
-                                    <td>1033.20</td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div><!-- /table-responsive -->
-
-                        <table class="table invoice-total">
-                            <tbody>
-                            <tr>
-                                <td><strong>Sub Total :</strong></td>
-                                <td>$1026.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>TAX :</strong></td>
-                                <td>$235.98</td>
-                            </tr>
-                            <tr>
-                                <td><strong>TOTAL :</strong></td>
-                                <td>$1261.98</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-
-                        <div class="well m-t"><strong>Comments</strong>
-                            It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                            more-or-less
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button> -->
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>

@@ -4,6 +4,7 @@ import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dao.AutoPopulateDAO;
 import com.erp.mastro.entities.*;
+import com.erp.mastro.model.request.BranchRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.service.IndentServiceImpl;
@@ -233,6 +234,40 @@ public class AutocompleteController {
             }
             return new GenericResponse(true, "get items")
                     .setProperty("products", productRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+
+    /**
+     * Method to get autopopulate items
+     *
+     * @param searchTerm
+     * @return item list
+     */
+    @RequestMapping(value = "/branch", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse branches(@RequestParam("searchTerm") String searchTerm) {
+        try {
+            MastroLogUtils.info(AutocompleteController.class, "Going to get Branch in autocomplete : {}");
+            List<Branch> branchFinal = new ArrayList<>();
+            List<Branch> branches = autoPopulateDao.getAutoPopulateList("branchName", searchTerm, Branch.class, 50);
+            branchFinal = branches.stream()
+                    .filter(branchData -> (null != branchData))
+                    .filter(branchData -> (1 != branchData.getBranchDeleteStatus()))
+                    .collect(Collectors.toList());
+            Set<BranchRequestModel> branchRequestModels = new HashSet<BranchRequestModel>();
+            for (Branch branch : branchFinal) {
+                BranchRequestModel branchRequestModel = new BranchRequestModel();
+                branchRequestModel.setId(branch.getId());
+                branchRequestModel.setBranchName(branch.getBranchName());
+                branchRequestModels.add(branchRequestModel);
+            }
+            return new GenericResponse(true, "get items")
+                    .setProperty("branches", branchRequestModels);
 
         } catch (Exception e) {
             MastroLogUtils.error(this, e.getMessage(), e);
