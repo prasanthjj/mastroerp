@@ -61,6 +61,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductPartyRateRelationRepository productPartyRateRelationRepository;
 
     @Autowired
+    PartyRepository partyRepository;
+
+    @Autowired
     S3Service s3Services;
 
     /**
@@ -377,12 +380,17 @@ public class ProductServiceImpl implements ProductService {
                     .filter(relationData -> (partyId.equals(relationData.getParty().getId())))
                     .collect(Collectors.toSet());
             if (productPartyRateRelationsSet.size() == 0) {
-                ProductPartyRateRelation productPartyRateRelation = new ProductPartyRateRelation();
+
                 Party party = partyService.getPartyById(partyId);
-                productPartyRateRelation.setParty(party);
                 Product product = getProductById(productId);
+                ProductPartyRateRelation productPartyRateRelation = new ProductPartyRateRelation();
+                productPartyRateRelation.setParty(party);
                 productPartyRateRelation.setProduct(product);
                 productPartyRateRelationRepository.save(productPartyRateRelation);
+                Set<ProductPartyRateRelation> productPartyRateRelationSet = party.getProductPartyRateRelations();
+                productPartyRateRelationSet.add(productPartyRateRelation);
+                party.setProductPartyRateRelations(productPartyRateRelationSet);
+                partyRepository.save(party);
             }
 
         }
