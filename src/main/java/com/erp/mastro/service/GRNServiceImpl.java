@@ -7,6 +7,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.repository.GRNRepository;
 import com.erp.mastro.repository.IndentItemPartyGroupRepository;
+import com.erp.mastro.repository.PurchaseOrderRepository;
 import com.erp.mastro.repository.StockRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
@@ -43,6 +44,9 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
 
     /**
      * Method to get all grns
@@ -135,8 +139,24 @@ public class GRNServiceImpl implements GRNService {
             Set<GRNItems> grnItemsSet = saveOrUpdateGRNItems(grnRequestModel, grn);
             grn.setStatus("Draft");
             grn.setGrnItems(grnItemsSet);
-
             grnRepository.save(grn);
+
+            int count = grnItemsSet.size();
+            for (GRNItems grnItems : grnItemsSet) {
+                if (grnItems.getPending() == 0) {
+                    IndentItemPartyGroup indentItemPartyGroup = grnItems.getIndentItemPartyGroup();
+                    indentItemPartyGroup.setGrnPendingStatus(1);
+                    indentItemPartyGroupRepository.save(indentItemPartyGroup);
+                    count = count - 1;
+                }
+
+            }
+            if (count == 0) {
+                PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
+                purchaseOrder.setStatus("CLOSE");
+                purchaseOrderRepository.save(purchaseOrder);
+            }
+
         }
         return grn;
     }

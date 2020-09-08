@@ -52,4 +52,7 @@ public class IndentItemPartyGroup extends Auditable<String> {
             orphanRemoval = true)
     private Set<GRNItems> grnItems = new HashSet<>();
 
+    @Column(name = "grn_pending_status", nullable = false)
+    private int grnPendingStatus;
+
 }

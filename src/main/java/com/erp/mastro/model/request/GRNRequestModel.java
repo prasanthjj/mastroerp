@@ -32,7 +32,10 @@ public class GRNRequestModel {
     public GRNRequestModel(GRN grn) {
         if (grn != null) {
             this.id = grn.getId();
-            grn.getPurchaseOrder().getIndentItemPartyGroups().parallelStream().forEach(x -> this.grnpoItemsModels.add(new GRNRequestModel.GRNPOItemsModel(x)));
+            grn.getPurchaseOrder().getIndentItemPartyGroups()
+                    .parallelStream()
+                    .filter(grnIndentItemGroupData -> (1 != grnIndentItemGroupData.getGrnPendingStatus()))
+                    .forEach(x -> this.grnpoItemsModels.add(new GRNRequestModel.GRNPOItemsModel(x)));
 
         }
 
