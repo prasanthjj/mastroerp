@@ -28,6 +28,10 @@ public class SalesSlip {
     @Column(name = "vehicle_no")
     private String vehicleNo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "salesslip_salesslipitems", joinColumns = {@JoinColumn(name = "sales_slip_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "salesslip_items_id", referencedColumnName = "id")})

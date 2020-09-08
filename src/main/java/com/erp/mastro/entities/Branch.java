@@ -92,4 +92,9 @@ public class Branch {
             orphanRemoval = true)
     private Set<GRN> grnSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlip> salesSlips = new HashSet<>();
+
 }

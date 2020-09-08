@@ -101,7 +101,7 @@ text-align: right;
     padding: 0;
     position: absolute;
     text-shadow: none;
-    top: 100%;
+  /*  top: 100%;*/
     z-index: 1000;
     background-color: #fff;
     color: #212529;

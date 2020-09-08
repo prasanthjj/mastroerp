@@ -11,5 +11,15 @@ public class SalesSlipRequestModel {
     private Long id;
     private String transportMode;
     private String vehicleNo;
-    private Long partyId;
+    private Long selectedPartyInSalesSlip;
+
+    @Override
+    public String toString() {
+        return "SalesSlipRequestModel{" +
+                "id=" + id +
+                ", transportMode='" + transportMode + '\'' +
+                ", vehicleNo='" + vehicleNo + '\'' +
+                ", partyId=" + selectedPartyInSalesSlip +
+                '}';
+    }
 }
