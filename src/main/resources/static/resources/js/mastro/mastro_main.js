@@ -415,6 +415,85 @@ $("#calculationAmount").hide();
                         	})
                 		//dynamic click for item in party item relation autocomplete end
 
+                		// sales slip party auto-complete start
+                                     var salesPartyAutopopulateUrl = $('#partyAutopopulateInSalesSlipUrl').data('url');
+                                     $(".party_sales_dropdown").hide();
+                                     $(".salespartyautocomplete").keyup(function () {
+
+                                		var valssale = $(this).val().trim();
+                                		if (valssale.length > 2) {
+
+                                		$(".party_sales_dropdown ul").empty();
+                                		     $.ajax({
+                                              url:salesPartyAutopopulateUrl,
+                                               type: 'GET',
+                                               dataType : 'json',
+                                               data: {'searchTerm':valssale},
+                                               success: function(data){
+                                                 if(data.success) {
+
+                                                        $.each(data.data.partys, function(i){
+
+
+                                                                      $(".party_sales_dropdown ul").append('<li><a class="dynamicClick" data-salespartysid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
+                                                                        });
+                                                  }
+                                                   },
+                                               error: function(jqXHR, textStatus) {
+                                               alert('Error Occured');
+                                               }
+
+                                              });
+                                              $(".party_sales_dropdown").show();
+                                		}
+                                		else {
+                                        			$(".party_sales_dropdown").hide();
+                                        		}
+                                		});
+                                		//sales slip party autocomplete end
+
+                                		//dynamic click for party in partytype autocomplete in sales start
+                                                        			$(".party_sales_dropdown").on('click','a.dynamicClick',function (e) {
+                                                                		e.preventDefault();
+                                                                		var value = $(this).text();
+                                                                            	$(".salespartyautocomplete").val(value);
+                                                                            	var partyIdSale = $(this).data('salespartysid');
+
+                                                                        			$("#partyIdSalesInput").val($(e.target).data('salespartysid'));
+
+                                                                		$(".party_sales_dropdown").hide();
+                                                                		//ajax call for party details start
+                                                                		            $.ajax({
+                                                                                url: '/inventory/getPartyDetailsInSales',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'partyIdSale': partyIdSale },
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+
+                                                                                    $('#partycontactperson').text(data.data.contactperson);
+                                                                                     $('#city').text(data.data.city);
+                                                                                     $('#state').text(data.data.state);
+                                                                                     $('#country').text(data.data.country);
+                                                                                     $('#pincode').text(data.data.pincode);
+                                                                                     $('#phoneno').text(data.data.phoneno);
+                                                                                     $('#email').text(data.data.email);
+                                                                                     $('#delivarycontactperson').text(data.data.delivarycontactperson);
+                                                                                     $('#delivarydesignation').text(data.data.delivarydesignation);
+                                                                                     $('#delivaryaddress').text(data.data.delivaryaddress);
+                                                                                     $('#deliveryphoneno').text(data.data.deliveryphoneno);
+                                                                                     $('#deliveryemail').text(data.data.deliveryemail);
+                                                                                     $('#category').text(data.data.category);
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+                                                                            //ajax call for party details end
+                                                                	})
+                                                        		//dynamic click for party in partytype autocomplete in sales end
+
     // add item party rate table start
 
     $('.itemPartyRateTable').on('change', ':checkbox', function () {

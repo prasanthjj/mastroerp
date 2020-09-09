@@ -28,37 +28,31 @@ public class DeliveryChellanController {
 
     @RequestMapping("/inventory/getDeliveryChellan")
     public String getDeliveryChellan(Model model) {
-        /*Branch branch = branchService.getBranchById(branchId);
-        List<Branch> branchList = new ArrayList<>();
+        MastroLogUtils.info(DeliveryChellanController.class, "Going to get Delivery Chellan list : {}");
+        model.addAttribute("deliveryChellanForm", new DeliveryChellanRequestModel());
+        model.addAttribute("inventoryModule", "inventory");
+        model.addAttribute("deliveryChellanTab", "deliveryChellan");
+        return "views/dc_purchase_slip";
+    }
 
-        System.out.println("branch name:"+branch.getBranchName());
-        System.out.println("id"+branchId);
-        */
-
+    @GetMapping("/inventory/getSelectedDeliveryChellan")
+    public String getSelectedDeliveryChellan(Model model, HttpServletRequest req) {
+        MastroLogUtils.info(DeliveryChellanController.class, "Going to get Selected Delivery Chellan : {}");
+        Long branchId = Long.parseLong(req.getParameter("selectedBranchs"));
+        Branch branch = branchService.getBranchById(branchId);
 
         model.addAttribute("deliveryChellanForm", new DeliveryChellanRequestModel());
         model.addAttribute("inventoryModule", "inventory");
         model.addAttribute("deliveryChellanTab", "deliveryChellan");
-        //  model.addAttribute("deliveryChellanList", deliveryChellanList);
-/*
-        model.addAttribute("branchList", branchList);
-*/
-
-        return "views/dc_purchase_slip";
+        model.addAttribute("branchDetails", branch);
+            return "views/add_dc";
     }
 
     @GetMapping("/inventory/addDeliveryChellan")
-    public String addDeliveryChellan(Model model, @Valid Long branchId) {
+    public String addDeliveryChellan(Model model) {
         MastroLogUtils.info(DeliveryChellanController.class, "Going to add Delivery Chellan list : {}");
         try {
-            /*List<SalaryComponent> salaryComponentList = salaryComponentService.getAllSalaryComonents().stream()
-                    .filter(salarycomponentData -> (null != salarycomponentData))
-
-                    .sorted(Comparator.comparing(
-                            SalaryComponent::getId).reversed())
-                    .collect(Collectors.toList());*/
-            System.out.println("id:"+branchId);
-            List<Branch> branchList = new ArrayList<>();
+              List<Branch> branchList = new ArrayList<>();
             for (Branch branch : branchService.getAllBranch()) {
                 if (branch.getBranchDeleteStatus() != 1) {
                     branchList.add(branch);

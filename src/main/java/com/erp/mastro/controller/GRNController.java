@@ -109,7 +109,7 @@ public class GRNController {
     @ResponseBody
     public GenericResponse getPartyPo(@RequestParam("partyId") Long partyId) {
         try {
-            MastroLogUtils.info(GRNController.class, "Going to get party pos : {}");
+            MastroLogUtils.info(GRNController.class, "Going to get party pos : {}" + partyId);
             Party party = partyService.getPartyById(partyId);
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             Set<PurchaseOrder> purchaseOrderSet = party.getPurchaseOrders().stream()
@@ -235,6 +235,7 @@ public class GRNController {
             grn.setStatus("Approve");
             grn.setReason(reason);
             grnRepository.save(grn);
+            grnService.stockUpdationBasedOnGRN(grn);
             return new GenericResponse(true, "approve grn");
 
         } catch (Exception e) {

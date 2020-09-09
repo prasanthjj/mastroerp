@@ -96,12 +96,13 @@ text-align: right;
     box-shadow: 0 0 3px rgba(86, 96, 117, 0.7);
     float: left;
     font-size: 12px;
-    left: 0;
+    left: 15;
     list-style: none outside none;
     padding: 0;
+    padding-inline-start: 0px !important;
     position: absolute;
     text-shadow: none;
-    top: 100%;
+  /*  top: 100%;*/
     z-index: 1000;
     background-color: #fff;
     color: #212529;
@@ -124,14 +125,14 @@ text-align: right;
   .auto-dropdown-menu > li > a:hover {
     color: #fff;
     text-decoration: none;
-    background-color: #0094db;
+    background-color: #23c6c8;
   }
   .auto-dropdown-menu > .active > a,
   .auto-dropdown-menu > .active > a:focus,
   .auto-dropdown-menu > .active > a:hover {
     color: #fff;
     text-decoration: none;
-    background-color: #1ab394;
+    background-color: #23c6c8;
     outline: 0;
   }
   .middle-box{

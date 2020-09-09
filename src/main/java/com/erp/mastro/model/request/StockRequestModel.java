@@ -11,7 +11,7 @@ public class StockRequestModel {
 
     private Long id;
     private Long openingStock;
-    private Long currentStock;
+    private Double currentStock;
     private int reorderLevel;
     private int rejectedStock;
     private int reserveStock;

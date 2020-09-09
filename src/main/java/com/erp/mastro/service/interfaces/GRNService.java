@@ -16,4 +16,6 @@ public interface GRNService {
 
     List<GRN> getAllGRNs();
 
+    void stockUpdationBasedOnGRN(GRN grn);
+
 }

@@ -51,63 +51,69 @@
             <div class="row">
                 <div class="col-lg-12">
                 <div class="ibox ">
-                    <div class="ibox-title  ">
-                       
+                    <div class="ibox-title  mastro-ibox-title">
+                        <form id="getDeliveryChellanForm" th:action="@{/inventory/getSelectedDeliveryChellan}" method="get">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                        <input type="hidden" name="selectedBranchs" id="branchsIdInput">
+                                        <input type="text" class="form-control branchautocomplete" required
+                                               placeholder="Enter branch name">
+                                        <div class="branch_dropdown">
+                                            <ul class="auto-dropdown-menu">
+
+                                            </ul>
+                                        </div>
+                                </div>
+                                <div class="col-lg-2">
+                                        <button type="submit" class="btn btn-default">Select</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="ibox-tools">
                             
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <form id="addDeliveryChellanForm" th:action="@{/inventory/saveDeliveryChellan}" th:object="${deliveryChellanForm}"  name="deliveryChellanForm" method="post">
+                    <div class="ibox-content mastro-ibox-content">
 
-                        
+
                             <div class="row">
-                                
+
+
                                 <div class="col-lg-4">
-                                    <div class="form-group"><label>Select Branch</label>
-                                      <!--  <select class="form-control">
-                                            <option>Thrissur</option>
-                                            <option>Ernakulam</option>
-                                        </select>-->
-                                        <select class="form-control" name="branchId" id="branchId" required>
-                                            <option value="">Select Branch</option>
-                                            <option th:each="branchObj : ${branchList}"
-                                                   th:value="${branchObj.id}"
-                                                    th:text="${branchObj.branchName}">Select
-                                            </option>
-                                        </select>
+                                <div class="form-group">
+                                       <span th:if="${branchDetails!= null}">
+                                <div><label>Billing Address</label>
+                                    <p> <strong>Mastro Metals Pvt Ltd.</strong><br>
+                                        <span th:text="${branchDetails.branchAddress}"></span><br>
+                                     <span  th:text="${branchDetails.cityName}"></span> , <span th:text="${branchDetails.stateName}"></span>,
+                                    <span th:text="${branchDetails.countryName}"></span><br>
+                                        <span>Pincode : <span th:text="${branchDetails.pinCode}"></span></span><br>
+                                        <span>Phone no : <span th:text="${branchDetails.phoneNo}"></span></span><br>
+                                        <span>Email ID : <span th:text="${branchDetails.emailId}"></span></span>
+                                    </p>
+                                </div>
+                                </span>
                                     </div>
+
                                 </div>
                                 <div class="col-lg-4"> 
-                                    <div class="form-group"><label>Delivery Address</label>
-                                        <address>
-                                            <strong>Mastro Metals Pvt Ltd.</strong><br>
-                                             TMC. 1. 203 , 2nd floor
-                                            106 Jorg Avenu, 600/10,<br>
-                                            compass point,<br>Chiravakku, NH Taliparamba <br>
-                                            <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204
-                                        </address>
-                                    </div>
-                                    <div class="form-group"><label>Pin Code :</label>
-                                        680502
-                                    </div>
+                                    <div class="form-group">
+                                        <span th:if="${branchDetails!= null}">
+                                <div><label>Delivery Address</label>
+                                    <p> <strong>Mastro Metals Pvt Ltd.</strong><br>
+                                        <span th:text="${branchDetails.branchAddress}"></span><br>
+                                     <span  th:text="${branchDetails.cityName}"></span> , <span th:text="${branchDetails.stateName}"></span>,
+                                    <span th:text="${branchDetails.countryName}"></span><br>
+                                        <span>Pincode : <span th:text="${branchDetails.pinCode}"></span></span><br>
+                                        <span>Phone no : <span th:text="${branchDetails.phoneNo}"></span></span><br>
+                                        <span>Email ID : <span th:text="${branchDetails.emailId}"></span></span>
+                                    </p>
                                 </div>
-                                <div class="col-lg-4"> 
-                                    <div class="form-group"><label>Billing Address</label>
-                                        <address>
-                                            <strong>Mastro Metals Pvt Ltd.</strong><br>
-                                             TMC. 1. 203 , 2nd floor
-                                            106 Jorg Avenu, 600/10,<br>
-                                            compass point,<br>Chiravakku, NH Taliparamba <br>
-                                            <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204
-                                        </address>
-                                    </div>
-                                    <div class="form-group"><label>Pin Code :</label>
-                                        680502
+                                </span>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+
                         <div class="ibox">
                             <div class="ibox-title  ">
                                 <h3>Item Particulars</h3>
@@ -115,13 +121,26 @@
                                     
                                 </div>
                             </div>
-                            <form>
+                            <!--<form id="addDeliveryChellanForm" th:action="@{/inventory/saveDeliveryChellan}" th:object="${deliveryChellanForm}"  name="deliveryChellanForm" method="post">-->
+
+                            <form id="dcgetDeliveryChellanForm" th:action="@{/inventory/getSelectedDeliveryChellan}" method="get">
 
                             <div class="ibox-content">
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                       <!-- <div class="col-lg-4">
                                             <div class="form-group"><label>Item Name</label>
                                                 <input type="text" class="form-control typeahead_1" />
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group">
+                                            <label>Item Name</label>
+                                            <input type="hidden" name="productId" id="itemIdInput">
+                                            <input type="text" class="form-control indentitemautocmoplete"
+                                                   placeholder="Enter Item Name" required>
+                                            <div class="indent_item_dropdown">
+                                                <ul class="auto-dropdown-menu">
+
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
@@ -208,7 +227,11 @@
       
     </div>
     <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
-   <!-- Mainly scripts -->
+    <span id="branchAutopopulateUrl" th:data-url="@{/autopopulate/branch}"></span>
+    <span id="indentItemAutopopulateUrl" th:data-url="@{/autopopulate/items/indent}"></span>
+
+
+    <!-- Mainly scripts -->
    <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
    <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
    <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
@@ -225,5 +248,105 @@
 
  <!-- Sweet alert -->
  <script src="../resources/js/plugins/sweetalert/sweetalert.min.js" th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <script>
+       $(document).ready(function(){
+
+        // Branch auto-complete start
+     var branchAutopopulateUrl = $('#branchAutopopulateUrl').data('url');
+     $(".branch_dropdown").hide();
+     $(".branchautocomplete").keyup(function () {
+
+        var val = $(this).val().trim();
+        if (val.length > 1) {
+        $(".branch_dropdown ul").empty();
+             $.ajax({
+              url:branchAutopopulateUrl,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val},
+               success: function(data){
+                 if(data.success) {
+
+                        $.each(data.data.branches, function(i){
+
+                                      $(".branch_dropdown ul").append('<li><a class="dynamicClick" data-branchsid="'+this['id'] +'" href="#">'+ this['branchName'] +'</a></li>');
+                                        });
+
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".branch_dropdown").show();
+        }
+        else {
+                    $(".branch_dropdown").hide();
+                }
+        });
+        //Branch autocomplete end
+
+        //dynamic click for item in item autocomplete start
+            $(".branch_dropdown").on('click','a.dynamicClick',function (e) {
+                e.preventDefault();
+                var value = $(this).text();
+             $(".branchautocomplete").val(value);
+                            $("#branchsIdInput").val($(e.target).data('branchsid'));
+                $(".branch_dropdown").hide();
+            })
+        //dynamic click for item in item autocomplete end
+
+  var indentItemAutopopulateUrl = $('#indentItemAutopopulateUrl').data('url');
+     $(".indent_item_dropdown").hide();
+     $(".indentitemautocmoplete").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		$(".indent_item_dropdown ul").empty();
+		     $.ajax({
+              url:indentItemAutopopulateUrl,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val},
+               success: function(data){
+                 if(data.success) {
+
+                        $.each(data.data.products, function(i){
+
+                                     $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
+                                      $(".indent_item_dropdown ul").append('<li><a class="dynamicClick" data-indentitemsid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                        });
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".indent_item_dropdown").show();
+		}
+		else {
+        			$(".indent_item_dropdown").hide();
+        		}
+		});
+
+
+
+			$(".indent_item_dropdown").on('click','a.dynamicClick',function (e) {
+        		e.preventDefault();
+        		var value = $(this).text();
+
+
+                			$(".indentitemautocmoplete").val(value);
+                			$("#itemIdInput").val($(e.target).data('indentitemsid'));
+                			$(".indent_item_dropdown").hide();
+
+
+              });
+
+       });
+
+</script>
 </body>
 </html>

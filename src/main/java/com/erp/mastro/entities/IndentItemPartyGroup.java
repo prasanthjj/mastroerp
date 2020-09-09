@@ -40,7 +40,7 @@ public class IndentItemPartyGroup extends Auditable<String> {
     @JoinColumn(name = "indent_id")
     private Indent indent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "po_id")
     private PurchaseOrder purchaseOrder;
 
@@ -51,5 +51,8 @@ public class IndentItemPartyGroup extends Auditable<String> {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<GRNItems> grnItems = new HashSet<>();
+
+    @Column(name = "grn_pending_status", nullable = false)
+    private int grnPendingStatus;
 
 }

@@ -7,6 +7,8 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.repository.GRNRepository;
 import com.erp.mastro.repository.IndentItemPartyGroupRepository;
+import com.erp.mastro.repository.PurchaseOrderRepository;
+import com.erp.mastro.repository.StockRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
@@ -39,6 +41,12 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private CalculateService calculateService;
+
+    @Autowired
+    private StockRepository stockRepository;
+
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
 
     /**
      * Method to get all grns
@@ -131,8 +139,24 @@ public class GRNServiceImpl implements GRNService {
             Set<GRNItems> grnItemsSet = saveOrUpdateGRNItems(grnRequestModel, grn);
             grn.setStatus("Draft");
             grn.setGrnItems(grnItemsSet);
-
             grnRepository.save(grn);
+
+            int count = grnItemsSet.size();
+            for (GRNItems grnItems : grnItemsSet) {
+                if (grnItems.getPending() == 0) {
+                    IndentItemPartyGroup indentItemPartyGroup = grnItems.getIndentItemPartyGroup();
+                    indentItemPartyGroup.setGrnPendingStatus(1);
+                    indentItemPartyGroupRepository.save(indentItemPartyGroup);
+                    count = count - 1;
+                }
+
+            }
+            if (count == 0) {
+                PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
+                purchaseOrder.setStatus("CLOSE");
+                purchaseOrderRepository.save(purchaseOrder);
+            }
+
         }
         return grn;
     }
@@ -157,7 +181,6 @@ public class GRNServiceImpl implements GRNService {
                 if (!containsInList(x.getId(), grn.getGrnItems().stream().filter(grndata -> (null != grndata)).map(y -> y.getId()).collect(Collectors.toList()))) {
                     grnItems = new GRNItems();
                     grnItems.setAccepted(x.getAccepted());
-                    grnItems.setPending(x.getPending());
                     grnItems.setReceived(x.getReceived());
                     grnItems.setShortage(x.getShortage());
                     grnItems.setRejected(x.getRejected());
@@ -178,13 +201,46 @@ public class GRNServiceImpl implements GRNService {
                     }
                     grnItems.setIgstRate(productPartyRateRelation.getProduct().getHsn().getIgst());
                     Double total = 0d;
-                    total = calculateService.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted(), productPartyRateRelation.getPartyPriceList().getDiscount());
+                    Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
+                    ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .findFirst().get();
+                    total = calculateService.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted() * productUOMPurchase.getConvertionFactor(), productPartyRateRelation.getPartyPriceList().getDiscount());
                     grnItems.setTotalPrice(total);
                     grnItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(total, productPartyRateRelation.getProduct().getHsn()));
                     grnItems.setGrn(grn);
+                    Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
+                            .filter(grnData -> (null != grnData))
+                            .filter(grnData -> (!grnData.getStatus().equals("Discard")))
+                            .collect(Collectors.toSet());
+
+                    if (grns.isEmpty() == false) {
+                        Set<GRNItems> grnItemsSets = new HashSet<>();
+                        for (GRN grnn : grns) {
+                            if (grnn.getGrnItems().isEmpty() == false) {
+                                GRNItems grnItem = grnn.getGrnItems().stream()
+                                        .filter(grnItemData -> (null != grnItemData))
+                                        .filter(grnItemData -> (grnItemData.getIndentItemPartyGroup().getId().equals(indentItemPartyGroup.getId())))
+                                        .findFirst().get();
+
+                                grnItemsSets.add(grnItem);
+                            }
+                        }
+                        if (grnItemsSets.isEmpty() == false) {
+                            Double totalAccepted = 0.0d;
+                            for (GRNItems grnItems1s : grnItemsSets) {
+                                totalAccepted = totalAccepted + grnItems1s.getAccepted();
+                            }
+                            grnItems.setPending(indentItemPartyGroup.getQuantity() - (totalAccepted + x.getAccepted()));
+                        } else {
+                            grnItems.setPending(indentItemPartyGroup.getQuantity() - (x.getAccepted()));
+                        }
+                    }
                     grnItemsSet.add(grnItems);
                 }
             });
@@ -200,6 +256,30 @@ public class GRNServiceImpl implements GRNService {
     private boolean containsInList(Long id, Collection<Long> ids) {
         return id != null
                 && ids.stream().anyMatch(x -> x.equals(id));
+    }
+
+    /**
+     * Method to updation in stock based on grn approve
+     *
+     * @param grn
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void stockUpdationBasedOnGRN(GRN grn) {
+
+        MastroLogUtils.info(GRNService.class, "Going to stockUpdationBasedOnGRN  {}" + grn.getId());
+        Set<GRNItems> grnItemsSet = grn.getGrnItems();
+        for (GRNItems grnItems : grnItemsSet) {
+            Stock stock = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock();
+            Uom purchaseUOM = grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+            ProductUOM productUOMPurchase = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                    .filter(productuomData -> (null != productuomData))
+                    .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                    .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                    .findFirst().get();
+            stock.setCurrentStock(stock.getCurrentStock() + grnItems.getAccepted() * productUOMPurchase.getConvertionFactor());
+            stockRepository.save(stock);
+        }
+
     }
 
 }

@@ -67,8 +67,8 @@
                                                 th:data-grnids="${grnDetails.id}">Approve</button>
                                         <button class="btn btn-primary dim grnReview"
                                                 th:data-grnids="${grnDetails.id}">Review</button>
-                                        <button class="btn btn-danger dim grnDiscard"
-                                                th:data-grnids="${grnDetails.id}">Discard</button>
+                                        <!--  <button class="btn btn-danger dim grnDiscard"
+                                                  th:data-grnids="${grnDetails.id}">Discard</button>-->
 
                                     </p>
                                 </div>
@@ -155,9 +155,13 @@
                                             <td th:text="${grnPreview.quantityDc}">26.00</td>
                                             <td th:text="${grnPreview.received}">5.98</td>
                                             <td th:text="${grnPreview.shortage}">31,98</td>
-                                            <td th:text="${grnPreview.accepted}">31,98</td>
+                                            <td><span th:text="${grnPreview.accepted}">31,98</span>/<span
+                                                    th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.purchaseUOM.UOM}">kg</span>
+                                            </td>
                                             <td th:text="${grnPreview.rejected}">31,98</td>
-                                            <td th:text="${grnPreview.indentItemPartyGroup.rate}">31,98</td>
+                                            <td><span th:text="${grnPreview.indentItemPartyGroup.rate}">31,98</span>/
+                                                <span th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.uom.UOM}">31,98</span>
+                                            </td>
                                             <td th:text="${grnPreview.discount}">31,98</td>
                                             <td th:text="${grnPreview.totalPrice}">31,98</td>
                                             <td th:text="${grnPreview.cgstRate}">31,98</td>

@@ -4319,7 +4319,7 @@ samp {
   width: 300px !important;
   z-index: 1009;
   bottom: 0;
-  right: -260px;
+  right: -300px;
 }
 #right-sidebar.sidebar-open {
   right: 0;

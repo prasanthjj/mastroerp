@@ -16,10 +16,20 @@ public class DeliveryChellan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+/*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "delivery_branch", joinColumns = {@JoinColumn(name = "delivery_chellan_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "branch_id", referencedColumnName = "id")})
+    private Branch branch;*/
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
     private Branch branch;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "indent_id")
+    private Indent indent;
+
+
 
 }

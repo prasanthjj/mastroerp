@@ -55,60 +55,152 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-content mastro-step-inbox-content">
-                            <form action="">
+                            <form th:action="@{/inventory/createSalesSlipBasic}"
+                                  th:object="${salesSlipForm}"
+                                  name="salesSlipForm" method="post">
+                                <span th:if="${salesSlipDetails== null}">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group"><label>Party Name</label>
-                                            <select class="form-control">
-                                                <option>Mastro Metals Pvt Ltd</option>
-                                                <option>Cash Customer</option>
-                                            </select>
+                                            <input type="hidden" name="selectedPartyInSalesSlip" id="partyIdSalesInput">
+                                            <input type="text" class="form-control salespartyautocomplete"
+                                                   placeholder="Select party"
+                                                   required>
+                                            <i class="icon-triangle-down"></i>
+                                            <div class="party_sales_dropdown">
+                                                <ul class="auto-dropdown-menu">
+
+                                                </ul>
+                                            </div>
                                         </div>
 
                                         <div class="form-group"><label>Category</label>
-                                            <h4>A</h4>
+                                            <h4>
+                                                <span id="category"></span>
+                                            </h4>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered ">
                                                 <tr>
                                                     <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
                                                     <td>
-                                                        <input type="text" class="form-control"/>
+                                                        <input type="text" class="form-control" name="transportMode"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="master-blue-bg txt-white">vehicle No</td>
                                                     <td>
-                                                        <input type="text" class="form-control"/>
+                                                        <input type="text" class="form-control" name="vehicleNo"/>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                         <div class="form-group text-right">
-                                            <button class="btn btn-primary" type="button">Select</button>
+                                            <button class="btn btn-primary" type="submit">Select</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group"><label>Delivery Address</label>
-                                            <textarea class="form-control" rows="5" placeholder=""> Mastro Metals Pvt Ltd. TMC. 1. 203 , 2nd floor106 Jorg Avenu, 600/10,compass point, Chiravakku, NH Taliparamba Phone: (+91) 9745 981 204, Pin Code :680502
-                                        </textarea>
+                                            <p> <strong id="delivarycontactperson"></strong><br>
+                                                <span id="delivarydesignation"></span><br>
+                                                <span id="delivaryaddress"></span><br>
+                                                <span>Phone no : <span id="deliveryphoneno"></span></span><br>
+                                                <span>Email ID : <span id="deliveryemail"></span></span>
+                                            </p>
                                         </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+
+           <div><label>Billing Address</label>
+                  <p> <strong id="partycontactperson"></strong><br>
+        <span id="city"></span><br>
+     <span id="state"></span> ,
+    <span id="country"></span><br>
+        <span>Pincode : <span id="pincode"></span></span><br>
+        <span>Phone no : <span id="phoneno"></span></span><br>
+        <span>Email ID : <span id="email"></span></span>
+    </p>
+</div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </span>
+                                <span th:unless="${salesSlipDetails== null}">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Party Name</label>
+
+                                         <h4>
+                                               <span th:text="${salesSlipDetails.party.partyName}"></span>
+                                         </h4>
+                                        </div>
+
+                                        <div class="form-group"><label>Category</label>
+                                            <h4>
+                                                <span th:text="${salesSlipDetails.party.categoryType}"></span>
+                                            </h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
+                                                    <td>
+                                                        <span class="form-control"
+                                                              th:text="${salesSlipDetails.transportMode}"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white">vehicle No</td>
+                                                    <td>
+                                                       <span class="form-control"
+                                                             th:text="${salesSlipDetails.vehicleNo}"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!-- <div class="form-group text-right">
+                                             <button class="btn btn-primary" type="submit">Select</button>
+                                         </div>-->
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="form-group"><label>Billing Address</label>
-                                            <address>
-                                                <strong>Mastro Metals Pvt Ltd.</strong><br>
-                                                TMC. 1. 203 , 2nd floor
-                                                106 Jorg Avenu, 600/10,<br>
-                                                compass point,<br>Chiravakku, NH Taliparamba <br>
-                                                <abbr title="Phone">Phone:</abbr> (+91) 9745 981 204
-                                            </address>
-                                        </div>
-                                        <div class="form-group"><label>Pin Code :</label>
-                                            680502
+                                        <div class="form-group"><label>Delivery Address</label>
+                                            <p> <strong th:text="${contactDetails.contactPersonName}"></strong><br>
+                                                <span th:text="${contactDetails.designation}"></span><br>
+                                                <span th:text="${contactDetails.address}"></span><br>
+                                                <span>Phone no : <span
+                                                        th:text="${contactDetails.mobileNo}"></span></span><br>
+                                                <span>Email ID : <span
+                                                        th:text="${contactDetails.emailId}"></span></span>
+                                            </p>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+
+                                            <div><label>Billing Address</label>
+                                                <p> <strong th:text="${billingDetails.contactPersonName}"></strong><br>
+                                                    <span th:text="${billingDetails.city}"></span><br>
+                                                    <span th:text="${billingDetails.state}"></span> ,
+                                                    <span th:text="${billingDetails.country}"></span><br>
+                                                    <span>Pincode : <span
+                                                            th:text="${billingDetails.pinCode}"></span></span><br>
+                                                    <span>Phone no : <span
+                                                            th:text="${billingDetails.telephoneNo}"></span></span><br>
+                                                    <span>Email ID : <span
+                                                            th:text="${billingDetails.emailId}"></span></span>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
+                        </span>
                             </form>
                             <div class="ibox">
                                 <div class="ibox-title  ">
@@ -475,6 +567,7 @@
 </div>
 <!-- Mainly scripts -->
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<span id="partyAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/party}"></span>
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
@@ -482,8 +575,11 @@
         th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 <script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
         th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <!-- Custom and plugin javascript -->
 <script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 <script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
 <!-- jQuery UI -->
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"

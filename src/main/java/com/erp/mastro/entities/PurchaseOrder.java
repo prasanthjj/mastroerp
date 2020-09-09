@@ -50,6 +50,7 @@ public class PurchaseOrder extends Auditable<String> {
     private String reason;
 
     @OneToMany(mappedBy = "purchaseOrder",
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<GRN> grnSet = new HashSet<>();
