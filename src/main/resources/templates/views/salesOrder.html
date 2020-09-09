@@ -76,18 +76,19 @@
                                         <th>Sales Order No.</th>
                                         <th>Sales Order Date</th>
                                         <th>Party Name</th>
-                                        <th>HSN Code</th>
+                                        <!--<th>HSN Code</th>-->
                                         <th>Status</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>1</td>
-                                        <td>SO-060820</td>
-                                        <td>24/06/2020</td>
-                                        <td></td>
-                                        <td>100</td>
+                                    <span th:if="${salesOrderList!= null}">
+                        <tr class="gradeX" th:each="salesObj,iterator:${salesOrderList}">
+                        <td th:text="${iterator.index+1}">1</td>
+                        <td th:text="${salesObj.id}">SO-060820</td>
+                        <td>----</td>
+                        <td th:text="${salesObj.party.partyName}"></td>
+                            <!-- <td th:text="${salesObj.salesOrderProductSet.product.hsn.hsnCode}">100</td>-->
                                         <td><a href="#" data-toggle="modal" data-target="#poDraft"><b>Draft</b></a></td>
                                         <td class="center">
                                             <div class="btn-group">
@@ -107,6 +108,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    </span>
                                     </tbody>
                                     <tfoot>
 

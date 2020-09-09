@@ -31,6 +31,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CalculateService calculateService;
+
     /**
      * method to get all salesorder
      *
@@ -113,11 +116,49 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         SalesOrderProduct salesOrderProduct = new SalesOrderProduct();
         salesOrderProduct.setProduct(product);
         salesOrderProduct.setQuantity(quantity);
+        Double taxableValue = 0d;
+        taxableValue = calculateService.calculateTaxableValueInSo(salesOrderProduct.getQuantity(), salesOrderProduct.getProduct());
+        salesOrderProduct.setTaxableValue(taxableValue);
+        Double totalCgstAmount = 0d;
+        totalCgstAmount = calculateService.calculateTotalPriceCgstAmount(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn());
+        salesOrderProduct.setCgstAmount(totalCgstAmount);
+        Double totalSgstAmount = 0d;
+        totalSgstAmount = calculateService.calculateTotalPriceSgstAmount(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn());
+        salesOrderProduct.setSgstAmount(totalSgstAmount);
+        Double totalPrice = 0d;
+        totalPrice = calculateService.totalPriceForSO(salesOrderProduct.getTaxableValue(), salesOrderProduct.getCgstAmount(), salesOrderProduct.getSgstAmount());
+        salesOrderProduct.setTotalPrice(totalPrice);
+
         salesOrderProductSet.add(salesOrderProduct);
 
         salesOrderRepository.save(salesOrder1);
         MastroLogUtils.info(SalesOrderService.class, "Save " + salesOrder1.getId() + " succesfully.");
         return salesOrderProduct;
+    }
+
+    /**
+     * Method to generate Sales order
+     *
+     * @param salesOrderRequestModel
+     * @param salesOrder
+     * @param grandTotal
+     * @throws ModelNotFoundException
+     */
+
+    @Transactional(rollbackOn = {Exception.class})
+    public void generateSalesOrder(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Double grandTotal) throws ModelNotFoundException {
+        MastroLogUtils.info(SalesOrderService.class, "Going to createSalesOrder" + salesOrder.getId());
+        SalesOrder salesOrder1 = salesOrder;
+        if (salesOrderRequestModel == null) {
+            throw new ModelNotFoundException("SalesOrderRequestModel model is empty");
+        } else {
+            salesOrder1.setSpecialInstructions(salesOrderRequestModel.getSpecialInstructions());
+            salesOrder1.setRemarks(salesOrderRequestModel.getRemarks());
+            salesOrder1.setGrandTotal(grandTotal);
+            salesOrderRepository.save(salesOrder1);
+            MastroLogUtils.info(SalesOrderService.class, "create sales order succesfully.");
+        }
+
     }
 
 }

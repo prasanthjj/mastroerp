@@ -16,6 +16,9 @@ public class SalesOrderRequestModel {
     private Long id;
     private Long partyId;
     private List<SalesOrderRequestModel.SalesOrderProductModel> salesOrderProductModels = new ArrayList<>();
+    private String specialInstructions;
+    private String remarks;
+    private Double grandTotal;
 
     public SalesOrderRequestModel() {
 
@@ -25,6 +28,8 @@ public class SalesOrderRequestModel {
         if (salesOrder != null) {
             this.id = salesOrder.getId();
             this.partyId = salesOrder.getParty().getId();
+            this.specialInstructions = salesOrder.getSpecialInstructions();
+            this.remarks = salesOrder.getRemarks();
 
             salesOrder.getSalesOrderProductSet().parallelStream().forEach(x -> this.salesOrderProductModels.add(new SalesOrderRequestModel.SalesOrderProductModel(x)));
         }
@@ -48,6 +53,7 @@ public class SalesOrderRequestModel {
                 this.id = salesOrderProduct.getId();
                 this.quantity = salesOrderProduct.getQuantity();
                 this.productId = salesOrderProduct.getId();
+
             }
 
         }

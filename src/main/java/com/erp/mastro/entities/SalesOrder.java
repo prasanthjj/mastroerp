@@ -22,6 +22,15 @@ public class SalesOrder extends Auditable<String> {
     @JoinColumn(name = "party_id")
     private Party party;
 
+    @Column(name = "special_instructions")
+    private String specialInstructions;
+
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "grand_total")
+    private Double grandTotal;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "salesorder_salesorderproduct", joinColumns = {@JoinColumn(name = "sales_order_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sales_order_product_id", referencedColumnName = "id")})

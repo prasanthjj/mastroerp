@@ -20,9 +20,21 @@ public class SalesOrderProduct {
     @Column(name = "quantity")
     private Double quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "taxable_value")
+    private Double taxableValue;
+
+    @Column(name = "total_price")
+    private Double totalPrice;
+
+    @Column(name = "sgst_amount")
+    private Double sgstAmount;
+
+    @Column(name = "cgst_amount")
+    private Double cgstAmount;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "salesorder_salesorderproduct", joinColumns = {@JoinColumn(name = "sales_order_product_id", referencedColumnName = "id")}
