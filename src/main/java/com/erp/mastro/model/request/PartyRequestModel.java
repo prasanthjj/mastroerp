@@ -207,6 +207,29 @@ public class PartyRequestModel {
 
     }
 
+    @Override
+    public String toString() {
+        return "PartyRequestModel{" +
+                "id=" + id +
+                ", partyType='" + partyType + '\'' +
+                ", partyCode='" + partyCode + '\'' +
+                ", partyName='" + partyName + '\'' +
+                ", status='" + status + '\'' +
+                ",paymentTerms'" + paymentTerms + '\'' +
+                ",categoryType'" + categoryType + '\'' +
+                ",partyDate'" + partyDate + '\'' +
+                ",oldReferCode'" + oldReferCode + '\'' +
+                ",relationshipMananger'" + relationshipMananger + '\'' +
+                ",contactDetailsModelList'" + contactDetailsModelList + '\'' +
+                ",billingDetailsModelList'" + billingDetailsModelList + '\'' +
+                ",bankDetailsModelList'" + bankDetailsModelList + '\'' +
+                ",creditDetailsModelList'" + creditDetailsModelList + '\'' +
+                ",industryid'" + industryid + '\'' +
+                ",partysname'" + partysname + '\'' +
+                '}';
+
+    }
+
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class partyPoModel {

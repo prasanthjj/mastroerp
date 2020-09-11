@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.HSN;
+import com.erp.mastro.entities.Product;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,4 +39,25 @@ public class CalculateService {
         }
         return Math.round(totalCess * 100.0) / 100.0;
     }
+
+    public Double calculateTaxableValueInSo(Double quantity, Product product) {
+        Double taxableValue = quantity * product.getBasePrice();
+        return Math.round(taxableValue * 100.0) / 100.0;
+    }
+
+    public Double calculateCgstAmountForSO(Double taxableValue, HSN hsn) {
+        Double totalCgstAmount = taxableValue * (hsn.getCgst() / 100);
+        return Math.round(totalCgstAmount * 100.0) / 100.0;
+    }
+
+    public Double calculateSgstAmountForSO(Double taxableValue, HSN hsn) {
+        Double totalSgstAmount = taxableValue * (hsn.getSgst() / 100);
+        return Math.round(totalSgstAmount * 100.0) / 100.0;
+    }
+
+    public Double totalPriceForSO(Double taxableValue, Double cgstAmount, Double sgstAmount) {
+        Double totalPrice = taxableValue + cgstAmount + sgstAmount;
+        return Math.round(totalPrice * 100.0) / 100.0;
+    }
+
 }

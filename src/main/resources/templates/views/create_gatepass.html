@@ -74,9 +74,10 @@
                                             Movement Type (In/Out)</label>
 
                                             <div class="col-sm-6">
-                                                <div class="m-t-md">
-                                                    <label><input type="radio" th:value=${"Inword"}
-                                                                  name="vehicleMovement"> <i></i>Inword </label>
+                                                <div class="m-t-sm">
+                                                    <label class="m-r-sm"><input type="radio" th:value=${"Inword"}
+                                                                                 name="vehicleMovement"> <i></i>Inword
+                                                    </label>
                                                     <label> <input type="radio" checked th:value=${"Outword"}
                                                                    name="vehicleMovement"> <i></i>Outword</label>
                                                 </div>
@@ -84,10 +85,10 @@
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Vehicle
-                                            No.</label>
+                                            No. <i class="fa fa-asterisk "></i> </label>
 
                                             <div class="col-sm-8"><input type="text" class="form-control"
-                                                                         th:field="*{vehicleNo}"></div>
+                                                                         th:field="*{vehicleNo}" required></div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Transport
@@ -134,12 +135,13 @@
                                         <div class="hr-line-dashed"></div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Empty/With
-                                            Material <i class="fa fa-asterisk "></i></label>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Material
+                                            Type <i class="fa fa-asterisk "></i></label>
 
                                             <div class="col-sm-8">
-                                                <div class="m-t-md">
-                                                    <label><input type="radio" th:value=${"Empty"} name="emptyMatrial">
+                                                <div class="m-t-sm">
+                                                    <label class="m-r-sm"><input type="radio" th:value=${"Empty"}
+                                                                                 name="emptyMatrial">
                                                         <i></i>Empty </label>
                                                     <label> <input type="radio" checked th:value=${"With_Matrial"}
                                                                    name="emptyMatrial"> <i></i>With Material
@@ -154,7 +156,8 @@
                                                 <div class="input-group date">
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span>
-                                                    <input type="text" name="sEntryDate" class="form-control" value="">
+                                                    <input type="text" name="sEntryDate" class="form-control" value=""
+                                                           required>
                                                 </div>
                                             </div>
                                         </div>

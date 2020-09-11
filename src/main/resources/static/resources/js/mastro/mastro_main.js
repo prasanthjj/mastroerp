@@ -1474,7 +1474,7 @@ $("#calculationAmount").hide();
       data: { 'grnItemsId': grnItemsId,'partyId':partySalesIds,'productSalesIds':productSalesIds,'rateValue':rateValue,'qtyEnter':qtyEnter,'salesUOMId':saleuom,'salesslipid':saleslipId },
 
       success: function(data){
-      alert("ok");
+
       var salId=data.data.saleslipId;
   var redirectionUrl= "/inventory/getsSalesSlipBasic?salesSlipId="+salId;
     window.location.href = redirectionUrl;

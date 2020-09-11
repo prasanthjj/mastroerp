@@ -8,7 +8,9 @@ import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.repository.BranchRepository;
 import com.erp.mastro.repository.IndustryTypeRepository;
 import com.erp.mastro.repository.PartyRepository;
+import com.erp.mastro.repository.PriceListRepository;
 import com.erp.mastro.service.interfaces.PartyService;
+import com.erp.mastro.service.interfaces.PriceListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ public class PartyServiceImpl implements PartyService {
 
     @Autowired
     private BranchRepository branchRepository;
+
+    @Autowired
+    private PriceListRepository priceListRepository;
+
+    @Autowired
+    private PriceListService priceListService;
 
     public List<Party> getAllPartys() {
         List<Party> partyList = new ArrayList<Party>();
@@ -86,6 +94,22 @@ public class PartyServiceImpl implements PartyService {
     }
 
     /**
+     * Method to get Pricelist By Id
+     *
+     * @param id
+     * @return
+     */
+
+    public PriceList getPriceListById(Long id) {
+        PriceList priceList = new PriceList();
+        if (id != null) {
+            MastroLogUtils.info(PartyService.class, "Going to get Pricelist by Id : {}" + id);
+            priceList = priceListRepository.findById(id).get();
+        }
+        return priceList;
+    }
+
+    /**
      * save and edit party
      *
      * @param partyRequestModel
@@ -115,6 +139,33 @@ public class PartyServiceImpl implements PartyService {
                 party.setEnabled(true);
                 if (partyRequestModel.getIndustryid() != null) {
                     party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("A")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("A")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("B")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("B")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("C")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("C")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
                 }
                 Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
                 party.setContactDetails(contactDetails);
@@ -151,6 +202,33 @@ public class PartyServiceImpl implements PartyService {
                 party.setEnabled(true);
                 if (partyRequestModel.getIndustryid() != null) {
                     party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("A")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("A")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("B")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("B")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
+                }
+                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("C")) {
+                    PriceList priceList = priceListService.getAllPriceList().stream()
+                            .filter(priceListData -> (null != priceListData))
+                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                            .filter(priceListData -> (priceListData.getCategoryType().equals("C")))
+                            .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                            .findFirst().get();
+                    party.setPriceList(priceList);
                 }
                 Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
                 party.setContactDetails(contactDetails);
