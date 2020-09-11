@@ -109,6 +109,22 @@ public class GRNRequestModel {
 
     }
 
+    //for salesslip grnitem view
+    @Setter(AccessLevel.PUBLIC)
+    @Getter(AccessLevel.PUBLIC)
+    public static class GRNItemModel {
+
+        private Long id;
+        private Product itemId;
+        private Long itemPartyGroupId;
+        private Double acceptedqty;
+        private String purchaseuom;
+        private String itemname;
+        private Long grnid;
+        private Double acceptedqtyinsalesuom;
+        private String salesuom;
+
+    }
     @Override
     public String toString() {
         return "GRNRequestModel{" +

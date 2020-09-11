@@ -229,6 +229,7 @@ public class PartyRequestModel {
                 '}';
 
     }
+
     @Setter(AccessLevel.PUBLIC)
     @Getter(AccessLevel.PUBLIC)
     public static class partyPoModel {

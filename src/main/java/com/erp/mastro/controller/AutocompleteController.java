@@ -275,4 +275,85 @@ public class AutocompleteController {
         }
     }
 
+    /**
+     * Method to get product in sales slip
+     *
+     * @param searchTerm
+     * @param partyId
+     * @return products
+     */
+    @RequestMapping(value = "/items/salesslip", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse productsInSalesSlip(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyId") Long partyId) {
+        try {
+            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
+            List<Product> productsFinal = new ArrayList<>();
+            List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
+            productsFinal = products.stream()
+                    .filter(productData -> (null != productData))
+                    .filter(productData -> (true == productData.isEnabled()))
+                    .collect(Collectors.toList());
+
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            Set<Product> productSet = new HashSet<>();
+            for (Product product : productsFinal) {
+                Set<Stock> stocksSet = indentService.getAllStocks().stream()
+                        .filter(stockData -> (null != stockData))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (product.getId().equals(stockData.getProduct().getId())))
+                        .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                        /* .filter(stockData -> (0 != stockData.getCurrentStock()))*/
+                        .collect(Collectors.toSet());
+                if (stocksSet.isEmpty() == false) {
+                    Stock stock = stocksSet.stream().findFirst().get();
+                    productSet.add(stock.getProduct());
+                } else {
+                    MastroLogUtils.info(AutocompleteController.class, "stock set is empty for the product" + product.getId() + "in branch" + currentBranch.getId());
+                }
+            }
+            Set<ProductRequestModel> productRequestModels = new HashSet<ProductRequestModel>();
+            for (Product product : productSet) {
+                ProductRequestModel productRequestModel = new ProductRequestModel();
+                productRequestModel.setId(product.getId());
+                productRequestModel.setProductname(product.getProductName());
+                productRequestModels.add(productRequestModel);
+
+            }
+            return new GenericResponse(true, "get items")
+                    .setProperty("products", productRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    @RequestMapping(value = "/party/customer", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse getCustomerPartys(@RequestParam("searchTerm") String searchTerm) {
+        try {
+            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : {}");
+            List<Party> partyFinal = new ArrayList<>();
+            List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
+            partyFinal = partys.stream()
+                    .filter(partysData -> (null != partysData))
+                    .filter(partysData -> (true == partysData.isEnabled()))
+                    .filter(partysData -> (partysData.getPartyType().equals("Customer")))
+                    .collect(Collectors.toList());
+            Set<PartyRequestModel> partyRequestModels = new HashSet<PartyRequestModel>();
+            for (Party party : partyFinal) {
+                PartyRequestModel partyRequestModel = new PartyRequestModel();
+                partyRequestModel.setId(party.getId());
+                partyRequestModel.setPartysname(party.getPartyName());
+                partyRequestModels.add(partyRequestModel);
+            }
+            return new GenericResponse(true, "get partys")
+                    .setProperty("partys", partyRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
 }

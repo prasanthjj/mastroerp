@@ -65,59 +65,82 @@
                                     <div class="ibox-content mastro-sub-ibox-content ">
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Item Name </strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.productName}">:</label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.product.productName}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Opening Stock  </strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.openingStock}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Opening
+                                                Stock </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.openingStock}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Rejected Stock  </strong></label>
-                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.rejectedStock}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Rejected
+                                                Stock </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.rejectedStock}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Min. Lead Time  </strong></label>
-                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.minimumLeadTime}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Min. Lead
+                                                Time </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.minimumLeadTime}">:</label>
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Rate </strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.basePrice}">:</label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.product.basePrice}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Current Stock</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.currentStock}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Current
+                                                Stock</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.currentStock}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Reserve Stock</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.reserveStock}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Reserve
+                                                Stock</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.reserveStock}">:</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="ibox-content mastro-sub-ibox-content ">
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Max. Lead Time </strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.maximumLeadTime}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Max. Lead
+                                                Time </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.maximumLeadTime}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Minimum Stock Qty  </strong></label>
-                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.minimumStockQuantity}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Minimum Stock
+                                                Qty </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.minimumStockQuantity}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Reorder Level </strong></label>
-                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.reorderLevel}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Reorder
+                                                Level </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.reorderLevel}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Minimum Order Qty</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.minimumOrderQuantity}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Minimum Order
+                                                Qty</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.minimumOrderQuantity}">:</label>
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Base UOM</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.uom.UOM}">:</label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.product.uom.UOM}">:</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Maximum Stock Qty</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.maximumStockQuantity}">:</label>
+                                            <label class="col-sm-5 col-form-label"><strong>Maximum Stock
+                                                Qty</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${stockDetails.maximumStockQuantity}">:</label>
                                         </div>
                                     </div>
                                 </div>

@@ -108,22 +108,22 @@
                                 <div class="col-lg-4">
                                     <div><label>Billing Address</label>
                                         <p> <strong th:text="${partyContactDetails.contactPersonName}">Mastro Metals Pvt Ltd.</strong><br>
-                                           <span  th:text="${partyContactDetails.address}"></span><br>
-                                            <span  th:text="${partyContactDetails.mobileNo}"></span><br>
-                                           <span  th:text="${partyContactDetails.emailId}"></span>
+                                           <span th:text="${partyContactDetails.address}"></span><br>
+                                            <span th:text="${partyContactDetails.mobileNo}"></span><br>
+                                           <span th:text="${partyContactDetails.emailId}"></span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div><label>Delivery Address</label>
                                         <p> <strong th:text="${partyBillingDetails.contactPersonName}">Mastro Metals Pvt Ltd.</strong><br>
-                                             <span  th:text="${partyBillingDetails.street}"></span><br>
-                                          <span  th:text="${partyBillingDetails.city}"></span>,
-                                            <span  th:text="${partyBillingDetails.state}"></span>,
-                                             <span  th:text="${partyBillingDetails.country}"></span><br>
-                                             <span  th:text="${partyBillingDetails.pinCode}"></span><br>
-                                               <span  th:text="${partyBillingDetails.telephoneNo}"></span><br>
-                                               <span  th:text="${partyBillingDetails.emailId}"></span><br>
+                                             <span th:text="${partyBillingDetails.street}"></span><br>
+                                          <span th:text="${partyBillingDetails.city}"></span>,
+                                            <span th:text="${partyBillingDetails.state}"></span>,
+                                             <span th:text="${partyBillingDetails.country}"></span><br>
+                                             <span th:text="${partyBillingDetails.pinCode}"></span><br>
+                                               <span th:text="${partyBillingDetails.telephoneNo}"></span><br>
+                                               <span th:text="${partyBillingDetails.emailId}"></span><br>
 
 
                                         </p>
@@ -508,6 +508,8 @@
                         	})
                 		//dynamic click for party in partytype autocomplete end
     });
+
+
 
 
 </script>

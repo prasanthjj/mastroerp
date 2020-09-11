@@ -213,34 +213,55 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group"><label>Item Name</label>
-                                                <input type="text" class="form-control"/>
+                                                <div class="col-sm-8">
+                                                    <!--<input type="text" class="form-control item_head"
+                                                          >-->
+                                                    <span th:if="${salesSlipDetails!= null}">
+                                                       <input type="hidden" th:value="${salesSlipDetails.id}"
+                                                              id="salesslipid">
+                                                   <input type="hidden" name="selectedPartysId"
+                                                          th:value="${salesSlipDetails.party.id}" id="partssalesid">
+                                                   </span>
+                                                    <input type="hidden" name="selectedProduct" id="itemIdInputSale">
+                                                    <input type="text" class="form-control itemautocmopleteinsalesslip"
+                                                           placeholder="Select item">
+
+                                                    <div class="item_dropdown_sales">
+                                                        <ul class="auto-dropdown-menu">
+
+                                                        </ul>
+                                                    </div>
+
+
+                                                </div>
                                             </div>
+
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="form-group"><label>UOM</label>
-                                                <select class="form-control">
-                                                    <option value="">Select Uom</option>
+                                                <select class="form-control" id="saleuom" required>
+                                                    <!--<option value="">Select Uom</option>
                                                     <option>Mtr</option>
-                                                    <option>Kg</option>
+                                                    <option>Kg</option>-->
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="form-group"><label>Quantity</label>
-                                                <input type="text" class="form-control"/>
+                                                <input type="text" class="form-control" id="qtyenter"/>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="form-group"><label>Rate</label>
-                                                <input type="text" class="form-control"/>
+                                                <input type="text" class="form-control" id="rate" readonly/>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 m-t-lg">
-                                            <button type="button" class="right-sidebar-toggle btn btn-primary">Add
+                                            <a class="right-sidebar-toggle btn btn-primary addItemButton">Add
                                                 Item
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -310,163 +331,96 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Oxy .47 Red 3.05mtr (10')</td>
-                                        <td>HSN-0265</td>
-                                        <td>10</td>
-                                        <td>35</td>
-                                        <td>3500</td>
+                                    <span th:if="${salesSlipDetails!= null}">
+                                    <tr th:each="salesslipItemObj,iterator:${salesSlipDetails.salesSlipItemsSet}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td th:text="${salesslipItemObj.product.productName}">Oxy .47 Red 3.05mtr (10')</td>
+                                        <td th:text="${salesslipItemObj.product.hsn.hsnCode}">HSN-0265</td>
+                                        <td><span th:text="${salesslipItemObj.grnQty}"></span> <span
+                                                th:text="${salesslipItemObj.productUOM.uom.UOM}"></span></td>
+                                        <td><span th:text="${salesslipItemObj.rate}"></span>/<span
+                                                th:text="${salesslipItemObj.product.uom.UOM}"></span></td>
+                                        <td th:text="${salesslipItemObj.totalAmount}">3500</td>
                                         <td style="padding: 0px;margin: 0px;">
                                             <table width="100%">
                                                 <tr>
-                                                    <td>10 %</td>
-                                                    <td>350</td>
+                                                    <td><span th:text="${salesslipItemObj.cgstRate}"></span> %</td>
+                                                    <td th:text="${salesslipItemObj.cgstAmount}">350</td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td style="padding: 0px;margin: 0px;">
                                             <table width="100%">
                                                 <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
+                                                    <td width="50%"><span th:text="${salesslipItemObj.sgstRate}"></span>%</td>
+                                                    <td width="50%" th:text="${salesslipItemObj.sgstAmount}">175</td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td style="padding: 0px;margin: 0px;">
                                             <table width="100%">
                                                 <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
+                                                    <td width="50%"><span th:text="${salesslipItemObj.igstRate}"></span>%</td>
+                                                    <td width="50%" th:text="${salesslipItemObj.igstAmount}">175</td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td style="padding: 0px;margin: 0px;">
                                             <table width="100%">
                                                 <tr>
-                                                    <td width="50%">10%</td>
-                                                    <td width="50%">350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Flat 25x6mm (1x1/4)</td>
-                                        <td>HSN-0265</td>
-                                        <td>10</td>
-                                        <td>35</td>
-                                        <td>3500</td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td>10 %</td>
-                                                    <td>350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">10%</td>
-                                                    <td width="50%">350</td>
+                                                    <td width="50%"><span th:text="${salesslipItemObj.cessRate}"></span>%</td>
+                                                    <td width="50%" th:text="${salesslipItemObj.cessAmount}">350</td>
                                                 </tr>
                                             </table>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Angles 25x6 (1x1/4)</td>
-                                        <td>HSN-0265</td>
-                                        <td>10</td>
-                                        <td>35</td>
-                                        <td>3500</td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td>10 %</td>
-                                                    <td>350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">5%</td>
-                                                    <td width="50%">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%">10%</td>
-                                                    <td width="50%">350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
+
+                                    </span>
                                     </tbody>
                                     <tfoot>
 
                                     </tfoot>
                                 </table>
                             </div>
+                            <span th:if="${salesSlipDetails!= null}">
+                            <form th:action="@{/inventory/saveSalesSlipFullDetails}"
+                                  th:object="${salesSlipForm}"
+                                  name="salesSlipForm" method="post">
+                                <input type="hidden" name="id" th:value="${salesSlipDetails.id}">
                             <div class="row m-t-md">
-                                <div class="col-lg-12">
+                               <!-- <div class="col-lg-12">
                                     <div class="form-group row">
                                         <label class="col-lg-10 text-right">Round Off</label>
                                         <div class=" col-lg-2"><input type="text" class="form-control"/></div>
                                     </div>
-                                </div>
+                                </div>-->
+                                <span th:if="${grandTotal!= null}">
                                 <div class="col-lg-12 text-right">
-                                    <h3 class="">Grand Total : 500.00</h3>
+                                    <h3 class="">Grand Total :<span th:text="${grandTotal}"></span> </h3>
                                 </div>
+                                    </span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group"><label>Special instructions</label>
-                                        <textarea class="form-control" rows="6">
+                                        <textarea class="form-control" rows="6" name="specificInst">
         
                                             </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group"><label>Remarks</label>
-                                        <textarea class="form-control" rows="6">
+                                        <textarea class="form-control" rows="6" name="remarks">
 
                                     </textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12 text-right">
-                                <button class="btn btn-primary btn-sm grn" type="button">Create Purchase Slip</button>
+                                <button class="btn btn-primary btn-sm grn" type="submit">Create Purchase Slip</button>
                             </div>
-
+                            </form>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -488,36 +442,32 @@
 
                 <div id="tab-1" class="tab-pane active">
 
-                    <div class="sidebar-title">
-                        <h3><i class="fa fa-barcode"></i> Oxy .47 Red 3.05mtr (10')</h3>
+                    <!--  <div class="sidebar-title">
+                          <h3><i class="fa fa-barcode"></i> <span id="grnProductId"></span></h3>
 
-                    </div>
+                      </div>-->
 
                     <div>
 
                         <div class="sidebar-message">
                             <div class="table-responsive">
-                                <table class="table table-bordered ">
+                                <table class="table table-bordered " id="grnitemDetails">
+                                    <thead>
                                     <tr class="mastro-blue-bg txt-white">
                                         <th>GRN No</th>
+                                        <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th></th>
                                     </tr>
-                                    <tr>
-                                        <td>GRN0246875</td>
-                                        <td>24</td>
-                                        <td><a href="#" class="btn btn-primary">Select</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>GRN0235985</td>
-                                        <td>28</td>
-                                        <td><a href="#" class="btn btn-primary">Select</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>GRN0245687</td>
-                                        <td>32</td>
-                                        <td><a href="#" class="btn btn-primary">Select</a></td>
-                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--  <tr>
+                                          <td>GRN0246875</td>
+                                          <td>24</td>
+                                          <td><a href="#" class="btn btn-primary">Select</a></td>
+                                      </tr>-->
+                                    </tbody>
+
                                 </table>
                             </div>
 
@@ -530,44 +480,11 @@
         </div>
     </div>
 </div>
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="branchListForm">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Branch List</h4>
 
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" required>
-                                    <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <!-- Mainly scripts -->
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
-<span id="partyAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/party}"></span>
+<span id="partyAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/party/customer}"></span>
+<span id="productAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/items/salesslip}"></span>
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
@@ -589,6 +506,77 @@
 <!-- Sweet alert -->
 <script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
         th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script>
+      $(document).ready(function(){
+
+
+       var itemAutopopulateUrlInSales = $('#productAutopopulateInSalesSlipUrl').data('url');
+     $(".item_dropdown_sales").hide();
+     $(".itemautocmopleteinsalesslip").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		var partsSalesId=document.getElementById("partssalesid").value;
+		$(".item_dropdown_sales ul").empty();
+		     $.ajax({
+              url:itemAutopopulateUrlInSales,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val,'partyId':partsSalesId},
+               success: function(data){
+                 if(data.success) {
+                        $.each(data.data.products, function(i){
+                                      $(".item_dropdown_sales ul").append('<li><a class="dynamicClick" data-itemsidsales="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                        });
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".item_dropdown_sales").show();
+		}
+		else {
+        			$(".item_dropdown_sales").hide();
+        		}
+		});
+
+
+	$(".item_dropdown_sales").on('click','a.dynamicClick',function (e) {
+        		e.preventDefault();
+        		var value = $(this).text();
+        		var productIdSale = $(this).data('itemsidsales');
+        		var partysSalesIds=document.getElementById("partssalesid").value;
+                $(".itemautocmopleteinsalesslip").val(value);
+                $("#itemIdInputSale").val($(e.target).data('itemsidsales'));
+        		$(".item_dropdown_sales").hide();
+        		 $.ajax({
+                                                                  url: '/inventory/getProductDetailsInSales',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'partyIdSale': partysSalesIds,'productIdSale': productIdSale},
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+                                                                                  $("#saleuom").html("");
+                                                                                  $('#rate').val(data.data.rate);
+                                                                                    $.each(data.data.salesuoms, function(i){
+                                                              $('#saleuom').append($('<option>').val(this['id']).text(this['nameuom']));
+                                                               });
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+
+        	})
+
+      });
+
+
+
+</script>
 
 </body>
 </html>
