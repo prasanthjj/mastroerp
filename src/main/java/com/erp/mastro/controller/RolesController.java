@@ -107,7 +107,7 @@ public class RolesController {
                 return new GenericResponse(false, "Role id null");
             }
         } catch (Exception e) {
-            MastroLogUtils.error(RolesController.class, "Error occured while deleting Branch : {}");
+            MastroLogUtils.error(RolesController.class, "Error occured while deleting Roles : {}");
             return new GenericResponse(false, e.getMessage());
         }
     }

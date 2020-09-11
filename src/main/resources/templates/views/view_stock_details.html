@@ -52,82 +52,76 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title  ">
-                            <div class="form-group row">
-                                <label class="col-lg-2 col-form-label">Item Name</label>
-                                <div class="col-lg-4">
-                                    <h4 th:text="${stockDetails.product.productName}"></h4>
-                                </div>
+                        <div class="ibox-title  mastro-ibox-title ">
 
-                            </div>
                             <div class="ibox-tools">
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <form action="" id="addStockDetailsForm">
-                                <h2>Stock Details</h2>
-                                <div class="row">
+                        <div class="ibox-content mastro-ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
 
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Opening Stock </label>
-                                            <h4 th:text="${stockDetails.openingStock}">Opening Stock</h4>
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Item Name </strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.productName}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Rejected Stock</label>
-                                            <h4 th:text="${stockDetails.rejectedStock}">Rejected Stock</h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Opening Stock  </strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.openingStock}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Min. Lead Time</label>
-                                            <h4 th:text="${stockDetails.minimumLeadTime}"></h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Rejected Stock  </strong></label>
+                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.rejectedStock}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Rate</label>
-                                            <h4 th:text="${stockDetails.product.basePrice}"></h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Min. Lead Time  </strong></label>
+                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.minimumLeadTime}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group"><label>Current Stock</label>
-                                            <h4 th:text="${stockDetails.currentStock}">Current Stock</h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Rate </strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.basePrice}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Reserve Stock </label>
-                                            <h4 th:text="${stockDetails.reserveStock}">Reserve Stock</h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Current Stock</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.currentStock}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Max. Lead Time</label>
-                                            <h4 th:text="${stockDetails.maximumLeadTime}">Max. Lead Time</h4>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Reserve Stock</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.reserveStock}">:</label>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Minimum Stock Qty</label>
-                                            <h4 th:text="${stockDetails.minimumStockQuantity}">Minimum Stock Qty</h4>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <div class="form-group"><label>Reorder Level</label>
-                                            <h4 th:text="${stockDetails.reorderLevel}"></h4>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label> Minimum Order Qty</label>
-                                            <h4 th:text="${stockDetails.minimumOrderQuantity}"></h4>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Base UOM</label>
-                                            <h4 th:text="${stockDetails.product.uom.UOM}"></h4>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label>Maximum Stock Qty</label>
-                                            <h4 th:text="${stockDetails.maximumStockQuantity}"></h4>
-                                        </div>
-                                        <div class="hr-line-dashed"></div>
                                     </div>
                                 </div>
-
-                            </form>
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Max. Lead Time </strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.maximumLeadTime}">:</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Minimum Stock Qty  </strong></label>
+                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.minimumStockQuantity}">:</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Reorder Level </strong></label>
+                                            <label class="col-sm-7 col-form-label"  th:text="${stockDetails.reorderLevel}">:</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Minimum Order Qty</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.minimumOrderQuantity}">:</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Base UOM</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.product.uom.UOM}">:</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Maximum Stock Qty</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${stockDetails.maximumStockQuantity}">:</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
