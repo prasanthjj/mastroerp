@@ -33,12 +33,17 @@ public class DeliveryChellanController {
     @Autowired
     SalesSlipService salesSlipService;
 
+    @Autowired
+    private UserController userController;
+
     @RequestMapping("/inventory/getDeliveryChellan")
     public String getDeliveryChellan(Model model) {
         MastroLogUtils.info(DeliveryChellanController.class, "Going to get Delivery Chellan list : {}");
+        Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
         List<SalesSlip> salesSlipList = salesSlipService.getAllSalesSlips().stream()
                 .filter(salesSlip -> (null != salesSlip))
                 .filter(salesSlip -> (null != salesSlip.getStatus()))
+                .filter(salesSlip -> (salesSlip.getBranch().getId().equals(currentBranch.getId())))
                 .sorted(Comparator.comparing(
                         SalesSlip::getId).reversed())
                 .collect(Collectors.toList());

@@ -394,9 +394,11 @@
                                         <div class=" col-lg-2"><input type="text" class="form-control"/></div>
                                     </div>
                                 </div>-->
+                                <span th:if="${grandTotal!= null}">
                                 <div class="col-lg-12 text-right">
-                                    <h3 class="">Grand Total : </h3>
+                                    <h3 class="">Grand Total :<span th:text="${grandTotal}"></span> </h3>
                                 </div>
+                                    </span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">

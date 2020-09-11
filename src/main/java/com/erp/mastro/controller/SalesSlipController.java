@@ -289,7 +289,11 @@ public class SalesSlipController {
             model.addAttribute("contactDetails", contactDetails);
             model.addAttribute("salesSlipDetails", salesSlip);
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
-
+            Double grandTotal = 0.0d;
+            for (SalesSlipItems salesSlipItems : salesSlip.getSalesSlipItemsSet()) {
+                grandTotal = grandTotal + salesSlipItems.getTotalAmount() + salesSlipItems.getCessAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount();
+            }
+            model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
             return "views/addPurchaseSlip";
         } catch (Exception e) {
             MastroLogUtils.error(SalesSlipController.class, e.getMessage());
