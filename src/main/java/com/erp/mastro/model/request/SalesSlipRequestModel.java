@@ -12,6 +12,8 @@ public class SalesSlipRequestModel {
     private String transportMode;
     private String vehicleNo;
     private Long selectedPartyInSalesSlip;
+    private String specificInst;
+    private String remarks;
 
     @Override
     public String toString() {

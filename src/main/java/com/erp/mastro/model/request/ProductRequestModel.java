@@ -62,6 +62,7 @@ public class ProductRequestModel {
         private String transactionType;
         private Double convertionFactor;
         private Long uomId;
+        private String nameuom;
 
         public ProductUOMModel() {
 

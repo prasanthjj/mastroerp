@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -71,4 +73,9 @@ public class GRNItems {
 
     @Column(name = "cess_amount")
     private Double cessAmount;
+
+    @OneToMany(mappedBy = "grnItems",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlipItems> salesSlipItems = new HashSet<>();
 }

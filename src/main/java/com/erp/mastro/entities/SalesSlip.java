@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "sales_slip")
-public class SalesSlip {
+public class SalesSlip extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +36,13 @@ public class SalesSlip {
     @JoinTable(name = "salesslip_salesslipitems", joinColumns = {@JoinColumn(name = "sales_slip_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "salesslip_items_id", referencedColumnName = "id")})
     private Set<SalesSlipItems> salesSlipItemsSet = new HashSet<>();
+
+    @Column(name = "specific_instruction")
+    private String specificInst;
+
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "status")
+    private String status;
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
@@ -31,5 +32,10 @@ public class ProductUOM {
     @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private Set<Product> product;
+
+    @OneToMany(mappedBy = "productUOM",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlipItems> salesSlipItems = new HashSet<>();
 
 }

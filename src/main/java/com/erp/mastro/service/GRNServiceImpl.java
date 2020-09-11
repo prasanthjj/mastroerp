@@ -5,10 +5,7 @@ import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
-import com.erp.mastro.repository.GRNRepository;
-import com.erp.mastro.repository.IndentItemPartyGroupRepository;
-import com.erp.mastro.repository.PurchaseOrderRepository;
-import com.erp.mastro.repository.StockRepository;
+import com.erp.mastro.repository.*;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
@@ -47,6 +44,9 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    private GRNItemRepository grnItemRepository;
 
     /**
      * Method to get all grns
@@ -280,6 +280,22 @@ public class GRNServiceImpl implements GRNService {
             stockRepository.save(stock);
         }
 
+    }
+
+    /**
+     * Method to get GRNITEM
+     *
+     * @param id
+     * @return grnitem
+     */
+    public GRNItems getGRNItemById(Long id) {
+        GRNItems grnItem = new GRNItems();
+        if (id != null) {
+            MastroLogUtils.info(GRNService.class, "Going to getGRNItemById : {}" + id);
+            grnItem = grnItemRepository.findById(id).get();
+        }
+
+        return grnItem;
     }
 
 }
