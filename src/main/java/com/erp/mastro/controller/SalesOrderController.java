@@ -1,10 +1,12 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
 import com.erp.mastro.model.request.SalesOrderRequestModel;
+import com.erp.mastro.repository.SalesOrderRepository;
 import com.erp.mastro.service.interfaces.HSNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.ProductService;
@@ -34,6 +36,9 @@ public class SalesOrderController {
 
     @Autowired
     SalesOrderService salesOrderService;
+
+    @Autowired
+    SalesOrderRepository salesOrderRepository;
 
     @Autowired
     HSNService hsnService;
@@ -294,6 +299,47 @@ public class SalesOrderController {
             MastroLogUtils.error(SalesOrderController.class, "Error occured while getSalesOrderPreview :{}" + soId, e);
             throw e;
         }
+    }
+
+
+    @PostMapping("/soApprove")
+    @ResponseBody
+    public GenericResponse soApprove(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("soids") Long soId) {
+        MastroLogUtils.info(SalesOrderController.class, "Going to approve Sales Order" + soId);
+        try {
+            SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+            salesOrder.setStatus("Approve");
+            salesOrder.setReason(reason);
+            salesOrderRepository.save(salesOrder);
+            return new GenericResponse(true, "approve Sales Order");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on approve Sales Order:{}", e);
+
+            throw e;
+        }
+
+    }
+
+
+    @PostMapping("/soDiscard")
+    @ResponseBody
+    public GenericResponse soDiscard(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("soids") Long soId) {
+        MastroLogUtils.info(SalesOrderController.class, "Going to Discard GRN" + soId);
+        try {
+
+            SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+            salesOrder.setStatus("Discard");
+            salesOrder.setReason(reason);
+            salesOrderRepository.save(salesOrder);
+            return new GenericResponse(true, "Disgard Sales Order");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on Discard sales Order:{}", e);
+
+            throw e;
+        }
+
     }
 
 

@@ -110,6 +110,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Transactional
     public SalesOrderProduct saveOrUpdateSalesOrderProduct(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Product product, Double quantity) throws ModelNotFoundException {
         MastroLogUtils.info(SalesOrderService.class, "Going to save salesorderProduct : {}" + salesOrder.getId());
+        salesOrder.setStatus("Draft");
 
         SalesOrder salesOrder1 = salesOrder;
         Set<SalesOrderProduct> salesOrderProductSet = salesOrder1.getSalesOrderProductSet();
@@ -129,10 +130,12 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         totalPrice = calculateService.totalPriceForSO(salesOrderProduct.getTaxableValue(), salesOrderProduct.getCgstAmount(), salesOrderProduct.getSgstAmount());
         salesOrderProduct.setTotalPrice(totalPrice);
 
+
         salesOrderProductSet.add(salesOrderProduct);
 
         salesOrderRepository.save(salesOrder1);
         MastroLogUtils.info(SalesOrderService.class, "Save " + salesOrder1.getId() + " succesfully.");
+
         return salesOrderProduct;
     }
 
