@@ -235,8 +235,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             }
         }
         if (count == 0) {
-            indent.setIndentStatus("CLOSED");
-            indentRepository.save(indent);
+            if (indentItemPartyGroups.isEmpty() == false) {
+                indent.setIndentStatus("CLOSED");
+                indentRepository.save(indent);
+            }
         }
 
         MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");

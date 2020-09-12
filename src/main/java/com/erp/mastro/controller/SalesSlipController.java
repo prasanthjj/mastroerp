@@ -195,7 +195,7 @@ public class SalesSlipController {
             Set<GRN> grnSet = grnService.getAllGRNs().stream()
                     .filter(grnData -> (null != grnData))
                     .filter(grnData -> (grnData.getBranch().getId().equals(currentBranch.getId())))
-                    .filter(grnData -> (grnData.getStatus().equals("Approve")))
+                    .filter(grnData -> (grnData.getStatus().equals("Approved")))
                     .collect(Collectors.toSet());
 
             Set<GRNItems> grnItemsSet = new HashSet<>();

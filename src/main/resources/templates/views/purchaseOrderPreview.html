@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         </span>
-                        <span th:if="${purchaseOrderDetails.status== 'Approve'}">
+                        <span th:if="${purchaseOrderDetails.status== 'Approved'}">
                         <div class="ibox-title  ">
                              <div class="ibox-tools">
                                 <div class="btn-group">
@@ -223,8 +223,8 @@
             var reason=document.getElementById("reason").value;
             var poids=$(this).data('poids');
             swal({
-                title: "Approved!",
-                text: "You want to Approved Purchase Order!",
+                title: "Approve?",
+                text: "Do you want to Approve this Purchase Order!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",
@@ -262,8 +262,8 @@
             var reason=document.getElementById("reason").value;
             var poids=$(this).data('poids');
             swal({
-                title: "Discard!",
-                text: "You want to Discard Purchase Order!",
+                title: "Discard?",
+                text: "Do you want to Discard this Purchase Order!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",
@@ -302,8 +302,8 @@ $('.poReview').click(function(){
             var reason=document.getElementById("reason").value;
             var poids=$(this).data('poids');
             swal({
-                title: "Review!",
-                text: "You want to Review Purchase Order!",
+                title: "Review?",
+                text: " Do you want to Review Purchase Order!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",

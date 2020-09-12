@@ -10,16 +10,16 @@ import lombok.Setter;
 public class StockRequestModel {
 
     private Long id;
-    private Long openingStock;
+    private Double openingStock;
     private Double currentStock;
-    private int reorderLevel;
-    private int rejectedStock;
-    private int reserveStock;
-    private int minimumOrderQuantity;
-    private int minimumLeadTime;
-    private Long maximumLeadTime;
-    private int minimumStockQuantity;
-    private Long maximumStockQuantity;
+    private Double reorderLevel;
+    private Double rejectedStock;
+    private Double reserveStock;
+    private Double minimumOrderQuantity;
+    private Double minimumLeadTime;
+    private Double maximumLeadTime;
+    private Double minimumStockQuantity;
+    private Double maximumStockQuantity;
     private Long productId;
 
     public StockRequestModel() {

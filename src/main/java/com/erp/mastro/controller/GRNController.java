@@ -114,7 +114,7 @@ public class GRNController {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             Set<PurchaseOrder> purchaseOrderSet = party.getPurchaseOrders().stream()
                     .filter(poData -> (null != poData))
-                    .filter(po -> (po.getStatus().equals("Approve")))
+                    .filter(po -> (po.getStatus().equals("Approved")))
                     .filter(po -> (po.getIndent().getBranch().getId().equals(currentBranch.getId())))
                     .collect(Collectors.toSet());
 
@@ -232,7 +232,7 @@ public class GRNController {
         MastroLogUtils.info(GRNController.class, "Going to approve GRN" + grnId);
         try {
             GRN grn = grnService.getGRNById(grnId);
-            grn.setStatus("Approve");
+            grn.setStatus("Approved");
             grn.setReason(reason);
             grnRepository.save(grn);
             grnService.stockUpdationBasedOnGRN(grn);
@@ -252,7 +252,7 @@ public class GRNController {
         MastroLogUtils.info(GRNController.class, "Going to Review GRN" + grnId);
         try {
             GRN grn = grnService.getGRNById(grnId);
-            grn.setStatus("Review");
+            grn.setStatus("Reviewed");
             grn.setReason(reason);
             grnRepository.save(grn);
             return new GenericResponse(true, "Review grn");

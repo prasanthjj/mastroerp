@@ -389,7 +389,7 @@ public class PurchaseOrderController {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             User user = userController.getCurrentUser();
             purchaseOrder.setUser(user);
-            purchaseOrder.setStatus("Approve");
+            purchaseOrder.setStatus("Approved");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
             return new GenericResponse(true, "approve po");
@@ -419,7 +419,7 @@ public class PurchaseOrderController {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             User user = userController.getCurrentUser();
             purchaseOrder.setUser(user);
-            purchaseOrder.setStatus("Review");
+            purchaseOrder.setStatus("Reviewed");
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
             return new GenericResponse(true, "poReview");
