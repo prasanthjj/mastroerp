@@ -77,10 +77,10 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group"><label>Received From</label>
+                                            <div class="form-group"><label>Received From <i class="fa fa-asterisk "></i></label>
                                                     <input type="hidden" name="selectedParty" id="partysIdInput">
                                                     <input type="text" class="form-control grnpartyautocmoplete"
-                                                           placeholder="Select party">
+                                                           placeholder="Select party" required>
 
                                                     <div class="grn_party_dropdown">
                                                         <ul class="auto-dropdown-menu">
@@ -134,19 +134,19 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="master-blue-bg txt-white">Party Invoice No</td>
+                                                        <td class="master-blue-bg txt-white">Party Invoice No<i class="fa fa-asterisk "></i> </td>
                                                         <td><input type="text" class="form-control"
-                                                                   name="partyInvoiceNo"></td>
+                                                                   name="partyInvoiceNo" required></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="master-blue-bg txt-white">Party Invoice Date</td>
+                                                        <td class="master-blue-bg txt-white">Party Invoice Date<i class="fa fa-asterisk "></i> </td>
                                                         <td>
                                                             <div id="addGrnDcOrInvoiceDate">
                                                                 <div class="input-group date">
                                                                     <span class="input-group-addon"><i
                                                                             class="fa fa-calendar"></i></span><input
                                                                         type="text" class="form-control" value=""
-                                                                        name="spartyInvoiceDate">
+                                                                        name="spartyInvoiceDate" required>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -215,13 +215,13 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="row">
-                                        <!--<div class="col-lg-4">
-                                            <label>Invoice Copy</label>
+                                        <div class="col-lg-4">
+                                         <!--   <label>Invoice Copy</label>
                                             <div class="custom-file">
                                                 <input id="logo" type="file" class="custom-file-input">
                                                 <label for="logo" class="custom-file-label">Choose file...</label>
-                                            </div>
-                                        </div>-->
+                                            </div>-->
+                                        </div>
                                         <div class="col-lg-8  ">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered ">
@@ -292,12 +292,12 @@
                                                         </th>
                                                     </tr>
                                                     <tr>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">Pending</td>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">DC/Invoice</td>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">Received</td>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">Shotage</td>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">Accepted</td>
-                                                        <td class="mastro-blue-bg txt-white" width="20%">Rejected</td>
+                                                        <td class="mastro-blue-bg txt-white" width="17%">Pending</td>
+                                                        <td class="mastro-blue-bg txt-white" width="17%">DC/Invoice</td>
+                                                        <td class="mastro-blue-bg txt-white" width="17%">Received</td>
+                                                        <td class="mastro-blue-bg txt-white" width="17%">Shotage</td>
+                                                        <td class="mastro-blue-bg txt-white" width="16%">Accepted</td>
+                                                        <td class="mastro-blue-bg txt-white" width="16%">Rejected</td>
                                                     </tr>
                                                 </table>
 
@@ -324,26 +324,26 @@
                                             <td style="padding: 0px;margin: 0px;">
                                                 <table width="100%">
                                                     <tr>
-                                                        <td th:text="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}">
+                                                        <td th:text="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}" width="17%">
                                                             11
                                                         </td>
-                                                        <td>
+                                                        <td width="17%">
                                                             <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].quantityDc}"/>
                                                         </td>
-                                                        <td>
+                                                        <td width="17%">
                                                             <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>
                                                         </td>
-                                                        <td>
+                                                        <td width="17%">
                                                             <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].shortage}"/>
                                                         </td>
-                                                        <td>
+                                                        <td width="16%">
                                                             <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].accepted}"/>
                                                         </td>
-                                                        <td>
+                                                        <td width="16%">
                                                             <input type="text" class="form-control" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].rejected}"/>
                                                         </td>
@@ -392,41 +392,6 @@
 
 </div>
 
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="branchListForm">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Branch List</h4>
-
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" required>
-                                    <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
 <span id="grnPartyAutopopulateUrl" th:data-url="@{/autopopulate/party}"></span>

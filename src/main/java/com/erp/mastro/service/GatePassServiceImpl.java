@@ -63,10 +63,10 @@ public class GatePassServiceImpl implements GatePassService {
             MastroLogUtils.info(GatePassService.class, "Going to save GAte Pass {}" + gatePassRequestModel.toString());
             GatePass gatePass = new GatePass();
             gatePass.setVehicleMovementType(value);
-            if (gatePass.getVehicleMovementType().equals("Inword")) {
-                gatePass.setVehicleMovementType("Inword");
+            if (gatePass.getVehicleMovementType().equals("Inward")) {
+                gatePass.setVehicleMovementType("Inward");
             } else {
-                gatePass.setVehicleMovementType("Outword");
+                gatePass.setVehicleMovementType("Outward");
             }
 
             gatePass.setEmptyMaterial(val);

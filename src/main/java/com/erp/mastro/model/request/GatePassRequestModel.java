@@ -36,10 +36,10 @@ public class GatePassRequestModel {
         if (gatePass != null) {
             this.id = gatePass.getId();
             this.vehicleMovementType = gatePass.getVehicleMovementType();
-            if (gatePass.getVehicleMovementType().equals("Inword")) {
-                gatePass.setVehicleMovementType("Inword");
+            if (gatePass.getVehicleMovementType().equals("Inward")) {
+                gatePass.setVehicleMovementType("Inward");
             } else {
-                gatePass.setVehicleMovementType("Outword");
+                gatePass.setVehicleMovementType("Outward");
             }
             this.emptyMaterial = gatePass.getEmptyMaterial();
             if (gatePass.getEmptyMaterial().equals("Empty")) {
