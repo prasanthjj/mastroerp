@@ -80,25 +80,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-2 m-t-lg">
+                                        <button class="btn btn-primary" type="submit">Select</button>
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <span th:if="${indentDetails != null}">
                                             <label>Indent Priority</label>
                                                 <h4 th:text="${indentDetails.indentPriority}"></h4>
                                             </span>
-                                            <!--  <span th:if="${indentDetails != null}">
-                                                  <select class="form-control"  th:field="*{indentPriority}">
-                                                       <option value="">Select Priority</option>
-                                                       <option value="Low">Low</option>
-                                                       <option value="Medium">Medium</option>
-                                                       <option value="High">High</option>
-                                                  </select>
-                                              </span>-->
+
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 m-t-lg">
-                                        <button class="btn btn-primary" type="submit">Select</button>
-                                    </div>
+
                                 </div>
                             </form>
 

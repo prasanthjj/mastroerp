@@ -80,8 +80,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span th:if="${indentDetails== null}">
-                                    <div class="col-lg-4">
+
+                                    <div class="col-lg-4" th:if="${indentDetails== null}">
                                         <div class="form-group">
                                             <label>Indent Priority</label>
                                                 <select class="form-control" name="indentPriority" required>
@@ -93,7 +93,7 @@
 
                                         </div>
                                     </div>
-                                     </span>
+
                                     <div class="col-lg-2 m-t-lg">
                                         <button class="btn btn-primary" type="submit">Select</button>
                                     </div>
