@@ -74,18 +74,18 @@
 
                                             <div class="col-sm-6">
                                                 <div class="m-t-sm">
-                                                    <span th:if="${gatePassForm.vehicleMovementType == 'Inword'}">
-                                              <label class="m-r-sm"><input type="radio" checked th:value=${"Inword"}
-                                                                           name="vehicleMovement"> <i></i>Inword	</label>
-                                                <label> <input type="radio" th:value=${"Outword"}
-                                                               name="vehicleMovement"> <i></i>Outword</label>
+                                                    <span th:if="${gatePassForm.vehicleMovementType == 'Inward'}">
+                                              <label class="m-r-sm"><input type="radio" checked th:value=${"Inward"}
+                                                                           name="vehicleMovement"> <i></i>Inward	</label>
+                                                <label> <input type="radio" th:value=${"Outward"}
+                                                               name="vehicleMovement"> <i></i>Outward</label>
                                                 </span>
 
-                                                    <span th:unless="${gatePassForm.vehicleMovementType == 'Inword'}">
-                                                 <label class="m-r-sm"><input type="radio" th:value=${"Inword"}
-                                                                              name="vehicleMovement"> <i></i>Inword	</label>
-                                                <label> <input type="radio" checked th:value=${"Outword"}
-                                                               name="vehicleMovement"> <i></i>Outword</label>
+                                                    <span th:unless="${gatePassForm.vehicleMovementType == 'Inward'}">
+                                                 <label class="m-r-sm"><input type="radio" th:value=${"Inward"}
+                                                                              name="vehicleMovement"> <i></i>Inward	</label>
+                                                <label> <input type="radio" checked th:value=${"Outward"}
+                                                               name="vehicleMovement"> <i></i>Outward</label>
                                                 </span>
 
                                                 </div>
