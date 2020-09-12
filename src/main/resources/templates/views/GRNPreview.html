@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         </span>
-                        <span th:if="${grnDetails.status== 'Approve'}">
+                        <span th:if="${grnDetails.status== 'Approved'}">
                         <div class="ibox-title  ">
                              <div class="ibox-tools">
                                 <div class="btn-group">
@@ -254,8 +254,8 @@
             var reason=document.getElementById("reason").value;
             var grnids=$(this).data('grnids');
             swal({
-                title: "Approved!",
-                text: "You want to Approved GRN!",
+                title: "Approve?",
+                text: "Do you want to Approve GRN!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",
@@ -293,8 +293,8 @@
             var reason=document.getElementById("reason").value;
             var grnids=$(this).data('grnids');
             swal({
-                title: "Discard!",
-                text: "You want to Discard GRN!",
+                title: "Discard?",
+                text: "Do you want to Discard GRN!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",
@@ -333,8 +333,8 @@ $('.grnReview').click(function(){
             var reason=document.getElementById("reason").value;
             var grnids=$(this).data('grnids');
             swal({
-                title: "Review!",
-                text: "You want to Review GRN!",
+                title: "Review?",
+                text: "Do you want to Review GRN!",
                 type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0094db",

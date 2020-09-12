@@ -17,28 +17,28 @@ public class Stock extends Auditable<String> {
     private long id;
 
     @Column(name = "opening_stock")
-    private Long openingStock;
+    private Double openingStock;
 
     @Column(name = "current_stock")
     private Double currentStock;
 
     @Column(name = "reorder_level")
-    private int reorderLevel;
+    private Double reorderLevel;
 
     @Column(name = "rejected_stock")
-    private int rejectedStock;
+    private Double rejectedStock;
 
     @Column(name = "reserve_stock")
-    private int reserveStock;
+    private Double reserveStock;
 
     @Column(name = "minimum_order_quantity")
-    private int minimumOrderQuantity;
+    private Double minimumOrderQuantity;
 
     @Column(name = "minimum_lead_time")
-    private int minimumLeadTime;
+    private Double minimumLeadTime;
 
     @Column(name = "maximum_lead_time")
-    private Long maximumLeadTime;
+    private Double maximumLeadTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uom_id")
@@ -48,10 +48,10 @@ public class Stock extends Auditable<String> {
     private Double rate;
 
     @Column(name = "minimum_stock_quantity")
-    private int minimumStockQuantity;
+    private Double minimumStockQuantity;
 
     @Column(name = "maximum_stock_qunatity")
-    private Long maximumStockQuantity;
+    private Double maximumStockQuantity;
 
     @Column(name = "delete_status", nullable = false)
     private int stockDeleteStatus;

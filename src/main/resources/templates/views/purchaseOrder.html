@@ -118,7 +118,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
 
-                                                    <span th:if="${purchaseObj.status== 'Review'}">
+                                                    <span th:if="${purchaseObj.status== 'Reviewed'}">
                                                     <li><a class="dropdown-item font-bold"
                                                            th:href="${'/purchase/getPurchaseOrderOnReview?indentId='+{purchaseObj.indent.id}+'&poId='+{purchaseObj.id}}"><i
                                                             class="fa fa-edit"></i> Manage</a></li>
