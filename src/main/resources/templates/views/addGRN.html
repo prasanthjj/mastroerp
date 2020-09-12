@@ -241,14 +241,14 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="master-blue-bg txt-white">Party Invoice Date</td>
-                                                        <td>
-                                                            <div>
+                                                        <td th:text="${#dates.format(grnDetails.date, 'dd-MMMM-yyyy')}">
+                                                           <!-- <div>
                                                                 <div class="input-group date">
                                                                     <span class="input-group-addon"><i
                                                                             class="fa fa-calendar"></i></span><span
-                                                                        th:text="${#dates.format(grnDetails.date, 'dd-MMMM-yyyy')}"></span>
+                                                                        ></span>
                                                                 </div>
-                                                            </div>
+                                                            </div>-->
                                                         </td>
                                                     </tr>
                                                     <tr>
