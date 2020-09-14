@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,24 +33,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         if (user.getId() != null) {
-            getCurrentLoginDate(user);
+            //getCurrentLoginDate(user);
         }
 
         return new CurrentUserDetails(user);
     }
 
-	public Map<String, Object> getDataMap() {
-		return dataMap;
-	}
+    public Map<String, Object> getDataMap() {
+        return dataMap;
+    }
 
-	public void setDataMap(Map<String, Object> dataMap) {
-		this.dataMap = dataMap;
-	}
+    public void setDataMap(Map<String, Object> dataMap) {
+        this.dataMap = dataMap;
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
     public Date getCurrentLoginDate(User user) {
 
         user.setLastLogin(user.getCurrentLogin());
         user.setLoggedIn(true);
-        user.setCurrentLogin(MastroApplicationUtils.converttoTimestamp( LocalDateTime.now()));
+        user.setCurrentLogin(MastroApplicationUtils.converttoTimestamp(LocalDateTime.now()));
         userRepository.save(user);
         return user.getCurrentLogin();
     }

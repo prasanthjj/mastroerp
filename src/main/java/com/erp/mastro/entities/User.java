@@ -23,18 +23,6 @@ public class User extends Auditable<String> {
     @Column(name = "user_name")
     protected String userName;
 
-    @Column(name = "created_by")
-    protected String createdBy;
-
-    @Column(name = "created_date")
-    protected Date createdDate;
-
-    @Column(name = "last_modified_by")
-    protected String lastModifiedBy;
-
-    @Column(name = "last_modified_date")
-    protected Date lastModifiedDate;
-
     @Column(name = "password")
     protected String password;
 

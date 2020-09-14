@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -48,4 +49,8 @@ public class MastroApplicationUtils {
         /* || authentication.getAuthorities().contains(Constants.ROLE_SUPERADMIN)*/
     }
 
+    public static Double roundTwoDecimals(Double amount) {
+        DecimalFormat twoDForm = new DecimalFormat("#.####");
+        return Double.valueOf(twoDForm.format(amount));
+    }
 }

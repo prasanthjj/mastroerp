@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -231,9 +230,6 @@ public class UserController {
         rolesSet.add(roles);
 
         user.setRoles(rolesSet);
-        user.setCreatedDate(MastroApplicationUtils.converttoTimestamp(LocalDateTime.now()));
-        user.setCreatedBy(user.getEmail());
-
         userService.savUser(user);
     }
 
