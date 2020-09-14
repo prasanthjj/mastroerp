@@ -61,6 +61,7 @@ public class GRNController {
             model.addAttribute("GRNTab", "GRN");
             List<GRN> grnList = grnService.getAllGRNs().stream()
                     .filter(grn -> (null != grn))
+                    .filter(grn -> (!grn.getStatus().equals("Empty")))
                     .filter(grn -> (!grn.getStatus().equals("Discard")))
                     .filter(grn -> (grn.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
