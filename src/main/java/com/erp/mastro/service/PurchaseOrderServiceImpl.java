@@ -232,6 +232,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
                     count = count + 1;
                 }
+            } else {
+                count = count + 1;
             }
         }
         if (count == 0) {
@@ -368,6 +370,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
                     count = count + 1;
                 }
+            } else {
+                count = count + 1;
             }
         }
         if (count == 0) {
@@ -412,6 +416,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 if (itemStockDetailss.getQuantityToIndent() > itemStockDetailss.getPurchaseQuantity()) {
                     count = count + 1;
                 }
+            } else {
+                count = count + 1;
             }
         }
         if (count == 0) {
