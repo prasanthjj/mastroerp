@@ -94,6 +94,9 @@ $(document).ready(function(){
                                stateName: {
                               required: true,
                              },
+                              branchCode: {
+                               required: true,
+                                         },
                               pinCode: {
                              required: true,
                             maxlength:6,
@@ -204,6 +207,9 @@ $("#editBranchform").steps({
                                   stateName: {
                                  required: true,
                                 },
+                                 branchCode: {
+                                  required: true,
+                                             },
                                  pinCode: {
                                 required: true,
                                maxlength:6,

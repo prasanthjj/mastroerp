@@ -64,4 +64,7 @@ public class GRN extends Auditable<String> {
 
     @Column(name = "reason")
     private String reason;
+
+    @Column(name = "grn_no")
+    private String grnNo;
 }

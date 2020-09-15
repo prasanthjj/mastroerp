@@ -139,6 +139,11 @@ public class GRNServiceImpl implements GRNService {
             Set<GRNItems> grnItemsSet = saveOrUpdateGRNItems(grnRequestModel, grn);
             grn.setStatus("Draft");
             grn.setGrnItems(grnItemsSet);
+            String currentBranchCode = grn.getBranch().getBranchCode();
+            if (currentBranchCode != null) {
+                String str = currentBranchCode + "-" + String.format("%05d", grn.getId());
+                grn.setGrnNo(str);
+            }
             grnRepository.save(grn);
 
             int count = grnItemsSet.size();
