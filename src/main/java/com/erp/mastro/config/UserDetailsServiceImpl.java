@@ -32,10 +32,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid Username or Password");
         }
 
-        if (user.getId() != null) {
-            //getCurrentLoginDate(user);
-        }
-
         return new CurrentUserDetails(user);
     }
 
@@ -45,16 +41,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public void setDataMap(Map<String, Object> dataMap) {
         this.dataMap = dataMap;
-    }
-
-    @Transactional(rollbackOn = {Exception.class})
-    public Date getCurrentLoginDate(User user) {
-
-        user.setLastLogin(user.getCurrentLogin());
-        user.setLoggedIn(true);
-        user.setCurrentLogin(MastroApplicationUtils.converttoTimestamp(LocalDateTime.now()));
-        userRepository.save(user);
-        return user.getCurrentLogin();
     }
 
 }
