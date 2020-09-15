@@ -38,6 +38,7 @@ public class IndentItemPartyGroupRequestModel {
         private Double rate;
         private Double quantity;
         private Party party;
+        private boolean enabled;
 
         public IndentItemPartyGroupRequestModels() {
         }
@@ -48,6 +49,7 @@ public class IndentItemPartyGroupRequestModel {
                 this.rate = indentItemPartyGroup.getRate();
                 this.party = indentItemPartyGroup.getParty();
                 this.quantity = indentItemPartyGroup.getQuantity();
+                this.enabled = indentItemPartyGroup.isEnabled();
             }
         }
     }

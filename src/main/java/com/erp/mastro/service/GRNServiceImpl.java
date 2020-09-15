@@ -141,7 +141,7 @@ public class GRNServiceImpl implements GRNService {
             grn.setGrnItems(grnItemsSet);
             String currentBranchCode = grn.getBranch().getBranchCode();
             if (currentBranchCode != null) {
-                String str = currentBranchCode + "-" + String.format("%05d", grn.getId());
+                String str = currentBranchCode + "-" + "GR-" + String.format("%05d", grn.getId());
                 grn.setGrnNo(str);
             }
             grnRepository.save(grn);

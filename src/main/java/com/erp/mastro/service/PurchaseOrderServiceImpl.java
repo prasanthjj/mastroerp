@@ -83,22 +83,32 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
             MastroLogUtils.info(PurchaseOrderService.class, "Going to save indentItemPartyGroup  {}" + indentItemPartyGroupRequestModel.toString());
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
-            IndentItemPartyGroup indentItemPartyGroup = new IndentItemPartyGroup();
-            indentItemPartyGroup.setBranch(currentBranch);
-            Party party = partyService.getPartyById(indentItemPartyGroupRequestModel.getPartyId());
-            indentItemPartyGroup.setParty(party);
-            ProductPartyRateRelation productPartyRateRelations = party.getProductPartyRateRelations().stream()
-                    .filter(productPartyRateRelation -> (null != productPartyRateRelation))
-                    .filter(productPartyRateRelation -> (productPartyRateRelation.getProduct().getId().equals(itemStockDetails.getStock().getProduct().getId())))
-                    .findFirst().get();
-            if (productPartyRateRelations != null) {
-                indentItemPartyGroup.setRate(productPartyRateRelations.getPartyPriceList().getRate());
-            }
             Indent indent = indentService.getIndentById(indentItemPartyGroupRequestModel.getIndentId());
-            indentItemPartyGroup.setIndent(indent);
-            indentItemPartyGroup.setItemStockDetails(itemStockDetails);
-            itemStockDetails.getIndentItemPartyGroups().add(indentItemPartyGroup);
+            Party party = partyService.getPartyById(indentItemPartyGroupRequestModel.getPartyId());
+            Set<IndentItemPartyGroup> indentItemPartyGroups = itemStockDetails.getIndentItemPartyGroups().stream()
+                    .filter(groupData -> (null != groupData))
+                    .filter(groupData -> (!groupData.isEnabled()))
+                    .filter(groupData -> (groupData.getParty().getId().equals(party.getId())))
+                    .collect(Collectors.toSet());
+            IndentItemPartyGroup indentItemPartyGroup;
+            if (indentItemPartyGroups.isEmpty() == false) {
+                indentItemPartyGroup = indentItemPartyGroups.stream().findFirst().get();
+            } else {
+                indentItemPartyGroup = new IndentItemPartyGroup();
+                indentItemPartyGroup.setBranch(currentBranch);
+                indentItemPartyGroup.setParty(party);
+                ProductPartyRateRelation productPartyRateRelations = party.getProductPartyRateRelations().stream()
+                        .filter(productPartyRateRelation -> (null != productPartyRateRelation))
+                        .filter(productPartyRateRelation -> (productPartyRateRelation.getProduct().getId().equals(itemStockDetails.getStock().getProduct().getId())))
+                        .findFirst().get();
+                if (productPartyRateRelations != null) {
+                    indentItemPartyGroup.setRate(productPartyRateRelations.getPartyPriceList().getRate());
+                }
 
+                indentItemPartyGroup.setIndent(indent);
+                indentItemPartyGroup.setItemStockDetails(itemStockDetails);
+            }
+            itemStockDetails.getIndentItemPartyGroups().add(indentItemPartyGroup);
             itemStockDetailsRepository.save(itemStockDetails);
 
             return itemStockDetails;

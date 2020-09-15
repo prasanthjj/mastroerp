@@ -122,11 +122,11 @@
                                               dhdthtfh
                                             </td>
                                             <td class="center">
-                                                <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                                <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].enabled== false}">
                                                 <input class="form-control" type="text"
                                                        th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
                                                 </span>
-                                                 <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                                 <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].enabled== false}">
                                                 <input class="form-control" type="text" readonly
                                                        th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
                                                 </span>

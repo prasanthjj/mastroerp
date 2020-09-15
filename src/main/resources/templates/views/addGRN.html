@@ -328,11 +328,12 @@
                                                             11
                                                         </td>
                                                         <td width="17%">
-                                                            <input type="text" class="form-control" required
+                                                            <input type="text" class="form-control dcQtys" required
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].quantityDc}"/>
                                                         </td>
                                                         <td width="17%">
-                                                            <input type="text" class="form-control" required
+                                                            <input type="text" class="form-control recevQtys" required
+                                                                   onfocusout="shortageFunction()"
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>
                                                         </td>
                                                         <td width="17%">
@@ -522,4 +523,9 @@ else if (id == 'invoiceBtn'){
  $("#dcBtn").removeClass("active");
  }     } });
 
+
+  function shortageFunction() {
+    alert(this.id);
+
+}
 </script>
