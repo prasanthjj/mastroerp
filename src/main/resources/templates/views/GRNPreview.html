@@ -163,15 +163,23 @@
                                                 <span th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.uom.UOM}">31,98</span>
                                             </td>
                                             <td th:text="${grnPreview.discount}">31,98</td>
-                                            <td th:text="${grnPreview.totalPrice}">31,98</td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.totalPrice, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
                                             <td th:text="${grnPreview.cgstRate}">31,98</td>
-                                            <td th:text="${grnPreview.cgstAmount}">31,98</td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
                                             <td th:text="${grnPreview.sgstRate}">31,98</td>
-                                            <td th:text="${grnPreview.sgstAmount}">31,98</td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
                                             <!--<td th:text="${grnPreview.igstRate}">31,98</td>
                                             <td th:text="${grnPreview.igstAmount}">31,98</td>-->
                                             <td th:text="${grnPreview.cessRate}">31,98</td>
-                                            <td th:text="${grnPreview.cessAmount}">31,98</td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.cessAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
 
 
                                         </tr>
@@ -185,15 +193,21 @@
                                     <tbody>
                                     <tr>
                                         <td><strong>Sub Total :</strong></td>
-                                        <td>Rs <span th:text="${subTotal}">1026.00</span></td>
+                                        <td>Rs <span
+                                                th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>TAX :</strong></td>
-                                        <td>Rs <span th:text="${tax}"></span></td>
+                                        <td>Rs <span
+                                                th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>TOTAL :</strong></td>
-                                        <td>Rs <span th:text="${finalTotal}"></span></td>
+                                        <td>Rs <span
+                                                th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

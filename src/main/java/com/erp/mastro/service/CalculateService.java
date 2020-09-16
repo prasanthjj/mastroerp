@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.entities.Product;
 import org.springframework.stereotype.Component;
@@ -14,22 +15,24 @@ public class CalculateService {
         Double total = acceptQty * rate;
         Double discountAmount = total * (discountPer / 100);
         total = total - discountAmount;
-        return Math.round(total * 100.0) / 100.0;
+        return MastroApplicationUtils.roundTwoDecimals(total);
+
     }
 
     public Double calculateTotalPriceIgstAmount(Double total, HSN hsn) {
         Double totalIgst = total * (hsn.getIgst() / 100);
-        return Math.round(totalIgst * 100.0) / 100.0;
+        return MastroApplicationUtils.roundTwoDecimals(totalIgst);
+
     }
 
     public Double calculateTotalPriceCgstAmount(Double total, HSN hsn) {
         Double totalCgst = total * (hsn.getCgst() / 100);
-        return Math.round(totalCgst * 100.0) / 100.0;
+        return MastroApplicationUtils.roundTwoDecimals(totalCgst);
     }
 
     public Double calculateTotalPriceSgstAmount(Double total, HSN hsn) {
         Double totalSgst = total * (hsn.getSgst() / 100);
-        return Math.round(totalSgst * 100.0) / 100.0;
+        return MastroApplicationUtils.roundTwoDecimals(totalSgst);
     }
 
     public Double calculateTotalPriceCessAmount(Double total, HSN hsn) {
@@ -37,7 +40,7 @@ public class CalculateService {
         if (hsn.getCess() != null) {
             totalCess = total * (hsn.getCess() / 100);
         }
-        return Math.round(totalCess * 100.0) / 100.0;
+        return MastroApplicationUtils.roundTwoDecimals(totalCess);
     }
 
     public Double calculateTaxableValueInSo(Double quantity, Product product) {

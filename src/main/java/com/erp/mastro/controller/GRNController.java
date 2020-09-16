@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
@@ -213,10 +214,10 @@ public class GRNController {
                     }
                     tax = tax + ((grnItems.getTotalPrice() * taxCalculationPercentage) / 100);
                 }
-                model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
-                model.addAttribute("tax", Math.round(tax * 100.0) / 100.0);
+                model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+                model.addAttribute("tax", MastroApplicationUtils.roundTwoDecimals(tax));
                 Double finalTotal = subTotal + tax;
-                model.addAttribute("finalTotal", Math.round(finalTotal * 100.0) / 100.0);
+                model.addAttribute("finalTotal", MastroApplicationUtils.roundTwoDecimals(finalTotal));
             }
 
             return "views/GRNPreview";
