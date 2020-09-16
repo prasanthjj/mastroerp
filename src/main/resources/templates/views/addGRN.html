@@ -295,7 +295,7 @@
                                                         <td class="mastro-blue-bg txt-white" width="17%">Pending</td>
                                                         <td class="mastro-blue-bg txt-white" width="17%">DC/Invoice</td>
                                                         <td class="mastro-blue-bg txt-white" width="17%">Received</td>
-                                                        <td class="mastro-blue-bg txt-white" width="17%">Shotage</td>
+                                                        <td class="mastro-blue-bg txt-white" width="17%">Shortage</td>
                                                         <td class="mastro-blue-bg txt-white" width="16%">Accepted</td>
                                                         <td class="mastro-blue-bg txt-white" width="16%">Rejected</td>
                                                     </tr>
@@ -332,8 +332,11 @@
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].quantityDc}"/>
                                                         </td>
                                                         <td width="17%">
+                                                            <!--  <input type="text" class="form-control recevQtys" required
+                                                                     onfocusout="shortageFunction()"
+                                                                     th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>-->
                                                             <input type="text" class="form-control recevQtys" required
-                                                                   onfocusout="shortageFunction()"
+                                                                   onfocusout="shortageFunction(this.name.substring(17, 18))"
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>
                                                         </td>
                                                         <td width="17%">
@@ -342,6 +345,7 @@
                                                         </td>
                                                         <td width="16%">
                                                             <input type="text" class="form-control" required
+                                                                   onfocusout="rejectedFunction(this.name.substring(17, 18))"
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].accepted}"/>
                                                         </td>
                                                         <td width="16%">
@@ -524,8 +528,15 @@ else if (id == 'invoiceBtn'){
  }     } });
 
 
-  function shortageFunction() {
-    alert(this.id);
+  function shortageFunction(arg) {
+    var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
+    var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
+    document.getElementById('grnpoItemsModels'+arg+'.shortage').value=dcQty-recQty;
 
+}
+ function rejectedFunction(arg) {
+    var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
+    var acceptQty=document.getElementById('grnpoItemsModels'+arg+'.accepted').value;
+    document.getElementById('grnpoItemsModels'+arg+'.rejected').value=recQty-acceptQty;
 }
 </script>
