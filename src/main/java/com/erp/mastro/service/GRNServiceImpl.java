@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
@@ -141,8 +142,7 @@ public class GRNServiceImpl implements GRNService {
             grn.setGrnItems(grnItemsSet);
             String currentBranchCode = grn.getBranch().getBranchCode();
             if (currentBranchCode != null) {
-                String str = currentBranchCode + "-" + "GR-" + String.format("%05d", grn.getId());
-                grn.setGrnNo(str);
+                grn.setGrnNo(MastroApplicationUtils.generateName(currentBranchCode,"GRN",grn.getId()));
             }
             grnRepository.save(grn);
 

@@ -53,4 +53,9 @@ public class MastroApplicationUtils {
         DecimalFormat twoDForm = new DecimalFormat("#.####");
         return Double.valueOf(twoDForm.format(amount));
     }
+
+    public static String  generateName(String branchCode,String type,long id){
+        String str = branchCode + "-" + type+"-" + String.format("%05d", id);
+        return str;
+    }
 }
