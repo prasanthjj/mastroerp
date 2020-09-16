@@ -1,6 +1,8 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.SalesOrder;
@@ -110,26 +112,20 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Transactional
     public SalesOrderProduct saveOrUpdateSalesOrderProduct(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Product product, Double quantity) throws ModelNotFoundException {
         MastroLogUtils.info(SalesOrderService.class, "Going to save salesorderProduct : {}" + salesOrder.getId());
-        salesOrder.setStatus("Draft");
+        salesOrder.setStatus(Constants.STATUS_DRAFT);
 
         SalesOrder salesOrder1 = salesOrder;
         Set<SalesOrderProduct> salesOrderProductSet = salesOrder1.getSalesOrderProductSet();
         SalesOrderProduct salesOrderProduct = new SalesOrderProduct();
         salesOrderProduct.setProduct(product);
         salesOrderProduct.setQuantity(quantity);
-        Double taxableValue = 0d;
-        taxableValue = calculateService.calculateTaxableValueInSo(salesOrderProduct.getQuantity(), salesOrderProduct.getProduct());
+        Double taxableValue = MastroApplicationUtils.calculateTaxableValueInSo(salesOrderProduct.getQuantity(), salesOrderProduct.getProduct());
         salesOrderProduct.setTaxableValue(taxableValue);
-        Double totalCgstAmount = 0d;
-        totalCgstAmount = calculateService.calculateTotalPriceCgstAmount(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn());
-        salesOrderProduct.setCgstAmount(totalCgstAmount);
-        Double totalSgstAmount = 0d;
-        totalSgstAmount = calculateService.calculateTotalPriceSgstAmount(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn());
-        salesOrderProduct.setSgstAmount(totalSgstAmount);
-        Double totalPrice = 0d;
-        totalPrice = calculateService.totalPriceForSO(salesOrderProduct.getTaxableValue(), salesOrderProduct.getCgstAmount(), salesOrderProduct.getSgstAmount());
-        salesOrderProduct.setTotalPrice(totalPrice);
+        salesOrderProduct.setCgstAmount(MastroApplicationUtils.calculateTax(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn().getCgst()));
+        salesOrderProduct.setSgstAmount(MastroApplicationUtils.calculateTax(salesOrderProduct.getTaxableValue(), salesOrderProduct.getProduct().getHsn().getSgst()));
 
+        Double totalPrice = MastroApplicationUtils.totalPriceForSO(salesOrderProduct.getTaxableValue(), salesOrderProduct.getCgstAmount(), salesOrderProduct.getSgstAmount());
+        salesOrderProduct.setTotalPrice(totalPrice);
 
         salesOrderProductSet.add(salesOrderProduct);
 

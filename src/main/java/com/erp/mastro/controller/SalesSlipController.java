@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -195,7 +196,7 @@ public class SalesSlipController {
             Set<GRN> grnSet = grnService.getAllGRNs().stream()
                     .filter(grnData -> (null != grnData))
                     .filter(grnData -> (grnData.getBranch().getId().equals(currentBranch.getId())))
-                    .filter(grnData -> (grnData.getStatus().equals("Approved")))
+                    .filter(grnData -> (grnData.getStatus().equals(Constants.STATUS_APPROVED)))
                     .collect(Collectors.toSet());
 
             Set<GRNItems> grnItemsSet = new HashSet<>();

@@ -11,4 +11,12 @@ public class Constants {
     public static String TEMPLATE_FORGOTPASSWORD = "views/passwordreset.html";
 
     public static final String PRODUCT = "productPic";
+
+    public static final String STATUS_APPROVED = "Approved";
+    public static final String STATUS_DRAFT = "Draft";
+    public static final String STATUS_CLOSED = "Closed";
+    public static final String STATUS_INPROGRESS = "In Progress";
+    public static final String STATUS_INCOMPLETE = "Incomplete";
+    public static final String STATUS_INITIAL = "Initial";
+
 }

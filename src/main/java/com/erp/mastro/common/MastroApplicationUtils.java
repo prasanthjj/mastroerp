@@ -1,5 +1,6 @@
 package com.erp.mastro.common;
 
+import com.erp.mastro.entities.Product;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +39,7 @@ public class MastroApplicationUtils {
         }
     }
 
-    public static Timestamp converttoTimestamp(LocalDateTime date) {
+    public static Timestamp convertToTimestamp(LocalDateTime date) {
         Timestamp timestamp = Timestamp.valueOf(date);
         return timestamp;
     }
@@ -54,8 +55,62 @@ public class MastroApplicationUtils {
         return Double.valueOf(twoDForm.format(amount));
     }
 
-    public static String  generateName(String branchCode,String type,long id){
-        String str = branchCode + "-" + type+"-" + String.format("%05d", id);
+    public static String generateName(String branchCode, String type, long id) {
+        String str = branchCode + "-" + type + "-" + String.format("%05d", id);
         return str;
     }
+
+    /**
+     * Below are the methods used for calculating the totals and Taxes
+     */
+
+    /**
+     * Method to calculate the total price from Rate, Quantity and discount %
+     *
+     * @param rate
+     * @param acceptQty
+     * @param discountPercentage
+     * @return
+     */
+    public static Double calculateTotalPrice(Double rate, Double acceptQty, Double discountPercentage) {
+        Double total = acceptQty * rate;
+        Double discountAmount = 0d;
+        if (discountPercentage != null || discountPercentage != 0) {
+            discountAmount = total * (discountPercentage / 100);
+        }
+        total = total - discountAmount;
+        return MastroApplicationUtils.roundTwoDecimals(total);
+    }
+
+    /**
+     * @param total
+     * @param taxRate
+     * @return
+     */
+    public static Double calculateTax(Double total, Double taxRate) {
+        return MastroApplicationUtils.roundTwoDecimals(total * (taxRate / 100));
+
+    }
+
+    /**
+     * @param quantity
+     * @param product
+     * @return
+     */
+    public static Double calculateTaxableValueInSo(Double quantity, Product product) {
+        Double taxableValue = quantity * product.getBasePrice();
+        return Math.round(taxableValue * 100.0) / 100.0;
+    }
+
+    /**
+     * @param taxableValue
+     * @param cgstAmount
+     * @param sgstAmount
+     * @return
+     */
+    public static Double totalPriceForSO(Double taxableValue, Double cgstAmount, Double sgstAmount) {
+        Double totalPrice = taxableValue + cgstAmount + sgstAmount;
+        return Math.round(totalPrice * 100.0) / 100.0;
+    }
+
 }

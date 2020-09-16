@@ -63,7 +63,7 @@ public class PartyServiceImpl implements PartyService {
     public Party getPartyById(Long id) {
         Party party = new Party();
         if (id != null) {
-            MastroLogUtils.info(PartyService.class, "Going to getPartyById : {}" + id);
+            MastroLogUtils.info(PartyService.class, "Going to getPartyById : " + id);
             party = partyRepository.findById(id).get();
         }
 
@@ -87,7 +87,7 @@ public class PartyServiceImpl implements PartyService {
     public IndustryType getIndustryTypeById(Long id) {
         IndustryType industryType = new IndustryType();
         if (id != null) {
-            MastroLogUtils.info(PartyService.class, "Going to getIndustryTypeBy Id : {}" + id);
+            MastroLogUtils.info(PartyService.class, "Going to getIndustryTypeBy Id : " + id);
             industryType = industryTypeRepository.findById(id).get();
         }
         return industryType;
@@ -103,7 +103,7 @@ public class PartyServiceImpl implements PartyService {
     public PriceList getPriceListById(Long id) {
         PriceList priceList = new PriceList();
         if (id != null) {
-            MastroLogUtils.info(PartyService.class, "Going to get Pricelist by Id : {}" + id);
+            MastroLogUtils.info(PartyService.class, "Going to get Pricelist by Id : " + id);
             priceList = priceListRepository.findById(id).get();
         }
         return priceList;
@@ -126,7 +126,7 @@ public class PartyServiceImpl implements PartyService {
         } else {
             if (partyRequestModel.getId() == null) {
 
-                MastroLogUtils.info(PartyService.class, "Going to Add Party  {}" + partyRequestModel.toString());
+                MastroLogUtils.info(PartyService.class, "Going to Add Party  " + partyRequestModel.toString());
 
                 party.setPartyType(partyRequestModel.getPartyType());
                 party.setPartyCode(partyRequestModel.getPartyCode());
@@ -187,7 +187,7 @@ public class PartyServiceImpl implements PartyService {
                 MastroLogUtils.info(PartyService.class, "Added" + party.getPartyName() + "successfully");
 
             } else {
-                MastroLogUtils.info(PartyService.class, "Going to edit party {}" + partyRequestModel.toString());
+                MastroLogUtils.info(PartyService.class, "Going to edit party " + partyRequestModel.toString());
 
                 party = partyRepository.findById(partyRequestModel.getId()).get();
                 party.setPartyType(partyRequestModel.getPartyType());
@@ -269,7 +269,7 @@ public class PartyServiceImpl implements PartyService {
 
         } else {
             if (industryTypeRequestModel.getId() == null) {
-                MastroLogUtils.info(PartyService.class, "Going to Add IndustryType  {}" + industryTypeRequestModel.toString());
+                MastroLogUtils.info(PartyService.class, "Going to Add IndustryType  " + industryTypeRequestModel.toString());
 
                 industryType.setIndustryType(industryTypeRequestModel.getIndustryType());
                 industryTypeRepository.save(industryType);
@@ -290,7 +290,7 @@ public class PartyServiceImpl implements PartyService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException {
 
-        MastroLogUtils.info(PartyService.class, "Going to save party contactDetails {}" + partyRequestModel.toString());
+        MastroLogUtils.info(PartyService.class, "Going to save party contactDetails " + partyRequestModel.toString());
         Set<ContactDetails> contactDetailsSet = new HashSet<>();
 
         if (partyRequestModel.getContactDetailsModelList().isEmpty() == false) {
@@ -345,7 +345,7 @@ public class PartyServiceImpl implements PartyService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException {
 
-        MastroLogUtils.info(PartyService.class, "Going to save party bankdetails {}" + partyRequestModel.toString());
+        MastroLogUtils.info(PartyService.class, "Going to save party bankdetails " + partyRequestModel.toString());
         Set<BankDetails> bankDetailsSet = new HashSet<>();
 
         if (partyRequestModel.getBankDetailsModelList().isEmpty() == false) {
@@ -386,7 +386,7 @@ public class PartyServiceImpl implements PartyService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party) {
 
-        MastroLogUtils.info(PartyService.class, "Going to save party billing details {}" + partyRequestModel.toString());
+        MastroLogUtils.info(PartyService.class, "Going to save party billing details " + partyRequestModel.toString());
         Set<BillingDetails> billingDetailsSet = new HashSet<>();
 
         if (partyRequestModel.getBillingDetailsModelList().isEmpty() == false) {
@@ -439,7 +439,7 @@ public class PartyServiceImpl implements PartyService {
     @Transactional(rollbackOn = {Exception.class})
     public Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchIds, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party) {
 
-        MastroLogUtils.info(PartyService.class, "Going to save party credit details {}" + partyRequestModel.toString());
+        MastroLogUtils.info(PartyService.class, "Going to save party credit details " + partyRequestModel.toString());
         Set<CreditDetails> creditDetailsSet = new HashSet<>();
         for (int i = 0; i < branchIds.length; i++) {
             CreditDetails creditDetails = new CreditDetails();

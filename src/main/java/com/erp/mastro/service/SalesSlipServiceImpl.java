@@ -1,6 +1,8 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -158,10 +160,14 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlipItems.setGrnQty(grnItemQtyInSalesUOMs);
                 Double totalForRound = (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()) * rate;
                 salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
-                salesSlipItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
+                salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
+                salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
+                salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                if (product.getHsn().getCess() != null) {
+                    salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
+                } else {
+                    salesSlipItems.setCessAmount(0d);
+                }
 
             } else if (salesQtyInSalesUOM < grnItemQtyInSalesUOMs) {
                 grnItemQtyInSalesUOMs = grnItemQtyInSalesUOMs - salesQtyInSalesUOM;
@@ -177,10 +183,14 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlipItems.setGrnQty(salesQtyInSalesUOM);
                 Double totalForRound = (salesQtyInSalesUOM * productSaleUOM.getConvertionFactor()) * rate;
                 salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
-                salesSlipItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
+                salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
+                salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
+                salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                if (product.getHsn().getCess() != null) {
+                    salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
+                } else {
+                    salesSlipItems.setCessAmount(0d);
+                }
             } else {
                 salesQtyInSalesUOM = salesQtyInSalesUOM - grnItemQtyInSalesUOMs;
                 Double currentStock = stock.getCurrentStock() - grnItemQtyInBaseUOM;
@@ -193,10 +203,14 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlipItems.setGrnQty(grnItemQtyInSalesUOMs);
                 Double totalForRound = (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()) * rate;
                 salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
-                salesSlipItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
-                salesSlipItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(salesSlipItems.getTotalAmount(), product.getHsn()));
+                salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
+                salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
+                salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                if (product.getHsn().getCess() != null) {
+                    salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
+                } else {
+                    salesSlipItems.setCessAmount(0d);
+                }
 
             }
             Set<SalesSlipItems> salesSlipItemsSet = salesSlip.getSalesSlipItemsSet();
@@ -224,7 +238,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 MastroLogUtils.info(SalesSlipService.class, "Going to save sales slip full data{}" + salesSlipRequestModel.toString());
                 salesSlip.setRemarks(salesSlipRequestModel.getRemarks());
                 salesSlip.setSpecificInst(salesSlipRequestModel.getSpecificInst());
-                salesSlip.setStatus("Draft");
+                salesSlip.setStatus(Constants.STATUS_DRAFT);
                 salesSlipRepository.save(salesSlip);
             }
 

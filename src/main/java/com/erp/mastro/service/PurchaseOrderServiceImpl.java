@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -222,7 +223,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 PurchaseOrder purchaseOrder = new PurchaseOrder();
                 purchaseOrder.setParty(party);
                 purchaseOrder.setIndent(indent);
-                purchaseOrder.setStatus("Draft");
+                purchaseOrder.setStatus(Constants.STATUS_DRAFT);
                 Set<ItemStockDetails> itemStockDetailsSet1 = new HashSet<>();
                 for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups1) {
                     itemStockDetailsSet1.add(indentItemPartyGroup.getItemStockDetails());
@@ -392,7 +393,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }
         indentRepository.save(indent);
         PurchaseOrder purchaseOrder = getPurchaseOrderById(Long.parseLong(purchaseId));
-        purchaseOrder.setStatus("Draft");
+        purchaseOrder.setStatus(Constants.STATUS_DRAFT);
         purchaseOrderRepository.save(purchaseOrder);
         MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");
 

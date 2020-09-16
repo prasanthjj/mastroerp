@@ -2,6 +2,7 @@ package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -75,13 +76,13 @@ public class GRNServiceImpl implements GRNService {
             throw new ModelNotFoundException("GRN model is empty");
         } else {
             if (grnRequestModel.getId() == null) {
-                MastroLogUtils.info(GRNRequestModel.class, "Going to create grn{}" + grnRequestModel.toString());
+                MastroLogUtils.info(GRNRequestModel.class, "Going to create GRN :" + grnRequestModel.toString());
                 grn.setParty(partyService.getPartyById(grnRequestModel.getSelectedParty()));
                 grn.setReceivedAganist(grnRequestModel.getReceivedAganist());
                 grn.setPurchaseOrder(purchaseOrderService.getPurchaseOrderById(grnRequestModel.getPoId()));
                 grn.setReceivedThrough(grnRequestModel.getReceivedThrough());
                 grn.setReceivedAs(grnRequestModel.getReceivedAs());
-                grn.setStatus("Empty");
+                grn.setStatus(Constants.STATUS_INITIAL);
                 grn.setNumber(grnRequestModel.getPartyInvoiceNo());
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 grn.setBranch(currentBranch);
@@ -111,7 +112,7 @@ public class GRNServiceImpl implements GRNService {
     public GRN getGRNById(Long id) {
         GRN grn = new GRN();
         if (id != null) {
-            MastroLogUtils.info(GRNService.class, "Going to getGRNById : {}" + id);
+            MastroLogUtils.info(GRNService.class, "Going to getGRNById : " + id);
             grn = grnRepository.findById(id).get();
         }
 
@@ -134,11 +135,11 @@ public class GRNServiceImpl implements GRNService {
         if (grnRequestModel == null) {
             throw new ModelNotFoundException("AssetRequestModel model is empty");
         } else {
-            MastroLogUtils.info(GRNService.class, "Going to Add grn items {}" + grnRequestModel.toString());
+            MastroLogUtils.info(GRNService.class, "Going to Add grn items " + grnRequestModel.toString());
             grn.setRemarks(grnRequestModel.getRemarks());
             grn.setUser(userController.getCurrentUser());
             Set<GRNItems> grnItemsSet = saveOrUpdateGRNItems(grnRequestModel, grn);
-            grn.setStatus("Draft");
+            grn.setStatus(Constants.STATUS_DRAFT);
             grn.setGrnItems(grnItemsSet);
             String currentBranchCode = grn.getBranch().getBranchCode();
             if (currentBranchCode != null) {
@@ -167,7 +168,7 @@ public class GRNServiceImpl implements GRNService {
     }
 
     /**
-     * method to save grn items
+     * method to save GRN items
      *
      * @param grnRequestModel
      * @param grn
@@ -176,14 +177,14 @@ public class GRNServiceImpl implements GRNService {
      */
     private Set<GRNItems> saveOrUpdateGRNItems(GRNRequestModel grnRequestModel, GRN grn) throws ModelNotFoundException {
 
-        MastroLogUtils.info(GRNService.class, "Going to save grn items  {}" + grnRequestModel.toString());
+        MastroLogUtils.info(GRNService.class, "Going to save GRN items :" + grnRequestModel.toString());
         Set<GRNItems> grnItemsSet = new HashSet<>();
 
         if (grnRequestModel.getGrnpoItemsModels().isEmpty() == false) {
 
             grnRequestModel.getGrnpoItemsModels().parallelStream().forEach(x -> {
                 GRNItems grnItems;
-                if (!containsInList(x.getId(), grn.getGrnItems().stream().filter(grndata -> (null != grndata)).map(y -> y.getId()).collect(Collectors.toList()))) {
+                if (!containsInList(x.getId(), grn.getGrnItems().stream().filter(grnData -> (null != grnData)).map(y -> y.getId()).collect(Collectors.toList()))) {
                     grnItems = new GRNItems();
                     grnItems.setAccepted(x.getAccepted());
                     grnItems.setReceived(x.getReceived());
@@ -208,16 +209,20 @@ public class GRNServiceImpl implements GRNService {
                     Double total = 0d;
                     Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
                     ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
-                            .filter(productuomData -> (null != productuomData))
-                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
-                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .filter(productUOMData -> (null != productUOMData))
+                            .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                            .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOM.getId())))
                             .findFirst().get();
-                    total = calculateService.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted() * productUOMPurchase.getConvertionFactor(), productPartyRateRelation.getPartyPriceList().getDiscount());
+                    total = MastroApplicationUtils.calculateTotalPrice(indentItemPartyGroup.getRate(), x.getAccepted() * productUOMPurchase.getConvertionFactor(), productPartyRateRelation.getPartyPriceList().getDiscount());
                     grnItems.setTotalPrice(total);
-                    grnItems.setIgstAmount(calculateService.calculateTotalPriceIgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
-                    grnItems.setCgstAmount(calculateService.calculateTotalPriceCgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
-                    grnItems.setSgstAmount(calculateService.calculateTotalPriceSgstAmount(total, productPartyRateRelation.getProduct().getHsn()));
-                    grnItems.setCessAmount(calculateService.calculateTotalPriceCessAmount(total, productPartyRateRelation.getProduct().getHsn()));
+                    grnItems.setIgstAmount(MastroApplicationUtils.calculateTax(total, productPartyRateRelation.getProduct().getHsn().getIgst()));
+                    grnItems.setCgstAmount(MastroApplicationUtils.calculateTax(total, productPartyRateRelation.getProduct().getHsn().getCgst()));
+                    grnItems.setSgstAmount(MastroApplicationUtils.calculateTax(total, productPartyRateRelation.getProduct().getHsn().getSgst()));
+                    if (productPartyRateRelation.getProduct().getHsn().getCess() != null) {
+                        grnItems.setCessAmount(MastroApplicationUtils.calculateTax(total, productPartyRateRelation.getProduct().getHsn().getCess()));
+                    } else {
+                        grnItems.setCessAmount(0d);
+                    }
                     grnItems.setGrn(grn);
                     Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
                             .filter(grnData -> (null != grnData))
@@ -271,7 +276,7 @@ public class GRNServiceImpl implements GRNService {
     @Transactional(rollbackOn = {Exception.class})
     public void stockUpdationBasedOnGRN(GRN grn) {
 
-        MastroLogUtils.info(GRNService.class, "Going to stockUpdationBasedOnGRN  {}" + grn.getId());
+        MastroLogUtils.info(GRNService.class, "Going to Update Stock after GRN approval :" + grn.getId());
         Set<GRNItems> grnItemsSet = grn.getGrnItems();
         for (GRNItems grnItems : grnItemsSet) {
             Stock stock = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock();

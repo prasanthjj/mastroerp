@@ -2,6 +2,7 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -47,14 +48,14 @@ public class GRNController {
     private GRNRepository grnRepository;
 
     /**
-     * Method to get all GRN
+     * Method to get all GRN and display as a list
      *
      * @param model
      * @return GRN list
      */
     @GetMapping("/getGRNList")
     public String getGRNList(Model model) {
-        MastroLogUtils.info(GRNController.class, "Going to get GRN list: {}");
+        MastroLogUtils.info(GRNController.class, "In GRNController.getGRNList()");
         try {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             model.addAttribute("grnForm", new GRNRequestModel());
@@ -73,7 +74,7 @@ public class GRNController {
             return "views/GRNMaster";
 
         } catch (Exception e) {
-            MastroLogUtils.error(GRNController.class, "Error occured while getting GRN list: {}", e);
+            MastroLogUtils.error(GRNController.class, "Error occurred while getting GRN list", e);
             throw e;
         }
 
@@ -102,7 +103,7 @@ public class GRNController {
     }
 
     /**
-     * Method to get party pos
+     * Method to get party PO List
      *
      * @param partyId
      * @return party pos list
@@ -111,12 +112,12 @@ public class GRNController {
     @ResponseBody
     public GenericResponse getPartyPo(@RequestParam("partyId") Long partyId) {
         try {
-            MastroLogUtils.info(GRNController.class, "Going to get party pos : {}" + partyId);
+            MastroLogUtils.info(GRNController.class, "Going to get party pos for party id " + partyId);
             Party party = partyService.getPartyById(partyId);
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             Set<PurchaseOrder> purchaseOrderSet = party.getPurchaseOrders().stream()
                     .filter(poData -> (null != poData))
-                    .filter(po -> (po.getStatus().equals("Approved")))
+                    .filter(po -> (po.getStatus().equals(Constants.STATUS_APPROVED)))
                     .filter(po -> (po.getIndent().getBranch().getId().equals(currentBranch.getId())))
                     .collect(Collectors.toSet());
 
@@ -146,7 +147,7 @@ public class GRNController {
      */
     @PostMapping("/createGRNBasic")
     public String createGRNBasic(@ModelAttribute("grnForm") @Valid GRNRequestModel grnRequestModel, HttpServletRequest request, Model model) {
-        MastroLogUtils.info(GRNController.class, "Going to create basic grn details : {}" + grnRequestModel.toString());
+        MastroLogUtils.info(GRNController.class, "Going to create basic GRN details :" + grnRequestModel.toString());
         try {
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("GRNTab", "GRN");
@@ -173,7 +174,7 @@ public class GRNController {
      */
     @PostMapping("/saveGRNDetails")
     public String saveGRNDetails(@ModelAttribute("grnForm") @Valid GRNRequestModel grnRequestModel, HttpServletRequest request, Model model) {
-        MastroLogUtils.info(GRNController.class, "Going to save grn item details: {}" + grnRequestModel.toString());
+        MastroLogUtils.info(GRNController.class, "In GRNController.saveGRNDetails() method :" + grnRequestModel.toString());
         try {
             Long grnId = Long.parseLong(request.getParameter("grnIds"));
             grnService.saveOrUpdateGRNItemDetails(grnRequestModel, grnId);
@@ -182,7 +183,7 @@ public class GRNController {
             MastroLogUtils.error(this, "grn model empty", e);
             return "redirect:/inventory/getGRNList";
         } catch (Exception e) {
-            MastroLogUtils.error(GRNController.class, "Error occured while save grn item details : {}", e);
+            MastroLogUtils.error(GRNController.class, "Error occurred while save grn item details : {}", e);
             throw e;
         }
 
@@ -231,17 +232,19 @@ public class GRNController {
     @PostMapping("/grnApprove")
     @ResponseBody
     public GenericResponse grnApprove(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("grnids") Long grnId) {
-        MastroLogUtils.info(GRNController.class, "Going to approve GRN" + grnId);
+        MastroLogUtils.info(GRNController.class, "In GRNController.grnApprove() method :" + grnId);
         try {
             GRN grn = grnService.getGRNById(grnId);
-            grn.setStatus("Approved");
-            grn.setReason(reason);
-            grnRepository.save(grn);
-            grnService.stockUpdationBasedOnGRN(grn);
+            if (grn != null) {
+                grn.setStatus(Constants.STATUS_APPROVED);
+                grn.setReason(reason);
+                grnRepository.save(grn);
+                grnService.stockUpdationBasedOnGRN(grn);
+            }
             return new GenericResponse(true, "approve grn");
 
         } catch (Exception e) {
-            MastroLogUtils.error(this, "Error Occured on approve grn:{}", e);
+            MastroLogUtils.error(this, "Error Occurred on approve grn : ", e);
 
             throw e;
         }

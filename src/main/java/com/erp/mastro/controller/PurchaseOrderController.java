@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -389,7 +390,7 @@ public class PurchaseOrderController {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             User user = userController.getCurrentUser();
             purchaseOrder.setUser(user);
-            purchaseOrder.setStatus("Approved");
+            purchaseOrder.setStatus(Constants.STATUS_APPROVED);
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
             return new GenericResponse(true, "approve po");
