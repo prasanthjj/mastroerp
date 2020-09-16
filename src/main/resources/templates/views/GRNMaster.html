@@ -87,7 +87,7 @@
                                     <tbody>
                                     <tr class="gradeX" th:each="grnobj,iterator:${grnList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td th:text="${grnobj.id}">GRN-06082020</td>
+                                        <td th:text="${grnobj.grnNo}">GRN-06082020</td>
                                         <span th:if="${grnobj.createdDate!= null}">
                                         <td th:text="${#dates.format(grnobj.createdDate, 'dd-MMMM-yyyy')}"></td>
                                         </span>
