@@ -55,4 +55,7 @@ public class PurchaseOrder extends Auditable<String> {
             orphanRemoval = true)
     private Set<GRN> grnSet = new HashSet<>();
 
+    @Column(name = "po_no")
+    private String poNo;
+
 }

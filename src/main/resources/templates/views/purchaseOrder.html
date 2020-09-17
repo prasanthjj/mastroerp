@@ -96,7 +96,7 @@
                                     <tbody>
                                     <tr class="gradeX" th:each="purchaseObj,iterator:${purchaseList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td th:text="${purchaseObj.id}">PO-06082020</td>
+                                        <td th:text="${purchaseObj.poNo}">PO-06082020</td>
                                         <span th:if="${purchaseObj.createdDate!= null}">
                                         <td th:text="${#dates.format(purchaseObj.createdDate, 'dd-MMMM-yyyy')}"></td>
                                         </span>

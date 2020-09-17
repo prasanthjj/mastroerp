@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.controller.UserController;
@@ -232,6 +233,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     indentItemPartyGroupRepository.save(indentItemPartyGroup);
                 }
                 purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);
+                purchaseOrderRepository.save(purchaseOrder);
+                Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+                String currentBranchCode = currentBranch.getBranchCode();
+                if (currentBranchCode != null) {
+                    purchaseOrder.setPoNo(MastroApplicationUtils.generateName(currentBranchCode, "PO", purchaseOrder.getId()));
+                }
                 purchaseOrderRepository.save(purchaseOrder);
             }
 
