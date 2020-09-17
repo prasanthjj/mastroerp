@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals |PO GRN List</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i>PO GRN List</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>GRN List </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title mastro-ibox-title ">
+                            <!-- <h5 class="text-info"> <strong> <i class="fa fa-barcode"></i> HSN List</strong></h5> -->
+                            <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item font-bold" th:href="@{/inventory/getCreateGRN}"><i
+                                                class="fa fa-plus-square"></i> Add GRN </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-grn">
+                                    <thead class="mastro-blue-bg txt-white">
+                                    <tr>
+                                        <th class="mastro-blue-bg txt-white">No</th>
+                                        <th>GRN No.</th>
+                                        <th>GRN Date</th>
+                                        <th>PO No.</th>
+                                        <!-- <th>Chalan Qty</th>-->
+                                        <!-- <th>Short Qty</th>
+                                         <th>Accepted Qty</th>
+                                         <th>Avl.Stock Qty</th>
+                                         <th>Rate</th>-->
+                                        <th>GRN Status</th>
+                                        <!-- <th>Controls</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeX" th:each="grnobj,iterator:${grnList}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td th:text="${grnobj.grnNo}">GRN-06082020</td>
+                                        <span th:if="${grnobj.createdDate!= null}">
+                                        <td th:text="${#dates.format(grnobj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                        <span th:unless="${grnobj.createdDate!= null}">
+                                        <td></td>
+                                        </span>
+                                        <!-- <td></td>-->
+                                        <td th:text="${grnobj.purchaseOrder.id}">PO-28796452</td>
+                                        <!--<td>100</td>
+                                        <td class="center">50</td>
+                                        <td class="center">50</td>
+                                        <td class="center">200</td>
+                                        <td class="center">135</td>-->
+                                        <td><a href="#" th:href="@{/inventory/getGRNPreview?grnId=__${grnobj.id}__}"><b
+                                                th:text="${grnobj.status}">Draft</b></a></td>
+                                        <!-- <td class="center">
+                                             <div class="btn-group">
+                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                                     Action
+                                                 </button>
+                                                 <ul class="dropdown-menu">
+                                                     &lt;!&ndash; <li><a class="dropdown-item font-bold" href="#"><i
+                                                              class="fa fa-eye"></i> Browse</a></li>
+                                                      <li class="dropdown-divider"></li>&ndash;&gt;
+                                                     <li><a class="dropdown-item font-bold" href="#"><i
+                                                             class="fa fa-edit"></i> Manage</a></li>
+                                                     <li class="dropdown-divider"></li>
+                                                     &lt;!&ndash; <li><a class="dropdown-item font-bold " href="#"><i
+                                                              class="fa fa-trash"></i> Remove</a></li>&ndash;&gt;
+                                                 </ul>
+                                             </div>
+                                         </td>-->
+                                    </tr>
+
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/mastro/mastro_datatables.js"
+        th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
+</body>
+</html>

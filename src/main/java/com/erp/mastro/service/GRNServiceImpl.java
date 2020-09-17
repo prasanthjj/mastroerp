@@ -159,7 +159,7 @@ public class GRNServiceImpl implements GRNService {
             }
             if (count == 0) {
                 PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
-                purchaseOrder.setStatus(Constants.STATUS_CLOSED);
+                purchaseOrder.setStatus(Constants.STATUS_PO_DELIVERY_COMPLETE);
                 purchaseOrderRepository.save(purchaseOrder);
             } else {
                 PurchaseOrder purchaseOrder = grn.getPurchaseOrder();

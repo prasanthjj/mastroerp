@@ -123,10 +123,17 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
 
-                                                    <span th:if="${purchaseObj.status== 'Reviewed'}">
+                                                    <span th:if="${purchaseObj.status== 'Delivery in progress'}">
                                                     <li><a class="dropdown-item font-bold"
-                                                           th:href="${'/purchase/getPurchaseOrderOnReview?indentId='+{purchaseObj.indent.id}+'&poId='+{purchaseObj.id}}"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
+                                                           th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
+                                                    <i
+                                                            class="fa fa-edit"></i> View GRNS</a></li>
+                                                    </span>
+                                                    <span th:if="${purchaseObj.status== 'Delivery complete'}">
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
+                                                    <i
+                                                            class="fa fa-edit"></i> View GRNS</a></li>
                                                     </span>
 
                                                 </ul>
