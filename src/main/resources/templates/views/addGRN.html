@@ -541,10 +541,10 @@ else if (id == 'invoiceBtn'){
     }
     else
     {
-    document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value=' ';
+    document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value='';
       swal({
   title: "Quantity Mismatch",
- text: "DC/Invoice quantity must less than or equal to pending quantity"
+ text: "DC/Invoice quantity must be less than or equal to pending quantity"
          });
 
     }
@@ -561,10 +561,10 @@ else if (id == 'invoiceBtn'){
     }
     else
     {
-    document.getElementById('grnpoItemsModels'+arg+'.received').value=' ';
+    document.getElementById('grnpoItemsModels'+arg+'.received').value='';
        swal({
   title: "Quantity Mismatch",
- text: "Recevied quantity must less than or equal to DC/invoice quantity."
+ text: "Recevied quantity must be less than or equal to DC/invoice quantity."
          });
 
     }
@@ -579,11 +579,11 @@ else if (id == 'invoiceBtn'){
     }
 else
 {
-document.getElementById('grnpoItemsModels'+arg+'.accepted').value=' ';
+document.getElementById('grnpoItemsModels'+arg+'.accepted').value='';
 
           swal({
   title: "Quantity Mismatch",
- text: "Accepted quantity must less than or equal to recevied quantity."
+ text: "Accepted quantity must be less than or equal to recevied quantity."
          });
 
 
