@@ -324,11 +324,14 @@
                                             <td style="padding: 0px;margin: 0px;">
                                                 <table width="100%">
                                                     <tr>
-                                                        <td th:text="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}" width="17%">
-                                                            11
+                                                        <td width="17%">
+                                                            <span th:text="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}">11</span>
+                                                            <input type="hidden"
+                                                                   th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].pending}">
                                                         </td>
                                                         <td width="17%">
                                                             <input type="text" class="form-control dcQtys" required
+                                                                   onfocusout="dcorInvoiceFunction(this.name.substring(17, 18))"
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].quantityDc}"/>
                                                         </td>
                                                         <td width="17%">
@@ -340,7 +343,7 @@
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].received}"/>
                                                         </td>
                                                         <td width="17%">
-                                                            <input type="text" class="form-control" required
+                                                            <input type="text" class="form-control" required readonly
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].shortage}"/>
                                                         </td>
                                                         <td width="16%">
@@ -349,7 +352,7 @@
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].accepted}"/>
                                                         </td>
                                                         <td width="16%">
-                                                            <input type="text" class="form-control" required
+                                                            <input type="text" class="form-control" required readonly
                                                                    th:field="${grnForm.grnpoItemsModels[__${iterator.index}__].rejected}"/>
                                                         </td>
                                                     </tr>
@@ -528,15 +531,63 @@ else if (id == 'invoiceBtn'){
  }     } });
 
 
+
+ function dcorInvoiceFunction(arg) {
+    var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
+    var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
+    if(dcQty<=pendingQty)
+    {
+
+    }
+    else
+    {
+    document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value=' ';
+      swal({
+  title: "Quantity Mismatch",
+ text: "DC/Invoice quantity must less than or equal to pending quantity"
+         });
+
+    }
+
+}
+
   function shortageFunction(arg) {
     var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
     var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
+    var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
+    if(recQty<=dcQty)
+    {
     document.getElementById('grnpoItemsModels'+arg+'.shortage').value=dcQty-recQty;
+    }
+    else
+    {
+    document.getElementById('grnpoItemsModels'+arg+'.received').value=' ';
+       swal({
+  title: "Quantity Mismatch",
+ text: "Recevied quantity must less than or equal to DC/invoice quantity."
+         });
+
+    }
 
 }
  function rejectedFunction(arg) {
     var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
     var acceptQty=document.getElementById('grnpoItemsModels'+arg+'.accepted').value;
+    if(acceptQty<=recQty)
+    {
     document.getElementById('grnpoItemsModels'+arg+'.rejected').value=recQty-acceptQty;
+    }
+else
+{
+document.getElementById('grnpoItemsModels'+arg+'.accepted').value=' ';
+
+          swal({
+  title: "Quantity Mismatch",
+ text: "Accepted quantity must less than or equal to recevied quantity."
+         });
+
+
+}
+
 }
 </script>

@@ -63,8 +63,8 @@ public class GRNController {
             model.addAttribute("GRNTab", "GRN");
             List<GRN> grnList = grnService.getAllGRNs().stream()
                     .filter(grn -> (null != grn))
-                    .filter(grn -> (!grn.getStatus().equals("Empty")))
-                    .filter(grn -> (!grn.getStatus().equals("Discard")))
+                    .filter(grn -> (!grn.getStatus().equals(Constants.STATUS_INITIAL)))
+                    .filter(grn -> (!grn.getStatus().equals(Constants.STATUS_DISCARD)))
                     .filter(grn -> (grn.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
                             GRN::getId).reversed())
@@ -257,7 +257,7 @@ public class GRNController {
         MastroLogUtils.info(GRNController.class, "Going to Review GRN" + grnId);
         try {
             GRN grn = grnService.getGRNById(grnId);
-            grn.setStatus("Reviewed");
+            grn.setStatus(Constants.STATUS_REVIEWED);
             grn.setReason(reason);
             grnRepository.save(grn);
             return new GenericResponse(true, "Review grn");
@@ -276,7 +276,7 @@ public class GRNController {
         MastroLogUtils.info(GRNController.class, "Going to Discard GRN" + grnId);
         try {
             GRN grn = grnService.getGRNById(grnId);
-            grn.setStatus("Discard");
+            grn.setStatus(Constants.STATUS_DISCARD);
             grn.setReason(reason);
             grnRepository.save(grn);
             return new GenericResponse(true, "Discard grn");

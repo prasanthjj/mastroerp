@@ -1,5 +1,6 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -69,7 +70,7 @@ public class GRNRequestModel {
                 this.rate = indentItemPartyGroup.getRate();
                 Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
                         .filter(grnData -> (null != grnData))
-                        .filter(grnData -> (!grnData.getStatus().equals("Discard")))
+                        .filter(grnData -> (!grnData.getStatus().equals(Constants.STATUS_DISCARD)))
                         .collect(Collectors.toSet());
                 if (grns.isEmpty() == false) {
                     Set<GRNItems> grnItemsSet = new HashSet<>();

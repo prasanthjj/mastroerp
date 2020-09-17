@@ -159,7 +159,7 @@ public class GRNServiceImpl implements GRNService {
             }
             if (count == 0) {
                 PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
-                purchaseOrder.setStatus("Closed");
+                purchaseOrder.setStatus(Constants.STATUS_CLOSED);
                 purchaseOrderRepository.save(purchaseOrder);
             }
 
@@ -226,7 +226,7 @@ public class GRNServiceImpl implements GRNService {
                     grnItems.setGrn(grn);
                     Set<GRN> grns = indentItemPartyGroup.getPurchaseOrder().getGrnSet().stream()
                             .filter(grnData -> (null != grnData))
-                            .filter(grnData -> (!grnData.getStatus().equals("Discard")))
+                            .filter(grnData -> (!grnData.getStatus().equals(Constants.STATUS_DISCARD)))
                             .collect(Collectors.toSet());
 
                     if (grns.isEmpty() == false) {
