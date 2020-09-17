@@ -55,4 +55,16 @@ public class IndentItemPartyGroup extends Auditable<String> {
     @Column(name = "grn_pending_status", nullable = false)
     private int grnPendingStatus;
 
+    @Column(name = "hsn_code")
+    private String hsnCode;
+
+    @Column(name = "cgst_rate")
+    private Double cgstRate;
+
+    @Column(name = "sgst_rate")
+    private Double sgstRate;
+
+    @Column(name = "cess_rate")
+    private Double cessRate;
+
 }

@@ -230,6 +230,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     itemStockDetailsSet1.add(indentItemPartyGroup.getItemStockDetails());
                     indentItemPartyGroup.setEnabled(true);
                     indentItemPartyGroup.setPurchaseOrder(purchaseOrder);
+                    indentItemPartyGroup.setHsnCode(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
+                    indentItemPartyGroup.setSgstRate(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst());
+                    indentItemPartyGroup.setCgstRate(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst());
+                    if (indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
+                        indentItemPartyGroup.setCessRate(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess());
+                    } else {
+                        indentItemPartyGroup.setCessRate(0.0);
+                    }
                     indentItemPartyGroupRepository.save(indentItemPartyGroup);
                 }
                 purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);

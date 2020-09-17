@@ -161,6 +161,10 @@ public class GRNServiceImpl implements GRNService {
                 PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
                 purchaseOrder.setStatus(Constants.STATUS_CLOSED);
                 purchaseOrderRepository.save(purchaseOrder);
+            } else {
+                PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
+                purchaseOrder.setStatus(Constants.STATUS_PO_DELIVERYINPROGRESS);
+                purchaseOrderRepository.save(purchaseOrder);
             }
 
         }

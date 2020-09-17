@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
@@ -337,7 +338,7 @@ public class PurchaseOrderController {
                     indentItemPartyGroupRequestModelsView.setBaseuom(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getUom().getUOM());
                     indentItemPartyGroupRequestModelsView.setPurchaseuom(indentItemPartyGroup.getItemStockDetails().getPurchaseUOM().getUOM());
                     indentItemPartyGroupRequestModelsView.setRate(indentItemPartyGroup.getRate());
-                    indentItemPartyGroupRequestModelsView.setHsnnoo(indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
+                    indentItemPartyGroupRequestModelsView.setHsnnoo(indentItemPartyGroup.getHsnCode());
                     Double itemTotalAmount = 0d;
                     Uom purchaseUOM = indentItemPartyGroup.getItemStockDetails().getPurchaseUOM();
                     ProductUOM productUOMPurchase = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
@@ -347,22 +348,18 @@ public class PurchaseOrderController {
                             .findFirst().get();
 
                     itemTotalAmount = indentItemPartyGroup.getQuantity() * productUOMPurchase.getConvertionFactor() * indentItemPartyGroup.getRate();
-                    indentItemPartyGroupRequestModelsView.setTotal(itemTotalAmount);
+                    indentItemPartyGroupRequestModelsView.setTotal(MastroApplicationUtils.roundTwoDecimals(itemTotalAmount));
                     indentItemPartyGroupRequestModels.add(indentItemPartyGroupRequestModelsView);
                     subTotal = subTotal + itemTotalAmount;
                     Double taxCalculationPercentage = 0d;
-                    if (indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
-                        taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess();
-                    } else {
-                        taxCalculationPercentage = indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCgst() + indentItemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getSgst();
-                    }
+                    taxCalculationPercentage = indentItemPartyGroup.getCgstRate() + indentItemPartyGroup.getSgstRate() + indentItemPartyGroup.getCessRate();
                     tax = tax + ((itemTotalAmount * taxCalculationPercentage) / 100);
                 }
                 model.addAttribute("indentItemPartyGroupData", indentItemPartyGroupRequestModels);
-                model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
-                model.addAttribute("tax", Math.round(tax * 100.0) / 100.0);
+                model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+                model.addAttribute("tax", MastroApplicationUtils.roundTwoDecimals(tax));
                 Double finalTotal = subTotal + tax;
-                model.addAttribute("finalTotal", Math.round(finalTotal * 100.0) / 100.0);
+                model.addAttribute("finalTotal", MastroApplicationUtils.roundTwoDecimals(finalTotal));
             }
 
             return "views/purchaseOrderPreview";
@@ -420,7 +417,7 @@ public class PurchaseOrderController {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             User user = userController.getCurrentUser();
             purchaseOrder.setUser(user);
-            purchaseOrder.setStatus("Reviewed");
+            purchaseOrder.setStatus(Constants.STATUS_REVIEWED);
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
             return new GenericResponse(true, "poReview");
@@ -451,7 +448,7 @@ public class PurchaseOrderController {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             User user = userController.getCurrentUser();
             purchaseOrder.setUser(user);
-            purchaseOrder.setStatus("Discard");
+            purchaseOrder.setStatus(Constants.STATUS_DISCARD);
             purchaseOrder.setReason(reason);
             purchaseOrderRepository.save(purchaseOrder);
             purchaseOrderService.poDiscardChange(purchaseOrder.getId());

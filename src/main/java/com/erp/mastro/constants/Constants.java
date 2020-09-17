@@ -20,5 +20,6 @@ public class Constants {
     public static final String STATUS_INITIAL = "Initial";
     public static final String STATUS_DISCARD = "Discard";
     public static final String STATUS_REVIEWED = "Reviewed";
+    public static final String STATUS_PO_DELIVERYINPROGRESS = "Delivery in progress";
 
 }
