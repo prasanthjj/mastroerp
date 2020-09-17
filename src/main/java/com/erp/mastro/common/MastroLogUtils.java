@@ -1,6 +1,7 @@
 package com.erp.mastro.common;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -26,10 +27,9 @@ public class MastroLogUtils {
         loggers.getOrDefault(currentObject.getClass(), defaultLogger).error(message, e);
     }
 
-
-    public static void error(Object currentObject, String message) {
-        putLoggerIfAbsent(currentObject);
-        loggers.getOrDefault(currentObject.getClass(), defaultLogger).error(message);
+    public static void error(Class<?> currentObject, String message) {
+        Logger logger = LoggerFactory.getLogger(currentObject);
+        logger.error(logger.getName() + ": " + message);
     }
 
     public static void error(Object currentObject, String message, Object... args) {
@@ -42,10 +42,9 @@ public class MastroLogUtils {
         loggers.getOrDefault(currentObject.getClass(), defaultLogger).debug(message, e);
     }
 
-
-    public static void debug(Object currentObject, String message) {
-        putLoggerIfAbsent(currentObject);
-        loggers.getOrDefault(currentObject.getClass(), defaultLogger).debug(message);
+    public static void debug(Class<?> currentObject, String message) {
+        Logger logger = LoggerFactory.getLogger(currentObject);
+        logger.debug(logger.getName() + ": " + message);
     }
 
     public static void debug(Object currentObject, String message, Object... args) {
@@ -53,15 +52,14 @@ public class MastroLogUtils {
         loggers.getOrDefault(currentObject.getClass(), defaultLogger).debug(message, args);
     }
 
-
     public static void warn(Object currentObject, String message, Throwable e) {
         putLoggerIfAbsent(currentObject);
         loggers.getOrDefault(currentObject.getClass(), defaultLogger).warn(message, e);
     }
 
-    public static void warn(Object currentObject, String message) {
-        putLoggerIfAbsent(currentObject);
-        loggers.getOrDefault(currentObject.getClass(), defaultLogger).warn(message);
+    public static void warn(Class<?> currentObject, String message) {
+        Logger logger = LoggerFactory.getLogger(currentObject);
+        logger.warn(logger.getName() + ": " + message);
     }
 
     public static void warn(Object currentObject, String message, Object... args) {
@@ -74,9 +72,9 @@ public class MastroLogUtils {
         loggers.getOrDefault(currentObject.getClass(), defaultLogger).info(message, e);
     }
 
-    public static void info(Object currentObject, String message) {
-        putLoggerIfAbsent(currentObject);
-        loggers.getOrDefault(currentObject.getClass(), defaultLogger).info(message);
+    public static void info(Class<?> currentObject, String message) {
+        Logger logger = LoggerFactory.getLogger(currentObject);
+        logger.info(logger.getName() + ": " + message);
     }
 
     public static void info(Object currentObject, String message, Object... args) {
