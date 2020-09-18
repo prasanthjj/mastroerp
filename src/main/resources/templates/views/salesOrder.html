@@ -82,30 +82,33 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <span th:if="${salesOrderList!= null}">
+                         <span th:if="${salesOrderList!= null}">
                         <tr class="gradeX" th:each="salesObj,iterator:${salesOrderList}">
                         <td th:text="${iterator.index+1}">1</td>
-                        <td th:text="${salesObj.id}">SO-060820</td>
-                        <td>----</td>
+                        <td>SO-<span th:text="${salesObj.id}"></span></td>
+                       <span th:if="${salesObj.createdDate!= null}">
+                              <td th:text="${#dates.format(salesObj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                    <span th:unless="${salesObj.createdDate!= null}">
+                                        <td>--------</td>
+                                    </span>
                         <td th:text="${salesObj.party.partyName}"></td>
                             <!-- <td th:text="${salesObj.salesOrderProductSet.product.hsn.hsnCode}">100</td>-->
                                         <td><a href="#" th:href="@{/sales/getSalesOrderPreview?soId=__${salesObj.id}__}" >
                                             <b th:text="${salesObj.status}">Draft</b></a></td>
 
                                         <td class="center">
-                                            <div class="btn-group">
+                                            <div class="btn-group" th:if="${salesObj.status} == Reviewed">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-eye"></i> Browse</a></li>
+                                                    <li ><a class="dropdown-item font-bold" href="#">
+
+
+                                                         <i class="fa fa-edit"></i> Manage</a></li>
                                                     <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold" href="#"><i
-                                                            class="fa fa-edit"></i> Manage</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item font-bold " href="#"><i
-                                                            class="fa fa-trash"></i> Remove</a></li>
+
                                                 </ul>
                                             </div>
                                         </td>

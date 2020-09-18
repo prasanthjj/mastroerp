@@ -51,7 +51,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse products(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : " + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
             List<Product> productsFinal = new ArrayList<>();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
@@ -84,7 +84,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse getPartys(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : " + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : {}");
             List<Party> partyFinal = new ArrayList<>();
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
@@ -118,7 +118,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse getPartysOnType(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyType") String partyType) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete based on type : " + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete based on type : {}");
             List<Party> partyFinal = new ArrayList<>();
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
@@ -152,7 +152,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse productsInIndent(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete :" + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
             List<Product> productsFinal = new ArrayList<>();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
@@ -202,7 +202,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse productsInStock(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(com.erp.mastro.controller.AutocompleteController.class, "Going to get product in autocomplete : " + searchTerm);
+            MastroLogUtils.info(com.erp.mastro.controller.AutocompleteController.class, "Going to get product in autocomplete : {}");
             User userDetails = userController.getCurrentUser();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             List<Product> productsFinal = products.stream()
@@ -252,7 +252,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse branches(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get Branch in autocomplete :  " + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get Branch in autocomplete : {}");
             List<Branch> branchFinal = new ArrayList<>();
             List<Branch> branches = autoPopulateDao.getAutoPopulateList("branchName", searchTerm, Branch.class, 50);
             branchFinal = branches.stream()
@@ -286,7 +286,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse productsInSalesSlip(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyId") Long partyId) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete :  " + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
             List<Product> productsFinal = new ArrayList<>();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
@@ -332,7 +332,7 @@ public class AutocompleteController {
     @ResponseBody
     public GenericResponse getCustomerPartys(@RequestParam("searchTerm") String searchTerm) {
         try {
-            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete :" + searchTerm);
+            MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : {}");
             List<Party> partyFinal = new ArrayList<>();
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
@@ -355,5 +355,68 @@ public class AutocompleteController {
             throw e;
         }
     }
+
+    @RequestMapping(value = "/items/customer", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse productsInCustomer(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyId") Long partyId) {
+        try {
+            MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
+            List<Product> productsFinal = new ArrayList<>();
+            List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
+            productsFinal = products.stream()
+                    .filter(productData -> (null != productData))
+                    .filter(productData -> (true == productData.isEnabled()))
+                    .collect(Collectors.toList());
+
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            Set<Product> productSet = new HashSet<>();
+            for (Product product : productsFinal) {
+                Set<Stock> stocksSet = indentService.getAllStocks().stream()
+                        .filter(stockData -> (null != stockData))
+                        .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                        .filter(stockData -> (product.getId().equals(stockData.getProduct().getId())))
+                        .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                        .collect(Collectors.toSet());
+                if (stocksSet.isEmpty() == false) {
+                    Stock stock = stocksSet.stream().findFirst().get();
+                    productSet.add(stock.getProduct());
+                } else {
+                    MastroLogUtils.info(AutocompleteController.class, "stock set is empty for the product" + product.getId() + "in branch" + currentBranch.getId());
+                }
+            }
+
+            Set<ProductRequestModel> productRequestModels = new HashSet<ProductRequestModel>();
+            for (Product product : productSet) {
+                Set<ProductPartyRateRelation> productPartyRateRelationSet=product.getProductPartyRateRelations().stream()
+                        .filter(productPartyData -> (null !=productPartyData))
+                        .filter(productPartyData -> (partyId.equals(productPartyData.getParty().getId())))
+                        .collect(Collectors.toSet());
+                if(productPartyRateRelationSet.isEmpty()==false)
+                {
+                    ProductRequestModel productRequestModel = new ProductRequestModel();
+                    productRequestModel.setId(product.getId());
+                    productRequestModel.setProductname(product.getProductName());
+                    productRequestModels.add(productRequestModel);
+                }
+
+            }
+
+            /*Set<ProductRequestModel> productRequestModels = new HashSet<ProductRequestModel>();
+            for (Product product : productSet) {
+                ProductRequestModel productRequestModel = new ProductRequestModel();
+                productRequestModel.setId(product.getId());
+                productRequestModel.setProductname(product.getProductName());
+                productRequestModels.add(productRequestModel);
+
+            }*/
+            return new GenericResponse(true, "get items")
+                    .setProperty("products", productRequestModels);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
 
 }
