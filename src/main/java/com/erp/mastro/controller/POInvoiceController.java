@@ -5,6 +5,7 @@ import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.model.request.GRNRequestModel;
+import com.erp.mastro.service.interfaces.HSNService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class POInvoiceController {
 
     @Autowired
     private UserController userController;
+
+    @Autowired
+    HSNService hsnService;
 
     @RequestMapping(value = "/getPurchaseOrderInvoice", method = RequestMethod.GET)
     public String getPurchaseOrderInvoice(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
@@ -56,7 +60,8 @@ public class POInvoiceController {
                 }
                 List<GRNRequestModel.GRNPOItemsModel> poGRNItemsModelList = new ArrayList<>();
                 Double subTotal = 0d;
-                Double tax = 0d;
+                Double cessTotal = 0d;
+                Double loadingChargeSum = 0d;
                 for (GRNItems grnItems : grnItemsSet) {
                     GRNRequestModel.GRNPOItemsModel grnpoItemsModel = new GRNRequestModel.GRNPOItemsModel();
                     grnpoItemsModel.setQuantityDc(grnItems.getQuantityDc());
@@ -78,15 +83,34 @@ public class POInvoiceController {
                     grnpoItemsModel.setItemTotal(total);
                     Double totalCGST = total * (grnItems.getCgstRate() / 100);
                     Double totalSGST = total * (grnItems.getSgstRate() / 100);
+                    cessTotal = cessTotal + (total * (grnItems.getCessRate() / 100));
                     grnpoItemsModel.setItemCgstAmt(totalCGST);
                     grnpoItemsModel.setItemSgstAmt(totalSGST);
                     Double finalItemTotal = total + totalCGST + totalSGST;
                     grnpoItemsModel.setFinalItemTotal(finalItemTotal);
                     subTotal = subTotal + finalItemTotal;
                     poGRNItemsModelList.add(grnpoItemsModel);
+                    loadingChargeSum = loadingChargeSum + (grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getLoadingCharge() * grnItems.getQuantityDc() * productUOMPurchase.getConvertionFactor());
                 }
+                HSN loadingHSN = hsnService.getAllHSN().stream()
+                        .filter(hsnData -> (null != hsnData))
+                        .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                        .filter(hsnData -> hsnData.getHsnCode().equals("7314"))
+                        .findFirst().get();
+                Double loadingChargeSgstAmt = loadingChargeSum * (loadingHSN.getSgst() / 100);
+                Double loadingChargeCgstAmt = loadingChargeSum * (loadingHSN.getCgst() / 100);
+                Double finalLoadingCharge = loadingChargeSum + loadingChargeSgstAmt + loadingChargeCgstAmt;
+                model.addAttribute("loadingHSN", loadingHSN);
                 model.addAttribute("grnItems", poGRNItemsModelList);
                 model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+                model.addAttribute("loadingChargeSum", MastroApplicationUtils.roundTwoDecimals(loadingChargeSum));
+                model.addAttribute("loadingChargeSgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeSgstAmt));
+                model.addAttribute("loadingChargeCgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeCgstAmt));
+                model.addAttribute("finalLoadingCharge", MastroApplicationUtils.roundTwoDecimals(finalLoadingCharge));
+                if (loadingHSN.getCess() != null) {
+                    cessTotal = cessTotal + (loadingChargeSum * (loadingHSN.getCess() / 100));
+                }
+                model.addAttribute("cessTotal", MastroApplicationUtils.roundTwoDecimals(cessTotal));
 
             }
             return "views/createPOInvoice";

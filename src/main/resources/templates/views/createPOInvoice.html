@@ -139,6 +139,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td><span th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">839.9924</span>
                                         </td>
 
@@ -146,15 +147,24 @@
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <!-- <td><span th:text="${hsnDetails}">7314</span></td>-->
-                                        <td>Loading Charges@18%(Sales)</td>
-                                        <td>18</td>
+                                        <td><span th:text="${loadingHSN.hsnCode}">7314</span></td>
+                                        <td>Loading Charges@<span th:text="${loadingHSN.igst}">18</span>%(Purchase)</td>
                                         <td></td>
                                         <td></td>
-                                        <!-- <td> <span th:text="${totalTaxableValue}">4.0000</span></td>
-                                         <td><span th:text="${cgstAmt}">0.3600</span></td>
-                                         <td><span th:text="${sgstAmt}">0.3600</span></td>
-                                         <td><span th:text="${loadingCharge}">0.7200</span></td>-->
+                                        <td></td>
+                                        <td></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(loadingChargeSum, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(loadingChargeSgstAmt, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(loadingChargeCgstAmt, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(finalLoadingCharge, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
 
 
                                     </tr>
@@ -168,7 +178,10 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <!--  <td> <span th:text="${totalCess}">7.1586</span></td>-->
+                                        <td></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(cessTotal, 0, 'COMMA', 4, 'POINT')}">7.1586</span>
+                                        </td>
 
 
                                     </tr>
@@ -180,13 +193,13 @@
                                 </table>
                             </div>
 
-                            <form th:action="@{/inventory/saveSalesSlipFullDetails}"
-                                  th:object="${salesSlipForm}"
-                                  name="salesSlipForm" method="post">
+                            <form>
                                 <!-- <input type="hidden" name="id" th:value="${salesSlipDetails.id}">-->
                                 <div class="row m-t-md">
 
                                     <div class="col-lg-12 text-right">
+                                        <h3 class=""> Round Off :(-)
+                                            <!--<span th:text="${finalroundoff}"> 850.0000</span>--></h3>
                                         <h3 class="">Grand Total :<!--<span th:text="${grandTotal}"></span>--> </h3>
                                     </div>
 
