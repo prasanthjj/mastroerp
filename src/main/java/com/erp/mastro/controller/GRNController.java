@@ -207,12 +207,7 @@ public class GRNController {
                 for (GRNItems grnItems : grn.getGrnItems()) {
                     subTotal = subTotal + grnItems.getTotalPrice();
                     Double taxCalculationPercentage = 0d;
-                    if (grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
-                        taxCalculationPercentage = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getSgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCess();
-
-                    } else {
-                        taxCalculationPercentage = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCgst() + grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getSgst();
-                    }
+                    taxCalculationPercentage = grnItems.getCgstRate() + grnItems.getSgstRate() + grnItems.getCessRate();
                     tax = tax + ((grnItems.getTotalPrice() * taxCalculationPercentage) / 100);
                 }
                 model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));

@@ -101,7 +101,9 @@
                                         <td class="center">50</td>
                                         <td class="center">200</td>
                                         <td class="center">135</td>-->
-                                        <td><a href="#" th:href="@{/inventory/getGRNPreview?grnId=__${grnobj.id}__}"><b
+                                        <td><a data-toggle="modal" class="dropdown-item font-bold posGRNView"
+                                               data-target="#getPoGRN" href="#"
+                                               th:data-grnids="${grnobj.id}"><b
                                                 th:text="${grnobj.status}">Draft</b></a></td>
                                         <!-- <td class="center">
                                              <div class="btn-group">
@@ -144,6 +146,78 @@
     </div>
 
 </div>
+<div class="modal inmodal" id="getPoGRN" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">View GRN </h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-bordered table-hover dataTables-example"
+                               id="pogrnview">
+                            <thead class="mastro-blue-bg txt-white">
+                            <tr>
+                                <th class="mastro-blue-bg txt-white">Item List</th>
+                                <th>HSN Code</th>
+                                <th>Pending</th>
+                                <th>DC/Invoice Quantity</th>
+                                <th>Received</th>
+                                <th>Shotage</th>
+                                <th>Accepted</th>
+                                <th>Rejected</th>
+                                <th>Price/Unit</th>
+                                <th>Discount %</th>
+                                <th>Total Price</th>
+                                <th>CGST Amount</th>
+                                <th>SGST Amount</th>
+                                <th>CESS Amount</th>
+
+                            </tr>
+                            </thead>
+                            <tbody class="">
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <table class="table invoice-total">
+                        <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>Rs <span id="subtotal"
+                            >1026.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>TAX :</strong></td>
+                            <td>Rs <span id="tax"
+                            ></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL :</strong></td>
+                            <td>Rs <span id="total"
+                            ></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
@@ -170,5 +244,42 @@
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
 <script src="../resources/js/mastro/mastro_datatables.js"
         th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
+<script>
+
+      $("body").on('click','.posGRNView',function (e) {
+
+        e.preventDefault();
+         var poGRNId=$(this).data('grnids');
+
+         	$.ajax({
+          url: '/purchase/getPOGRNView',
+          type: 'GET',
+          dataType : 'json',
+          data: { 'poGRNId': poGRNId },
+
+          success: function(data){
+                   if(data.success) {
+      $("#pogrnview tbody").html("");
+       $.each(data.data.poGRNItemsModelList, function(){
+       var tblRow = "<tr class='gradeX'>" + "<td>" + this['nameOfProduct'] + "</td>"+ "<td class='center'>" + this['hsncode'] + "</td>" + "<td class='center'>" + this['pending'] +"</td>" +"<td class='center'>"+this['quantityDc']+"</td>"+"<td class='center'>"+this['received']+"</td>"+"<td class='center'>"+this['shortage']+"</td>"+"<td class='center'>"+this['accepted']+"/"+this['uomPurchase']+"</td>"+"<td class='center'>"+this['rejected']+"</td>"+"<td class='center'>"+this['rate']+"/"+this['uomBase']+"</td>"+"<td class='center'>"+this['discount']+"</td>"+"<td class='center'>"+this['itemTotal']+"</td>"+"<td class='center'>"+this['itemCgstAmt']+"</td>"+"<td class='center'>"+this['itemSgstAmt']+"</td>"+"<td class='center'>"+this['itemCessAmt']+"</td>"+"</tr>";
+       $(tblRow).appendTo("#pogrnview tbody");
+
+       });
+        $('#subtotal').text(data.data.totalPrice);
+         $('#tax').text(data.data.tax);
+          $('#total').text(data.data.finalTotal);
+
+                                    }
+
+                               },
+
+      error: function(jqXHR, textStatus)
+       {
+       alert('Error Occured');
+        }
+           });
+       });
+
+</script>
 </body>
 </html>

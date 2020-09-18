@@ -5,9 +5,11 @@ import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
 import com.erp.mastro.repository.ItemStockDetailsRepository;
 import com.erp.mastro.repository.PurchaseOrderRepository;
+import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
 import org.slf4j.Logger;
@@ -46,6 +48,9 @@ public class PurchaseOrderController {
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
 
+    @Autowired
+    private GRNService grnService;
+
     /**
      * method to get purchase order list
      *
@@ -54,7 +59,7 @@ public class PurchaseOrderController {
      */
     @GetMapping("/getPurchaseOrderList")
     public String getIndentList(Model model) {
-        logger.info("Going to get indent list: {}");
+        logger.info("Going to get indent list: ");
         try {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<PurchaseOrder> purchaseList = purchaseOrderService.getAllPurchaseOrders().stream()
@@ -79,7 +84,7 @@ public class PurchaseOrderController {
             return "views/purchaseOrder";
 
         } catch (Exception e) {
-            logger.error("Error occured while getting indent list: {}", e);
+            logger.error("Error occured while getting indent list: ", e);
             throw e;
         }
 
@@ -95,7 +100,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/getPurchaseOrderViaIndent", method = RequestMethod.GET)
     public String getPurchaseOrderViaIndent(HttpServletRequest request, @RequestParam("indentId") Long indentId, Model model) {
-        logger.info("Going to get indent :{}" + indentId);
+        logger.info("Going to get indent :" + indentId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -106,7 +111,7 @@ public class PurchaseOrderController {
             return "views/addPoViaIndent";
 
         } catch (Exception e) {
-            logger.error("Error occured while getPurchaseOrderViaIndent :{}" + indentId, e);
+            logger.error("Error occured while getPurchaseOrderViaIndent :" + indentId, e);
             throw e;
         }
     }
@@ -122,7 +127,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/splitIndentItem", method = RequestMethod.GET)
     public String getsplitIndentItem(HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId, Model model) {
-        logger.info("Going to get indent item supplyers:{}" + indentItemId);
+        logger.info("Going to get indent item supplyers:" + indentItemId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -151,7 +156,7 @@ public class PurchaseOrderController {
             return "views/splitIndentItem";
 
         } catch (Exception e) {
-            logger.error("Error occured while get indent item split :{}" + indentItemId, e);
+            logger.error("Error occured while get indent item split :" + indentItemId, e);
             throw e;
         }
     }
@@ -166,7 +171,7 @@ public class PurchaseOrderController {
      */
     @PostMapping("/createIndentItemPartyGroup")
     public String createIndent(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
-        logger.info("Going to create IndentItemPartyGroup : {}" + indentItemPartyGroupRequestModel.toString());
+        logger.info("Going to create IndentItemPartyGroup : " + indentItemPartyGroupRequestModel.toString());
         try {
             ItemStockDetails itemStockDetails = purchaseOrderService.IndentItemPartyGroup(indentItemPartyGroupRequestModel);
             model.addAttribute("purchaseModule", "purchaseModule");
@@ -206,7 +211,7 @@ public class PurchaseOrderController {
      */
     @PostMapping("/saveIndentItemGroupData")
     public String saveIndentItemGroupData(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
-        logger.info("Going to save additional  details: {}" + indentItemPartyGroupRequestModel.toString());
+        logger.info("Going to save additional  details: " + indentItemPartyGroupRequestModel.toString());
         try {
             purchaseOrderService.IndentItemGroupDatas(indentItemPartyGroupRequestModel);
             return "redirect:/purchase/getPurchaseOrderViaIndent?indentId=" + indentItemPartyGroupRequestModel.getIndentId();
@@ -214,7 +219,7 @@ public class PurchaseOrderController {
             logger.error("indentItemPartyGroupRequestModel empty", e, this);
             return "redirect:/purchase/getPurchaseOrderViaIndent?indentId=" + indentItemPartyGroupRequestModel.getIndentId();
         } catch (Exception e) {
-            logger.error("Error occured while save indent item group details : {}", e);
+            logger.error("Error occured while save indent item group details : ", e);
             throw e;
         }
 
@@ -230,12 +235,12 @@ public class PurchaseOrderController {
     @PostMapping("/createPO")
     public String createPO(HttpServletRequest request, Model model) {
         String indentId = request.getParameter("purchaseIndentId");
-        logger.info("Going to create purchase order for the indent: {}" + indentId);
+        logger.info("Going to create purchase order for the indent:" + indentId);
         try {
             purchaseOrderService.generatePurchaseOrders(indentId);
             return "redirect:/purchase/getPurchaseOrderList";
         } catch (Exception e) {
-            logger.error("Error occured while creating purchase orders : {}", e);
+            logger.error("Error occured while creating purchase orders :", e);
             throw e;
         }
 
@@ -260,7 +265,7 @@ public class PurchaseOrderController {
             return new GenericResponse(true, "delete indent item group details");
 
         } catch (Exception e) {
-            logger.error("Error Occured while deleting indent item group details :{}", e, this);
+            logger.error("Error Occured while deleting indent item group details :", e, this);
 
             throw e;
         }
@@ -301,7 +306,7 @@ public class PurchaseOrderController {
                     .setProperty("indentiteamgroup", indentItemPartyGroupRequestModels);
 
         } catch (Exception e) {
-            logger.error("Error Occured while getting indent iteam group view:{}", e, this);
+            logger.error("Error Occured while getting indent iteam group view:", e, this);
             return new GenericResponse(false, e.getMessage());
 
         }
@@ -318,7 +323,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/getPurchaseOrderPreview", method = RequestMethod.GET)
     public String getPurchaseOrderPreview(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
-        logger.info("Going to get PurchaseOrderPreview :{}" + poId);
+        logger.info("Going to get PurchaseOrderPreview :" + poId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -368,7 +373,7 @@ public class PurchaseOrderController {
             return "views/purchaseOrderPreview";
 
         } catch (Exception e) {
-            logger.error("Error occured while getPurchaseOrderPreview :{}" + poId, e, PurchaseOrderController.class);
+            logger.error("Error occured while getPurchaseOrderPreview :" + poId, e, PurchaseOrderController.class);
             throw e;
         }
     }
@@ -396,7 +401,7 @@ public class PurchaseOrderController {
             return new GenericResponse(true, "approve po");
 
         } catch (Exception e) {
-            logger.error("Error Occured on approve po:{}", e, this);
+            logger.error("Error Occured on approve po:", e, this);
 
             throw e;
         }
@@ -426,7 +431,7 @@ public class PurchaseOrderController {
             return new GenericResponse(true, "poReview");
 
         } catch (Exception e) {
-            logger.error("Error Occured on poReview :{}", e, this);
+            logger.error("Error Occured on poReview :", e, this);
 
             throw e;
         }
@@ -458,7 +463,7 @@ public class PurchaseOrderController {
             return new GenericResponse(true, "poDiscard ");
 
         } catch (Exception e) {
-            logger.error("Error Occured on poDiscard :{}", e, this);
+            logger.error("Error Occured on poDiscard :", e, this);
 
             throw e;
         }
@@ -467,7 +472,7 @@ public class PurchaseOrderController {
 
     @RequestMapping(value = "/getPurchaseOrderOnReview", method = RequestMethod.GET)
     public String getPurchaseOrderOnReview(HttpServletRequest request, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
-        logger.info("Going to get indent :{}" + indentId);
+        logger.info("Going to get indent :" + indentId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -480,14 +485,14 @@ public class PurchaseOrderController {
             return "views/editPoOnReview";
 
         } catch (Exception e) {
-            logger.error("Error occured while getPurchaseOrderViaIndent :{}" + indentId, e);
+            logger.error("Error occured while getPurchaseOrderViaIndent :" + indentId, e);
             throw e;
         }
     }
 
     @RequestMapping(value = "/splitIndentItemReviewEdit", method = RequestMethod.GET)
     public String getsplitIndentItemReviewEdit(HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
-        logger.info("Going to get indent item supplyers edit:{}" + indentItemId);
+        logger.info("Going to get indent item supplyers edit:" + indentItemId);
         try {
             model.addAttribute("purchaseModule", "purchaseModule");
             model.addAttribute("purchaseTab", "purchase");
@@ -526,14 +531,14 @@ public class PurchaseOrderController {
             return "views/splitIndentItemonReviewEdit";
 
         } catch (Exception e) {
-            logger.error("Error occured while get indent item split :{}" + indentItemId, e);
+            logger.error("Error occured while get indent item split :" + indentItemId, e);
             throw e;
         }
     }
 
     @PostMapping("/saveIndentItemGroupDataOnEdit")
     public String saveIndentItemGroupDataOnEdit(@ModelAttribute("indentItemPartyGroupForm") @Valid IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel, HttpServletRequest request, Model model) {
-        logger.info("Going to save additional  details in edit: {}" + indentItemPartyGroupRequestModel.toString());
+        logger.info("Going to save additional  details in edit: " + indentItemPartyGroupRequestModel.toString());
         String poId = request.getParameter("poId");
         try {
             purchaseOrderService.IndentItemGroupDatasInEdit(indentItemPartyGroupRequestModel);
@@ -542,7 +547,7 @@ public class PurchaseOrderController {
             logger.error("indentItemPartyGroupRequestModel empty", e, this);
             return "redirect:/purchase/getPurchaseOrderOnReview?indentId=" + indentItemPartyGroupRequestModel.getIndentId() + "&poId=" + poId;
         } catch (Exception e) {
-            logger.error("Error occured while save indent item group details in edit : {}", e);
+            logger.error("Error occured while save indent item group details in edit : ", e);
             throw e;
         }
 
@@ -552,12 +557,12 @@ public class PurchaseOrderController {
     public String editPO(HttpServletRequest request, Model model) {
         String indentId = request.getParameter("purchaseIndentId");
         String purchaseId = request.getParameter("purchasesId");
-        logger.info("Going to edit purchase order for the indent: {}" + indentId);
+        logger.info("Going to edit purchase order for the indent: " + indentId);
         try {
             purchaseOrderService.editGeneratePurchaseOrders(indentId, purchaseId);
             return "redirect:/purchase/getPurchaseOrderList";
         } catch (Exception e) {
-            logger.error("Error occured while edit purchase orders : {}", e);
+            logger.error("Error occured while edit purchase orders : ", e);
             throw e;
         }
 
@@ -565,7 +570,7 @@ public class PurchaseOrderController {
 
     @GetMapping("/getPurchaseOrderGRN")
     public String getPurchaseOrderGRN(Model model, @RequestParam("poId") Long poId, HttpServletRequest req) {
-        logger.info("Going to get po GRNS :{} po id is" + poId);
+        logger.info("Going to get po GRNS : po id is" + poId);
         try {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
             model.addAttribute("purchaseModule", "purchaseModule");
@@ -583,10 +588,56 @@ public class PurchaseOrderController {
             model.addAttribute("grnList", poGRNs);
             return "views/POGRNList";
         } catch (Exception e) {
-            logger.error("Error occured while getting po grns :{}" + poId, e);
+            logger.error("Error occured while getting po grns " + poId, e);
             throw e;
         }
 
     }
 
+    @GetMapping("/getPOGRNView")
+    @ResponseBody
+    public GenericResponse getPOGRNView(Model model, HttpServletRequest request, @RequestParam("poGRNId") Long grnId) {
+
+        try {
+            logger.info("Going to get po GRN view : pogrn id is" + grnId);
+            GRN grn = grnService.getGRNById(grnId);
+            List<GRNRequestModel.GRNPOItemsModel> poGRNItemsModelList = new ArrayList<>();
+            Double subTotal = 0d;
+            Double tax = 0d;
+            for (GRNItems grnItems : grn.getGrnItems()) {
+                GRNRequestModel.GRNPOItemsModel grnpoItemsModel = new GRNRequestModel.GRNPOItemsModel();
+                grnpoItemsModel.setAccepted(grnItems.getAccepted());
+                grnpoItemsModel.setDiscount(grnItems.getDiscount());
+                grnpoItemsModel.setPending(grnItems.getPending());
+                grnpoItemsModel.setReceived(grnItems.getReceived());
+                grnpoItemsModel.setRejected(grnItems.getRejected());
+                grnpoItemsModel.setShortage(grnItems.getShortage());
+                grnpoItemsModel.setQuantityDc(grnItems.getQuantityDc());
+                grnpoItemsModel.setRate(grnItems.getIndentItemPartyGroup().getRate());
+                grnpoItemsModel.setNameOfProduct(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductName());
+                grnpoItemsModel.setUomBase(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getUom().getUOM());
+                grnpoItemsModel.setUomPurchase(grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM().getUOM());
+                grnpoItemsModel.setItemTotal(grnItems.getTotalPrice());
+                grnpoItemsModel.setItemSgstAmt(grnItems.getSgstAmount());
+                grnpoItemsModel.setItemCgstAmt(grnItems.getCgstAmount());
+                grnpoItemsModel.setItemCessAmt(grnItems.getCessAmount());
+                grnpoItemsModel.setHsncode(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
+
+                subTotal = subTotal + grnItems.getTotalPrice();
+                Double taxCalculationPercentage = 0d;
+                taxCalculationPercentage = grnItems.getCgstRate() + grnItems.getSgstRate() + grnItems.getCessRate();
+                tax = tax + ((grnItems.getTotalPrice() * taxCalculationPercentage) / 100);
+                poGRNItemsModelList.add(grnpoItemsModel);
+            }
+            Double finalTotal = subTotal + tax;
+            return new GenericResponse(true, "get po grn details")
+                    .setProperty("poGRNItemsModelList", poGRNItemsModelList)
+                    .setProperty("totalPrice", MastroApplicationUtils.roundTwoDecimals(subTotal))
+                    .setProperty("tax", MastroApplicationUtils.roundTwoDecimals(tax))
+                    .setProperty("finalTotal", MastroApplicationUtils.roundTwoDecimals(finalTotal));
+        } catch (Exception e) {
+            logger.error("Error Occured while getting po grn view:", e, this);
+            return new GenericResponse(false, e.getMessage());
+        }
+    }
 }

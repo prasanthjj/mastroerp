@@ -58,6 +58,14 @@ public class GRNRequestModel {
         private Double quantity;
         private Double rate;
         private Double discount;
+        private String nameOfProduct;
+        private String uomPurchase;
+        private String uomBase;
+        private Double itemTotal;
+        private Double itemCessAmt;
+        private Double itemCgstAmt;
+        private Double itemSgstAmt;
+        private String hsncode;
 
         public GRNPOItemsModel() {
         }
