@@ -58,33 +58,21 @@
 
                         <div class="ibox-content mastro-step-ibox-content ">
                             <form th:action="@{/sales/getSelectedPartyDetails}" method="get">
+
                                         <span th:if="${partysDetails== null}">
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <div class="form-group"><label>Type</label>
-                                                    <select class="form-control" id="partysType">
-                                                        <option>Select</option>
-                                                        <option>Customer</option>
-                                                        <option>Supplier</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group"><label>Party Name</label>
-                                                    <input type="hidden" id="partyTypesValue">
-                                                    <input type="hidden" name="selectedPartys" id="partysIdInput">
-                                                    <input type="text" class="form-control partyautocmopletes"
-                                                           placeholder="Select party">
+                                        <input type="hidden" name="selectedPartys" id="partyIdSalesInput">
+                                        <input type="text" class="form-control salespartyautocomplete" required
+                                               placeholder="Enter Party name">
+                                         <div class="party_sales_dropdown">
+                                            <ul class="auto-dropdown-menu">
 
-                                                    <div class="parts_dropdown">
-                                                        <ul class="auto-dropdown-menu">
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <div class="form-group m-t-lg">
+                                            </ul>
+                                        </div>
+                                </div>
+                                 <div class="col-lg-2">
+                                                <div class="form-group">
                                                     <button class="btn btn-primary" type="submit">Submit</button>
                                                 </div>
                                             </div>
@@ -142,16 +130,30 @@
                                             <div class="col-lg-2">
                                                 <label>Item Name</label>
                                             </div>
-                                            <div class="col-lg-4">
+                                  <div class="col-lg-4">
 
-                                                <input type="hidden" name="selectedProduct" id="itemIdInput">
-                                                <input type="text" class="form-control itemautocmoplete"
+                                           <!--     <input type="hidden" name="selectedProduct" id="itemIdInput">
+                                                <input type="text" class="form-control customerautocmoplete"
                                                        placeholder="Select item">
-
-                                                <div class="item_dropdown">
+                                                <div class="customer_item_dropdown">
                                                     <ul class="auto-dropdown-menu">
                                                     </ul>
-                                                </div>
+                                                </div>-->
+                                      <span th:if="${salesDetails!= null}">
+
+                                                   <input type="hidden" name="selectedPartysId"
+                                                          th:value="${salesDetails.party.id}" id="partssalesid">
+                                                   </span>
+
+
+                                      <input type="hidden" name="selectedProduct" id="itemIdInput">
+                                      <input type="text" class="form-control customeritemautocmoplete"
+                                             placeholder="Enter Item Name" required>
+                                      <div class="customer_item_dropdown">
+                                          <ul class="auto-dropdown-menu">
+
+                                          </ul>
+                                      </div>
                                             </div>
 
                                             <div class="col-lg-2">
@@ -159,7 +161,7 @@
                                             </div>
                                             <div class="col-lg-2">
 
-                                                <input type="text" name="quantity" class="form-control"/>
+                                                <input type="text" name="quantity" required class="form-control"/>
 
                                             </div>
                                             <div class="col-lg-2">
@@ -193,9 +195,9 @@
                                             <th class="mastro-blue-bg ">No</th>
                                             <th class="mastro-blue-bg txt-white">HSN / SAC</th>
                                             <th class="mastro-blue-bg txt-white">Item</th>
-                                            <th class="mastro-blue-bg txt-white">IGST(%)</th>
                                             <th class="mastro-blue-bg txt-white">Quantity</th>
-                                            <th class="mastro-blue-bg txt-white">Unit Rate</th>
+                                            <!--<th class="mastro-blue-bg txt-white">Unit Rate</th>-->
+                                            <th class="mastro-blue-bg txt-white">Net Price</th>
                                             <th class="mastro-blue-bg txt-white">Taxable Value</th>
                                             <th class="mastro-blue-bg txt-white">CGST</th>
                                             <th class="mastro-blue-bg txt-white">SGST</th>
@@ -209,59 +211,56 @@
                                         <td th:text="${iterator.index+1}">3</td>
                                       <td th:text="${salesObj.product.hsn.hsnCode}">HSN-0265</td>
                                         <td th:text="${salesObj.product.productName}">Angles 25x6 (1x1/4)</td>
-                                        <td th:text="${salesObj.product.hsn.igst}">18</td>
-                                        <td th:text="${salesObj.quantity}">3.00 nos</td>
-                                        <td th:text="${salesObj.product.basePrice}">280</td>
-                                        <td th:text="${salesObj.taxableValue}">711.8580</td>
+                                    <!--  <td th:text="${salesObj.product.hsn.igst}">18</td>-->
+                                        <td><span th:text="${salesObj.quantity}">26.00</span>/<span
+                                                th:text="${salesObj.product.uom.UOM}"></span></td>
+                                       <!-- <td th:text="${salesObj.PartyPriceList.rate}">280</td>-->
+                                        <td th:text="${salesObj.netPrice}"></td>
+                                        <td th:text="${salesObj.finalTaxableValue}">711.8580</td>
                                         <td th:text="${salesObj.cgstAmount}"></td>
                                         <td th:text="${salesObj.sgstAmount}"></td>
                                         <td th:text="${salesObj.totalPrice}">839.9924</td>
-
                                     </tr>
 
+                                            <tr rowspan="3">
+                                                <td colspan="10"></td>
+                                            </tr>
 
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td>Sub Total</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                         <td><span th:text="${subTotal}">839.9924</span></td>
-                                        
-                                       
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td><span th:text="${hsnDetails}">7314</span></td>
-                                        <td>Loading Charges@18%(Sales)</td>
-                                        <td>18</td>
+                                        <td>Loading Charges@<span th:text="${igstAmt}"></span> %(Sales)</td>
                                         <td></td>
                                         <td></td>
                                         <td> <span th:text="${totalTaxableValue}">4.0000</span></td>
                                         <td><span th:text="${cgstAmt}">0.3600</span></td>
                                         <td><span th:text="${sgstAmt}">0.3600</span></td>
                                         <td><span th:text="${loadingCharge}">0.7200</span></td>
-                                        
-                                       
+
+
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td>Kerala Flood Cess</td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
+                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td> <span th:text="${totalCess}">7.1586</span></td>
-                                        
-                                       
+
+
                                     </tr>
+
+
                                 </span>
                                         </tbody>
                                         <tfoot>
@@ -273,10 +272,11 @@
                                 <div class="row m-t-md">
                                     <div class="col-lg-12 text-right">
                                      <span th:if="${salesDetails!= null}">
-                                        <input type="hidden" name="grandTotal" th:value="${grandTotal}">
-                                         </span>
-                                        <h3 class=""> Grand Total :<span th:text="${grandTotal}"> 850.0000</span></h3>
+                                        <input type="hidden" name="grandTotal" th:value="${finalTotal}">
 
+                                        <h3 class=""> Round Off :(-) <span th:text="${finalroundoff}"> 850.0000</span></h3>
+                                        <h3 class=""> Grand Total  : <span th:text="${finalTotal}"> 850.0000</span></h3>
+                                          </span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -295,7 +295,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 text-right">
+
+                                <div class="col-lg-12 text-right" th:if="${salesDetails!= null}">
                                     <button class="btn btn-primary btn-sm createSalesOrder" type="submit">Create Sales
                                         Order
                                     </button>
@@ -317,9 +318,16 @@
 </div>
 <div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <!-- Mainly scripts -->
-<span id="partyAutopopulateUrl" th:data-url="@{/autopopulate/party}"></span>
-<span id="partyTypeAutopopulateUrl" th:data-url="@{/autopopulate/party/type}"></span>
-<span id="itemAutopopulateUrl" th:data-url="@{/autopopulate/items}"></span>
+
+<span id="partyAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/party/customer}"></span>
+
+<span id="customerItemAutopopulateUrl" th:data-url="@{/autopopulate/items/customer}"></span>
+
+<!--
+<span id="indentItemAutopopulateUrl" th:data-url="@{/autopopulate/items/indent}"></span>
+-->
+
+
 <script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
 <script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
 <script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
@@ -339,36 +347,83 @@
         th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 
+
 <script>
-        $(document).ready(function(){
-        $('.createSalesOrder').click(function(){
-            swal({
-                title: "Sales Order Created!",
-                text: "",
-                type: "success",
-            });
-        });
+       $(document).ready(function(){
 
- // item party rate relation item auto-complete start
-     var itemAutopopulateUrl = $('#itemAutopopulateUrl').data('url');
-     $(".item_dropdown").hide();
-     $(".itemautocmoplete").keyup(function () {
+    //Sales Order Party autocomplete Starts
 
-		var val = $(this).val().trim();
-		if (val.length > 2) {
-		$(".item_dropdown ul").empty();
-		     $.ajax({
-              url:itemAutopopulateUrl,
+     var partyAutopopulateInSalesSlipUrl = $('#partyAutopopulateInSalesSlipUrl').data('url');
+     $(".party_sales_dropdown").hide();
+     $(".salespartyautocomplete").keyup(function () {
+
+        var val = $(this).val().trim();
+        if (val.length > 2) {
+        $(".party_sales_dropdown ul").empty();
+             $.ajax({
+              url:partyAutopopulateInSalesSlipUrl,
                type: 'GET',
                dataType : 'json',
                data: {'searchTerm':val},
                success: function(data){
                  if(data.success) {
 
+                        $.each(data.data.partys, function(i){
+
+                                      $(".party_sales_dropdown ul").append('<li><a class="dynamicClick" data-salespartysid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
+                                        });
+
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".party_sales_dropdown").show();
+        }
+        else {
+                    $(".party_sales_dropdown").hide();
+                }
+        });
+        //Sales Order Party autocomplete end
+
+
+    //dynamic click for party autocomplete start
+            $(".party_sales_dropdown").on('click','a.dynamicClick',function (e) {
+                e.preventDefault();
+                var value = $(this).text();
+             $(".salespartyautocomplete").val(value);
+                            $("#partyIdSalesInput").val($(e.target).data('salespartysid'));
+                $(".party_sales_dropdown").hide();
+            })
+        //dynamic click for party autocomplete end
+
+
+//Customer item autocomplete starts
+
+  var customerItemAutopopulateUrl = $('#customerItemAutopopulateUrl').data('url');
+     $(".customer_item_dropdown").hide();
+     $(".customeritemautocmoplete").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		var partsSalesId=document.getElementById("partssalesid").value;
+		$(".customer_item_dropdown ul").empty();
+
+		     $.ajax({
+              url:customerItemAutopopulateUrl,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val,'partyId':partsSalesId},
+               success: function(data){
+
+                 if(data.success) {
+
                         $.each(data.data.products, function(i){
-                                      //  $('#itemAutocomplete').append($('<input>').val(this['id']).text(this['productname']));
+
                                      $('.typeahead').append($('<li><a class="dropdown-item" href="#" role="option">'+ this['productname'] +' </a> </li>'));
-                                      $(".item_dropdown ul").append('<li><a class="dynamicClick" data-itemsid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                      $(".customer_item_dropdown ul").append('<li><a class="dynamicClick" data-customerproductid="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
                                         });
                   }
                    },
@@ -377,141 +432,38 @@
                }
 
               });
-              $(".item_dropdown").show();
+              $(".customer_item_dropdown").show();
 		}
 		else {
-        			$(".item_dropdown").hide();
+        			$(".customer_item_dropdown").hide();
         		}
 		});
-		//item autocomplete end
 
-		//dynamic click for item in item autocomplete start
-			$(".item_dropdown").on('click','a.dynamicClick',function (e) {
+//Customer item autocomplete ends
+
+
+//Customer item Onclick starts
+
+
+			$(".customer_item_dropdown").on('click','a.dynamicClick',function (e) {
         		e.preventDefault();
         		var value = $(this).text();
+        		var partysSalesIds=document.getElementById("partssalesid").value;
 
 
-                			$(".itemautocmoplete").val(value);
-                			$("#itemIdInput").val($(e.target).data('itemsid'));
-
-        		$(".item_dropdown").hide();
-        	})
-		//dynamic click for item in item autocomplete end
-
-        		 // item party rate relation party auto-complete start
-             var partyAutopopulateUrl = $('#partyAutopopulateUrl').data('url');
-             $(".party_dropdown").hide();
-             $(".partyautocmoplete").keyup(function () {
-
-        		var vals = $(this).val().trim();
-        		if (vals.length > 2) {
-        		$(".party_dropdown ul").empty();
-        		     $.ajax({
-                      url:partyAutopopulateUrl,
-                       type: 'GET',
-                       dataType : 'json',
-                       data: {'searchTerm':vals},
-                       success: function(data){
-                         if(data.success) {
-
-                                $.each(data.data.partys, function(i){
-
-                                              $(".party_dropdown ul").append('<li><a class="dynamicClick" data-partysid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
-                                                });
-                          }
-                           },
-                       error: function(jqXHR, textStatus) {
-                       alert('Error Occured');
-                       }
-
-                      });
-                      $(".party_dropdown").show();
-        		}
-        		else {
-                			$(".party_dropdown").hide();
-                		}
-        		});
-        		//party autocomplete end
-
-        		//dynamic click for party in party autocomplete start
-                			$(".party_dropdown").on('click','a.dynamicClick',function (e) {
-                        		e.preventDefault();
-                        		var value = $(this).text();
+                			$(".customeritemautocmoplete").val(value);
+                			$("#itemIdInput").val($(e.target).data('customerproductid'));
+                			$(".customer_item_dropdown").hide();
 
 
-                                			$(".partyautocmoplete").val(value);
-                                			$("#partyIdInput").val($(e.target).data('partysid'));
+              });
 
-                        		$(".party_dropdown").hide();
-                        	})
-                		//dynamic click for party in party autocomplete end
-                		//get selected party type in partytype autocomplete start
-                         	$("#partysType").on("change", function(e){
-                         	 var typeOfParty =$('#partysType').val();
+        //Customer item Onclick Ends
 
-                         	 $("#partyTypesValue").val(typeOfParty);
-
-
-                                            });
-                                            //get selected party type in partytype autocomplete end
-                	 //  party item rate relation party type auto-complete start
-                                 var partyTypeAutopopulateUrl = $('#partyTypeAutopopulateUrl').data('url');
-
-
-                                 $(".parts_dropdown").hide();
-                                 $(".partyautocmopletes").keyup(function () {
-
-                            		var vals = $(this).val().trim();
-
-                            		if (vals.length > 2) {
-                            		var partsTypee=document.getElementById("partyTypesValue").value;
-
-                            		$(".parts_dropdown ul").empty();
-                            		     $.ajax({
-                                          url:partyTypeAutopopulateUrl,
-                                           type: 'GET',
-                                           dataType : 'json',
-                                           data: {'searchTerm':vals,'partyType':partsTypee},
-                                           success: function(data){
-                                             if(data.success) {
-
-                                                    $.each(data.data.partys, function(i){
-
-                                                                  $(".parts_dropdown ul").append('<li><a class="dynamicClick" data-partyssid="'+this['id'] +'" href="#">'+ this['partysname'] +'</a></li>');
-                                                                    });
-                                              }
-                                               },
-                                           error: function(jqXHR, textStatus) {
-                                           alert('Error Occured');
-                                           }
-
-                                          });
-                                          $(".parts_dropdown").show();
-                            		}
-                            		else {
-                                    			$(".parts_dropdown").hide();
-                                    		}
-                            		});
-                            		//party item rate relation party type auto-complete end
-
-
-//dynamic click for party in partytype autocomplete start
-                			$(".parts_dropdown").on('click','a.dynamicClick',function (e) {
-                        		e.preventDefault();
-                        		var value = $(this).text();
-
-
-                                			$(".partyautocmopletes").val(value);
-                                			$("#partysIdInput").val($(e.target).data('partyssid'));
-
-                        		$(".parts_dropdown").hide();
-                        	})
-                		//dynamic click for party in partytype autocomplete end
-    });
-
-
+       });
 
 
 </script>
+
 </body>
 </html>

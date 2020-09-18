@@ -68,7 +68,9 @@
                                 <p class="text-left">
                                     <button class="btn btn-primary dim soApproved"
                                             th:data-soids="${salesOrderDetails.id}">Approve</button>
-                                    <button class="btn btn-primary dim ">Review</button>
+
+                                        <button class="btn btn-primary dim soReview"
+                                                th:data-soids="${salesOrderDetails.id}">Review</button>
                              <button class="btn btn-danger dim soDiscard"
                                             th:data-soids="${salesOrderDetails.id}">Discard</button>
 
@@ -104,7 +106,7 @@
     
                                 <div class="col-sm-6 text-right">
                                     <h4>Sales Oder No.</h4>
-                                    <h4 class="text-navy">IN-000567F7-00</h4>
+                                    <h4 class="text-navy"> IN-<span th:text="${salesDetails.id}"></span>-0</h4>
                                     <span>To:</span>
                                     <span th:if="${partysDetails!= null}">
                                    <p> <strong th:text="${partyBillingDetails.contactPersonName}">Mastro Metals Pvt Ltd.</strong><br>
@@ -129,12 +131,13 @@
                                         <th>No</th>
                                         <th>HSN / SAC</th>
                                         <th>Item</th>
-                                        <th>GST</th>
+                                        <!--<th>GST</th>-->
                                         <th>Quantity</th>
-                                        <th>Unit Rate</th>
+                                        <!--<th>Unit Rate</th>-->
                                         <th>Taxable Value</th>
                                         <th>CGST</th>
                                         <th>SGST</th>
+                                        <th>Net Price</th>
                                         <th>Total</th>
                                     </tr>
                                     </thead>
@@ -143,14 +146,46 @@
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${salesoderPreview.product.hsn.hsnCode}">HSN-0265</td>
                                         <td th:text="${salesoderPreview.product.productName}">Angles 25x6 (1x1/4)</td>
-                                        <td th:text="${salesoderPreview.product.hsn.igst}">18</td>
-                                        <td th:text="${salesoderPreview.quantity}">3.00 nos</td>
-                                        <td th:text="${salesoderPreview.product.basePrice}">280</td>
-                                        <td th:text="${salesoderPreview.taxableValue}">711.8580</td>
+                                       <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
+                                        <td><span th:text="${salesoderPreview.quantity}">26.00</span>/<span
+                                                th:text="${salesoderPreview.product.uom.UOM}"></span></td>
+                                        <td th:text="${salesoderPreview.finalTaxableValue}">711.8580</td>
                                         <td th:text="${salesoderPreview.cgstAmount}"></td>
                                         <td th:text="${salesoderPreview.sgstAmount}"></td>
+                                        <td th:text="${salesoderPreview.netPrice}"></td>
                                         <td th:text="${salesoderPreview.totalPrice}">839.9924</td>
+
                                     </tr>
+
+                                    <tr  th:if="${salesDetails!= null}">
+                                        <td></td>
+                                        <td><span th:text="${hsnDetails}">7314</span></td>
+                                        <td>Loading Charges@<span th:text="${igstAmt}"></span> %(Sales)</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td> <span th:text="${totalTaxableValue}">4.0000</span></td>
+                                        <td><span th:text="${cgstAmt}">0.3600</span></td>
+                                        <td><span th:text="${sgstAmt}">0.3600</span></td>
+                                        <td><span th:text="${loadingCharge}">0.7200</span></td>
+
+                                    </tr>
+
+
+                                    <tr th:if="${salesDetails!= null}">
+                                        <td></td>
+                                        <td></td>
+                                        <td>Kerala Flood Cess</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td> <span th:text="${totalCess}">7.1586</span></td>
+
+
+                                    </tr>
+
+
 
                                     </tbody>
                                 </table>
@@ -164,8 +199,13 @@
                                     <td>    <span th:text="${subTotal}">1261.98</span></td>
                                 </tr>
                                 <tr>
+
+                                    <td><strong>Round Off :</strong></td>
+                                    <td> (-)  <span th:text="${finalroundoff}">1261.98</span></td>
+                                </tr>
+                                <tr>
                                     <td><strong>TOTAL :</strong></td>
-                                    <td>    <span th:text="${grandTotal}">1261.98</span></td>
+                                    <td>    <span th:text="${finalTotal}">1261.98</span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -285,6 +325,46 @@
                     });
             });
         });
+
+
+        $('.soReview').click(function(){
+            var reason=document.getElementById("reason").value;
+            var soids=$(this).data('soids');
+            swal({
+                title: "Review?",
+                text: " Do you want to Review Sales Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Review it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/sales/soReview',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'soids':soids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/sales/getSalesOrder";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
 
 
         });

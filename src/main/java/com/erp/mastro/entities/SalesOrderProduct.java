@@ -36,6 +36,19 @@ public class SalesOrderProduct {
     @Column(name = "cgst_amount")
     private Double cgstAmount;
 
+    @Column(name = "single_cgst_amount")
+    private Double singlesgstAmount;
+
+    @Column(name = "single_sgst_amount")
+    private Double singlecgstAmount;
+
+    @Column(name = "net_price")
+    private Double netPrice;
+
+    @Column(name = "final_Taxable_value")
+    private Double finalTaxableValue;
+
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "salesorder_salesorderproduct", joinColumns = {@JoinColumn(name = "sales_order_product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sales_order_id", referencedColumnName = "id")})

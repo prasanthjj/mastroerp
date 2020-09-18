@@ -1,10 +1,10 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
-import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
 import com.erp.mastro.model.request.SalesOrderRequestModel;
 import com.erp.mastro.repository.SalesOrderRepository;
 import com.erp.mastro.service.interfaces.HSNService;
@@ -130,6 +130,26 @@ public class SalesOrderController {
 
     }
 
+
+
+ /*   @GetMapping("/getSelectedPartyDetails")
+    public String getSelectedPartyDetails(Model model, HttpServletRequest req) {
+        MastroLogUtils.info(SalesOrderController.class, "Going to get Selected party : {}");
+        Long partyId = Long.parseLong(req.getParameter("selectedPartys"));
+        SalesOrder salesOrder = salesOrderService.getSalesorderById(partyId);
+
+
+
+
+        model.addAttribute("salesForm", new SalesOrderRequestModel());
+        model.addAttribute("salesModule", "salesModule");
+        model.addAttribute("salesTab", "sales");
+        model.addAttribute("partyDetails", salesOrder);
+        return "views/addSalesOrder";
+    }*/
+
+
+
     /**
      * Method to get selected product details
      *
@@ -161,18 +181,19 @@ public class SalesOrderController {
             model.addAttribute("partyBillingDetails", billingDetails);
             Double subTotal = 0d;
             Double totalCess = 0d;
-            Double totalTaxableValue = 0d;
-            Double cgstAmt = 0d;
-            Double sgstAmt = 0d;
             Double loadingCharge = 0d;
             Double grandTotal = 0d;
+            Double itemlodingcharge =0d;
+            Double LodingChargeTotal =0d;
+           Double TotalLodingChargeCgst =0d;
+            Double TotalLodingChargeSgst =0d;
             for (SalesOrderProduct salesOrderProduct : salesOrder.getSalesOrderProductSet()) {
                 if (salesOrderProduct.getProduct() != null) {
                     subTotal = subTotal + salesOrderProduct.getTotalPrice();
                 }
                 if (salesOrderProduct.getProduct().getHsn().getCess() != null) {
                     Double taxableValue = 0d;
-                    taxableValue = salesOrderProduct.getTaxableValue();
+                    taxableValue = salesOrderProduct.getFinalTaxableValue();
                     totalCess = totalCess + taxableValue * (salesOrderProduct.getProduct().getHsn().getCess() / 100);
                 }
                 HSN hsn = hsnService.getAllHSN().stream()
@@ -180,22 +201,57 @@ public class SalesOrderController {
                         .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
                         .filter(hsnData -> hsnData.getHsnCode().equals("7314"))
                         .findFirst().get();
-                totalTaxableValue = totalTaxableValue + salesOrderProduct.getTaxableValue();
-                cgstAmt = totalTaxableValue * (hsn.getCgst() / 100);
-                sgstAmt = totalTaxableValue * (hsn.getSgst() / 100);
-                loadingCharge = cgstAmt + sgstAmt;
+                       Double igstAmt = hsn.getIgst() ;
 
-                grandTotal = subTotal + loadingCharge + totalCess;
+                loadingCharge = salesOrderProduct.getProduct().getLoadingCharge();
+                Double itemQuanity = salesOrderProduct.getQuantity();
+                 itemlodingcharge= itemlodingcharge + (itemQuanity * loadingCharge);
+
+
+                TotalLodingChargeCgst = itemlodingcharge *  (hsn.getCgst() / 100);
+                 TotalLodingChargeSgst = itemlodingcharge *  (hsn.getSgst() / 100);
+                LodingChargeTotal =  itemlodingcharge+TotalLodingChargeCgst+TotalLodingChargeSgst;
+
+                grandTotal = subTotal + LodingChargeTotal + totalCess;
                 model.addAttribute("hsnDetails", hsn.getHsnCode());
+                model.addAttribute("igstAmt", Math.round(igstAmt * 100.0) / 100.0);
             }
 
-            model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
-            model.addAttribute("totalTaxableValue", Math.round(totalTaxableValue * 100.0) / 100.0);
-            model.addAttribute("cgstAmt", Math.round(cgstAmt * 100.0) / 100.0);
-            model.addAttribute("sgstAmt", Math.round(sgstAmt * 100.0) / 100.0);
-            model.addAttribute("loadingCharge", Math.round(loadingCharge * 100.0) / 100.0);
-            model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
-            model.addAttribute("totalCess", Math.round(totalCess * 100.0) / 100.0);
+            //Methods for rounoff starts
+            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(grandTotal);
+            double doubleNumber =grandTotals;
+
+            String doubleAsString = String.valueOf(doubleNumber);
+            int indexOfDecimal = doubleAsString.indexOf(".");
+            String integernumberstring =doubleAsString.substring(0, indexOfDecimal);
+            String decimalpart = doubleAsString.substring(indexOfDecimal);
+
+            int integerbeforeround=Integer.parseInt(integernumberstring);
+
+            Double integernumber=  Double.parseDouble(integernumberstring);
+            Double number = integernumber;
+            double place =10;
+            double result = number / place;
+            result = Math.floor(result);
+            result *= place;
+            int roundoffvalue=(int)result;
+
+            int diffrenceofround= integerbeforeround-roundoffvalue;
+            String stringvalues=String.valueOf(diffrenceofround);//Now it will return "diffrenceofround"
+            String Stringresult = stringvalues+decimalpart;
+            //Method for round off Ends
+
+            model.addAttribute("finalTotal", roundoffvalue);
+            model.addAttribute("finalroundoff", Stringresult);
+          //  model.addAttribute("grandTotal",  MastroApplicationUtils.roundTwoDecimals(grandTotal));
+            model.addAttribute("grandTotal",  Stringresult);
+           // model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
+            model.addAttribute("totalTaxableValue", MastroApplicationUtils.roundTwoDecimals(itemlodingcharge));
+            model.addAttribute("cgstAmt", MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeCgst));
+            model.addAttribute("sgstAmt",  MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeSgst));
+            model.addAttribute("loadingCharge", MastroApplicationUtils.roundTwoDecimals(LodingChargeTotal));
+            model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+            model.addAttribute("totalCess",  MastroApplicationUtils.roundTwoDecimals(totalCess));
             model.addAttribute("salesDetails", salesOrder);
 
             return "views/addSalesOrder";
@@ -262,18 +318,19 @@ public class SalesOrderController {
             model.addAttribute("salesForm", salesOrderService.getSalesorderById(soId));
             Double subTotal = 0d;
             Double totalCess = 0d;
-            Double totalTaxableValue = 0d;
-            Double cgstAmt = 0d;
-            Double sgstAmt = 0d;
             Double loadingCharge = 0d;
             Double grandTotal = 0d;
+            Double itemlodingcharge =0d;
+            Double LodingChargeTotal =0d;
+            Double TotalLodingChargeCgst =0d;
+            Double TotalLodingChargeSgst =0d;
             for (SalesOrderProduct salesOrderProduct : salesOrder.getSalesOrderProductSet()) {
                 if (salesOrderProduct.getProduct() != null) {
                     subTotal = subTotal + salesOrderProduct.getTotalPrice();
                 }
                 if (salesOrderProduct.getProduct().getHsn().getCess() != null) {
                     Double taxableValue = 0d;
-                    taxableValue = salesOrderProduct.getTaxableValue();
+                    taxableValue = salesOrderProduct.getFinalTaxableValue();
                     totalCess = totalCess + taxableValue * (salesOrderProduct.getProduct().getHsn().getCess() / 100);
                 }
                 HSN hsn = hsnService.getAllHSN().stream()
@@ -281,19 +338,62 @@ public class SalesOrderController {
                         .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
                         .filter(hsnData -> hsnData.getHsnCode().equals("7314"))
                         .findFirst().get();
-                totalTaxableValue = totalTaxableValue + salesOrderProduct.getTaxableValue();
-                cgstAmt = totalTaxableValue * (hsn.getCgst() / 100);
-                sgstAmt = totalTaxableValue * (hsn.getSgst() / 100);
-                loadingCharge = cgstAmt + sgstAmt;
+                Double igstAmt = hsn.getIgst() ;
 
-                grandTotal = subTotal + loadingCharge + totalCess;
+                loadingCharge = salesOrderProduct.getProduct().getLoadingCharge();
+                Double itemQuanity = salesOrderProduct.getQuantity();
+                itemlodingcharge= itemlodingcharge + (itemQuanity * loadingCharge);
+
+
+                TotalLodingChargeCgst = itemlodingcharge *  (hsn.getCgst() / 100);
+                TotalLodingChargeSgst = itemlodingcharge *  (hsn.getSgst() / 100);
+                LodingChargeTotal =  itemlodingcharge+TotalLodingChargeCgst+TotalLodingChargeSgst;
+
+                grandTotal = subTotal + LodingChargeTotal + totalCess;
                 model.addAttribute("hsnDetails", hsn.getHsnCode());
+                model.addAttribute("igstAmt", Math.round(igstAmt * 100.0) / 100.0);
             }
-            model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
-            model.addAttribute("subTotal", Math.round(subTotal * 100.0) / 100.0);
+
+            //Methods for rounoff starts
+            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(grandTotal);
+            double doubleNumber =grandTotals;
+
+            String doubleAsString = String.valueOf(doubleNumber);
+            int indexOfDecimal = doubleAsString.indexOf(".");
+            String integernumberstring =doubleAsString.substring(0, indexOfDecimal);
+            String decimalpart = doubleAsString.substring(indexOfDecimal);
+
+            int integerbeforeround=Integer.parseInt(integernumberstring);
+
+            Double integernumber=  Double.parseDouble(integernumberstring);
+            Double number = integernumber;
+            double place =10;
+            double result = number / place;
+            result = Math.floor(result);
+            result *= place;
+            int roundoffvalue=(int)result;
+
+            int diffrenceofround= integerbeforeround-roundoffvalue;
+            String stringvalues=String.valueOf(diffrenceofround);//Now it will return "diffrenceofround"
+            String Stringresult = stringvalues+decimalpart;
+            //Method for round off Ends
+
+            model.addAttribute("finalTotal", roundoffvalue);
+            model.addAttribute("finalroundoff", Stringresult);
+            //  model.addAttribute("grandTotal",  MastroApplicationUtils.roundTwoDecimals(grandTotal));
+            model.addAttribute("grandTotal",  Stringresult);
+            // model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
+            model.addAttribute("totalTaxableValue", MastroApplicationUtils.roundTwoDecimals(itemlodingcharge));
+            model.addAttribute("cgstAmt", MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeCgst));
+            model.addAttribute("sgstAmt",  MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeSgst));
+            model.addAttribute("loadingCharge", MastroApplicationUtils.roundTwoDecimals(LodingChargeTotal));
+            model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+            model.addAttribute("totalCess",  MastroApplicationUtils.roundTwoDecimals(totalCess));
             model.addAttribute("salesDetails", salesOrder);
 
             return "views/salesOrderPreview";
+
+
 
         } catch (Exception e) {
             MastroLogUtils.error(SalesOrderController.class, "Error occured while getSalesOrderPreview :{}" + soId, e);
@@ -341,6 +441,39 @@ public class SalesOrderController {
         }
 
     }
+
+    @PostMapping("/soReview")
+    @ResponseBody
+    public GenericResponse soReview(Model model, HttpServletRequest request, @RequestParam("reason") String reason, @RequestParam("soids") Long soId) {
+        MastroLogUtils.info(SalesOrderController.class, "Going to Review so" + soId);
+        try {
+            SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+
+            salesOrder.setStatus("Reviewed");
+            salesOrder.setReason(reason);
+            salesOrderRepository.save(salesOrder);
+            return new GenericResponse(true, "soReview");
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on soReview :{}", e);
+
+            throw e;
+        }
+
+    }
+
+    @RequestMapping(value = "/getSalesOrderOnReview", method = RequestMethod.GET)
+    public String getSalesOrderOnReview(HttpServletRequest request, @RequestParam("soId") Long soId, Model model) {
+
+
+            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute("salesTab", "sales");
+            SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+            model.addAttribute("salesOrderDetails", salesOrder);
+            return "views/editSoOnReview";
+
+    }
+
 
 
 }

@@ -310,7 +310,7 @@ $("#calculationAmount").hide();
 
 
                                             });
-                                            //get selected party type in partytype autocomplete end
+                      //get selected party type in partytype autocomplete end
                 	 //  party item rate relation party type auto-complete start
                                  var partyTypeAutopopulateUrl = $('#partyTypeAutopopulateUrl').data('url');
 
