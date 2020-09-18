@@ -621,7 +621,7 @@ public class PurchaseOrderController {
                 grnpoItemsModel.setItemSgstAmt(grnItems.getSgstAmount());
                 grnpoItemsModel.setItemCgstAmt(grnItems.getCgstAmount());
                 grnpoItemsModel.setItemCessAmt(grnItems.getCessAmount());
-                grnpoItemsModel.setHsncode(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
+                grnpoItemsModel.setHsncode(grnItems.getHsnCode());
 
                 subTotal = subTotal + grnItems.getTotalPrice();
                 Double taxCalculationPercentage = 0d;

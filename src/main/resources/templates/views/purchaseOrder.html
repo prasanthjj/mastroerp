@@ -128,12 +128,20 @@
                                                            th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
                                                     <i
                                                             class="fa fa-edit"></i> View GRNS</a></li>
+                                                         <li><a class="dropdown-item font-bold"
+                                                                th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
+                                                    <i
+                                                            class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
                                                     </span>
                                                     <span th:if="${purchaseObj.status== 'Delivery complete'}">
                                                     <li><a class="dropdown-item font-bold"
                                                            th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
                                                     <i
                                                             class="fa fa-edit"></i> View GRNS</a></li>
+                                                         <li><a class="dropdown-item font-bold"
+                                                                th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
+                                                    <i
+                                                            class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
                                                     </span>
 
                                                 </ul>

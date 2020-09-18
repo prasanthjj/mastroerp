@@ -66,6 +66,8 @@ public class GRNRequestModel {
         private Double itemCgstAmt;
         private Double itemSgstAmt;
         private String hsncode;
+        private String grnno;
+        private Double finalItemTotal;
 
         public GRNPOItemsModel() {
         }

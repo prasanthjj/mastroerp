@@ -102,4 +102,9 @@ public class Branch {
             orphanRemoval = true)
     private Set<DeliveryChellan> deliveryChellanSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<POInvoice> poInvoiceSet = new HashSet<>();
+
 }

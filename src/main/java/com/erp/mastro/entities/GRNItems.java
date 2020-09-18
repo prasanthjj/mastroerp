@@ -78,4 +78,7 @@ public class GRNItems {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<SalesSlipItems> salesSlipItems = new HashSet<>();
+
+    @Column(name = "hsn_code")
+    private String hsnCode;
 }

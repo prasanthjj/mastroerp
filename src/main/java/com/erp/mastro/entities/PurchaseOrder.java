@@ -55,6 +55,12 @@ public class PurchaseOrder extends Auditable<String> {
             orphanRemoval = true)
     private Set<GRN> grnSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "purchaseOrder",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<POInvoice> poInvoices = new HashSet<>();
+
     @Column(name = "po_no")
     private String poNo;
 

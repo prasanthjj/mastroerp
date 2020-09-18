@@ -204,6 +204,7 @@ public class GRNServiceImpl implements GRNService {
                     grnItems.setDiscount(productPartyRateRelation.getPartyPriceList().getDiscount());
                     grnItems.setCgstRate(productPartyRateRelation.getProduct().getHsn().getCgst());
                     grnItems.setSgstRate(productPartyRateRelation.getProduct().getHsn().getSgst());
+                    grnItems.setHsnCode(productPartyRateRelation.getProduct().getHsn().getHsnCode());
                     if (productPartyRateRelation.getProduct().getHsn().getCess() != null) {
                         grnItems.setCessRate(productPartyRateRelation.getProduct().getHsn().getCess());
                     } else {
