@@ -1,5 +1,6 @@
 package com.erp.mastro.common;
 
+import com.erp.mastro.entities.HSN;
 import com.erp.mastro.entities.Product;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
@@ -118,13 +119,34 @@ public class MastroApplicationUtils {
      *
      * @param amtForRound
      * @param roundedGrandTotalInDouble
-     * @return
+     * @return rounded value
      */
     public static Double roundAmount(Double amtForRound, Double roundedGrandTotalInDouble) {
 
         Double roundValue = 0.0d;
         roundValue = amtForRound - roundedGrandTotalInDouble;
         return MastroApplicationUtils.roundTwoDecimals(roundValue * (-1));
+    }
+
+    /**
+     * Net price in sales slip
+     *
+     * @param rate
+     * @param hsn
+     * @param productSalesUOMConvertionFactor
+     * @param discount
+     * @return net price
+     */
+    public static Double totalNetPriceForSalesSlip(Double rate, HSN hsn, Double productSalesUOMConvertionFactor, Double discount) {
+
+        Double itemRate = rate * productSalesUOMConvertionFactor;
+        Double itemDiscountedrate = itemRate * (discount / 100.0);
+        Double taxablevalueforoneitem = itemRate - itemDiscountedrate;
+        Double singlesgst = taxablevalueforoneitem * ((hsn.getSgst()) / 100);
+        Double singlecgst = taxablevalueforoneitem * ((hsn.getCgst()) / 100);
+        Double netPrice = taxablevalueforoneitem + (singlesgst + singlecgst);
+        return MastroApplicationUtils.roundTwoDecimals(netPrice);
+
     }
 
 }

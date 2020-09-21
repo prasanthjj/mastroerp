@@ -14,7 +14,7 @@ public interface SalesSlipService {
 
     void grnUpdationOnSale(Long itemId, Long partyId, Double salequantity, Long productUOMSalesId, Double rate, Long grnItemIds, Long salesSlipId);
 
-    void saveSalesSlipFullDate(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException;
+    void saveSalesSlipFullData(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException;
 
     List<SalesSlip> getAllSalesSlips();
 }

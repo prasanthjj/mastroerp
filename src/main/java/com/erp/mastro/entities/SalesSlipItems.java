@@ -69,4 +69,17 @@ public class SalesSlipItems {
 
     @Column(name = "cess_amount")
     private Double cessAmount;
+
+    @Column(name = "hsn_code")
+    private String hsnCode;
+
+    @Column(name = "final_amount")
+    private Double finalAmount;
+
+    @Column(name = "discount_percentage")
+    private Double discountPercentage;
+
+    @Column(name = "net_price")
+    private Double netPrice;
+
 }

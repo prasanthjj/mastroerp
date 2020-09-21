@@ -1,5 +1,6 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
@@ -9,10 +10,7 @@ import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.model.request.SalesSlipRequestModel;
 import com.erp.mastro.repository.ProductUOMRepository;
-import com.erp.mastro.service.interfaces.GRNService;
-import com.erp.mastro.service.interfaces.PartyService;
-import com.erp.mastro.service.interfaces.ProductService;
-import com.erp.mastro.service.interfaces.SalesSlipService;
+import com.erp.mastro.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +39,9 @@ public class SalesSlipController {
 
     @Autowired
     GRNService grnService;
+
+    @Autowired
+    HSNService hsnService;
 
     @Autowired
     private UserController userController;
@@ -290,11 +291,36 @@ public class SalesSlipController {
             model.addAttribute("contactDetails", contactDetails);
             model.addAttribute("salesSlipDetails", salesSlip);
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
-            Double grandTotal = 0.0d;
+            Double grandTotal = 0d;
+            Double subTotal = 0d;
+            Double loadingChargeSum = 0d;
+            Double cessTotal = 0d;
             for (SalesSlipItems salesSlipItems : salesSlip.getSalesSlipItemsSet()) {
-                grandTotal = grandTotal + salesSlipItems.getTotalAmount() + salesSlipItems.getCessAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount();
+                subTotal = subTotal + salesSlipItems.getFinalAmount();
+                loadingChargeSum = loadingChargeSum + (salesSlipItems.getGrnItems().getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getLoadingCharge() * salesSlipItems.getGrnQty() * salesSlipItems.getProductUOM().getConvertionFactor());
+                cessTotal = cessTotal + (salesSlipItems.getTotalAmount() * (salesSlipItems.getCessRate() / 100));
+                //grandTotal = grandTotal + salesSlipItems.getTotalAmount() + salesSlipItems.getCessAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount();
             }
+            model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
+            model.addAttribute("loadingChargeSum", MastroApplicationUtils.roundTwoDecimals(loadingChargeSum));
             model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
+            HSN loadingHSN = hsnService.getAllHSN().stream()
+                    .filter(hsnData -> (null != hsnData))
+                    .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                    .filter(hsnData -> hsnData.getHsnCode().equals("7314"))
+                    .findFirst().get();
+            model.addAttribute("loadingHSN", loadingHSN);
+            Double loadingChargeSgstAmt = loadingChargeSum * (loadingHSN.getSgst() / 100);
+            Double loadingChargeCgstAmt = loadingChargeSum * (loadingHSN.getCgst() / 100);
+            model.addAttribute("loadingChargeSgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeSgstAmt));
+            model.addAttribute("loadingChargeCgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeCgstAmt));
+            Double finalLoadingCharge = loadingChargeSum + loadingChargeSgstAmt + loadingChargeCgstAmt;
+            model.addAttribute("finalLoadingCharge", MastroApplicationUtils.roundTwoDecimals(finalLoadingCharge));
+            if (loadingHSN.getCess() != null) {
+                cessTotal = cessTotal + (loadingChargeSum * (loadingHSN.getCess() / 100));
+            }
+            model.addAttribute("cessTotal", MastroApplicationUtils.roundTwoDecimals(cessTotal));
+            Double amtForRound = MastroApplicationUtils.roundTwoDecimals(subTotal + finalLoadingCharge + cessTotal);
             return "views/addPurchaseSlip";
         } catch (Exception e) {
             MastroLogUtils.error(SalesSlipController.class, e.getMessage());
@@ -308,7 +334,7 @@ public class SalesSlipController {
         try {
             model.addAttribute("inventoryModule", "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
-            salesSlipService.saveSalesSlipFullDate(salesSlipRequestModel);
+            salesSlipService.saveSalesSlipFullData(salesSlipRequestModel);
 
             return "redirect:/inventory/getDeliveryChellan";
         } catch (ModelNotFoundException e) {

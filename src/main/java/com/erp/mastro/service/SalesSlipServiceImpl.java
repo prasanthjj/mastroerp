@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SalesSlipServiceImpl implements SalesSlipService {
@@ -144,11 +145,23 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlipItems.setCgstRate(product.getHsn().getCgst());
             salesSlipItems.setSgstRate(product.getHsn().getSgst());
             salesSlipItems.setIgstRate(product.getHsn().getIgst());
+            salesSlipItems.setHsnCode(product.getHsn().getHsnCode());
             if (product.getHsn().getCess() != null) {
                 salesSlipItems.setCessRate(product.getHsn().getCess());
             } else {
                 salesSlipItems.setCessRate(0.0);
             }
+            Double discount = 0.0d;
+            if (!party.getIndustryType().getIndustryType().equals("Cash Customer")) {
+                Set<ProductPartyRateRelation> productPartyRateRelationSet = product.getProductPartyRateRelations().stream()
+                        .filter(productPartyData -> (null != productPartyData))
+                        .filter(productPartyData -> (partyId.equals(productPartyData.getParty().getId())))
+                        .collect(Collectors.toSet());
+                if (!productPartyRateRelationSet.isEmpty()) {
+                    discount = productPartyRateRelationSet.stream().findFirst().get().getPartyPriceList().getDiscount();
+                }
+            }
+            salesSlipItems.setDiscountPercentage(discount);
             if (salesQtyInSalesUOM == grnItemQtyInSalesUOMs) {
                 Double currentStock = stock.getCurrentStock() - (salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
                 stock.setCurrentStock(currentStock);
@@ -158,16 +171,19 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 grnItems.setAccepted(acceptedQtyRemaining);
                 grnItemRepository.save(grnItems);
                 salesSlipItems.setGrnQty(grnItemQtyInSalesUOMs);
-                Double totalForRound = (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()) * rate;
-                salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
+
+                Double totalForRound = MastroApplicationUtils.calculateTotalPrice(rate, (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()), discount);
+                salesSlipItems.setTotalAmount(MastroApplicationUtils.roundTwoDecimals(totalForRound));
                 salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
                 salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
                 salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                salesSlipItems.setFinalAmount(MastroApplicationUtils.roundTwoDecimals(salesSlipItems.getTotalAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount()));
                 if (product.getHsn().getCess() != null) {
                     salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
                 } else {
                     salesSlipItems.setCessAmount(0d);
                 }
+                salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
 
             } else if (salesQtyInSalesUOM < grnItemQtyInSalesUOMs) {
                 grnItemQtyInSalesUOMs = grnItemQtyInSalesUOMs - salesQtyInSalesUOM;
@@ -181,16 +197,20 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 grnItems.setAccepted(Math.round(acceptedQtyRemaining * 100.0) / 100.0);
                 grnItemRepository.save(grnItems);
                 salesSlipItems.setGrnQty(salesQtyInSalesUOM);
-                Double totalForRound = (salesQtyInSalesUOM * productSaleUOM.getConvertionFactor()) * rate;
-                salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
+
+                Double totalForRound = MastroApplicationUtils.calculateTotalPrice(rate, (salesQtyInSalesUOM * productSaleUOM.getConvertionFactor()), discount);
+                salesSlipItems.setTotalAmount(MastroApplicationUtils.roundTwoDecimals(totalForRound));
                 salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
                 salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
                 salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                salesSlipItems.setFinalAmount(MastroApplicationUtils.roundTwoDecimals(salesSlipItems.getTotalAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount()));
                 if (product.getHsn().getCess() != null) {
                     salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
                 } else {
                     salesSlipItems.setCessAmount(0d);
                 }
+                salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
+
             } else {
                 salesQtyInSalesUOM = salesQtyInSalesUOM - grnItemQtyInSalesUOMs;
                 Double currentStock = stock.getCurrentStock() - grnItemQtyInBaseUOM;
@@ -201,16 +221,19 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 grnItems.setAccepted(acceptedQtyRemaining);
                 grnItemRepository.save(grnItems);
                 salesSlipItems.setGrnQty(grnItemQtyInSalesUOMs);
-                Double totalForRound = (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()) * rate;
-                salesSlipItems.setTotalAmount(Math.round(totalForRound * 100.0) / 100.0);
+
+                Double totalForRound = MastroApplicationUtils.calculateTotalPrice(rate, (grnItemQtyInSalesUOMs * productSaleUOM.getConvertionFactor()), discount);
+                salesSlipItems.setTotalAmount(MastroApplicationUtils.roundTwoDecimals(totalForRound));
                 salesSlipItems.setIgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getIgst()));
                 salesSlipItems.setCgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCgst()));
                 salesSlipItems.setSgstAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getSgst()));
+                salesSlipItems.setFinalAmount(MastroApplicationUtils.roundTwoDecimals(salesSlipItems.getTotalAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount()));
                 if (product.getHsn().getCess() != null) {
                     salesSlipItems.setCessAmount(MastroApplicationUtils.calculateTax(salesSlipItems.getTotalAmount(), product.getHsn().getCess()));
                 } else {
                     salesSlipItems.setCessAmount(0d);
                 }
+                salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
 
             }
             Set<SalesSlipItems> salesSlipItemsSet = salesSlip.getSalesSlipItemsSet();
@@ -228,7 +251,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
      * @throws ModelNotFoundException
      */
     @Transactional(rollbackOn = {Exception.class})
-    public void saveSalesSlipFullDate(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException {
+    public void saveSalesSlipFullData(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException {
 
         if (salesSlipRequestModel == null) {
             throw new ModelNotFoundException("SalesSlip model is empty");

@@ -241,9 +241,6 @@
                                         <div class="col-lg-2">
                                             <div class="form-group"><label>UOM</label>
                                                 <select class="form-control" id="saleuom" required>
-                                                    <!--<option value="">Select Uom</option>
-                                                    <option>Mtr</option>
-                                                    <option>Kg</option>-->
                                                 </select>
                                             </div>
                                         </div>
@@ -274,60 +271,11 @@
                                         <th class="mastro-blue-bg txt-white">Item</th>
                                         <th class="mastro-blue-bg txt-white">HSN / SAC</th>
                                         <th class="mastro-blue-bg txt-white">Quantity</th>
-                                        <th class="mastro-blue-bg txt-white">Unit Rate</th>
-                                        <th class="mastro-blue-bg txt-white">Amount</th>
-                                        <th class="mastro-blue-bg txt-white" style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
-                                                        colspan="2">CGST
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
-                                                </tr>
-                                            </table>
-                                        </th>
-                                        <th style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
-                                                        colspan="2">SGST
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
-                                                </tr>
-                                            </table>
-                                        </th>
-                                        <!--<th style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
-                                                        colspan="2">IGST
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
-                                                </tr>
-                                            </table>
-                                        </th>-->
-                                        <th style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <th class="mastro-blue-bg txt-white" style="text-align: center;"
-                                                        colspan="2">CESS
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Rate</th>
-                                                    <th width="50%" class="mastro-blue-bg txt-white">Value</th>
-                                                </tr>
-                                            </table>
-                                        </th>
+                                        <th class="mastro-blue-bg txt-white">Net Price</th>
+                                        <th class="mastro-blue-bg txt-white">Taxable Value</th>
+                                        <th class="mastro-blue-bg txt-white">CGST</th>
+                                        <th class="mastro-blue-bg txt-white">SGST</th>
+                                        <th class="mastro-blue-bg txt-white">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -335,44 +283,61 @@
                                     <tr th:each="salesslipItemObj,iterator:${salesSlipDetails.salesSlipItemsSet}">
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${salesslipItemObj.product.productName}">Oxy .47 Red 3.05mtr (10')</td>
-                                        <td th:text="${salesslipItemObj.product.hsn.hsnCode}">HSN-0265</td>
+                                        <td th:text="${salesslipItemObj.hsnCode}">HSN-0265</td>
                                         <td><span th:text="${salesslipItemObj.grnQty}"></span> <span
                                                 th:text="${salesslipItemObj.productUOM.uom.UOM}"></span></td>
-                                        <td><span th:text="${salesslipItemObj.rate}"></span>/<span
-                                                th:text="${salesslipItemObj.product.uom.UOM}"></span></td>
-                                        <td th:text="${salesslipItemObj.totalAmount}">3500</td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td><span th:text="${salesslipItemObj.cgstRate}"></span> %</td>
-                                                    <td th:text="${salesslipItemObj.cgstAmount}">350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%"><span th:text="${salesslipItemObj.sgstRate}"></span>%</td>
-                                                    <td width="50%" th:text="${salesslipItemObj.sgstAmount}">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                       <!-- <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%"><span th:text="${salesslipItemObj.igstRate}"></span>%</td>
-                                                    <td width="50%" th:text="${salesslipItemObj.igstAmount}">175</td>
-                                                </tr>
-                                            </table>
-                                        </td>-->
-                                        <td style="padding: 0px;margin: 0px;">
-                                            <table width="100%">
-                                                <tr>
-                                                    <td width="50%"><span th:text="${salesslipItemObj.cessRate}"></span>%</td>
-                                                    <td width="50%" th:text="${salesslipItemObj.cessAmount}">350</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesslipItemObj.netPrice, 0, 'COMMA', 4, 'POINT')}"></span>/<span
+                                                th:text="${salesslipItemObj.productUOM.uom.UOM}"></span></td>
+
+                                        <td th:text="${#numbers.formatDecimal(salesslipItemObj.totalAmount, 0, 'COMMA', 4, 'POINT')}">3500</td>
+                                        <td th:text="${#numbers.formatDecimal(salesslipItemObj.cgstAmount, 0, 'COMMA', 4, 'POINT')}">350</td>
+                                        <td th:text="${#numbers.formatDecimal(salesslipItemObj.sgstAmount, 0, 'COMMA', 4, 'POINT')}">175</td>
+                                        <td th:text="${#numbers.formatDecimal(salesslipItemObj.finalAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                    </tr>
+                                             <tr rowspan="3">
+                                                <td colspan="10"></td>
+                                            </tr>
+                                         <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Sub Total</td>
+                                        <td colspan="5"></td>
+                                        <td th:if="${subTotal!= null}"><span
+                                                th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}"></span></td>
+                                    </tr>
+                                         <tr>
+                                        <td></td>
+                                        <td th:if="${loadingHSN!= null}"><span
+                                                th:text="${loadingHSN.hsnCode}">7314</span></td>
+                                        <td th:if="${loadingHSN!= null}">Loading Charges@<span
+                                                th:text="${loadingHSN.igst}">18</span> %(Sales)</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td th:if="${loadingChargeSum!= null}"> <span
+                                                th:text="${#numbers.formatDecimal(loadingChargeSum, 0, 'COMMA', 4, 'POINT')}"></span></td>
+                                        <td th:if="${loadingChargeSgstAmt!= null}"><span
+                                                th:text="${#numbers.formatDecimal(loadingChargeSgstAmt, 0, 'COMMA', 4, 'POINT')}"></span></td>
+                                        <td th:if="${loadingChargeCgstAmt!= null}"><span
+                                                th:text="${#numbers.formatDecimal(loadingChargeCgstAmt, 0, 'COMMA', 4, 'POINT')}"></span></td>
+                                        <td th:if="${finalLoadingCharge!= null}"><span
+                                                th:text="${#numbers.formatDecimal(finalLoadingCharge, 0, 'COMMA', 4, 'POINT')}"></span></td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Kerala Flood Cess</td>
+                                        <td></td>
+                                         <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td th:if="${cessTotal!= null}"> <span
+                                                th:text="${#numbers.formatDecimal(cessTotal, 0, 'COMMA', 4, 'POINT')}">7.1586</span></td>
+
+
                                     </tr>
 
                                     </span>
