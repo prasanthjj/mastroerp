@@ -27,8 +27,8 @@ public class POInvoice extends Auditable<String> {
     @Column(name = "total_amt")
     private Double totalAmt;
 
-    @Column(name = "round_value")
-    private Double roundValue;
+    @Column(name = "round_off")
+    private Double roundOff;
 
     @Column(name = "grand_total")
     private Double grandTotal;

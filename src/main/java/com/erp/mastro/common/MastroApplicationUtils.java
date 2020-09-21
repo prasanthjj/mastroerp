@@ -113,4 +113,18 @@ public class MastroApplicationUtils {
         return Math.round(totalPrice * 100.0) / 100.0;
     }
 
+    /**
+     * Method with  round amount
+     *
+     * @param amtForRound
+     * @param roundedGrandTotalInDouble
+     * @return
+     */
+    public static Double roundAmount(Double amtForRound, Double roundedGrandTotalInDouble) {
+
+        Double roundValue = 0.0d;
+        roundValue = amtForRound - roundedGrandTotalInDouble;
+        return MastroApplicationUtils.roundTwoDecimals(roundValue * (-1));
+    }
+
 }
