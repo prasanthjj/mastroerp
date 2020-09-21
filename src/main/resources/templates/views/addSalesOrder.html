@@ -272,11 +272,18 @@
                                 <div class="row m-t-md">
                                     <div class="col-lg-12 text-right">
                                      <span th:if="${salesDetails!= null}">
-                                        <input type="hidden" name="grandTotal" th:value="${finalTotal}">
+                                        <input type="hidden" name="grandTotal" th:value="${grandTotal}">
+                                         <input type="hidden" name="finalTotal" th:value="${finalTotal}">
+                                        <input type="hidden" name="roundOff" th:value="${roundOff}">
 
-                                        <h3 class=""> Round Off :(-) <span th:text="${finalroundoff}"> 850.0000</span></h3>
-                                        <h3 class=""> Grand Total  : <span th:text="${finalTotal}"> 850.0000</span></h3>
-                                          </span>
+
+
+
+                                        <h3 class=""> Round Off : <span th:text="${roundOff}"> 850.0000</span></h3>
+
+                                        <h3 class=""> Grand Total : <span th:text="${grandTotal}"> 850.0000</span></h3>
+
+                                     </span>
                                     </div>
                                 </div>
                                 <div class="row">

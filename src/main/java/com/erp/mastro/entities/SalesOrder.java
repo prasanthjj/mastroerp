@@ -31,6 +31,12 @@ public class SalesOrder extends Auditable<String> {
     @Column(name = "grand_total")
     private Double grandTotal;
 
+    @Column(name = "final_total")
+    private Double finalTotal;
+
+    @Column(name = "rounod_off")
+    private Double roundOff;
+
     @Column(name = "status")
     private String status;
 

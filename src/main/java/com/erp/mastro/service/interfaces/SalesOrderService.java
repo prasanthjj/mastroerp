@@ -21,5 +21,7 @@ public interface SalesOrderService {
 
     SalesOrderProduct saveOrUpdateSalesOrderProduct(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Product product, Double quantity) throws ModelNotFoundException;
 
-    void generateSalesOrder(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Double grandTotal) throws ModelNotFoundException;
+    void generateSalesOrder(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Double grandTotal,Double finalTotal,Double roundOff) throws ModelNotFoundException;
+
+
 }

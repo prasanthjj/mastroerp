@@ -132,24 +132,6 @@ public class SalesOrderController {
 
 
 
- /*   @GetMapping("/getSelectedPartyDetails")
-    public String getSelectedPartyDetails(Model model, HttpServletRequest req) {
-        MastroLogUtils.info(SalesOrderController.class, "Going to get Selected party : {}");
-        Long partyId = Long.parseLong(req.getParameter("selectedPartys"));
-        SalesOrder salesOrder = salesOrderService.getSalesorderById(partyId);
-
-
-
-
-        model.addAttribute("salesForm", new SalesOrderRequestModel());
-        model.addAttribute("salesModule", "salesModule");
-        model.addAttribute("salesTab", "sales");
-        model.addAttribute("partyDetails", salesOrder);
-        return "views/addSalesOrder";
-    }*/
-
-
-
     /**
      * Method to get selected product details
      *
@@ -183,10 +165,13 @@ public class SalesOrderController {
             Double totalCess = 0d;
             Double loadingCharge = 0d;
             Double grandTotal = 0d;
+            Double finalTotal= 0d;
             Double itemlodingcharge =0d;
             Double LodingChargeTotal =0d;
            Double TotalLodingChargeCgst =0d;
             Double TotalLodingChargeSgst =0d;
+            Double roundOff =0d;
+            int  roundoffvalue;
             for (SalesOrderProduct salesOrderProduct : salesOrder.getSalesOrderProductSet()) {
                 if (salesOrderProduct.getProduct() != null) {
                     subTotal = subTotal + salesOrderProduct.getTotalPrice();
@@ -212,39 +197,53 @@ public class SalesOrderController {
                  TotalLodingChargeSgst = itemlodingcharge *  (hsn.getSgst() / 100);
                 LodingChargeTotal =  itemlodingcharge+TotalLodingChargeCgst+TotalLodingChargeSgst;
 
-                grandTotal = subTotal + LodingChargeTotal + totalCess;
+                finalTotal = subTotal + LodingChargeTotal + totalCess;
                 model.addAttribute("hsnDetails", hsn.getHsnCode());
                 model.addAttribute("igstAmt", Math.round(igstAmt * 100.0) / 100.0);
             }
 
             //Methods for rounoff starts
-            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(grandTotal);
+            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(finalTotal);
             double doubleNumber =grandTotals;
-
             String doubleAsString = String.valueOf(doubleNumber);
             int indexOfDecimal = doubleAsString.indexOf(".");
             String integernumberstring =doubleAsString.substring(0, indexOfDecimal);
             String decimalpart = doubleAsString.substring(indexOfDecimal);
 
-            int integerbeforeround=Integer.parseInt(integernumberstring);
+            int intNumber = Integer.parseInt(integernumberstring);
+            double lastDigit = intNumber % 10 ;
+           int a = integernumberstring.length()-1;
+           if(lastDigit < 5)
+           {
+               Double integernumber=  Double.parseDouble(integernumberstring);
 
-            Double integernumber=  Double.parseDouble(integernumberstring);
-            Double number = integernumber;
-            double place =10;
-            double result = number / place;
-            result = Math.floor(result);
-            result *= place;
-            int roundoffvalue=(int)result;
+               Double number = integernumber;
+               double place =10;
+               double result = number / place;
+               result = Math.floor(result);
+               result *= place;
+               roundoffvalue=(int)result;
+               roundOff = roundoffvalue-finalTotal;
 
-            int diffrenceofround= integerbeforeround-roundoffvalue;
-            String stringvalues=String.valueOf(diffrenceofround);//Now it will return "diffrenceofround"
-            String Stringresult = stringvalues+decimalpart;
+
+           }else {
+               Double integernumber=  Double.parseDouble(integernumberstring);
+               Double number = integernumber;
+
+               double place =10;
+               double result = number / place;
+               result = Math.ceil(result);
+               result *= place;
+              roundoffvalue=(int)result;
+              roundOff = roundoffvalue-finalTotal;
+           }
             //Method for round off Ends
 
-            model.addAttribute("finalTotal", roundoffvalue);
-            model.addAttribute("finalroundoff", Stringresult);
+
+            model.addAttribute("grandTotal", roundoffvalue);
+            model.addAttribute("roundOff", MastroApplicationUtils.roundTwoDecimals(roundOff));
           //  model.addAttribute("grandTotal",  MastroApplicationUtils.roundTwoDecimals(grandTotal));
-            model.addAttribute("grandTotal",  Stringresult);
+            model.addAttribute("finalTotal",  MastroApplicationUtils.roundTwoDecimals(finalTotal));
            // model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
             model.addAttribute("totalTaxableValue", MastroApplicationUtils.roundTwoDecimals(itemlodingcharge));
             model.addAttribute("cgstAmt", MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeCgst));
@@ -278,9 +277,12 @@ public class SalesOrderController {
         MastroLogUtils.info(SalesOrderController.class, "Going to saveSalesOrderProduct  : {}");
         Long salesId = Long.parseLong(request.getParameter("salesIds"));
         Double grandTotal = Double.parseDouble(request.getParameter("grandTotal"));
+        Double finalTotal = Double.parseDouble(request.getParameter("finalTotal"));
+        Double roundOff = Double.parseDouble(request.getParameter("roundOff"));
+
         try {
             SalesOrder salesOrder = salesOrderService.getSalesorderById(salesId);
-            salesOrderService.generateSalesOrder(salesOrderRequestModel, salesOrder, grandTotal);
+            salesOrderService.generateSalesOrder(salesOrderRequestModel, salesOrder,grandTotal,finalTotal,roundOff);
 
             return "redirect:/sales/getSalesOrder";
         } catch (Exception e) {
@@ -320,10 +322,13 @@ public class SalesOrderController {
             Double totalCess = 0d;
             Double loadingCharge = 0d;
             Double grandTotal = 0d;
+            Double finalTotal= 0d;
             Double itemlodingcharge =0d;
             Double LodingChargeTotal =0d;
             Double TotalLodingChargeCgst =0d;
             Double TotalLodingChargeSgst =0d;
+            Double roundOff =0d;
+            int  roundoffvalue;
             for (SalesOrderProduct salesOrderProduct : salesOrder.getSalesOrderProductSet()) {
                 if (salesOrderProduct.getProduct() != null) {
                     subTotal = subTotal + salesOrderProduct.getTotalPrice();
@@ -349,39 +354,54 @@ public class SalesOrderController {
                 TotalLodingChargeSgst = itemlodingcharge *  (hsn.getSgst() / 100);
                 LodingChargeTotal =  itemlodingcharge+TotalLodingChargeCgst+TotalLodingChargeSgst;
 
-                grandTotal = subTotal + LodingChargeTotal + totalCess;
+                finalTotal = subTotal + LodingChargeTotal + totalCess;
                 model.addAttribute("hsnDetails", hsn.getHsnCode());
                 model.addAttribute("igstAmt", Math.round(igstAmt * 100.0) / 100.0);
             }
 
             //Methods for rounoff starts
-            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(grandTotal);
+            Double grandTotals= MastroApplicationUtils.roundTwoDecimals(finalTotal);
             double doubleNumber =grandTotals;
-
             String doubleAsString = String.valueOf(doubleNumber);
             int indexOfDecimal = doubleAsString.indexOf(".");
             String integernumberstring =doubleAsString.substring(0, indexOfDecimal);
             String decimalpart = doubleAsString.substring(indexOfDecimal);
 
-            int integerbeforeround=Integer.parseInt(integernumberstring);
+            int intNumber = Integer.parseInt(integernumberstring);
+            double lastDigit = intNumber % 10 ;
+            int a = integernumberstring.length()-1;
+            if(lastDigit < 5)
+            {
+                Double integernumber=  Double.parseDouble(integernumberstring);
 
-            Double integernumber=  Double.parseDouble(integernumberstring);
-            Double number = integernumber;
-            double place =10;
-            double result = number / place;
-            result = Math.floor(result);
-            result *= place;
-            int roundoffvalue=(int)result;
+                Double number = integernumber;
+                double place =10;
+                double result = number / place;
+                result = Math.floor(result);
+                result *= place;
+                roundoffvalue=(int)result;
+                roundOff = roundoffvalue-finalTotal;
 
-            int diffrenceofround= integerbeforeround-roundoffvalue;
-            String stringvalues=String.valueOf(diffrenceofround);//Now it will return "diffrenceofround"
-            String Stringresult = stringvalues+decimalpart;
+
+            }else {
+                Double integernumber=  Double.parseDouble(integernumberstring);
+                Double number = integernumber;
+
+                double place =10;
+                double result = number / place;
+                result = Math.ceil(result);
+                result *= place;
+                roundoffvalue=(int)result;
+                roundOff = roundoffvalue-finalTotal;
+            }
             //Method for round off Ends
 
-            model.addAttribute("finalTotal", roundoffvalue);
-            model.addAttribute("finalroundoff", Stringresult);
+
+
+            model.addAttribute("grandTotal", roundoffvalue);
+            model.addAttribute("roundOff", MastroApplicationUtils.roundTwoDecimals(roundOff));
             //  model.addAttribute("grandTotal",  MastroApplicationUtils.roundTwoDecimals(grandTotal));
-            model.addAttribute("grandTotal",  Stringresult);
+            //model.addAttribute("grandTotal",  grandTotal);
             // model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
             model.addAttribute("totalTaxableValue", MastroApplicationUtils.roundTwoDecimals(itemlodingcharge));
             model.addAttribute("cgstAmt", MastroApplicationUtils.roundTwoDecimals(TotalLodingChargeCgst));

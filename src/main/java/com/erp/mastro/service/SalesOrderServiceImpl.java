@@ -161,7 +161,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
             Double netPrice = 0d;
             netPrice = calculateService.totalNetPriceForSO(salesOrderProduct.getFinalTaxableValue(), salesOrderProduct.getSinglecgstAmount(), salesOrderProduct.getSinglesgstAmount(),productPartyRateRelation );
             salesOrderProduct.setNetPrice(netPrice);
-             salesOrderProductSet.add(salesOrderProduct);
+            salesOrderProductSet.add(salesOrderProduct);
         }
         salesOrderRepository.save(salesOrder1);
         MastroLogUtils.info(SalesOrderService.class, "Save " + salesOrder1.getId() + " succesfully.");
@@ -180,7 +180,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
      */
 
     @Transactional(rollbackOn = {Exception.class})
-    public void generateSalesOrder(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Double grandTotal) throws ModelNotFoundException {
+    public void generateSalesOrder(SalesOrderRequestModel salesOrderRequestModel, SalesOrder salesOrder, Double grandTotal,Double finalTotal,Double roundOff) throws ModelNotFoundException {
         MastroLogUtils.info(SalesOrderService.class, "Going to createSalesOrder" + salesOrder.getId());
         SalesOrder salesOrder1 = salesOrder;
         if (salesOrderRequestModel == null) {
@@ -189,10 +189,15 @@ public class SalesOrderServiceImpl implements SalesOrderService {
             salesOrder1.setSpecialInstructions(salesOrderRequestModel.getSpecialInstructions());
             salesOrder1.setRemarks(salesOrderRequestModel.getRemarks());
             salesOrder1.setGrandTotal(grandTotal);
+            salesOrder1.setFinalTotal(finalTotal);
+            salesOrder1.setRoundOff(roundOff);
             salesOrderRepository.save(salesOrder1);
             MastroLogUtils.info(SalesOrderService.class, "create sales order succesfully.");
         }
 
     }
+
+
+
 
 }

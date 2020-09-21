@@ -19,6 +19,8 @@ public class SalesOrderRequestModel {
     private String specialInstructions;
     private String remarks;
     private Double grandTotal;
+    private Double finalTotal;
+    private Double roundOff;
 
     public SalesOrderRequestModel() {
 
