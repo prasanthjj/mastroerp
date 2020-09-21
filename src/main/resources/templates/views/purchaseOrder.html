@@ -117,32 +117,24 @@
                                                 th:text="${purchaseObj.status}">Draft</b></a></td>
                                         <td class="center" th:text="${purchaseObj.reason}">200</td>
                                         <td class="center">
-                                            <div class="btn-group">
+                                            <!--<button type="button" class="btn btn-w-m btn-info dim">View GRNS</button>
+                                            <button type="button" class="btn btn-w-m btn-warning dim">Generate Purchase Invoice</button>-->
+                                            <div class="btn-group"
+                                                 th:if="${purchaseObj.status== 'Delivery in progress' || purchaseObj.status=='Delivery complete'}">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
 
-                                                    <span th:if="${purchaseObj.status== 'Delivery in progress'}">
+
                                                     <li><a class="dropdown-item font-bold"
                                                            th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
-                                                    <i
-                                                            class="fa fa-edit"></i> View GRNS</a></li>
-                                                         <li><a class="dropdown-item font-bold"
-                                                                th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
-                                                    <i
-                                                            class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
-                                                    </span>
-                                                    <span th:if="${purchaseObj.status== 'Delivery complete'}">
+                                                        <i
+                                                                class="fa fa-edit"></i> View GRNS</a></li>
                                                     <li><a class="dropdown-item font-bold"
-                                                           th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
-                                                    <i
-                                                            class="fa fa-edit"></i> View GRNS</a></li>
-                                                         <li><a class="dropdown-item font-bold"
-                                                                th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
-                                                    <i
-                                                            class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
-                                                    </span>
+                                                           th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
+                                                        <i class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
+
 
                                                 </ul>
                                             </div>
