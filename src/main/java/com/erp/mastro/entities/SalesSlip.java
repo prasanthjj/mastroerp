@@ -72,4 +72,16 @@ public class SalesSlip extends Auditable<String> {
 
     @Column(name = "total_sgst")
     private Double totalSgst;
+
+    @Column(name = "sales_slip_no")
+    private String salesSlipNo;
+
+    @Column(name = "loading_charge_sum")
+    private Double loadingChargeSum;
+
+    @Column(name = "loading_charge_cgst")
+    private Double loadingChargeCgst;
+
+    @Column(name = "loading_charge_sgst")
+    private Double loadingChargesgst;
 }

@@ -23,6 +23,9 @@ public class SalesSlipRequestModel {
     private Double totalTaxableValue;
     private Double totalCgst;
     private Double totalSgst;
+    private Double loadingChargeSum;
+    private Double loadingChargeCgst;
+    private Double loadingChargesgst;
 
     @Override
     public String toString() {

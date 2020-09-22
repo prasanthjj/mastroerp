@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Sales Order Preview</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Sales Slip Preview</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Sales</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#"> Sales Slip List </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Sales Slip Preview </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title mastro-ibox-title ">
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+                            <!-- <span th:if="${salesOrderDetails.status== 'Draft'}">-->
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <!--  <div class="form-group">
+                                              <input type="text" id="reason" class="form-control" placeholder="Approvel / Rejection Remarks" />
+                                      </div>-->
+                                </div>
+                                <div class="col-lg-7">
+                                    <!-- <p class="text-left">
+                                         <button class="btn btn-primary dim soApproved"
+                                                 th:data-soids="${salesOrderDetails.id}">Approve</button>
+
+                                             <button class="btn btn-primary dim soReview"
+                                                     th:data-soids="${salesOrderDetails.id}">Review</button>
+                                  <button class="btn btn-danger dim soDiscard"
+                                                 th:data-soids="${salesOrderDetails.id}">Discard</button>
+
+                                     </p>-->
+                                </div>
+                            </div><!--</span>-->
+                            <!-- <span th:if="${salesOrderDetails.status== 'Approve'}">
+                             <div class="ibox-title  ">
+                                  <div class="ibox-tools">
+                                     <div class="btn-group">
+                                         <button class="btn btn-primary ">
+                                             <i class="fa fa-print "></i></button>
+
+                                     </div>
+                                 </div>
+                             </div>
+                             </span>-->
+                            <div class="ibox-content p-xl">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>Delivery Address:</h5>
+
+                                        <p><strong th:text="${contactDetails.contactPersonName}"></strong><br>
+                                            <span th:text="${contactDetails.designation}"></span><br>
+                                            <span th:text="${contactDetails.address}"></span><br>
+                                            <span>Phone no : <span
+                                                    th:text="${contactDetails.mobileNo}"></span></span><br>
+                                            <span>Email ID : <span
+                                                    th:text="${contactDetails.emailId}"></span></span>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-sm-6 text-right">
+                                        <h4>Sales Oder No.</h4>
+                                        <h4 class="text-navy"><span th:text="${salesSlip.salesSlipNo}"></span></h4>
+                                        <h5>Billing Address:</h5>
+                                        <p><strong th:text="${billingDetails.contactPersonName}"></strong><br>
+                                            <span th:text="${billingDetails.city}"></span><br>
+                                            <span th:text="${billingDetails.state}"></span> ,
+                                            <span th:text="${billingDetails.country}"></span><br>
+                                            <span>Pincode : <span
+                                                    th:text="${billingDetails.pinCode}"></span></span><br>
+                                            <span>Phone no : <span
+                                                    th:text="${billingDetails.telephoneNo}"></span></span><br>
+                                            <span>Email ID : <span
+                                                    th:text="${billingDetails.emailId}"></span></span>
+                                        </p>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="table-responsive m-t">
+                                    <table class="table invoice-table">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>HSN / SAC</th>
+                                            <th>Item</th>
+                                            <!--<th>GST</th>-->
+                                            <th>Quantity</th>
+                                            <!--<th>Unit Rate</th>-->
+                                            <th>Taxable Value</th>
+                                            <th>CGST</th>
+                                            <th>SGST</th>
+                                            <th>Net Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="saleSlipItem,iterator:${salesSlip.salesSlipItemsSet}">
+                                            <td th:text="${iterator.index+1}">1</td>
+                                            <td th:text="${saleSlipItem.hsnCode}">HSN-0265</td>
+                                            <td th:text="${saleSlipItem.product.productName}">Angles 25x6 (1x1/4)</td>
+                                            <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
+                                            <td><span th:text="${saleSlipItem.grnQty}">26.00</span>/<span
+                                                    th:text="${saleSlipItem.productUOM.uom.UOM}"></span></td>
+                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.totalAmount, 0, 'COMMA', 4, 'POINT')}">
+                                                711.8580
+                                            </td>
+                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.finalAmount, 0, 'COMMA', 4, 'POINT')}">
+                                                839.9924
+                                            </td>
+
+                                        </tr>
+                                        <tr rowspan="3">
+                                            <td colspan="10"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Sub Total</td>
+                                            <td colspan="5"></td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.subTotal, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><span th:text="${loadingHSN.hsnCode}">7314</span></td>
+                                            <td>Loading Charges@<span th:text="${loadingHSN.igst}"></span> %(Sales)</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.loadingChargeSum, 0, 'COMMA', 4, 'POINT')}">4.0000</span>
+                                            </td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.loadingChargeCgst, 0, 'COMMA', 4, 'POINT')}">0.3600</span>
+                                            </td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.loadingChargesgst, 0, 'COMMA', 4, 'POINT')}">0.3600</span>
+                                            </td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.totalLoadingCharge, 0, 'COMMA', 4, 'POINT')}">0.7200</span>
+                                            </td>
+
+                                        </tr>
+
+
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Kerala Flood Cess</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(salesSlip.totalCess, 0, 'COMMA', 4, 'POINT')}">7.1586</span>
+                                            </td>
+
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <table class="table invoice-total">
+                                    <tbody>
+
+                                    <tr>
+
+                                        <td><strong>Round Off :</strong></td>
+                                        <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TOTAL :</strong></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="footer ">
+            <div class="float-right">
+                Designed and Developed By <strong>Halo Technology Solutions</strong>
+            </div>
+            <div>
+                <strong>Copyright</strong> Mastro Metals &copy; 2020
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<script>
+        $(document).ready(function(){
+            $('.soApproved').click(function(){
+            var reason=document.getElementById("reason").value;
+            var soids=$(this).data('soids');
+            swal({
+                title: "Approved!",
+                text: "You want to Approved Sales Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Approve it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+                 	$.ajax({
+                   url: '/sales/soApprove',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'soids':soids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/sales/getSalesOrder";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+  $('.soDiscard').click(function(){
+            var reason=document.getElementById("reason").value;
+            var soids=$(this).data('soids');
+            swal({
+                title: "Discard!",
+                text: "You want to Discard Sales Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Discard it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/sales/soDiscard',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'soids':soids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/sales/getSalesOrder";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+        $('.soReview').click(function(){
+            var reason=document.getElementById("reason").value;
+            var soids=$(this).data('soids');
+            swal({
+                title: "Review?",
+                text: " Do you want to Review Sales Order!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Review it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/sales/soReview',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'soids':soids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/sales/getSalesOrder";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+
+        });
+
+
+</script>
+
+</body>
+</html>

@@ -271,6 +271,13 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlip.setTotalCgst(salesSlipRequestModel.getTotalCgst());
                 salesSlip.setTotalLoadingCharge(salesSlipRequestModel.getTotalLoadingCharge());
                 salesSlip.setTotalTaxableValue(salesSlipRequestModel.getTotalTaxableValue());
+                salesSlip.setLoadingChargeSum(salesSlipRequestModel.getLoadingChargeSum());
+                salesSlip.setLoadingChargeCgst(salesSlipRequestModel.getLoadingChargeCgst());
+                salesSlip.setLoadingChargesgst(salesSlipRequestModel.getLoadingChargesgst());
+                String currentBranchCode = salesSlip.getBranch().getBranchCode();
+                if (currentBranchCode != null) {
+                    salesSlip.setSalesSlipNo(MastroApplicationUtils.generateName(currentBranchCode, "SalesSlip", salesSlip.getId()));
+                }
                 salesSlipRepository.save(salesSlip);
             }
 

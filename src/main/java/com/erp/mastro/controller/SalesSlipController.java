@@ -362,4 +362,41 @@ public class SalesSlipController {
         }
     }
 
+    /**
+     * Method to view sales slip
+     *
+     * @param request
+     * @param salesSlipId
+     * @param model
+     * @return salesslip
+     */
+    @RequestMapping(value = "/getSalesSlipPreview", method = RequestMethod.GET)
+    public String getSalesSlipPreview(HttpServletRequest request, @RequestParam("salesSlipId") Long salesSlipId, Model model) {
+        MastroLogUtils.info(SalesSlipController.class, "Method to get sales slip preview :" + salesSlipId);
+        try {
+            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute("deliveryChellanTab", "deliveryChellan");
+            if (salesSlipId != null) {
+                SalesSlip salesSlip = salesSlipService.getSalesSlipById(salesSlipId);
+                model.addAttribute("salesSlip", salesSlip);
+                BillingDetails billingDetails = salesSlip.getParty().getBillingDetails().stream().findFirst().get();
+                ContactDetails contactDetails = salesSlip.getParty().getContactDetails().stream().findFirst().get();
+                model.addAttribute("billingDetails", billingDetails);
+                model.addAttribute("contactDetails", contactDetails);
+                HSN loadingHSN = hsnService.getAllHSN().stream()
+                        .filter(hsnData -> (null != hsnData))
+                        .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                        .filter(hsnData -> hsnData.getHsnCode().equals("7314"))
+                        .findFirst().get();
+                model.addAttribute("loadingHSN", loadingHSN);
+
+            }
+
+            return "views/salesSlipPreview";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(SalesSlipController.class, e.getMessage());
+            throw e;
+        }
+    }
 }
