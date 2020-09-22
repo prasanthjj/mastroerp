@@ -14,6 +14,15 @@ public class SalesSlipRequestModel {
     private Long selectedPartyInSalesSlip;
     private String specificInst;
     private String remarks;
+    private Double totalAmt;
+    private Double roundOff;
+    private Double grandTotal;
+    private Double totalLoadingCharge;
+    private Double totalCess;
+    private Double subTotal;
+    private Double totalTaxableValue;
+    private Double totalCgst;
+    private Double totalSgst;
 
     @Override
     public String toString() {

@@ -149,4 +149,38 @@ public class MastroApplicationUtils {
 
     }
 
+    public static int roundForGrandTotalInSalesSlip(Double amtForRound) {
+
+        Double grandTotals = MastroApplicationUtils.roundTwoDecimals(amtForRound);
+        double doubleNumber = grandTotals;
+        String doubleAsString = String.valueOf(doubleNumber);
+        int indexOfDecimal = doubleAsString.indexOf(".");
+        String integernumberstring = doubleAsString.substring(0, indexOfDecimal);
+        String decimalpart = doubleAsString.substring(indexOfDecimal);
+
+        int intNumber = Integer.parseInt(integernumberstring);
+        double lastDigit = intNumber % 10;
+        int a = integernumberstring.length() - 1;
+        int roundoffvalue;
+        if (lastDigit < 5) {
+            Double integernumber = Double.parseDouble(integernumberstring);
+            Double number = integernumber;
+            double place = 10;
+            double result = number / place;
+            result = Math.floor(result);
+            result *= place;
+            roundoffvalue = (int) result;
+
+        } else {
+            Double integernumber = Double.parseDouble(integernumberstring);
+            Double number = integernumber;
+            double place = 10;
+            double result = number / place;
+            result = Math.ceil(result);
+            result *= place;
+            roundoffvalue = (int) result;
+        }
+        return roundoffvalue;
+    }
+
 }

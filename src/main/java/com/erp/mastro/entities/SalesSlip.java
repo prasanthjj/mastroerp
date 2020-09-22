@@ -45,4 +45,31 @@ public class SalesSlip extends Auditable<String> {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "total_amt")
+    private Double totalAmt;
+
+    @Column(name = "round_off")
+    private Double roundOff;
+
+    @Column(name = "grand_total")
+    private Double grandTotal;
+
+    @Column(name = "total_loading_charge")
+    private Double totalLoadingCharge;
+
+    @Column(name = "total_cess")
+    private Double totalCess;
+
+    @Column(name = "sub_total")
+    private Double subTotal;
+
+    @Column(name = "total_taxable_value")
+    private Double totalTaxableValue;
+
+    @Column(name = "total_cgst")
+    private Double totalCgst;
+
+    @Column(name = "total_sgst")
+    private Double totalSgst;
 }

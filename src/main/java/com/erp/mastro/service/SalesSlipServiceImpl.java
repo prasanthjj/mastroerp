@@ -262,6 +262,15 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlip.setRemarks(salesSlipRequestModel.getRemarks());
                 salesSlip.setSpecificInst(salesSlipRequestModel.getSpecificInst());
                 salesSlip.setStatus(Constants.STATUS_DRAFT);
+                salesSlip.setTotalAmt(salesSlipRequestModel.getTotalAmt());
+                salesSlip.setRoundOff(salesSlipRequestModel.getRoundOff());
+                salesSlip.setGrandTotal(salesSlipRequestModel.getGrandTotal());
+                salesSlip.setSubTotal(salesSlipRequestModel.getSubTotal());
+                salesSlip.setTotalCess(salesSlipRequestModel.getTotalCess());
+                salesSlip.setTotalSgst(salesSlipRequestModel.getTotalSgst());
+                salesSlip.setTotalCgst(salesSlipRequestModel.getTotalCgst());
+                salesSlip.setTotalLoadingCharge(salesSlipRequestModel.getTotalLoadingCharge());
+                salesSlip.setTotalTaxableValue(salesSlipRequestModel.getTotalTaxableValue());
                 salesSlipRepository.save(salesSlip);
             }
 

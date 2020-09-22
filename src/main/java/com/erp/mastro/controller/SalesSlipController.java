@@ -295,15 +295,19 @@ public class SalesSlipController {
             Double subTotal = 0d;
             Double loadingChargeSum = 0d;
             Double cessTotal = 0d;
+            Double totalCgstfinal = 0d;
+            Double totalSgstfinal = 0d;
+            Double totalTaxableValuefinal = 0d;
             for (SalesSlipItems salesSlipItems : salesSlip.getSalesSlipItemsSet()) {
                 subTotal = subTotal + salesSlipItems.getFinalAmount();
                 loadingChargeSum = loadingChargeSum + (salesSlipItems.getGrnItems().getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getLoadingCharge() * salesSlipItems.getGrnQty() * salesSlipItems.getProductUOM().getConvertionFactor());
                 cessTotal = cessTotal + (salesSlipItems.getTotalAmount() * (salesSlipItems.getCessRate() / 100));
-                //grandTotal = grandTotal + salesSlipItems.getTotalAmount() + salesSlipItems.getCessAmount() + salesSlipItems.getCgstAmount() + salesSlipItems.getSgstAmount();
+                totalCgstfinal = totalCgstfinal + salesSlipItems.getCgstAmount();
+                totalSgstfinal = totalSgstfinal + salesSlipItems.getSgstAmount();
+                totalTaxableValuefinal = totalTaxableValuefinal + salesSlipItems.getTotalAmount();
             }
             model.addAttribute("subTotal", MastroApplicationUtils.roundTwoDecimals(subTotal));
             model.addAttribute("loadingChargeSum", MastroApplicationUtils.roundTwoDecimals(loadingChargeSum));
-            model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);
             HSN loadingHSN = hsnService.getAllHSN().stream()
                     .filter(hsnData -> (null != hsnData))
                     .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
@@ -312,6 +316,9 @@ public class SalesSlipController {
             model.addAttribute("loadingHSN", loadingHSN);
             Double loadingChargeSgstAmt = loadingChargeSum * (loadingHSN.getSgst() / 100);
             Double loadingChargeCgstAmt = loadingChargeSum * (loadingHSN.getCgst() / 100);
+            totalCgstfinal = totalCgstfinal + loadingChargeCgstAmt;
+            totalSgstfinal = totalSgstfinal + loadingChargeSgstAmt;
+            totalTaxableValuefinal = totalTaxableValuefinal + loadingChargeSum;
             model.addAttribute("loadingChargeSgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeSgstAmt));
             model.addAttribute("loadingChargeCgstAmt", MastroApplicationUtils.roundTwoDecimals(loadingChargeCgstAmt));
             Double finalLoadingCharge = loadingChargeSum + loadingChargeSgstAmt + loadingChargeCgstAmt;
@@ -321,6 +328,15 @@ public class SalesSlipController {
             }
             model.addAttribute("cessTotal", MastroApplicationUtils.roundTwoDecimals(cessTotal));
             Double amtForRound = MastroApplicationUtils.roundTwoDecimals(subTotal + finalLoadingCharge + cessTotal);
+            int roundOffValue = MastroApplicationUtils.roundForGrandTotalInSalesSlip(amtForRound);
+            model.addAttribute("grandTotal", roundOffValue);
+            Double roundOff = 0d;
+            roundOff = roundOffValue - amtForRound;
+            model.addAttribute("roundOff", MastroApplicationUtils.roundTwoDecimals(roundOff));
+            model.addAttribute("totalCgst", MastroApplicationUtils.roundTwoDecimals(totalCgstfinal));
+            model.addAttribute("totalSgst", MastroApplicationUtils.roundTwoDecimals(totalSgstfinal));
+            model.addAttribute("totalTaxableValue", MastroApplicationUtils.roundTwoDecimals(totalTaxableValuefinal));
+            model.addAttribute("totalAmt", MastroApplicationUtils.roundTwoDecimals(subTotal + finalLoadingCharge + cessTotal));
             return "views/addPurchaseSlip";
         } catch (Exception e) {
             MastroLogUtils.error(SalesSlipController.class, e.getMessage());
