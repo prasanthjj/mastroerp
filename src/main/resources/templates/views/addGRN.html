@@ -540,7 +540,8 @@ else if (id == 'invoiceBtn'){
  function dcorInvoiceFunction(arg) {
     var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
     var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
-    if(dcQty<=pendingQty)
+
+    if(parseFloat(dcQty) <= parseFloat(pendingQty))
     {
 
     }
@@ -560,7 +561,7 @@ else if (id == 'invoiceBtn'){
     var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
     var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
     var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
-    if(recQty<=dcQty)
+    if(parseFloat(recQty) <= parseFloat(dcQty))
     {
     document.getElementById('grnpoItemsModels'+arg+'.shortage').value=dcQty-recQty;
     }
@@ -578,7 +579,7 @@ else if (id == 'invoiceBtn'){
  function rejectedFunction(arg) {
     var recQty=document.getElementById('grnpoItemsModels'+arg+'.received').value;
     var acceptQty=document.getElementById('grnpoItemsModels'+arg+'.accepted').value;
-    if(acceptQty<=recQty)
+    if(parseFloat(acceptQty) <= parseFloat(recQty))
     {
     document.getElementById('grnpoItemsModels'+arg+'.rejected').value=recQty-acceptQty;
     }

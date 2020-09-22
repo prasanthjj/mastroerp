@@ -157,14 +157,14 @@ public class GRNServiceImpl implements GRNService {
                 }
 
             }
+            PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
+            purchaseOrder.setStatus(Constants.STATUS_PO_DELIVERED);
+            purchaseOrderRepository.save(purchaseOrder);
             if (count == 0) {
-                PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
-                purchaseOrder.setStatus(Constants.STATUS_PO_DELIVERY_COMPLETE);
-                purchaseOrderRepository.save(purchaseOrder);
+
             } else {
-                PurchaseOrder purchaseOrder = grn.getPurchaseOrder();
-                purchaseOrder.setStatus(Constants.STATUS_PO_DELIVERYINPROGRESS);
-                purchaseOrderRepository.save(purchaseOrder);
+                grn.setCreateAnotherPO(1);
+                grnRepository.save(grn);
             }
 
         }

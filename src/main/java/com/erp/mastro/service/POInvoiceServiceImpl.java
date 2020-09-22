@@ -1,10 +1,13 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.POInvoice;
+import com.erp.mastro.entities.PurchaseOrder;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.POInvoiceRequestModel;
 import com.erp.mastro.repository.POInvoiceRepository;
+import com.erp.mastro.repository.PurchaseOrderRepository;
 import com.erp.mastro.service.interfaces.BranchService;
 import com.erp.mastro.service.interfaces.POInvoiceService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
@@ -28,6 +31,9 @@ public class POInvoiceServiceImpl implements POInvoiceService {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
 
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
+
     @Transactional(rollbackOn = {Exception.class})
     public void generatePOInvoice(POInvoiceRequestModel poInvoiceRequestModel) throws ModelNotFoundException {
 
@@ -49,6 +55,9 @@ public class POInvoiceServiceImpl implements POInvoiceService {
             poInvoice.setTotalAmt(poInvoiceRequestModel.getTotalAmt());
             poInvoice.setGrandTotal(poInvoiceRequestModel.getGrandTotal());
             poInvoiceRepository.save(poInvoice);
+            PurchaseOrder purchaseOrder = poInvoice.getPurchaseOrder();
+            purchaseOrder.setStatus(Constants.STATUS_PO_INVOICED);
+            purchaseOrderRepository.save(purchaseOrder);
             MastroLogUtils.info(POInvoiceService.class, "Generate invoice succesfully.");
         }
     }

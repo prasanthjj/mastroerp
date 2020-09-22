@@ -112,15 +112,20 @@
                                         </td>
                                         <!-- <td class="center">Ft</td>-->
                                         <!-- <td class="center">200</td>-->
-                                        <td><a href="#"
+                                        <td th:if="${purchaseObj.status== 'Delivered' || purchaseObj.status=='Invoiced'}">
+                                            <a href="#" class="text-danger"
                                                th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
-                                                th:text="${purchaseObj.status}">Draft</b></a></td>
+                                                    th:text="${purchaseObj.status}">Draft</b></a></td>
+                                        <td th:unless="${purchaseObj.status== 'Delivered' || purchaseObj.status=='Invoiced'}">
+                                            <a href="#"
+                                               th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
+                                                    th:text="${purchaseObj.status}">Draft</b></a></td>
                                         <td class="center" th:text="${purchaseObj.reason}">200</td>
                                         <td class="center">
                                             <!--<button type="button" class="btn btn-w-m btn-info dim">View GRNS</button>
                                             <button type="button" class="btn btn-w-m btn-warning dim">Generate Purchase Invoice</button>-->
                                             <div class="btn-group"
-                                                 th:if="${purchaseObj.status== 'Delivery in progress' || purchaseObj.status=='Delivery complete'}">
+                                                 th:if="${purchaseObj.status== 'Delivered' || purchaseObj.status=='Invoiced'}">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                                                     Action
                                                 </button>
@@ -129,13 +134,19 @@
 
                                                     <li><a class="dropdown-item font-bold"
                                                            th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
-                                                        <i
-                                                                class="fa fa-edit"></i> View GRNs</a></li>
-                                                    <li><a class="dropdown-item font-bold"
-                                                           th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
+                                                        <i class="fa fa-eye"></i> View GRNs</a></li>
+                                                    <li th:if="${purchaseObj.status== 'Delivered'}"><a
+                                                            class="dropdown-item font-bold"
+                                                            th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
                                                         <i class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
+                                                    <!--<span th:each="grn:${purchaseObj.grnSet}">-->
 
+                                                    <li th:each="grn:${purchaseObj.grnSet}"><a
+                                                            class="dropdown-item font-bold"
+                                                            th:if="${grn.createAnotherPO== 1}">
+                                                        <i class="fa fa-edit"></i> Create PO</a></li>
 
+                                                    <!-- </span>-->
                                                 </ul>
                                             </div>
                                         </td>

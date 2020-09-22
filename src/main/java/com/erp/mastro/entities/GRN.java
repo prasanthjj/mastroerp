@@ -67,4 +67,7 @@ public class GRN extends Auditable<String> {
 
     @Column(name = "grn_no")
     private String grnNo;
+
+    @Column(name = "create_another_po", nullable = false)
+    private int createAnotherPO;
 }
