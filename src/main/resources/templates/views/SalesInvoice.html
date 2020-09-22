@@ -88,36 +88,38 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <!--  <tr class="gradeX" th:each="purchaseObj,iterator:${purchaseList}">
+                                      <tr class="gradeX" th:each="salesSlipInvoiceobj,iterator:${salesSlipInvoiceList}">
                                           <td th:text="${iterator.index+1}">1</td>
-                                          <td th:text="${purchaseObj.poNo}">PO-06082020</td>
-                                          <span th:if="${purchaseObj.createdDate!= null}">
-                                          <td th:text="${#dates.format(purchaseObj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                          <td th:text="${salesSlipInvoiceobj.salesSlipInvoiceNo}">PO-06082020</td>
+                                          <span th:if="${salesSlipInvoiceobj.createdDate!= null}">
+                                          <td th:text="${#dates.format(salesSlipInvoiceobj.createdDate, 'dd-MMMM-yyyy')}"></td>
                                           </span>
-                                          <span th:unless="${purchaseObj.createdDate!= null}">
+                                          <span th:unless="${salesSlipInvoiceobj.createdDate!= null}">
                                           <td></td>
                                           </span>
 
-                                          <td class="center" th:text="${purchaseObj.indent.id}">IND-060259240</td>
-                                          <td class="center" th:text="${purchaseObj.party.partyName}">GM Steels Pvt Ltd
+                                          <td class="center" th:text="${salesSlipInvoiceobj.salesSlip.salesSlipNo}">
+                                              IND-060259240
+                                          </td>
+                                          <td class="center" th:text="${salesSlipInvoiceobj.salesSlip.party.partyName}">
+                                              GM Steels Pvt Ltd
                                           </td>
 
                                           <td class="center">
 
-                                              <div class="btn-group"
-                                                   th:if="${purchaseObj.status== 'Delivery in progress' || purchaseObj.status=='Delivery complete'}">
-                                                  <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                              <div class="btn-group">
+                                                  <button data-toggle="dropdown"
+                                                          class="btn btn-primary dropdown-toggle">
                                                       Action
                                                   </button>
                                                   <ul class="dropdown-menu">
-                                                      <li><a class="dropdown-item font-bold"
-                                                             th:href="@{/purchase/getPurchaseOrderGRN?poId=__${purchaseObj.id}__}">
+                                                      <li><a class="dropdown-item font-bold">
                                                           <i
                                                                   class="fa fa-edit"></i> View</a></li>
                                                   </ul>
                                               </div>
                                           </td>
-                                      </tr>-->
+                                      </tr>
 
                                     </tbody>
                                     <tfoot>

@@ -52,6 +52,13 @@ public class InvoiceController {
                     .collect(Collectors.toList());
             model.addAttribute("salesSlip", salesSlipList);
 
+            List<SalesSlipInvoice> salesSlipInvoiceList = currentBranch.getSalesSlipInvoices().stream()
+                    .filter(salesSlipData -> (null != salesSlipData))
+                    .sorted(Comparator.comparing(
+                            SalesSlipInvoice::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("salesSlipInvoiceList", salesSlipInvoiceList);
+
             return "views/SalesInvoice";
 
         } catch (Exception e) {

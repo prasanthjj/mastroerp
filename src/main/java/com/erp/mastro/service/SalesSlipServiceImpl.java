@@ -54,10 +54,28 @@ public class SalesSlipServiceImpl implements SalesSlipService {
     @Autowired
     private SalesSlipInvoiceRepository salesSlipInvoiceRepository;
 
+    /**
+     * Method to get all sales slip
+     *
+     * @return sales slip list
+     */
     public List<SalesSlip> getAllSalesSlips() {
+        MastroLogUtils.info(SalesSlipService.class, "Going to get all sales slip");
         List<SalesSlip> salesSlipList = new ArrayList<SalesSlip>();
         salesSlipRepository.findAll().forEach(salesSlip -> salesSlipList.add(salesSlip));
         return salesSlipList;
+    }
+
+    /**
+     * Method to get all sales slip invoices
+     *
+     * @return invoice list
+     */
+    public List<SalesSlipInvoice> getAllSalesSlipsInvoice() {
+        MastroLogUtils.info(SalesSlipService.class, "Going to get all sales slip invoice");
+        List<SalesSlipInvoice> salesSlipInvoiceList = new ArrayList<SalesSlipInvoice>();
+        salesSlipInvoiceRepository.findAll().forEach(salesSlipInvoice -> salesSlipInvoiceList.add(salesSlipInvoice));
+        return salesSlipInvoiceList;
     }
 
     /**
@@ -312,6 +330,11 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlipInvoice.setRoundOff(salesSlipRequestModel.getRoundOff());
             salesSlipInvoice.setTotalAmt(salesSlipRequestModel.getTotalAmt());
             salesSlipInvoice.setGrandTotal(salesSlipRequestModel.getGrandTotal());
+            salesSlipInvoiceRepository.save(salesSlipInvoice);
+            String currentBranchCode = salesSlipInvoice.getBranch().getBranchCode();
+            if (currentBranchCode != null) {
+                salesSlipInvoice.setSalesSlipInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "SalesSlipInvoice", salesSlipInvoice.getId()));
+            }
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             salesSlip.setStatus(Constants.STATUS_SALESSLIP);
             salesSlipRepository.save(salesSlip);
