@@ -210,9 +210,12 @@
                 <ul class="nav nav-second-level collapse">
                     <li th:if="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
                         Order</a></li>
-                    <li th:unless="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                    <li th:unless="${salesTab== 'sales'}"><a th:href="@{/sales/getSalesOrder}">Sales
                         Order</a></li>
-                    <li><a href="#">Invoice</a></li>
+                    <li th:if="${invoiceTab== 'invoice'}" class="active"><a href="#" th:href="@{/sales/getInvoiceList}">Invoice</a>
+                    </li>
+                    <li th:unless="${invoiceTab== 'invoice'}"><a href="#" th:href="@{/sales/getInvoiceList}">Invoice</a>
+                    </li>
                 </ul>
             </li>
             <li class="" th:unless="${salesModule== 'salesModule'}">
@@ -221,9 +224,12 @@
                 <ul class="nav nav-second-level collapse">
                     <li th:if="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
                         Order</a></li>
-                    <li th:unless="${salesTab== 'sales'}" class="active"><a th:href="@{/sales/getSalesOrder}">Sales
+                    <li th:unless="${salesTab== 'sales'}"><a th:href="@{/sales/getSalesOrder}">Sales
                         Order</a></li>
-                    <li><a href="#">Invoice</a></li>
+                    <li th:if="${invoiceTab== 'invoice'}" class="active"><a href="#" th:href="@{/sales/getInvoiceList}">Invoice</a>
+                    </li>
+                    <li th:unless="${invoiceTab== 'invoice'}"><a href="#" th:href="@{/sales/getInvoiceList}">Invoice</a>
+                    </li>
                 </ul>
             </li>
             <li class="active" th:if="${hrModule== 'hrModule'}">

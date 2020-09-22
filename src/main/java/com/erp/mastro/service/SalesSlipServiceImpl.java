@@ -7,10 +7,7 @@ import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.SalesSlipRequestModel;
-import com.erp.mastro.repository.GRNItemRepository;
-import com.erp.mastro.repository.ProductUOMRepository;
-import com.erp.mastro.repository.SalesSlipRepository;
-import com.erp.mastro.repository.StockRepository;
+import com.erp.mastro.repository.*;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.ProductService;
@@ -53,6 +50,9 @@ public class SalesSlipServiceImpl implements SalesSlipService {
 
     @Autowired
     private CalculateService calculateService;
+
+    @Autowired
+    private SalesSlipInvoiceRepository salesSlipInvoiceRepository;
 
     public List<SalesSlip> getAllSalesSlips() {
         List<SalesSlip> salesSlipList = new ArrayList<SalesSlip>();
@@ -285,4 +285,38 @@ public class SalesSlipServiceImpl implements SalesSlipService {
 
     }
 
+    /**
+     * Method to generate sales slip invoice
+     *
+     * @param salesSlipRequestModel
+     * @throws ModelNotFoundException
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void generateSalesSlipInvoice(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException {
+
+        if (salesSlipRequestModel == null) {
+            throw new ModelNotFoundException("salesSlipRequestModel is empty");
+        } else {
+            MastroLogUtils.info(SalesSlipService.class, "Going to generate sales slipinvoice " + salesSlipRequestModel.toString());
+            SalesSlipInvoice salesSlipInvoice = new SalesSlipInvoice();
+            SalesSlip salesSlip = getSalesSlipById(salesSlipRequestModel.getId());
+            salesSlipInvoice.setBranch(salesSlip.getBranch());
+            salesSlipInvoice.setSalesSlip(salesSlip);
+            salesSlipInvoice.setTotalTaxableValue(salesSlipRequestModel.getTotalTaxableValue());
+            salesSlipInvoice.setSubTotal(salesSlipRequestModel.getSubTotal());
+            salesSlipInvoice.setTotalCess(salesSlipRequestModel.getTotalCess());
+            salesSlipInvoice.setTotalCgst(salesSlipRequestModel.getTotalCgst());
+            salesSlipInvoice.setTotalSgst(salesSlipRequestModel.getTotalSgst());
+            salesSlipInvoice.setTotalLoadingCharge(salesSlipRequestModel.getTotalLoadingCharge());
+            salesSlipInvoice.setGrandTotal(salesSlipRequestModel.getGrandTotal());
+            salesSlipInvoice.setRoundOff(salesSlipRequestModel.getRoundOff());
+            salesSlipInvoice.setTotalAmt(salesSlipRequestModel.getTotalAmt());
+            salesSlipInvoice.setGrandTotal(salesSlipRequestModel.getGrandTotal());
+            salesSlipInvoiceRepository.save(salesSlipInvoice);
+            salesSlip.setStatus(Constants.STATUS_SALESSLIP);
+            salesSlipRepository.save(salesSlip);
+            MastroLogUtils.info(SalesSlipService.class, "Generate invoice succesfully.");
+        }
     }
+
+}

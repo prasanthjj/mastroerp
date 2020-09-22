@@ -84,4 +84,10 @@ public class SalesSlip extends Auditable<String> {
 
     @Column(name = "loading_charge_sgst")
     private Double loadingChargesgst;
+
+    @OneToMany(mappedBy = "salesSlip",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlipInvoice> salesSlipInvoices = new HashSet<>();
 }

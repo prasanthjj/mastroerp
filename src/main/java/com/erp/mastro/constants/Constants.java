@@ -22,5 +22,6 @@ public class Constants {
     public static final String STATUS_REVIEWED = "Reviewed";
     public static final String STATUS_PO_DELIVERYINPROGRESS = "Delivery in progress";
     public static final String STATUS_PO_DELIVERY_COMPLETE = "Delivery complete";
+    public static final String STATUS_SALESSLIP = "Invoiced";
 
 }

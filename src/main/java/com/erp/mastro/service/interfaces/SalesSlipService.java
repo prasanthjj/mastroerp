@@ -17,4 +17,6 @@ public interface SalesSlipService {
     void saveSalesSlipFullData(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException;
 
     List<SalesSlip> getAllSalesSlips();
+
+    void generateSalesSlipInvoice(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException;
 }

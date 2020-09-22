@@ -344,6 +344,14 @@ public class SalesSlipController {
         }
     }
 
+    /**
+     * Method to save sales slip datas
+     *
+     * @param salesSlipRequestModel
+     * @param request
+     * @param model
+     * @return
+     */
     @PostMapping("/saveSalesSlipFullDetails")
     public String saveSalesSlipFullDetails(@ModelAttribute("salesSlipForm") @Valid SalesSlipRequestModel salesSlipRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to save  sales slip full details : {}" + salesSlipRequestModel.toString());
