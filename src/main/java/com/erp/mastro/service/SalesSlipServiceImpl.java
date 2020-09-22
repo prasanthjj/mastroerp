@@ -294,7 +294,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 salesSlip.setLoadingChargesgst(salesSlipRequestModel.getLoadingChargesgst());
                 String currentBranchCode = salesSlip.getBranch().getBranchCode();
                 if (currentBranchCode != null) {
-                    salesSlip.setSalesSlipNo(MastroApplicationUtils.generateName(currentBranchCode, "SalesSlip", salesSlip.getId()));
+                    salesSlip.setSalesSlipNo(MastroApplicationUtils.generateName(currentBranchCode, "SS", salesSlip.getId()));
                 }
                 salesSlipRepository.save(salesSlip);
             }
@@ -333,7 +333,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             String currentBranchCode = salesSlipInvoice.getBranch().getBranchCode();
             if (currentBranchCode != null) {
-                salesSlipInvoice.setSalesSlipInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "SalesSlipInvoice", salesSlipInvoice.getId()));
+                salesSlipInvoice.setSalesSlipInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "SSInv", salesSlipInvoice.getId()));
             }
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             salesSlip.setStatus(Constants.STATUS_SALESSLIP);
