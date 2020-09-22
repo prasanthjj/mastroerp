@@ -108,15 +108,18 @@
                                           <td class="center">
 
                                               <div class="btn-group">
-                                                  <button data-toggle="dropdown"
-                                                          class="btn btn-primary dropdown-toggle">
-                                                      Action
-                                                  </button>
-                                                  <ul class="dropdown-menu">
-                                                      <li><a class="dropdown-item font-bold">
-                                                          <i
-                                                                  class="fa fa-edit"></i> View</a></li>
-                                                  </ul>
+                                                  <a class="btn btn-primary "
+                                                     th:href="@{/inventory/getSalesSlipPreview?salesSlipId=__${salesSlipInvoiceobj.salesSlip.id}__}">
+                                                      <i class="fa fa-print "></i></a>
+                                                  <!-- <button data-toggle="dropdown"
+                                                           class="btn btn-primary dropdown-toggle">
+                                                       Action
+                                                   </button>-->
+                                                  <!-- <ul class="dropdown-menu">
+                                                       <li><a class="dropdown-item font-bold">
+                                                           <i
+                                                                   class="fa fa-edit"></i> View</a></li>
+                                                   </ul>-->
                                               </div>
                                           </td>
                                       </tr>

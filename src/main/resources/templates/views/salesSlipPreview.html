@@ -81,7 +81,7 @@
                                      </p>-->
                                 </div>
                             </div><!--</span>-->
-                            <!-- <span th:if="${salesOrderDetails.status== 'Approve'}">
+
                              <div class="ibox-title  ">
                                   <div class="ibox-tools">
                                      <div class="btn-group">
@@ -91,7 +91,7 @@
                                      </div>
                                  </div>
                              </div>
-                             </span>-->
+
                             <div class="ibox-content p-xl">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -230,7 +230,7 @@
                                     <tr>
                                         <td><strong>TOTAL :</strong></td>
                                         <td><span
-                                                th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
+                                                th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 0, 'POINT')}">1261.98</span>
                                         </td>
                                     </tr>
                                     </tbody>
