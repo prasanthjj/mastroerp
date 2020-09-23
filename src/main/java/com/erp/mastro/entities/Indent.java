@@ -36,6 +36,9 @@ public class Indent extends Auditable<String> {
     @Column(name = "indent_status")
     private String indentStatus;
 
+    @Column(name = "indent_no")
+    private String indentNo;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "indent_indentitemstockdetails", joinColumns = {@JoinColumn(name = "indent_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "item_stock_deatils_id", referencedColumnName = "id")})

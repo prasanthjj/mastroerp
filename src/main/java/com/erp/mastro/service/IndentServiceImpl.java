@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.Branch;
@@ -95,6 +96,7 @@ public class IndentServiceImpl implements IndentService {
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 indent.setBranch(currentBranch);
 
+
                 indent.setIndentStatus("OPEN");
                 ItemStockDetails itemStockDetails;
                if(indent.getItemStockDetailsSet()!=null) {
@@ -150,6 +152,13 @@ public class IndentServiceImpl implements IndentService {
                    }
                }
 
+                indentRepository.save(indent);
+
+
+                String currentBranchCode = indent.getBranch().getBranchCode();
+                if (currentBranchCode != null) {
+                    indent.setIndentNo(MastroApplicationUtils.generateName(currentBranchCode, "IND", indent.getId()));
+                }
                 indentRepository.save(indent);
 
                 MastroLogUtils.info(IndentService.class, "create indent with" + indent.getIndentPriority() + " successfully.");
