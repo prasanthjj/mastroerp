@@ -190,6 +190,12 @@
                     <li class="" th:unless="${purchaseTab== 'purchase'}"><a href="#"
                                                                             th:href="@{/purchase/getPurchaseOrderList}">Purchase
                         Order</a></li>
+                    <li class="active" th:if="${purchaseInvoiceTab== 'purchaseInvoice'}"><a href="#"
+                                                                                            th:href="@{/purchase/getPurchaseInvoiceList}">
+                        Purchase Invoice</a></li>
+                    <li class="" th:unless="${purchaseInvoiceTab== 'purchaseInvoice'}"><a href="#"
+                                                                                          th:href="@{/purchase/getPurchaseInvoiceList}">Purchase
+                        Invoice </a></li>
                 </ul>
             </li>
             <li class="" th:unless="${purchaseModule== 'purchaseModule'}">
@@ -202,6 +208,13 @@
                     <li class="" th:unless="${purchaseTab== 'purchase'}"><a href="#"
                                                                             th:href="@{/purchase/getPurchaseOrderList}">Purchase
                         Order</a></li>
+
+                    <li class="active" th:if="${purchaseInvoiceTab== 'purchaseInvoice'}"><a href="#"
+                                                                                            th:href="@{/purchase/getPurchaseInvoiceList}">
+                        Purchase Invoice</a></li>
+                    <li class="" th:unless="${purchaseInvoiceTab== 'purchaseInvoice'}"><a href="#"
+                                                                                          th:href="@{/purchase/getPurchaseInvoiceList}">Purchase
+                        Invoice </a></li>
                 </ul>
             </li>
             <li class="active" th:if="${salesModule== 'salesModule'}">

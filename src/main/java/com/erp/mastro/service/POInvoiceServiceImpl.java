@@ -67,4 +67,15 @@ public class POInvoiceServiceImpl implements POInvoiceService {
             MastroLogUtils.info(POInvoiceService.class, "Generate invoice succesfully.");
         }
     }
+
+    /**
+     * Method to get po invoice
+     *
+     * @param id
+     * @return poinvoice
+     */
+    public POInvoice getPOInvoiceyId(Long id) {
+        MastroLogUtils.info(POInvoiceService.class, "Going to get invoice by id :{}" + id);
+        return poInvoiceRepository.findById(id).get();
+    }
 }
