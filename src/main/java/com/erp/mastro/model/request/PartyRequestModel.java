@@ -234,6 +234,7 @@ public class PartyRequestModel {
     @Getter(AccessLevel.PUBLIC)
     public static class partyPoModel {
         private Long id;
+        private String pono;
 
     }
 

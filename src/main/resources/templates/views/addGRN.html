@@ -503,7 +503,7 @@ $(document).ready(function(){
             $("#partyPo").html("");
                $.each(data.data.partypos, function(i){
 
-               $('#partyPo').append($('<option>').val(this['id']).text(this['id']));
+               $('#partyPo').append($('<option>').val(this['id']).text(this['pono']));
                   });
             }
         },

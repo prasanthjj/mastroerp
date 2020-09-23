@@ -125,6 +125,7 @@ public class GRNController {
             for (PurchaseOrder po : purchaseOrderSet) {
                 PartyRequestModel.partyPoModel partyPoModel = new PartyRequestModel.partyPoModel();
                 partyPoModel.setId(po.getId());
+                partyPoModel.setPono(po.getPoNo());
                 partyPoModels.add(partyPoModel);
             }
 
