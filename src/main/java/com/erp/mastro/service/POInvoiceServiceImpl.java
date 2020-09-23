@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.POInvoice;
@@ -54,6 +55,11 @@ public class POInvoiceServiceImpl implements POInvoiceService {
             poInvoice.setRoundOff(poInvoiceRequestModel.getRoundValue());
             poInvoice.setTotalAmt(poInvoiceRequestModel.getTotalAmt());
             poInvoice.setGrandTotal(poInvoiceRequestModel.getGrandTotal());
+            poInvoiceRepository.save(poInvoice);
+            String currentBranchCode = poInvoice.getBranch().getBranchCode();
+            if (currentBranchCode != null) {
+                poInvoice.setPoInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "PINV", poInvoice.getId()));
+            }
             poInvoiceRepository.save(poInvoice);
             PurchaseOrder purchaseOrder = poInvoice.getPurchaseOrder();
             purchaseOrder.setStatus(Constants.STATUS_PO_INVOICED);

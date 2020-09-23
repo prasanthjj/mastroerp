@@ -333,7 +333,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             String currentBranchCode = salesSlipInvoice.getBranch().getBranchCode();
             if (currentBranchCode != null) {
-                salesSlipInvoice.setSalesSlipInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "SSInv", salesSlipInvoice.getId()));
+                salesSlipInvoice.setSalesSlipInvoiceNo(MastroApplicationUtils.generateName(currentBranchCode, "SINV", salesSlipInvoice.getId()));
             }
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             salesSlip.setStatus(Constants.STATUS_SALESSLIP);
