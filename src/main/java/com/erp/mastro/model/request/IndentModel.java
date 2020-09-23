@@ -1,10 +1,7 @@
 package com.erp.mastro.model.request;
 
 import com.erp.mastro.common.MastroApplicationUtils;
-import com.erp.mastro.entities.Indent;
-import com.erp.mastro.entities.ItemStockDetails;
-import com.erp.mastro.entities.ProductUOM;
-import com.erp.mastro.entities.Stock;
+import com.erp.mastro.entities.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +18,16 @@ public class IndentModel {
 
     private Long id;
     private String indentPriority;
+    private Date indentDate;
     private Long branchId;
     private Long productId;
+    private Double quantityToIndent;
+    private String soReferenceNo;
+    private Long uomId;
+    private Uom purchaseUOM;
+
+
+
     private List<IndentModel.IndentItemStockDetailsModel> indentItemStockDetailsModels = new ArrayList<>();
 
     public IndentModel() {
@@ -33,6 +38,7 @@ public class IndentModel {
         if (indent != null) {
             this.id = indent.getId();
             this.indentPriority = indent.getIndentPriority();
+            this.indentDate= indent.getIndentDate();
 
             indent.getItemStockDetailsSet().parallelStream().forEach(x -> this.indentItemStockDetailsModels.add(new IndentModel.IndentItemStockDetailsModel(x)));
 
@@ -51,6 +57,7 @@ public class IndentModel {
         private Long stockId;
         private Long uomId;
         private Stock stock;
+        private Uom uom;
         private Set<ProductUOM> productUOMS;
 
         public IndentItemStockDetailsModel() {
@@ -80,6 +87,7 @@ public class IndentModel {
                 if (itemStockDetails.getRequiredByDate() != null) {
                     this.requiredByDate = itemStockDetails.getRequiredByDate();
                 }
+                this.uom=itemStockDetails.getPurchaseUOM();
                 this.soReferenceNo = itemStockDetails.getSoReferenceNo();
                 this.productUOMS = itemStockDetails.getStock().getProduct().getProductUOMSet().stream()
                         .filter(productuomData -> (null != productuomData))
@@ -95,6 +103,7 @@ public class IndentModel {
         return "IndentModel{" +
                 "id=" + id +
                 ", indentPriority='" + indentPriority + '\'' +
+                ", indentDate='" + indentDate + '\'' +
                 ", branchId=" + branchId +
                 ", indentItemStockDetailsModels=" + indentItemStockDetailsModels +
                 '}';

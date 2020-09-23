@@ -175,7 +175,7 @@
                                                     <th>Current Stock</th>
 
                                                     <th>Qty. To Indent</th>
-                                                    <th>Required by date</th>
+                                                    <!--<th>Required by date</th>-->
                                                     <th>So reference no</th>
                                                     <th>Base UOM</th>
                                                     <th>Purchase UOM</th>
@@ -201,7 +201,7 @@
                                                 <input class="form-control"
                                                        th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
                                             </td>
-                                               <td class="center indentRequiredDate">
+                                           <!--    <td class="center indentRequiredDate">
                                                    <div class="input-group date">
                                                     <span class="input-group-addon"><i
                                                             class="fa fa-calendar"></i></span><input
@@ -209,7 +209,7 @@
                                                            th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].srequiredByDate}">
                                                 </div>
 
-                                            </td>
+                                            </td>-->
                                             <td class="center">
                                                 <input class="form-control"
                                                        th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">

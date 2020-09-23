@@ -2,10 +2,11 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
-import com.erp.mastro.entities.Branch;
-import com.erp.mastro.entities.Indent;
+import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndentModel;
+import com.erp.mastro.model.request.ProductRequestModel;
+import com.erp.mastro.model.request.StockRequestModel;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -67,6 +70,60 @@ public class IndentController {
 
     }
 
+
+    /**
+     * Method to get product details in Indent
+     *
+     * @param productId
+
+     * @return product details
+     */
+    @RequestMapping(value = "/getProductDetailsInIndent", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse getProductDetailsInIndent(@RequestParam("productIdIndent") Long productId) {
+        try {
+            MastroLogUtils.info(SalesSlipController.class, "Going to get product details : {}" + productId);
+            Product product = productService.getProductById(productId);
+
+            Set<ProductUOM> productUOMS = product.getProductUOMSet().stream()
+                    .filter(productuomData -> (null != productuomData))
+                    .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                    .collect(Collectors.toSet());
+            Set<ProductRequestModel.ProductUOMModel> productUOMModels = new HashSet<>();
+            for (ProductUOM productUOM : productUOMS) {
+                ProductRequestModel.ProductUOMModel productUOMModel = new ProductRequestModel.ProductUOMModel();
+                productUOMModel.setId(productUOM.getUom().getId());
+                productUOMModel.setNameuom(productUOM.getUom().getUOM());
+                productUOMModels.add(productUOMModel);
+            }
+
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            Set<Stock> stocks = product.getStockSet().stream()
+                    .filter(stockItem -> stockItem.getBranch().getId().equals(currentBranch.getId()))
+                    .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                    .collect(Collectors.toSet());
+            Set<StockRequestModel> stockRequestModels = new HashSet<>();
+            StockRequestModel stockRequestModel = new  StockRequestModel();
+            for(Stock stock :stocks){
+
+              //  ProductRequestModel.ProductUOMModel productUOMModel = new ProductRequestModel.ProductUOMModel();
+                stockRequestModel.setId(stock.getId());
+                stockRequestModel.setCurrentStock(stock.getCurrentStock());
+                stockRequestModels.add(stockRequestModel);
+            }
+
+
+            return new GenericResponse(true, "get product details")
+
+                    .setProperty("stocks", stockRequestModel.getCurrentStock())
+                   .setProperty("baseuoms", product.getUom().getUOM())
+                    .setProperty("purchaseuoms", productUOMModels);
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
     /**
      * method to  get create indent page
      *
@@ -77,9 +134,12 @@ public class IndentController {
     public String getCreateIndent(Model model) {
         MastroLogUtils.info(IndentController.class, "Going to get CreateIndent : {}");
         try {
+            List<Indent> indentList = indentService.getAllIndents();
+
             model.addAttribute("indentForm", new IndentModel());
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("indentTab", "indent");
+            model.addAttribute("indentList", indentList);
             return "views/addIndent";
 
         } catch (Exception e) {
@@ -106,6 +166,10 @@ public class IndentController {
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentDetails", indent);
             model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
+            Indent indentModelsss = indentService.getIndentById(indent.getId());
+
+             System.out.println("id testing;"+indentModelsss.getItemStockDetailsSet().size());
+
             return "views/addIndent";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "Indentmodel empty", e);
@@ -128,12 +192,12 @@ public class IndentController {
     public String saveIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(IndentController.class, "Going to save indent item details: {}" + indentModel.toString());
         try {
-            indentService.saveOrUpdateIndentItemDetails(indentModel);
+          //  indentService.saveOrUpdateIndentItemDetails(indentModel);
             return "redirect:/inventory/getIndentList";
-        } catch (ModelNotFoundException e) {
+        } /*catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "indent model empty", e);
             return "redirect:/inventory/getIndentList";
-        } catch (Exception e) {
+        } */catch (Exception e) {
             MastroLogUtils.error(IndentController.class, "Error occured while save indent item details : {}", e);
             throw e;
         }

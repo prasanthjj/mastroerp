@@ -88,7 +88,10 @@ public class IndentServiceImpl implements IndentService {
             if (indentModel.getId() == null) {
 
                 MastroLogUtils.info(IndentModel.class, "Going to create indent{}" + indentModel.toString());
+
                 indent.setIndentPriority(indentModel.getIndentPriority());
+                indent.setIndentDate(indentModel.getIndentDate());
+
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 indent.setBranch(currentBranch);
                 indent.setIndentStatus("OPEN");
@@ -101,15 +104,27 @@ public class IndentServiceImpl implements IndentService {
                         .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                         .collect(Collectors.toSet());
                 itemStockDetails.setStock(stockSet.stream().findFirst().get());
+                itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
+                itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
+                 itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
+
+
+                /*for (IndentModel.IndentItemStockDetailsModel itemStockDetailsModel : indentModel.getIndentItemStockDetailsModels()) {
+                    itemStockDetails.setPurchaseUOM(uomRepository.findById(itemStockDetailsModel.getUomId()).get());
+                }*/
                 indent.getItemStockDetailsSet().add(itemStockDetails);
                 indentRepository.save(indent);
 
-                MastroLogUtils.info(IndentService.class, "create indent with" + indent.getIndentPriority() + " succesfully.");
+                MastroLogUtils.info(IndentService.class, "create indent with" + indent.getIndentPriority() + " successfully.");
 
             } else {
                 MastroLogUtils.info(IndentService.class, "Going to edit indent  {}" + indentModel.toString());
 
                 indent = indentRepository.findById(indentModel.getId()).get();
+
+                indent.setIndentPriority(indentModel.getIndentPriority());
+                indent.setIndentDate(indentModel.getIndentDate());
+
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 ItemStockDetails itemStockDetails = new ItemStockDetails();
                 Set<Stock> stockSet = getAllStocks().stream()
@@ -118,6 +133,10 @@ public class IndentServiceImpl implements IndentService {
                         .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
                         .collect(Collectors.toSet());
                 itemStockDetails.setStock(stockSet.stream().findFirst().get());
+                itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
+                itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
+                itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
+
                 indent.getItemStockDetailsSet().add(itemStockDetails);
                 indentRepository.save(indent);
             }
@@ -146,6 +165,7 @@ public class IndentServiceImpl implements IndentService {
             indent = indentRepository.findById(indentModel.getId()).get();
             Set<ItemStockDetails> itemStockDetails = saveOrUpdateIndentItems(indentModel, indent);
             indent.setItemStockDetailsSet(itemStockDetails);
+
             indentRepository.save(indent);
 
             MastroLogUtils.info(AssetService.class, "Save " + indent.getId() + " succesfully.");
@@ -183,7 +203,7 @@ public class IndentServiceImpl implements IndentService {
                     if (itemStockDetailsModel.getUomId() != null) {
                         itemStockDetails.setPurchaseUOM(uomRepository.findById(itemStockDetailsModel.getUomId()).get());
                     }
-                    String sDate1 = itemStockDetailsModel.getSrequiredByDate();
+                  /*  String sDate1 = itemStockDetailsModel.getSrequiredByDate();
                     if (!sDate1.equals("")) {
                         Date date1 = null;
                         try {
@@ -195,11 +215,12 @@ public class IndentServiceImpl implements IndentService {
                     } else if (sDate1.equals("")) {
                         Date date1 = new Date();
                         Calendar c = Calendar.getInstance();
+                        System.out.println("instance : " +c);
                         c.setTime(date1);
                         c.add(Calendar.DATE, 7);
                         Date date1PlusSeven = c.getTime();
                         itemStockDetails.setRequiredByDate(date1PlusSeven);
-                    }
+                    }*/
                     itemStockDetailsSet.add(itemStockDetails);
                 }
             }

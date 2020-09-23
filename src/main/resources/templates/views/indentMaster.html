@@ -96,7 +96,12 @@
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${indentObj.id}">IND-0021560</td>
                                         <td th:text="${indentObj.indentPriority}">Direct</td>
-                                        <td>----</td>
+                                        <span th:if="${indentObj.createdDate!= null}">
+                              <td th:text="${#dates.format(indentObj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                        <span th:unless="${indentObj.createdDate!= null}">
+                                        <td>--------</td>
+                                    </span>
                                         <!-- <td th:text="${indentObj.id}">Oxy .35 Red 3.05mtr (10')</td>-->
                                         <!-- <td></td>-->
                                         <!-- <td>200</td>

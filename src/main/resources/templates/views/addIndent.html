@@ -59,13 +59,40 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-
-                        <div class="ibox-content mastro-step-ibox-content">
-                            <form th:action="@{/inventory/createIndent}" th:object="${indentForm}"
+                        <div class="ibox-title mastro-ibox-title">
+                            <div class="ibox-tools">
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+                       <form th:action="@{/inventory/createIndent}" th:object="${indentForm}"
                                   name="indentForm" method="post">
-                                         <span th:if="${indentDetails!= null}">
-                                         <input type="hidden" name="id" th:value="${indentDetails.id}"/>
-                                         </span>
+                             <span th:if="${indentForm!= null}">
+                                 <input type="hidden" th:field="*{id}">
+                             </span>
+
+                           <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-lg-5">Indent Priority</label>
+                                            <select class="form-control col-lg-7" id="indentPriority" name="indentPriority">
+                                                <option value="">Select Priority</option>
+                                                <option value="Low">Low</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="High">High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-lg-5">Indent Date</label>
+                                            <div id="indentDate" class="col-lg-7">
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" placeholder="Select Date" class="form-control" name="IndentDate" required  id="indentDateId">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -75,30 +102,92 @@
                                                    placeholder="Enter Item Name" required>
                                             <div class="indent_item_dropdown">
                                                 <ul class="auto-dropdown-menu">
-
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-lg-4" th:if="${indentDetails== null}">
-                                        <div class="form-group">
-                                            <label>Indent Priority</label>
-                                                <select class="form-control" name="indentPriority" required>
-                                                     <option value="">Select Priority</option>
-                                                     <option value="Low">Low</option>
-                                                     <option value="Medium">Medium</option>
-                                                     <option value="High">High<option>
-                                                </select>
-
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Current Stock</label>
+                                                    <input type="text" class="form-control" id="stock" readonly/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Base UOM</label>
+                                                    <input type="text" class="form-control" id="baseuom" readonly/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-2 m-t-lg">
-                                        <button class="btn btn-primary" type="submit">Select</button>
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Qty. To Indent</label>
+                                                    <input  type="text" class="form-control" name="quantityToIndent">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Purchase UOM</label>
+                                                    <select class="form-control"   id="purchaseuom" name="purchaseUOM">
+                                                        <!--<option>Kg</option>-->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>SO Refernce No</label>
+                                                    <input class="form-control" name="soReferenceNo">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 m-t-lg">
+                                                <button class="btn btn-primary" id="addIndentItemDetailsBtn">Add</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </form>
+                            <!-- <form th:action="@{/inventory/createIndent}" th:object="${indentForm}"
+                                   name="indentForm" method="post">
+                                          <span th:if="${indentDetails!= null}">
+                                          <input type="hidden" name="id" th:value="${indentDetails.id}"/>
+                                          </span>
+                                 <div class="row">
+                                     <div class="col-lg-4">
+                                         <div class="form-group">
+                                             <label>Item Name</label>
+                                             <input type="hidden" name="productId" id="itemIdInput">
+                                             <input type="text" class="form-control indentitemautocmoplete"
+                                                    placeholder="Enter Item Name" required>
+                                             <div class="indent_item_dropdown">
+                                                 <ul class="auto-dropdown-menu">
+
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="col-lg-4" th:if="${indentDetails== null}">
+                                         <div class="form-group">
+                                             <label>Indent Priority</label>
+                                                 <select class="form-control" name="indentPriority" required>
+                                                      <option value="">Select Priority</option>
+                                                      <option value="Low">Low</option>
+                                                      <option value="Medium">Medium</option>
+                                                      <option value="High">High<option>
+                                                 </select>
+
+                                         </div>
+                                     </div>
+
+                                     <div class="col-lg-2 m-t-lg">
+                                         <button class="btn btn-primary" type="submit">Select</button>
+                                     </div>
+                                 </div>
+                             </form>-->
 
                             <!-- <div class="row">
                                  <span>
@@ -164,10 +253,12 @@
                                  </div>
                              </div>-->
                             <h2>Item Details</h2>
+
                             <div class="row">
-                                <form id="indentForm" th:action="@{/inventory/saveIndent}" th:object="${indentForm}"
+                                <form id="indentForms" th:action="@{/inventory/saveIndent}" th:object="${indentForm}"
                                       name="indentForm" method="post">
                                     <div class="col-lg-12">
+
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTables-addIndent"
                                                    style="font-weight: bold;">
@@ -177,9 +268,7 @@
                                                     <th>Item Name</th>
 
                                                     <th>Current Stock</th>
-
                                                     <th>Qty. To Indent</th>
-                                                    <th>Required by date</th>
                                                     <th>So reference no</th>
                                                     <th>Base UOM</th>
                                                     <th>Purchase UOM</th>
@@ -201,33 +290,25 @@
                                                 th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.currentStock}">
                                                 300
                                             </td>
-                                            <td class="center">
-                                                <input class="form-control" required
-                                                       th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
-                                            </td>
-                                               <td class="center indentRequiredDate">
-                                                   <div class="input-group date">
-                                                    <span class="input-group-addon"><i
-                                                            class="fa fa-calendar"></i></span><input
-                                                           class="form-control" type="text"
-                                                           th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].srequiredByDate}">
-                                                </div>
+
+                                            <td class="center"
+                                                th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
 
                                             </td>
-                                            <td class="center">
-                                                <input class="form-control"
-                                                       th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
+                                            <td class="center"
+                                                th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
+
                                             </td>
-                                            <td th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.uom.UOM}">Kg</td>
-                                            <td class="center">
-                                                   <select class="form-control" required
-                                                           th:field="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].uomId}">
-                                                   <option value="">select</option>
-                                                            <option th:each="productuomList: ${indentForm.indentItemStockDetailsModels[__${iterator.index}__].productUOMS}"
-                                                                    th:value="${productuomList.uom.id}"
-                                                                    th:text="${productuomList.uom.UOM}"></option>
-                                                </select>
+
+                                             <td class="center"
+                                                 th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.uom.UOM}">
                                             </td>
+
+                                     <td class="center"
+                                         th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].uom.UOM}">
+                                            </td>
+
+
                                             <td><a type='button'
                                                    class='btn btn-danger dim removeIndentItemDetailsBtn'
                                                    th:data-indentitemss="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].id}"
@@ -239,7 +320,10 @@
                                                 <tfoot>
 
                                                 </tfoot>
-                                            </table>
+                                     </table>
+
+
+
                                         </div>
                                         <div class="col-lg-12 text-right">
                                             <button class="btn btn-primary" type="submit">Save</button>
@@ -307,6 +391,33 @@
 <script>
         $(document).ready(function(){
 
+
+
+        $('#indentPriority').change(function () {
+          if ($('#indentPriority').val() == 'Low') {
+        var lowDate = new Date();
+        lowDate.setDate(lowDate.getDate() + 10);
+        priorityDate = lowDate.toLocaleDateString();
+         $('#indentDateId').val(priorityDate);
+
+
+          }
+
+          else if   ($('#indentPriority').val() == 'Medium') {
+        var medium = new Date();
+        medium.setDate(medium.getDate() + 7);
+        priorityDate = medium.toLocaleDateString();
+         $('#indentDateId').val(priorityDate);
+
+          }
+           else  {
+        var high = new Date();
+        high.setDate(high.getDate() + 3);
+        priorityDate = high.toLocaleDateString();
+          $('#indentDateId').val(priorityDate);
+          }
+
+          });
         $('.dataTables-addIndent').DataTable({
     pageLength: 25,
     responsive: true,
@@ -375,8 +486,31 @@
 
 
                 			$(".indentitemautocmoplete").val(value);
+                			var productIdIndent = $(this).data('indentitemsid');
+
                 			$("#itemIdInput").val($(e.target).data('indentitemsid'));
                 			$(".indent_item_dropdown").hide();
+
+                			  $.ajax({
+                                                                  url: '/inventory/getProductDetailsInIndent',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'productIdIndent': productIdIndent},
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+                                                                                  $("#purchaseuom").html("");
+                                                                                   $('#baseuom').val(data.data.baseuoms);
+                                                                                  $('#stock').val(data.data.stocks);
+                                                                                    $.each(data.data.purchaseuoms, function(i){
+                                                              $('#purchaseuom').append($('<option>').val(this['id']).text(this['nameuom']));
+                                                                           });
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+
 
 
               });
@@ -421,6 +555,7 @@ var indentItemId=$(this).data('indentitemss');
 
     });
        });
+
 
 
 </script>

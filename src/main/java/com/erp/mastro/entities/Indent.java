@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,10 @@ public class Indent extends Auditable<String> {
 
     @Column(name = "indent_priority")
     private String indentPriority;
+
+
+    @Column(name = "indent_Date")
+    private Date indentDate;
 
     @Column(name = "delete_status", nullable = false)
     private int indentDeleteStatus;
