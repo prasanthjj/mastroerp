@@ -150,12 +150,13 @@
                                                     <li th:if="${purchaseObj.status== 'Delivered'}"><a
                                                             class="dropdown-item font-bold"
                                                             th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
-                                                        <i class="fa fa-edit"></i> Generate Purchase Invoice</a></li>
+                                                        <i class="fa fa-edit"></i> Generate Invoice</a></li>
                                                     <!--<span th:each="grn:${purchaseObj.grnSet}">-->
 
                                                     <li th:each="grn:${purchaseObj.grnSet}"><a
                                                             class="dropdown-item font-bold"
-                                                            th:if="${grn.createAnotherPO== 1}">
+                                                            th:if="${grn.createAnotherPO== 1}"
+                                                            th:href="@{/purchase/getPurchaseOrderForPending?poId=__${purchaseObj.id}__}">
                                                         <i class="fa fa-edit"></i> Create PO</a></li>
 
                                                     <!-- </span>-->

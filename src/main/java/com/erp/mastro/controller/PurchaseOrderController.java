@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroApplicationUtils;
+import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
@@ -638,6 +639,29 @@ public class PurchaseOrderController {
         } catch (Exception e) {
             logger.error("Error Occured while getting po grn view:", e, this);
             return new GenericResponse(false, e.getMessage());
+        }
+    }
+
+    /**
+     * Method to create new po for pending
+     *
+     * @param request
+     * @param poId
+     * @param model
+     * @return po list
+     */
+    @RequestMapping(value = "/getPurchaseOrderForPending", method = RequestMethod.GET)
+    public String getPurchaseOrderForPending(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to create po for pending :" + poId);
+        try {
+            PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
+            PurchaseOrder purchaseOrder1 = new PurchaseOrder();
+
+            return "redirect:/purchase/getPurchaseOrderList";
+
+        } catch (Exception e) {
+            MastroLogUtils.error(PurchaseOrderController.class, e.getMessage());
+            throw e;
         }
     }
 }
