@@ -221,14 +221,20 @@
 
                                 <table class="table invoice-total">
                                     <tbody>
+                                    <tr>
 
+                                        <td><strong>Total :</strong></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.totalAmt, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
+                                        </td>
+                                    </tr>
                                     <tr>
 
                                         <td><strong>Round Off :</strong></td>
                                         <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>TOTAL :</strong></td>
+                                        <td><strong>Grand Total :</strong></td>
                                         <td><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 0, 'POINT')}">1261.98</span>
                                         </td>

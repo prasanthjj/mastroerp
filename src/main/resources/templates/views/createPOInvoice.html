@@ -209,6 +209,9 @@
                                 <div class="row m-t-md">
 
                                     <div class="col-lg-12 text-right">
+                                        <h3 class=""> Total :
+                                            <span th:text="${#numbers.formatDecimal(totalAmt, 0, 'COMMA', 4, 'POINT')}"> 850.0000</span>
+                                        </h3>
                                         <h3 class=""> Round Off :
                                             <span th:text="${roundValue}"> 850.0000</span></h3>
                                         <h3 class="">Grand Total :<span
