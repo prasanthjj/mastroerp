@@ -81,7 +81,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-5 col-form-label"><strong>Creation
                                                         Date </strong></label>
-                                                    <label class="col-sm-7 col-form-label">-------</label>
+                                                    <label class="col-sm-7 col-form-label" th:text="${#dates.format(indentDetails.createdDate, 'dd-MMMM-yyyy')}"></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,6 +126,8 @@
                                                             <span th:unless="${indentObj.purchaseUOM!= null}">
                                                             <td class="center">----</td>
                                                             </span>
+
+
                                                         </tr>
                                                         </tbody>
                                                         <tfoot>

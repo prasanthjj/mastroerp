@@ -94,7 +94,8 @@
                                     <tbody>
                                     <tr class="gradeX" th:each="indentObj,iterator:${indentList}">
                                         <td th:text="${iterator.index+1}">1</td>
-                                        <td th:text="${indentObj.id}">IND-0021560</td>
+                                        <td>IND-<span th:text="${indentObj.id}"></span></td>
+                                      <!--  <td th:text="${indentObj.id}">IND-0021560</td>-->
                                         <td th:text="${indentObj.indentPriority}">Direct</td>
                                         <span th:if="${indentObj.createdDate!= null}">
                               <td th:text="${#dates.format(indentObj.createdDate, 'dd-MMMM-yyyy')}"></td>

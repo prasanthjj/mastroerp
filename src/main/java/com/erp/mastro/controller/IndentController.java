@@ -110,11 +110,12 @@ public class IndentController {
                 stockRequestModel.setId(stock.getId());
                 stockRequestModel.setCurrentStock(stock.getCurrentStock());
                 stockRequestModels.add(stockRequestModel);
+                ItemStockDetails itemStockDetails ;
+
             }
 
 
             return new GenericResponse(true, "get product details")
-
                     .setProperty("stocks", stockRequestModel.getCurrentStock())
                    .setProperty("baseuoms", product.getUom().getUOM())
                     .setProperty("purchaseuoms", productUOMModels);
@@ -168,7 +169,6 @@ public class IndentController {
             model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
             Indent indentModelsss = indentService.getIndentById(indent.getId());
 
-             System.out.println("id testing;"+indentModelsss.getItemStockDetailsSet().size());
 
             return "views/addIndent";
         } catch (ModelNotFoundException e) {
