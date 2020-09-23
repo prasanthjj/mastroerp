@@ -113,9 +113,21 @@
                                         <!-- <td class="center">Ft</td>-->
                                         <!-- <td class="center">200</td>-->
                                         <td th:if="${purchaseObj.status== 'Delivered' || purchaseObj.status=='Invoiced'}">
+                                          <span th:each="grn:${purchaseObj.grnSet}">
+                                              <span th:if="${grn.grnItems!=null and !grn.grnItems.empty}">
+                                              <span th:if="${grn.createAnotherPO== 1}">
                                             <a href="#" class="text-danger"
                                                th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
-                                                    th:text="${purchaseObj.status}">Draft</b></a></td>
+                                                    th:text="${purchaseObj.status}">Draft</b></a>
+                                                  </span>
+                                                  <span th:unless="${grn.createAnotherPO== 1}">
+                                            <a href="#"
+                                               th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
+                                                    th:text="${purchaseObj.status}">Draft</b></a>
+                                                  </span>
+                                          </span>
+                                          </span>
+                                        </td>
                                         <td th:unless="${purchaseObj.status== 'Delivered' || purchaseObj.status=='Invoiced'}">
                                             <a href="#"
                                                th:href="@{/purchase/getPurchaseOrderPreview?poId=__${purchaseObj.id}__}"><b
