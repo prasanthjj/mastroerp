@@ -92,9 +92,14 @@
                                     <tr class="gradeX" th:each="salesslipObj,iterator:${salesSlipList}">
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td>Sales Slip</td>
-                                        <td th:text="${salesslipObj.id}">DC-75893425</td>
+                                        <td th:text="${salesslipObj.salesSlipNo}">DC-75893425</td>
 
-                                        <td class="center"></td>
+                                        <span th:if="${salesslipObj.createdDate!= null}">
+                                        <td th:text="${#dates.format(salesslipObj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                        <span th:unless="${salesslipObj.createdDate!= null}">
+                                        <td></td>
+                                        </span>
                                         <td class="center" th:text="${salesslipObj.party.partyName}">Mastro Metals Pvt
                                             Ltd.
                                         </td>
