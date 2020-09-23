@@ -85,6 +85,12 @@ public class Branch {
     @OneToMany(mappedBy = "branch",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    private Set<SalesOrder> salesOrders = new HashSet<>();
+
+
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
 
     @OneToMany(mappedBy = "branch",

@@ -131,18 +131,18 @@
                                 <div class="table-responsive m-t">
                                     <table class="table invoice-table">
                                         <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>HSN / SAC</th>
-                                            <th>Item</th>
+                                        <tr class="text-info">
+                                            <th><strong>No</strong></th>
+                                            <th><strong>HSN / SAC</strong></th>
+                                            <th><strong>Item</strong></th>
                                             <!--<th>GST</th>-->
-                                            <th>Quantity</th>
+                                            <th><strong>Quantity</strong></th>
                                             <!--<th>Unit Rate</th>-->
-                                            <th>Taxable Value</th>
-                                            <th>CGST</th>
-                                            <th>SGST</th>
-                                            <th>Net Price</th>
-                                            <th>Total</th>
+                                            <th><strong>Taxable Value</strong></th>
+                                            <th><strong>CGST</strong></th>
+                                            <th><strong>SGST</strong></th>
+                                            <th><strong>Net Price</strong></th>
+                                            <th><strong>Total</strong></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -233,7 +233,7 @@
                                         <td><strong>Round Off :</strong></td>
                                         <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>Grand Total :</strong></td>
                                         <td><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 0, 'POINT')}">1261.98</span>

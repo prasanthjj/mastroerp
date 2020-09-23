@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mastro Metals | Preview Purchase Order</title>
+    <title>Mastro Metals | Preview GRN</title>
 
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
     <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
@@ -53,19 +53,18 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <span th:if="${grnDetails.status== 'Draft'}">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title mastro-inbox-title ">
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="reason" required
-                                               placeholder="Approvel / Rejection Remarks"/>
+                                        <input type="text" class="form-control" id="reason" placeholder="Approval / Rejection Remarks" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
                                     <p class="text-left">
                                         <button class="btn btn-primary dim grnApproved"
                                                 th:data-grnids="${grnDetails.id}">Approve</button>
-                                        <button class="btn btn-primary dim grnReview"
+                                        <button class="btn btn-warning dim grnReview"
                                                 th:data-grnids="${grnDetails.id}">Review</button>
                                         <!--  <button class="btn btn-danger dim grnDiscard"
                                                   th:data-grnids="${grnDetails.id}">Discard</button>-->
@@ -76,7 +75,7 @@
                         </div>
                         </span>
                         <span th:if="${grnDetails.status== 'Approved'}">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title mastro-inbox-title ">
                              <div class="ibox-tools">
                                 <div class="btn-group">
                                     <button class="btn btn-primary ">
@@ -86,7 +85,7 @@
                             </div>
                         </div>
                         </span>
-                        <div class="ibox-content">
+                        <div class="ibox-content mastro-inbox-content">
 
 
                             <div class="ibox-content p-xl">
@@ -122,7 +121,7 @@
                                 <div class="table-responsive m-t">
                                     <table class="table invoice-table">
                                         <thead>
-                                        <tr>
+                                        <tr class="text-info">
                                             <th>Item List</th>
                                             <th>Pending</th>
                                             <th>Quantity</th>
@@ -203,7 +202,7 @@
                                                 th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>TOTAL :</strong></td>
                                         <td>Rs <span
                                                 th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>

@@ -61,7 +61,7 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="form-group">
-                                        <input type="text" id="reason" class="form-control" placeholder="Approvel / Rejection Remarks" />
+                                        <input type="text" id="reason" class="form-control" placeholder="Approval / Rejection Remarks" />
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -69,7 +69,7 @@
                                     <button class="btn btn-primary dim soApproved"
                                             th:data-soids="${salesOrderDetails.id}">Approve</button>
 
-                                        <button class="btn btn-primary dim soReview"
+                                        <button class="btn btn-warning dim soReview"
                                                 th:data-soids="${salesOrderDetails.id}">Review</button>
                              <button class="btn btn-danger dim soDiscard"
                                             th:data-soids="${salesOrderDetails.id}">Discard</button>
@@ -106,7 +106,7 @@
     
                                 <div class="col-sm-6 text-right">
                                     <h4>Sales Oder No.</h4>
-                                    <h4 class="text-navy"> IN-<span th:text="${salesDetails.id}"></span>-0</h4>
+                                    <h4 class="text-navy" th:text="${salesDetails.salesOrderNo}"></h4>
                                     <span>To:</span>
                                     <span th:if="${partysDetails!= null}">
                                    <p> <strong th:text="${partyBillingDetails.contactPersonName}">Mastro Metals Pvt Ltd.</strong><br>
@@ -127,18 +127,18 @@
                             <div class="table-responsive m-t">
                                 <table class="table invoice-table">
                                     <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>HSN / SAC</th>
-                                        <th>Item</th>
+                                    <tr class="text-info">
+                                        <th> <strong>No</strong></th>
+                                        <th><strong>HSN / SAC</strong></th>
+                                        <th><strong>Item</strong></th>
                                         <!--<th>GST</th>-->
-                                        <th>Quantity</th>
+                                        <th><strong>Quantity</strong></th>
                                         <!--<th>Unit Rate</th>-->
-                                        <th>Taxable Value</th>
-                                        <th>CGST</th>
-                                        <th>SGST</th>
-                                        <th>Net Price</th>
-                                        <th>Total</th>
+                                        <th><strong>Taxable Value</strong></th>
+                                        <th><strong>CGST</strong></th>
+                                        <th><strong>SGST</strong></th>
+                                        <th><strong>Net Price</strong></th>
+                                        <th><strong>Total</strong></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -209,8 +209,8 @@
                                     <td><strong>Round Off :</strong></td>
                                     <td>  <span th:text="${roundOff}">1261.98</span></td>
                                 </tr>
-                                <tr>
-                                    <td><strong>TOTAL :</strong></td>
+                                <tr class="priceColor">
+                                    <td><strong>Grand TOTAL :</strong></td>
                                     <td>    <span th:text="${grandTotal}">1261.98</span></td>
                                 </tr>
                                 </tbody>

@@ -43,6 +43,13 @@ public class SalesOrder extends Auditable<String> {
     @Column(name = "reason")
     private String reason;
 
+    @Column(name = "SalesOrder_no")
+    private String salesOrderNo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "salesorder_salesorderproduct", joinColumns = {@JoinColumn(name = "sales_order_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sales_order_product_id", referencedColumnName = "id")})

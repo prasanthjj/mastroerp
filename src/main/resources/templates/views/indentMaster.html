@@ -65,9 +65,13 @@
                                                th:href="@{/inventory/getCreateIndent}"><i
                                                 class="fa fa-plus-square"></i> Add Indent</a></li>
                                         <li class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item font-bold" data-toggle="modal"
+                                        <li>
+                                            <a class="dropdown-item font-bold" href="#"><i
+                                                class="fa fa-plus-square"></i> Add Indent Via Sales Order</a>
+                                           <!-- <a class="dropdown-item font-bold" data-toggle="modal"
                                                data-target="#addSalesSlipViaSalesOrder" href="#"><i
-                                                class="fa fa-plus-square"></i> Add Indent Via Sales Order</a></li>
+                                                    class="fa fa-plus-square"></i> Add Indent Via Sales Order</a>-->
+                                        </li>
 
                                     </ul>
                                 </div>
@@ -88,6 +92,7 @@
                                         <!--<th>Current Stock</th>
                                         <th>Indent Qty</th>-->
                                         <!--<th>Required By Date</th>-->
+                                        <th>Status</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
@@ -101,13 +106,14 @@
                               <td th:text="${#dates.format(indentObj.createdDate, 'dd-MMMM-yyyy')}"></td>
                                         </span>
                                         <span th:unless="${indentObj.createdDate!= null}">
-                                        <td>--------</td>
+                                        <td></td>
                                     </span>
                                         <!-- <td th:text="${indentObj.id}">Oxy .35 Red 3.05mtr (10')</td>-->
                                         <!-- <td></td>-->
                                         <!-- <td>200</td>
                                          <td>300</td>-->
                                         <!--  <td>30/06/2020</td>-->
+                                        <td th:text="${indentObj.indentStatus}"></td>
                                         <td class="center">
                                             <div class="btn-group">
                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
@@ -140,8 +146,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
 

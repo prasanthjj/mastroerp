@@ -49,8 +49,7 @@
         </div>
         <div class="wrapper wrapper-content">
 
-            <div class="row"> Preview Purchase Order
-
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title mastro-ibox-title ">
@@ -150,14 +149,14 @@
                                                     <li th:if="${purchaseObj.status== 'Delivered'}"><a
                                                             class="dropdown-item font-bold"
                                                             th:href="@{/purchase/getPurchaseOrderInvoice?poId=__${purchaseObj.id}__}">
-                                                        <i class="fa fa-edit"></i> Generate Invoice</a></li>
+                                                        <i class="fa fa-plus-square"></i> Generate Invoice</a></li>
                                                     <!--<span th:each="grn:${purchaseObj.grnSet}">-->
 
                                                     <li th:each="grn:${purchaseObj.grnSet}"><a
                                                             class="dropdown-item font-bold"
                                                             th:if="${grn.createAnotherPO== 1}"
                                                             th:href="@{/purchase/getPurchaseOrderForPending?poId=__${purchaseObj.id}__}">
-                                                        <i class="fa fa-edit"></i> Create PO</a></li>
+                                                        <i class="fa fa-plus-square"></i> Create PO</a></li>
 
                                                     <!-- </span>-->
                                                 </ul>
@@ -213,7 +212,9 @@
                                 <td class="center"><a href="add_po_via_indent.html"
                                                       th:href="@{/purchase/getPurchaseOrderViaIndent?indentId=__${indentObj.id}__}"><span
                                         th:text="${indentObj.id}"></span></a></td>
-                                <td class="center"></td>
+                                <td class="center" th:text="${#dates.format(indentObj.createdDate, 'dd-MMMM-yyyy')}">
+
+                                </td>
                             </tr>
 
                             </tbody>

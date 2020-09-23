@@ -367,7 +367,7 @@
                                 <input type="hidden" name="loadingChargesgst" th:value="${loadingChargeSgstAmt}">
                                     </span>
                             <div class="row m-t-md">
-                                <div class="col-lg-12 text-right">
+                               <!-- <div class="col-lg-12 text-right">
                                        <h3 class="" th:if="${totalAmt!= null}"> Round Off :
                                             <span th:text="${#numbers.formatDecimal(totalAmt, 0, 'COMMA', 4, 'POINT')}"> 850.0000</span></h3>
                                     <h3 class="" th:if="${roundOff!= null}"> Round Off :
@@ -375,8 +375,29 @@
                                         <h3 class="" th:if="${grandTotal!= null}">Grand Total :<span
                                                 th:text="${grandTotal}"></span>
                                         </h3>
-                                </div>
+                                </div>-->
+                                <div class=" row table-responsive">
+                                        <table class="table invoice-total">
+                                            <tbody>
+                                            <tr th:if="${totalAmt!= null}">
+                                                <td><strong>Total :</strong></td>
+                                                <td>Rs <span  th:text="${#numbers.formatDecimal(totalAmt, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
+                                                </td>
+                                            </tr>
 
+                                            <tr  th:if="${roundOff!= null}">
+                                                <td><strong>Round Off :</strong></td>
+                                                <td>Rs <span  th:text="${roundOff}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="priceColor"  th:if="${grandTotal!= null}">
+                                                <td><strong>Grand Total :</strong></td>
+                                                <td>Rs <span th:text="${grandTotal}"></span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">

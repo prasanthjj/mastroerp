@@ -53,19 +53,18 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <span th:if="${purchaseOrderDetails.status== 'Draft'}">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title  mastro-inbox-title">
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="reason" required
-                                               placeholder="Approvel / Rejection Remarks"/>
+                                        <input type="text" class="form-control" id="reason"  placeholder="Approval / Rejection Remarks" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
                                     <p class="text-left">
                                         <button class="btn btn-primary dim poApproved"
                                                 th:data-poids="${purchaseOrderDetails.id}">Approve</button>
-                                        <button class="btn btn-primary dim poReview"
+                                        <button class="btn btn-warning dim poReview"
                                                 th:data-poids="${purchaseOrderDetails.id}">Review</button>
                                         <button class="btn btn-danger dim poDiscard"
                                                 th:data-poids="${purchaseOrderDetails.id}">Discard</button>
@@ -76,7 +75,7 @@
                         </div>
                         </span>
                         <span th:if="${purchaseOrderDetails.status== 'Approved'}">
-                        <div class="ibox-title  ">
+                        <div class="ibox-title  mastro-inbox-title">
                              <div class="ibox-tools">
                                 <div class="btn-group">
                                     <button class="btn btn-primary ">
@@ -86,13 +85,13 @@
                             </div>
                         </div>
                         </span>
-                        <div class="ibox-content">
+                        <div class="ibox-content mastro-inbox-content">
 
 
                             <div class="ibox-content p-xl">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h5>From:</h5>
+                                        <h4>From:</h4>
                                         <address>
                                             <span th:text="${purchaseOrderDetails.indent.branch.branchAddress}"></span><br>
                                             <!--  <strong>Mastro Metals</strong><br>
@@ -122,12 +121,12 @@
                                 <div class="table-responsive m-t">
                                     <table class="table invoice-table">
                                         <thead>
-                                        <tr>
-                                            <th>Item List</th>
-                                            <th>HSN/SAC</th>
-                                            <th>Indent Quantity</th>
-                                            <th> Unit Rate(per base UOM)</th>
-                                            <th>Total Price</th>
+                                        <tr class="text-info">
+                                            <th><strong>Item List</strong></th>
+                                            <th><strong>HSN/SACt</strong></th>
+                                            <th><strong>Indent Quantity</strong></th>
+                                            <th> <strong>Unit Rate ( per base UOM )</strong></th>
+                                            <th><strong>Total Price</strong></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -166,8 +165,8 @@
                                                 th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td><strong>TOTAL :</strong></td>
+                                    <tr class="priceColor">
+                                        <td ><strong>TOTAL :</strong></td>
                                         <td>Rs <span
                                                 th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
@@ -176,12 +175,12 @@
                                 </table>
 
 
-                                <div class="well m-t"><strong>Comments</strong>
+                                <!--<div class="well m-t"><strong>Comments</strong>
                                     It is a long established fact that a reader will be distracted by the readable
                                     content of a
                                     page when looking at its layout. The point of using Lorem Ipsum is that it has a
                                     more-or-less
-                                </div>
+                                </div>-->
                             </div>
 
                         </div>

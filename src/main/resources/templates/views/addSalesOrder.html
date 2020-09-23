@@ -277,11 +277,32 @@
                                         <input type="hidden" name="roundOff" th:value="${roundOff}">
 
 
-                                       <h3 class=""> Total : <span th:text="${finalTotal}"> 850.0000</span></h3>
+                                      <!-- <h3 class=""> Total : <span th:text="${finalTotal}"> 850.0000</span></h3>
 
                                         <h3 class=""> Round Off : <span th:text="${roundOff}"> 850.0000</span></h3>
 
-                                        <h3 class=""> Grand Total : <span th:text="${grandTotal}"> 850.0000</span></h3>
+                                        <h3 class=""> Grand Total : <span th:text="${grandTotal}"> 850.0000</span></h3>-->
+                                         <div class="row table-responsive">
+                                        <table class="table invoice-total">
+                                            <tbody>
+                                            <tr>
+                                                <td><strong>Total :</strong></td>
+                                                <td>Rs <span  th:text="${finalTotal}">1026.00</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Round Off :</strong></td>
+                                                <td>Rs <span  th:text="${roundOff}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="priceColor">
+                                                <td><strong>Grand Total :</strong></td>
+                                                <td>Rs <span th:text="${grandTotal}"></span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                      </span>
                                     </div>
@@ -289,16 +310,12 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group"><label>Special instructions</label>
-                                            <textarea class="form-control" rows="6" name="specialInstructions">
-
-                                            </textarea>
+                                            <textarea class="form-control" rows="6" name="specialInstructions"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group"><label>Remarks</label>
-                                            <textarea class="form-control" rows="6" name="remarks">
-
-                                    </textarea>
+                                            <textarea class="form-control" rows="6" name="remarks"></textarea>
                                         </div>
                                     </div>
                                 </div>

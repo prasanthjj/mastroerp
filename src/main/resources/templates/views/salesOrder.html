@@ -85,7 +85,7 @@
                          <span th:if="${salesOrderList!= null}">
                         <tr class="gradeX" th:each="salesObj,iterator:${salesOrderList}">
                         <td th:text="${iterator.index+1}">1</td>
-                        <td>SO-<span th:text="${salesObj.id}"></span></td>
+                        <td th:text="${salesObj.salesOrderNo}"></td>
                        <span th:if="${salesObj.createdDate!= null}">
                               <td th:text="${#dates.format(salesObj.createdDate, 'dd-MMMM-yyyy')}"></td>
                                         </span>

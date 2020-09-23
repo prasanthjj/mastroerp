@@ -400,6 +400,8 @@ public class SalesOrderController {
 
             model.addAttribute("grandTotal", roundoffvalue);
             model.addAttribute("roundOff", MastroApplicationUtils.roundTwoDecimals(roundOff));
+            model.addAttribute("finalTotal",  MastroApplicationUtils.roundTwoDecimals(finalTotal));
+
             //  model.addAttribute("grandTotal",  MastroApplicationUtils.roundTwoDecimals(grandTotal));
             //model.addAttribute("grandTotal",  grandTotal);
             // model.addAttribute("grandTotal", Math.round(grandTotal * 100.0) / 100.0);

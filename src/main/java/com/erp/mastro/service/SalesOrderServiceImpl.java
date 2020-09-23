@@ -1,6 +1,8 @@
  package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.controller.UserController;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.SalesOrderRequestModel;
@@ -22,6 +24,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Autowired
     private SalesOrderRepository salesOrderRepository;
+
+    @Autowired
+    private UserController userController;
 
     @Autowired
     private PartyRepository partyRepository;
@@ -112,6 +117,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
         SalesOrder salesOrder1 = salesOrder;
 
+        Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+        salesOrder.setBranch(currentBranch);
+
         Set<ProductPartyRateRelation> productPartyRateRelationSet=product.getProductPartyRateRelations().stream()
                 .filter(productPartyData -> (null !=productPartyData))
                 .filter(productPartyData -> (salesOrder1.getParty().getId().equals(productPartyData.getParty().getId())))
@@ -164,6 +172,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
             salesOrderProductSet.add(salesOrderProduct);
         }
         salesOrderRepository.save(salesOrder1);
+
+        String currentBranchCode = salesOrder.getBranch().getBranchCode();
+        if (currentBranchCode != null) {
+            salesOrder.setSalesOrderNo(MastroApplicationUtils.generateName(currentBranchCode, "SO", salesOrder.getId()));
+        }
+        salesOrderRepository.save(salesOrder1);
+
         MastroLogUtils.info(SalesOrderService.class, "Save " + salesOrder1.getId() + " succesfully.");
 
         return salesOrderProduct;
