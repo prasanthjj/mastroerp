@@ -160,10 +160,10 @@ public class ProductController {
      * @return product list
      */
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("productForm") @Valid ProductRequestModel productRequestModel, HttpServletRequest request, Model model) {
+    public String saveProduct(@RequestParam("toleranceType") String value,@ModelAttribute("productForm") @Valid ProductRequestModel productRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(ProductController.class, "Going to save product : {}");
         try {
-            productService.saveOrUpdateProduct(productRequestModel);
+            productService.saveOrUpdateProduct(productRequestModel,value);
             return "redirect:/master/getProduct";
         } catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "ProductModel empty", e);

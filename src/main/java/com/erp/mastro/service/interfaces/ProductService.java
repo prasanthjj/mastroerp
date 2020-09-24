@@ -19,7 +19,7 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    Product saveOrUpdateProduct(ProductRequestModel productRequestModel) throws ModelNotFoundException, FileStoreException;
+    Product saveOrUpdateProduct(ProductRequestModel productRequestModel,String value) throws ModelNotFoundException, FileStoreException;
 
     void deleteProduct(Long id);
 

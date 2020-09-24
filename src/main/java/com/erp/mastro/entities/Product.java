@@ -52,7 +52,10 @@ public class Product extends Auditable<String>{
     private Double basePrice;
 
     @Column(name = "tolerance_type")
-    private String tolerance_Type;
+    private String toleranceType;
+
+    @Column(name = "amount")
+    private Double amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "subcategory_product", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}

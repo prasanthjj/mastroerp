@@ -29,6 +29,9 @@ public class ProductRequestModel {
     private Long brandId;
     private List<ProductUOMModel> productUOMModelList = new ArrayList<>();
     private String productname;
+    private String toleranceType;
+    private Double amount;
+    private Double percentageAmount;
 
     public ProductRequestModel() {
 
@@ -50,6 +53,13 @@ public class ProductRequestModel {
             this.setWarranty(product.getWarranty());
             this.setPropertySize(product.getPropertySize());
             this.setLoadingCharge(product.getLoadingCharge());
+            this.setToleranceType(product.getToleranceType());
+            this.setToleranceType(product.getToleranceType());
+            if (product.getToleranceType().equals("Flat-Amount")) {
+                this.amount = product.getAmount();
+            } else {
+                this.percentageAmount = product.getAmount();
+            }
             product.getProductUOMSet().parallelStream().forEach(x -> this.productUOMModelList.add(new ProductRequestModel.ProductUOMModel(x)));
         }
     }

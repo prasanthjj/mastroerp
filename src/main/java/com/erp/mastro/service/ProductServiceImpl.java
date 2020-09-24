@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws FileStoreException
      */
     @Transactional(rollbackOn = {Exception.class})
-    public Product saveOrUpdateProduct(ProductRequestModel productRequestModel) throws ModelNotFoundException, FileStoreException {
+    public Product saveOrUpdateProduct(ProductRequestModel productRequestModel,String value) throws ModelNotFoundException, FileStoreException {
         Product product = new Product();
         if (productRequestModel == null) {
             throw new ModelNotFoundException("ProductRequestModel model is empty");
@@ -133,7 +133,14 @@ public class ProductServiceImpl implements ProductService {
                 product.setBasePrice(productRequestModel.getBasePrice());
                 product.setInspectionType(productRequestModel.getInspectionType());
                 product.setLoadingCharge(productRequestModel.getLoadingCharge());
+                product.setToleranceType(productRequestModel.getToleranceType());
                 product.setEnabled(true);
+                product.setToleranceType(value);
+                if (product.getToleranceType().equals("Flat-Amount")) {
+                    product.setAmount(productRequestModel.getAmount());
+                } else {
+                    product.setAmount(productRequestModel.getPercentageAmount());
+                }
 
                 Set<ProductUOM> productUOM = saveOrUpdateProductUOM(productRequestModel, product);
                 product.setProductUOMSet(productUOM);
