@@ -51,6 +51,9 @@ public class Product extends Auditable<String>{
     @Column(name = "base_price")
     private Double basePrice;
 
+    @Column(name = "tolerance_type")
+    private String tolerance_Type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "subcategory_product", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")})

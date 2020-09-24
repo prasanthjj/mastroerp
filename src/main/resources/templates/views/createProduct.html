@@ -16,6 +16,8 @@
     <!-- Morris -->
     <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css}">
     <link href="../resources/css/plugins/dropzone/basic.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/dropzone/basic.css}">
     <link href="../resources/css/plugins/dropzone/dropzone.css" rel="stylesheet"
@@ -95,6 +97,8 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
+
+
                                     </div>
                                     <div class="col-lg-8">
 
@@ -132,12 +136,18 @@
                                         <div class="row">
                                             <div class="col-lg-6">
 
+
                                                 <div class="form-group  row"><label class="col-sm-6 col-form-label">Loading
-                                                    Charge</label>
+                                                    Charge <i class="fa fa-asterisk"></i></label>
 
                                                     <div class="col-sm-6"><input type="text" class="form-control"
-                                                                                 name="loadingCharge"></div>
+                                                                                 name="loadingCharge" required></div>
                                                 </div>
+                                            </div>
+                                            <div class="=col-lg-6">
+
+
+
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -161,6 +171,48 @@
                                         <div class="hr-line-dashed"></div>
                                     </div>
                                     <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <div class="form-group  row">
+
+                                                <label class="col-sm-4 col-form-label">Tolerance Type<i
+                                                        class="fa fa-asterisk "></i></label>
+                                                <div class="col-sm-8">
+
+                                                    <input type="radio" checked id="flatAmount"}
+                                                           name="toleranceType"> Flat Amount <br>
+                                                    <input type="radio" name="toleranceType">
+                                                    Percentage of CTC
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="form-group row" id="toleranceAmount">
+                                                <label class="col-sm-4 col-form-label">Enter Amount</label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-addon">&#8377;</span>
+                                                        </div>
+                                                        <!--<input type="text" class="form-control " th:field="*{amount}" name="amount">-->
+                                                        <input type="text" class="form-control " name="amount">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" id="tolerancePercentage">
+                                                <label class="col-sm-4 col-form-label">Enter Percentage</label>
+                                                <div class="col-sm-6">
+                                                    <input class="percentagetolerance" type="text">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-12">
+
+
+
                                         <div class="row">
                                             <div class="col-lg-4 ">
                                                 <div class="form-group  row"><label class="col-sm-4 col-form-label">Inspection
@@ -446,8 +498,38 @@
         th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="../resources/js/mastro/nestable.js" th:src="@{/resources/js/mastro/nestable.js}"></script>
 
+<!-- TouchSpin -->
+<script src="../resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"
+        th:src="@{/resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+
+
 <script>
 $(document).ready(function(){
+
+// tolerance percentage tolerance stat
+$(".percentagetolerance").TouchSpin({
+min:0,
+max:100,
+step:0.1,
+decimals:2,
+boostat:5,
+maxboostedstep:10,
+postfix:'%',
+buttondown_class:'btn btn-white',
+buttonup_class:'btn btn-white'
+});
+$("#tolerancePercentage").hide();
+$("input[name='toleranceType']").click(function() {
+if ($("#flatAmount").is(":checked")) {
+$("#toleranceAmount").show();
+$("#tolerancePercentage").hide();
+} else {
+$("#tolerancePercentage").show();
+$("#toleranceAmount").hide();
+}
+});
+// tolerance percentage tolerance end
+
 
 $("#catalogboxbtn").click(function(){
     $('#catalogBox').toggle();
