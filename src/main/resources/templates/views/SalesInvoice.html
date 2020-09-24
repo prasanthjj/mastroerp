@@ -84,6 +84,7 @@
                                         <th>Invoice Date</th>
                                         <th>Sales slip No</th>
                                         <th>Party Name</th>
+                                        <th>Grand Total</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
@@ -104,6 +105,7 @@
                                           <td class="center" th:text="${salesSlipInvoiceobj.salesSlip.party.partyName}">
                                               GM Steels Pvt Ltd
                                           </td>
+                                          <td th:text="${#numbers.formatDecimal(salesSlipInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></td>
 
                                           <td class="center">
 

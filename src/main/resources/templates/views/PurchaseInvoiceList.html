@@ -84,6 +84,7 @@
                                         <th>Invoice Date</th>
                                         <th>Purchase No</th>
                                         <th>Party Name</th>
+                                        <th>Grand Total</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
@@ -104,6 +105,7 @@
                                         <td class="center" th:text="${poInvoiceobj.purchaseOrder.party.partyName}">
                                             GM Steels Pvt Ltd
                                         </td>
+                                        <td th:text="${#numbers.formatDecimal(poInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></td>
 
                                         <td class="center">
 
