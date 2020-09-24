@@ -8,13 +8,17 @@ import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.IndentItemPartyGroupRequestModel;
+import com.erp.mastro.repository.GRNRepository;
+import com.erp.mastro.repository.IndentItemPartyGroupRepository;
 import com.erp.mastro.repository.ItemStockDetailsRepository;
 import com.erp.mastro.repository.PurchaseOrderRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +55,12 @@ public class PurchaseOrderController {
 
     @Autowired
     private GRNService grnService;
+
+    @Autowired
+    private IndentItemPartyGroupRepository indentItemPartyGroupRepository;
+
+    @Autowired
+    private GRNRepository grnRepository;
 
     /**
      * method to get purchase order list
@@ -651,14 +661,58 @@ public class PurchaseOrderController {
      * @return po list
      */
     @RequestMapping(value = "/getPurchaseOrderForPending", method = RequestMethod.GET)
-    public String getPurchaseOrderForPending(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
-        MastroLogUtils.info(PurchaseOrderController.class, "Going to create po for pending :" + poId);
+    public String getPurchaseOrderForPending(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) throws JsonProcessingException {
+        MastroLogUtils.info(PurchaseOrderController.class, "Going to create po for pending Items :" + poId);
         try {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
-            PurchaseOrder purchaseOrder1 = new PurchaseOrder();
 
+            PurchaseOrder shortagePO = new PurchaseOrder();
+            String[] ignoreProperties = {"id", "status", "poNo", "grnSet", "itemStockDetailsSet", "indentItemPartyGroups", "poInvoices"};
+            BeanUtils.copyProperties(purchaseOrder, shortagePO, ignoreProperties);
+            shortagePO.setStatus(Constants.STATUS_DRAFT);
+            purchaseOrderRepository.save(shortagePO);
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            String currentBranchCode = currentBranch.getBranchCode();
+            shortagePO.setPoNo(MastroApplicationUtils.generateName(currentBranchCode, "PO", shortagePO.getId()));
+            purchaseOrderRepository.save(shortagePO);
+
+            Set<GRN> grnSet = purchaseOrder.getGrnSet().stream()
+                    .filter(grn -> (null != grn))
+                    .filter(grn -> (!grn.getStatus().equals(Constants.STATUS_INITIAL)))
+                    .filter(grn -> (!grn.getStatus().equals(Constants.STATUS_DISCARD)))
+                    .collect(Collectors.toSet());
+            Set<GRNItems> grnItemsSet = new HashSet<>();
+            for (GRN grn : grnSet) {
+                Set<GRNItems> grnItems = grn.getGrnItems().stream()
+                        .filter(grnItem -> (null != grnItem))
+                        .filter(grnItem -> (grnItem.getPending() != 0))
+                        .collect(Collectors.toSet());
+                grnItemsSet.addAll(grnItems);
+                grn.setCreateAnotherPO(0);
+                grnRepository.save(grn);
+            }
+
+            for (GRNItems grnItems : grnItemsSet) {
+                IndentItemPartyGroup itemPartyGroup = new IndentItemPartyGroup();
+                itemPartyGroup.setEnabled(true);
+                itemPartyGroup.setQuantity(grnItems.getPending());
+                itemPartyGroup.setPurchaseOrder(shortagePO);
+                itemPartyGroup.setParty(grnItems.getIndentItemPartyGroup().getParty());
+                itemPartyGroup.setBranch(grnItems.getGrn().getBranch());
+                itemPartyGroup.setRate(grnItems.getIndentItemPartyGroup().getRate());
+                itemPartyGroup.setIndent(grnItems.getIndentItemPartyGroup().getIndent());
+                itemPartyGroup.setItemStockDetails(grnItems.getIndentItemPartyGroup().getItemStockDetails());
+                itemPartyGroup.setHsnCode(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getHsnCode());
+                itemPartyGroup.setSgstRate(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getSgst());
+                itemPartyGroup.setCgstRate(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCgst());
+                if (itemPartyGroup.getItemStockDetails().getStock().getProduct().getHsn().getCess() != null) {
+                    itemPartyGroup.setCessRate(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getHsn().getCess());
+                } else {
+                    itemPartyGroup.setCessRate(0.0);
+                }
+                indentItemPartyGroupRepository.save(itemPartyGroup);
+            }
             return "redirect:/purchase/getPurchaseOrderList";
-
         } catch (Exception e) {
             MastroLogUtils.error(PurchaseOrderController.class, e.getMessage());
             throw e;

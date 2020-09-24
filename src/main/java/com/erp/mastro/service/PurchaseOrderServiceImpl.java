@@ -240,7 +240,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     }
                     indentItemPartyGroupRepository.save(indentItemPartyGroup);
                 }
-                purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);
+               // purchaseOrder.setItemStockDetailsSet(itemStockDetailsSet1);
                 purchaseOrderRepository.save(purchaseOrder);
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 String currentBranchCode = currentBranch.getBranchCode();

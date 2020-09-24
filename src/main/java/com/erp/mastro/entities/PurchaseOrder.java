@@ -33,13 +33,13 @@ public class PurchaseOrder extends Auditable<String> {
     @JoinColumn(name = "approved_user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+  /*  @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "purchaseorder_indent_iteam",
             joinColumns = {@JoinColumn(name = "purchase_order_id")},
             inverseJoinColumns = {@JoinColumn(name = "indent_iteam_id")}
     )
-    Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
+    Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();*/
 
     @OneToMany(mappedBy = "purchaseOrder",
             cascade = CascadeType.ALL,
