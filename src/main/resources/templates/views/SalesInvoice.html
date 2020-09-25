@@ -105,7 +105,7 @@
                                           <td class="center" th:text="${salesSlipInvoiceobj.salesSlip.party.partyName}">
                                               GM Steels Pvt Ltd
                                           </td>
-                                          <td th:text="${#numbers.formatDecimal(salesSlipInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></td>
+                                          <td>Rs. <span th:text="${#numbers.formatDecimal(salesSlipInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></span></td>
 
                                           <td class="center">
 

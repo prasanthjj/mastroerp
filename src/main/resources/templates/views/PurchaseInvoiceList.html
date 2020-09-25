@@ -105,7 +105,7 @@
                                         <td class="center" th:text="${poInvoiceobj.purchaseOrder.party.partyName}">
                                             GM Steels Pvt Ltd
                                         </td>
-                                        <td th:text="${#numbers.formatDecimal(poInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        <td >Rs. <span th:text="${#numbers.formatDecimal(poInvoiceobj.grandTotal, 0, 'COMMA', 0, 'POINT')}"></span></td>
 
                                         <td class="center">
 
