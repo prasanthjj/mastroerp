@@ -191,7 +191,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordered  ">
                                         <thead class="mastro-blue-bg ">
-                                        <tr class="mastro-blue-bg txt-white">
+                                        <tr class="mastro-blue-bg txt-white" align="center">
                                             <th class="mastro-blue-bg ">No</th>
                                             <th class="mastro-blue-bg txt-white">HSN / SAC</th>
                                             <th class="mastro-blue-bg txt-white">Item</th>
@@ -215,23 +215,18 @@
                                         <td><span th:text="${salesObj.quantity}">26.00</span>/<span
                                                 th:text="${salesObj.product.uom.UOM}"></span></td>
                                        <!-- <td th:text="${salesObj.PartyPriceList.rate}">280</td>-->
-                                        <td th:text="${salesObj.netPrice}"></td>
-                                        <td th:text="${salesObj.finalTaxableValue}">711.8580</td>
-                                        <td th:text="${salesObj.cgstAmount}"></td>
-                                        <td th:text="${salesObj.sgstAmount}"></td>
-                                        <td th:text="${salesObj.totalPrice}">839.9924</td>
+                                        <td align="right" th:text="${salesObj.netPrice}"></td>
+                                        <td align="right" th:text="${salesObj.finalTaxableValue}">711.8580</td>
+                                        <td align="right" th:text="${salesObj.cgstAmount}"></td>
+                                        <td align="right" th:text="${salesObj.sgstAmount}"></td>
+                                        <td align="right" th:text="${salesObj.totalPrice}">839.9924</td>
                                     </tr>
-
-                                            <tr rowspan="3">
-                                                <td colspan="10"></td>
-                                            </tr>
-
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td>Sub Total</td>
                                         <td colspan="5"></td>
-                                        <td><span th:text="${subTotal}">839.9924</span></td>
+                                        <td  align="right"><span th:text="${subTotal}">839.9924</span></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -239,10 +234,10 @@
                                         <td>Loading Charges@<span th:text="${igstAmt}"></span> %(Sales)</td>
                                         <td></td>
                                         <td></td>
-                                        <td> <span th:text="${totalTaxableValue}">4.0000</span></td>
-                                        <td><span th:text="${cgstAmt}">0.3600</span></td>
-                                        <td><span th:text="${sgstAmt}">0.3600</span></td>
-                                        <td><span th:text="${loadingCharge}">0.7200</span></td>
+                                        <td align="right"> <span th:text="${totalTaxableValue}">4.0000</span></td>
+                                        <td ><span th:text="${cgstAmt}">0.3600</span></td>
+                                        <td align="right"><span th:text="${sgstAmt}">0.3600</span></td>
+                                        <td align="right"><span th:text="${loadingCharge}">0.7200</span></td>
 
 
                                     </tr>
@@ -255,7 +250,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td> <span th:text="${totalCess}">7.1586</span></td>
+                                        <td align="right"> <span th:text="${totalCess}">7.1586</span></td>
 
 
                                     </tr>
@@ -282,15 +277,15 @@
                                         <h3 class=""> Round Off : <span th:text="${roundOff}"> 850.0000</span></h3>
 
                                         <h3 class=""> Grand Total : <span th:text="${grandTotal}"> 850.0000</span></h3>-->
-                                         <div class="row table-responsive">
+                                         <div class="table-responsive">
                                         <table class="table invoice-total">
                                             <tbody>
-                                            <tr>
+                                            <tr class="priceColor">
                                                 <td><strong>Total :</strong></td>
                                                 <td>Rs <span  th:text="${finalTotal}">1026.00</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="priceColor">
                                                 <td><strong>Round Off :</strong></td>
                                                 <td>Rs <span  th:text="${roundOff}"></span>
                                                 </td>

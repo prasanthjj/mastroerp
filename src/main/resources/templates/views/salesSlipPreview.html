@@ -221,14 +221,14 @@
 
                                 <table class="table invoice-total">
                                     <tbody>
-                                    <tr>
+                                    <tr class="priceColor">
 
                                         <td><strong>Total :</strong></td>
                                         <td><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.totalAmt, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
 
                                         <td><strong>Round Off :</strong></td>
                                         <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>
