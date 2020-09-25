@@ -136,7 +136,7 @@
                                                     (10')</strong></div>
                                             </td>
                                             <td th:text="${poPreview.hsnnoo}">1</td>
-                                            <td><span th:text="${poPreview.qty}">26.00</span> /<span
+                                            <td><span th:text="${poPreview.qty}">26.00</span> <span
                                                     th:text="${poPreview.purchaseuom}"></span></td>
                                             <td><span th:text="${poPreview.rate}">26.00</span>/<span
                                                     th:text="${poPreview.baseuom}"></span></td>
@@ -153,13 +153,13 @@
 
                                 <table class="table invoice-total">
                                     <tbody>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>Sub Total :</strong></td>
                                         <td>Rs <span
                                                 th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>TAX :</strong></td>
                                         <td>Rs <span
                                                 th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>

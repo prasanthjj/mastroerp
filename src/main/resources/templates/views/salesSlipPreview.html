@@ -151,7 +151,7 @@
                                             <td th:text="${saleSlipItem.hsnCode}">HSN-0265</td>
                                             <td th:text="${saleSlipItem.product.productName}">Angles 25x6 (1x1/4)</td>
                                             <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
-                                            <td><span th:text="${saleSlipItem.grnQty}">26.00</span>/<span
+                                            <td><span th:text="${saleSlipItem.grnQty}">26.00</span> <span
                                                     th:text="${saleSlipItem.productUOM.uom.UOM}"></span></td>
                                             <td th:text="${#numbers.formatDecimal(saleSlipItem.totalAmount, 0, 'COMMA', 4, 'POINT')}">
                                                 711.8580
@@ -221,14 +221,14 @@
 
                                 <table class="table invoice-total">
                                     <tbody>
-                                    <tr>
+                                    <tr class="priceColor">
 
                                         <td><strong>Total :</strong></td>
                                         <td><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.totalAmt, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
 
                                         <td><strong>Round Off :</strong></td>
                                         <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>

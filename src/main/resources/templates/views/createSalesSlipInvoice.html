@@ -118,7 +118,7 @@
                                         <td th:text="${salesSlipItemObj.hsnCode}">HSN-0265</td>
                                         <!-- <td th:text="${grnItemObj.grnno}">GRN-0265</td>-->
                                         <td th:text="${salesSlipItemObj.product.productName}">Angles 25x6 (1x1/4)</td>
-                                        <td><span th:text="${salesSlipItemObj.grnQty}">26.00</span>/<span
+                                        <td><span th:text="${salesSlipItemObj.grnQty}">26.00</span> <span
                                                 th:text="${salesSlipItemObj.productUOM.uom.UOM}"></span></td>
                                         <td th:text="${#numbers.formatDecimal(salesSlipItemObj.netPrice, 0, 'COMMA', 4, 'POINT')}">
                                             /<span

@@ -168,7 +168,7 @@
                                 <th>Pending</th>
                                 <th>DC/Invoice Quantity</th>
                                 <th>Received</th>
-                                <th>Shotage</th>
+                                <th>Shortage</th>
                                 <th>Accepted</th>
                                 <th>Rejected</th>
                                 <th>Price/Unit</th>
@@ -261,7 +261,7 @@
                    if(data.success) {
       $("#pogrnview tbody").html("");
        $.each(data.data.poGRNItemsModelList, function(){
-       var tblRow = "<tr class='gradeX'>" + "<td>" + this['nameOfProduct'] + "</td>"+ "<td class='center'>" + this['hsncode'] + "</td>" + "<td class='center'>" + this['pending'] +"</td>" +"<td class='center'>"+this['quantityDc']+"</td>"+"<td class='center'>"+this['received']+"</td>"+"<td class='center'>"+this['shortage']+"</td>"+"<td class='center'>"+this['accepted']+"/"+this['uomPurchase']+"</td>"+"<td class='center'>"+this['rejected']+"</td>"+"<td class='center'>"+this['rate']+"/"+this['uomBase']+"</td>"+"<td class='center'>"+this['discount']+"</td>"+"<td class='center'>"+this['itemTotal']+"</td>"+"</tr>";
+       var tblRow = "<tr class='gradeX'>" + "<td>" + this['nameOfProduct'] + "</td>"+ "<td class='center'>" + this['hsncode'] + "</td>" + "<td class='center'>" + this['pending'] +"</td>" +"<td class='center'>"+this['quantityDc']+"</td>"+"<td class='center'>"+this['received']+"</td>"+"<td class='center'>"+this['shortage']+"</td>"+"<td class='center'>"+this['accepted']+" "+this['uomPurchase']+"</td>"+"<td class='center'>"+this['rejected']+"</td>"+"<td class='center'>"+this['rate']+"/"+this['uomBase']+"</td>"+"<td class='center'>"+this['discount']+"</td>"+"<td class='center'>"+this['itemTotal']+"</td>"+"</tr>";
        $(tblRow).appendTo("#pogrnview tbody");
 
        });
