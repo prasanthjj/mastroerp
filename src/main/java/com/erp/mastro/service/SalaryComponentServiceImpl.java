@@ -82,7 +82,12 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             salaryComponent.setComponentName(salaryComponentRequestModel.getComponentName());
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());
             salaryComponent.setCalculation_Type(value);
-            salaryComponent.setAmount(salaryComponentRequestModel.getAmount());
+            salaryComponent.setCalculation_Type(value);
+            if (salaryComponent.getCalculation_Type().equals("Flat-Amount")) {
+                salaryComponent.setAmount(salaryComponentRequestModel.getAmount());
+            } else {
+                salaryComponent.setAmount(salaryComponentRequestModel.getPercentageAmount());
+            }
             salaryComponentRepository.save(salaryComponent);
             MastroLogUtils.info(SalaryComponentService.class, "Updated " + salaryComponent.getComponentName() + " successfully.");
         }

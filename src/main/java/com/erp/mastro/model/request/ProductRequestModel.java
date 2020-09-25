@@ -54,7 +54,6 @@ public class ProductRequestModel {
             this.setPropertySize(product.getPropertySize());
             this.setLoadingCharge(product.getLoadingCharge());
             this.setToleranceType(product.getToleranceType());
-            this.setToleranceType(product.getToleranceType());
             if (product.getToleranceType().equals("Flat-Amount")) {
                 this.amount = product.getAmount();
             } else {

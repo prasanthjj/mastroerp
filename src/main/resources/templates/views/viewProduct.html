@@ -90,6 +90,16 @@
                                             <label class="col-sm-7 col-form-label"
                                                    th:text="${productDetails.propertySize}">: HSN001</label>
                                         </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Guarantee</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.guarantee}">: HSN001</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Warranty</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.warranty}">:
+                                                HSN001</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -125,16 +135,6 @@
                                                    th:text="${productDetails.inspectionType}">: HSN001</label>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Guarantee</strong></label>
-                                            <label class="col-sm-7 col-form-label"
-                                                   th:text="${productDetails.guarantee}">: HSN001</label>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-5 col-form-label"><strong>Warranty</strong></label>
-                                            <label class="col-sm-7 col-form-label" th:text="${productDetails.warranty}">:
-                                                HSN001</label>
-                                        </div>
-                                        <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Base UOM</strong></label>
                                             <label class="col-sm-7 col-form-label" th:text="${productDetails.uom.UOM}">:
                                                 HSN001</label>
@@ -156,6 +156,26 @@
                                             <label class="col-sm-7 col-form-label"
                                                    th:text="${productDetails.loadingCharge}">: HSN001</label>
                                         </div>
+
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Tolerance
+                                                Type</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${productDetails.toleranceType}">: </label>
+                                        </div>
+                                        <div class="row" th:if="${productDetails.toleranceType == 'Percentage'}">
+                                            <label class="col-sm-5 col-form-label"><strong>Amount</strong></label>
+                                            <label class="col-sm-7 col-form-label">:<span
+                                                    th:text="${productDetails.amount}"></span> <i
+                                                    class="fa fa-percent"></i> </label>
+                                        </div>
+                                        <div class="row"
+                                             th:unless="${productDetails.toleranceType == 'Percentage'}">
+                                            <label class="col-sm-5 col-form-label"><strong>Amount</strong></label>
+                                            <label class="col-sm-7 col-form-label">: <i class="fa fa-inr"></i> <span
+                                                    th:text="${productDetails.amount}"></span> </label>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-t-lg">

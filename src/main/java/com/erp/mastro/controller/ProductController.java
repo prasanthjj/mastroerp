@@ -97,6 +97,7 @@ public class ProductController {
             List<HSN> hsnList = hsnService.getAllHSN().stream()
                     .filter(hsnData -> (null != hsnData))
                     .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                    .filter(hsnData -> (!hsnData.getHsnCode().equals("7314")))
                     .sorted(Comparator.comparing(
                             HSN::getId).reversed())
                     .collect(Collectors.toList());
@@ -216,6 +217,7 @@ public class ProductController {
             List<HSN> hsnList = hsnService.getAllHSN().stream()
                     .filter(hsnData -> (null != hsnData))
                     .filter(hsnData -> (1 != hsnData.getHsnDeleteStatus()))
+                    .filter(hsnData -> (!hsnData.getHsnCode().equals("7314")))
                     .sorted(Comparator.comparing(
                             HSN::getId).reversed())
                     .collect(Collectors.toList());

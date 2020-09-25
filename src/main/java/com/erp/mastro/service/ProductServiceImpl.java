@@ -176,7 +176,13 @@ public class ProductServiceImpl implements ProductService {
                 product.setBasePrice(productRequestModel.getBasePrice());
                 product.setInspectionType(productRequestModel.getInspectionType());
                 product.setLoadingCharge(productRequestModel.getLoadingCharge());
-
+                product.setToleranceType(value);
+               // product.setAmount(productRequestModel.getAmount());
+                if (product.getToleranceType().equals("Flat-Amount")) {
+                    product.setAmount(productRequestModel.getAmount());
+                } else {
+                    product.setAmount(productRequestModel.getPercentageAmount());
+                }
                 Set<ProductUOM> productUOM = saveOrUpdateProductUOM(productRequestModel, product);
                 product.setProductUOMSet(productUOM);
                 HSN hsn = hsnRepository.findById(productRequestModel.getHsnId()).get();

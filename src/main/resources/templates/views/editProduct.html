@@ -16,6 +16,8 @@
     <!-- Morris -->
     <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css}">
     <link href="../resources/css/plugins/dropzone/basic.css" rel="stylesheet"
           th:src="@{/resources/css/plugins/dropzone/basic.css}">
     <link href="../resources/css/plugins/dropzone/dropzone.css" rel="stylesheet"
@@ -168,6 +170,57 @@
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
+
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="form-group  row">
+
+                                                    <label class="col-sm-4 col-form-label">Tolerance Type<i
+                                                            class="fa fa-asterisk "></i></label>
+                                                    <div class="col-sm-8">
+                                          <span th:if="${productForm.toleranceType == 'Percentage'}">
+                                                <input type="radio" id="flatAmount" th:value=${"Flat-Amount"}
+                                                       name="toleranceType"> Flat Amount <br>
+                                                    <input type="radio" checked th:value=${"Percentage"}
+                                                           name="toleranceType"> Percentage of CTC
+                                                </span>
+
+                                                        <span th:unless="${productForm.toleranceType == 'Percentage'}">
+                                                <input type="radio" id="flatAmount" checked th:value=${"Flat-Amount"}
+                                                       name="toleranceType"> Flat Amount <br>
+                                                    <input type="radio" th:value=${"Percentage"} name="toleranceType"> Percentage of CTC
+                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7">
+                                                <div class="form-group row" id="toleranceAmount">
+                                                    <label class="col-sm-4 col-form-label">Enter Amount</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group m-b">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-addon">&#8377;</span>
+                                                            </div>
+                                                            <!--<input type="text" class="form-control " th:field="*{amount}" name="amount">-->
+                                                            <input type="text" class="form-control " th:field="*{amount}"
+                                                                   name="amount">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="tolerancePercentage">
+                                                    <label class="col-sm-4 col-form-label">Enter Percentage</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="percentagetolerance" type="text"
+                                                               th:field="*{percentageAmount}">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-lg-4 ">
@@ -404,41 +457,7 @@
         </div>
     </div>
 </div>
-<div class="modal inmodal" id="branchList" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="branchListForm">
-            <div class="modal-content animated flipInY">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Branch List</h4>
-
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        <div class="form-group  row"><label class="col-sm-4 col-form-label">User branches</label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" required>
-                                    <option value="">Select branch</option>
-                                    <option>Thrissur</option>
-                                    <option>Ernakulam</option>
-                                    <option>Kozhikode</option>
-                                    <option>Kannur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Select</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
 <div class="modal inmodal" id="addItemToParty" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <form id="addItemToPartyForm" action="item_party_relation_master.html">
@@ -498,8 +517,38 @@
         th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="../resources/js/mastro/nestable.js" th:src="@{/resources/js/mastro/nestable.js}"></script>
 
+<!-- TouchSpin -->
+<script src="../resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"
+        th:src="@{/resources/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+
 <script>
 $(document).ready(function(){
+
+
+// tolerance percentage tolerance stat
+$(".percentagetolerance").TouchSpin({
+min:0,
+max:100,
+step:0.1,
+decimals:2,
+boostat:5,
+maxboostedstep:10,
+postfix:'%',
+buttondown_class:'btn btn-white',
+buttonup_class:'btn btn-white'
+});
+
+if ($("#flatAmount").is(":checked")) {
+$("#toleranceAmount").show();
+$("#tolerancePercentage").hide();
+} else {
+$("#tolerancePercentage").show();
+$("#toleranceAmount").hide();
+}
+// tolerance percentage tolerance end
+
+
+
 
 $("#catalogboxbtn").click(function(){
     $('#catalogBox').toggle();
