@@ -107,9 +107,15 @@
                                             th:each="indentItemObj,iterator:${indentDetails.itemStockDetailsSet}">
                                             <td th:text="${iterator.index+1}"></td>
                                             <td th:text="${indentItemObj.stock.product.productName}">Pipe</td>
-                                            <td th:text="${indentItemObj.stock.currentStock}">50</td>
-                                            <td th:text="${indentItemObj.quantityToIndent}">120</td>
-                                            <td th:text="${indentItemObj.purchaseQuantity}">0</td>
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.stock.currentStock, 0, 'COMMA', 3, 'POINT')}">
+                                                50
+                                            </td>
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.quantityToIndent, 0, 'COMMA', 3, 'POINT')}">
+                                                120
+                                            </td>
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.purchaseQuantity, 0, 'COMMA', 3, 'POINT')}">
+                                                0
+                                            </td>
                                             <span th:if="${indentItemObj.purchaseUOM!= null}">
                                     <td th:text="${indentItemObj.purchaseUOM.UOM}">120</td>
                                     </span>

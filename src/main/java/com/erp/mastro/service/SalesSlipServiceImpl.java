@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,6 +54,9 @@ public class SalesSlipServiceImpl implements SalesSlipService {
 
     @Autowired
     private SalesSlipInvoiceRepository salesSlipInvoiceRepository;
+
+    @Autowired
+    private StockLedgerRepository stockLedgerRepository;
 
     /**
      * Method to get all sales slip
@@ -203,6 +207,15 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 }
                 salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
 
+                StockLedger stockLedger = new StockLedger();
+                stockLedger.setBaseUom(stock.getProduct().getUom());
+                stockLedger.setProduct(stock.getProduct());
+                stockLedger.setBasePrice(stock.getProduct().getBasePrice());
+                stockLedger.setCreationDate(new Date());
+                stockLedger.setIssuedStock(salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
+                stockLedger.setBranch(stock.getBranch());
+                stockLedgerRepository.save(stockLedger);
+
             } else if (salesQtyInSalesUOM < grnItemQtyInSalesUOMs) {
                 grnItemQtyInSalesUOMs = grnItemQtyInSalesUOMs - salesQtyInSalesUOM;
                 Double currentStock = stock.getCurrentStock() - (salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
@@ -229,6 +242,14 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 }
                 salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
 
+                StockLedger stockLedger = new StockLedger();
+                stockLedger.setBaseUom(stock.getProduct().getUom());
+                stockLedger.setProduct(stock.getProduct());
+                stockLedger.setBasePrice(stock.getProduct().getBasePrice());
+                stockLedger.setCreationDate(new Date());
+                stockLedger.setIssuedStock(salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
+                stockLedger.setBranch(stock.getBranch());
+                stockLedgerRepository.save(stockLedger);
             } else {
                 salesQtyInSalesUOM = salesQtyInSalesUOM - grnItemQtyInSalesUOMs;
                 Double currentStock = stock.getCurrentStock() - grnItemQtyInBaseUOM;
@@ -253,6 +274,14 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 }
                 salesSlipItems.setNetPrice(MastroApplicationUtils.totalNetPriceForSalesSlip(rate, product.getHsn(), productSaleUOM.getConvertionFactor(), discount));
 
+                StockLedger stockLedger = new StockLedger();
+                stockLedger.setBaseUom(stock.getProduct().getUom());
+                stockLedger.setProduct(stock.getProduct());
+                stockLedger.setCreationDate(new Date());
+                stockLedger.setBasePrice(stock.getProduct().getBasePrice());
+                stockLedger.setIssuedStock(grnItemQtyInBaseUOM);
+                stockLedger.setBranch(stock.getBranch());
+                stockLedgerRepository.save(stockLedger);
             }
             Set<SalesSlipItems> salesSlipItemsSet = salesSlip.getSalesSlipItemsSet();
             salesSlipItemsSet.add(salesSlipItems);

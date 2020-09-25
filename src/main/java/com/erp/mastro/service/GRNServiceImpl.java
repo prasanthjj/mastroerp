@@ -50,6 +50,9 @@ public class GRNServiceImpl implements GRNService {
     @Autowired
     private GRNItemRepository grnItemRepository;
 
+    @Autowired
+    private StockLedgerRepository stockLedgerRepository;
+
     /**
      * Method to get all grns
      *
@@ -293,6 +296,15 @@ public class GRNServiceImpl implements GRNService {
                     .findFirst().get();
             stock.setCurrentStock(stock.getCurrentStock() + grnItems.getAccepted() * productUOMPurchase.getConvertionFactor());
             stockRepository.save(stock);
+
+            StockLedger stockLedger = new StockLedger();
+            stockLedger.setBaseUom(stock.getProduct().getUom());
+            stockLedger.setProduct(stock.getProduct());
+            stockLedger.setBasePrice(stock.getProduct().getBasePrice());
+            stockLedger.setCreationDate(new Date());
+            stockLedger.setReceivedStock(grnItems.getAccepted() * productUOMPurchase.getConvertionFactor());
+            stockLedger.setBranch(stock.getBranch());
+            stockLedgerRepository.save(stockLedger);
         }
 
     }

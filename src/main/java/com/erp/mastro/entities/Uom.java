@@ -31,4 +31,9 @@ public class Uom {
             orphanRemoval = true)
     private Set<Stock> stockDetails = new HashSet<>();
 
+    @OneToMany(mappedBy = "baseUom",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<StockLedger> stockLedgers = new HashSet<>();
+
 }
