@@ -192,7 +192,7 @@ public class IndentController {
     public String saveIndent(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) throws ModelNotFoundException {
         MastroLogUtils.info(IndentController.class, "Going to save indent item details: {}" + indentModel.toString());
         try {
-         indentService.saveOrUpdateIndentItemDetails(indentModel);
+         //  indentService.saveOrUpdateIndentItemDetails(indentModel);
             return "redirect:/inventory/getIndentList";
         } /*catch (ModelNotFoundException e) {
             MastroLogUtils.error(this, "indent model empty", e);

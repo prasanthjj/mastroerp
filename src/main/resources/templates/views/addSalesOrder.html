@@ -197,11 +197,11 @@
                                             <th class="mastro-blue-bg txt-white">Item</th>
                                             <th class="mastro-blue-bg txt-white">Quantity</th>
                                             <!--<th class="mastro-blue-bg txt-white">Unit Rate</th>-->
-                                            <th class="mastro-blue-bg txt-white">Net Price</th>
-                                            <th class="mastro-blue-bg txt-white">Taxable Value</th>
-                                            <th class="mastro-blue-bg txt-white">CGST</th>
-                                            <th class="mastro-blue-bg txt-white">SGST</th>
-                                            <th class="mastro-blue-bg txt-white">Total</th>
+                                            <th align="center" class="mastro-blue-bg txt-white">Net Price</th>
+                                            <th align="center" class="mastro-blue-bg txt-white">Taxable Value</th>
+                                            <th align="center" class="mastro-blue-bg txt-white">CGST</th>
+                                            <th align="center" class="mastro-blue-bg txt-white">SGST</th>
+                                            <th align="center" class="mastro-blue-bg txt-white">Total</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -282,17 +282,20 @@
                                             <tbody>
                                             <tr class="priceColor">
                                                 <td><strong>Total :</strong></td>
-                                                <td>Rs <span  th:text="${finalTotal}">1026.00</span>
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                        th:text="${finalTotal}">1026.00</span>
                                                 </td>
                                             </tr>
                                             <tr class="priceColor">
                                                 <td><strong>Round Off :</strong></td>
-                                                <td>Rs <span  th:text="${roundOff}"></span>
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                        th:text="${roundOff}"></span>
                                                 </td>
                                             </tr>
                                             <tr class="priceColor">
                                                 <td><strong>Grand Total :</strong></td>
-                                                <td>Rs <span th:text="${grandTotal}"></span>
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                        th:text="${grandTotal}"></span>
                                                 </td>
                                             </tr>
                                             </tbody>

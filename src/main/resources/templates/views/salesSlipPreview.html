@@ -138,11 +138,11 @@
                                             <!--<th>GST</th>-->
                                             <th><strong>Quantity</strong></th>
                                             <!--<th>Unit Rate</th>-->
-                                            <th><strong>Taxable Value</strong></th>
-                                            <th><strong>CGST</strong></th>
-                                            <th><strong>SGST</strong></th>
-                                            <th><strong>Net Price</strong></th>
-                                            <th><strong>Total</strong></th>
+                                            <th align="center"><strong>Taxable Value</strong></th>
+                                            <th align="center"><strong>CGST</strong></th>
+                                            <th align="center"><strong>SGST</strong></th>
+                                            <th align="center"><strong>Net Price</strong></th>
+                                            <th align="center"><strong>Total</strong></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -153,13 +153,18 @@
                                             <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
                                             <td><span th:text="${saleSlipItem.grnQty}">26.00</span> <span
                                                     th:text="${saleSlipItem.productUOM.uom.UOM}"></span></td>
-                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.totalAmount, 0, 'COMMA', 4, 'POINT')}">
+                                            <td align="right"
+                                                th:text="${#numbers.formatDecimal(saleSlipItem.totalAmount, 0, 'COMMA', 4, 'POINT')}">
                                                 711.8580
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
-                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
-                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
-                                            <td th:text="${#numbers.formatDecimal(saleSlipItem.finalAmount, 0, 'COMMA', 4, 'POINT')}">
+                                            <td align="right"
+                                                th:text="${#numbers.formatDecimal(saleSlipItem.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td align="right"
+                                                th:text="${#numbers.formatDecimal(saleSlipItem.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td align="right"
+                                                th:text="${#numbers.formatDecimal(saleSlipItem.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
+                                            <td align="right"
+                                                th:text="${#numbers.formatDecimal(saleSlipItem.finalAmount, 0, 'COMMA', 4, 'POINT')}">
                                                 839.9924
                                             </td>
 
@@ -172,7 +177,7 @@
                                             <td></td>
                                             <td>Sub Total</td>
                                             <td colspan="5"></td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.subTotal, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
                                         </tr>
@@ -182,16 +187,16 @@
                                             <td>Loading Charges@<span th:text="${loadingHSN.igst}"></span> %(Sales)</td>
                                             <td></td>
                                             <td></td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.loadingChargeSum, 0, 'COMMA', 4, 'POINT')}">4.0000</span>
                                             </td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.loadingChargeCgst, 0, 'COMMA', 4, 'POINT')}">0.3600</span>
                                             </td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.loadingChargesgst, 0, 'COMMA', 4, 'POINT')}">0.3600</span>
                                             </td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.totalLoadingCharge, 0, 'COMMA', 4, 'POINT')}">0.7200</span>
                                             </td>
 
@@ -207,7 +212,7 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(salesSlip.totalCess, 0, 'COMMA', 4, 'POINT')}">7.1586</span>
                                             </td>
 
@@ -224,18 +229,19 @@
                                     <tr class="priceColor">
 
                                         <td><strong>Total :</strong></td>
-                                        <td><span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.totalAmt, 0, 'COMMA', 4, 'POINT')}">1261.98</span>
                                         </td>
                                     </tr>
                                     <tr class="priceColor">
 
                                         <td><strong>Round Off :</strong></td>
-                                        <td><span th:text="${salesSlip.roundOff}">1261.98</span></td>
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i><span
+                                                th:text="${salesSlip.roundOff}">1261.98</span></td>
                                     </tr>
                                     <tr class="priceColor">
                                         <td><strong>Grand Total :</strong></td>
-                                        <td><span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i><span
                                                 th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 0, 'POINT')}">1261.98</span>
                                         </td>
                                     </tr>

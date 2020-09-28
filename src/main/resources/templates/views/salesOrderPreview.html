@@ -128,17 +128,17 @@
                                 <table class="table invoice-table">
                                     <thead>
                                     <tr class="text-info">
-                                        <th> <strong>No</strong></th>
+                                        <th><strong>No</strong></th>
                                         <th><strong>HSN / SAC</strong></th>
                                         <th><strong>Item</strong></th>
                                         <!--<th>GST</th>-->
                                         <th><strong>Quantity</strong></th>
                                         <!--<th>Unit Rate</th>-->
-                                        <th><strong>Taxable Value</strong></th>
-                                        <th><strong>CGST</strong></th>
-                                        <th><strong>SGST</strong></th>
-                                        <th><strong>Net Price</strong></th>
-                                        <th><strong>Total</strong></th>
+                                        <th align="center"><strong>Taxable Value</strong></th>
+                                        <th align="center"><strong>CGST</strong></th>
+                                        <th align="center"><strong>SGST</strong></th>
+                                        <th align="center"><strong>Net Price</strong></th>
+                                        <th align="center"><strong>Total</strong></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -146,30 +146,32 @@
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${salesoderPreview.product.hsn.hsnCode}">HSN-0265</td>
                                         <td th:text="${salesoderPreview.product.productName}">Angles 25x6 (1x1/4)</td>
-                                       <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
+                                        <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
                                         <td><span th:text="${salesoderPreview.quantity}">26.00</span> <span
                                                 th:text="${salesoderPreview.product.uom.UOM}"></span></td>
-                                    <!--    <td th:text="${salesoderPreview.finalTaxableValue}">711.8580</td>-->
-                                        <td th:text="${#numbers.formatDecimal(salesoderPreview.finalTaxableValue, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <!--    <td th:text="${salesoderPreview.finalTaxableValue}">711.8580</td>-->
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(salesoderPreview.finalTaxableValue, 0, 'COMMA', 4, 'POINT')}"></td>
 
-                                        <td th:text="${salesoderPreview.cgstAmount}"></td>
-                                        <td th:text="${salesoderPreview.sgstAmount}"></td>
+                                        <td align="right" th:text="${salesoderPreview.cgstAmount}"></td>
+                                        <td align="right" th:text="${salesoderPreview.sgstAmount}"></td>
                                         <!--<td th:text="${salesoderPreview.netPrice}"></td>-->
-                                        <td th:text="${#numbers.formatDecimal(salesoderPreview.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
-                                        <td th:text="${salesoderPreview.totalPrice}">839.9924</td>
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(salesoderPreview.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td align="right" th:text="${salesoderPreview.totalPrice}">839.9924</td>
 
                                     </tr>
 
-                                    <tr  th:if="${salesDetails!= null}">
+                                    <tr th:if="${salesDetails!= null}">
                                         <td></td>
                                         <td><span th:text="${hsnDetails}">7314</span></td>
                                         <td>Loading Charges@<span th:text="${igstAmt}"></span> %(Sales)</td>
                                         <td></td>
                                         <td></td>
-                                        <td> <span th:text="${totalTaxableValue}">4.0000</span></td>
-                                        <td><span th:text="${cgstAmt}">0.3600</span></td>
-                                        <td><span th:text="${sgstAmt}">0.3600</span></td>
-                                        <td><span th:text="${loadingCharge}">0.7200</span></td>
+                                        <td align="right"><span th:text="${totalTaxableValue}">4.0000</span></td>
+                                        <td align="right"><span th:text="${cgstAmt}">0.3600</span></td>
+                                        <td align="right"><span th:text="${sgstAmt}">0.3600</span></td>
+                                        <td align="right"><span th:text="${loadingCharge}">0.7200</span></td>
 
                                     </tr>
 
@@ -183,7 +185,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td> <span th:text="${totalCess}">7.1586</span></td>
+                                        <td align="right"><span th:text="${totalCess}">7.1586</span></td>
 
 
                                     </tr>
@@ -199,8 +201,11 @@
                                 <tr>
 
                                     <td><strong>Sub Total :</strong></td>
-                                   <!-- <td>    <span th:text="${subTotal}">1261.98</span></td>-->
-                                    <td th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}"></td>
+                                    <!-- <td>    <span th:text="${subTotal}">1261.98</span></td>-->
+                                    <td>
+                                        <i class="fa fa-inr" aria-hidden="true"></i><span
+                                            th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}"></span>
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -209,12 +214,15 @@
 <!--
                                     <td>    <span th:text="${finalTotal}">1261.98</span></td>
 -->
-                                    <td th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span
+                                            th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
+                                    </td>
                                 </tr>
                                 <tr>
 
                                     <td><strong>Round Off :</strong></td>
-                                    <td>  <span th:text="${roundOff}">1261.98</span></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                            th:text="${roundOff}">1261.98</span></td>
 <!--
                                     <td th:text="${#numbers.formatDecimal(roundOff, 0, 'COMMA', 4, 'POINT')}"></td>
 -->
@@ -223,7 +231,8 @@
                                 <tr class="priceColor">
                                     <td><strong>Grand TOTAL :</strong></td>
 
-                                    <td>    <span th:text="${grandTotal}">1261.98</span></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i> <span th:text="${grandTotal}">1261.98</span>
+                                    </td>
 
 <!--
                                     <td th:text="${#numbers.formatDecimal(grandTotal, 0, 'COMMA', 4, 'POINT')}"></td>

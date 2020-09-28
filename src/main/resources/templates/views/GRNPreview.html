@@ -129,17 +129,17 @@
                                             <th>Shortage</th>
                                             <th>Accepted</th>
                                             <th>Rejected</th>
-                                            <th>Price/Unit</th>
-                                            <th>Discount %</th>
-                                            <th>Total Price</th>
-                                            <th>CGST Rate</th>
-                                            <th>CGST Amount</th>
-                                            <th>SGST Rate</th>
-                                            <th>SGST Amount</th>
+                                            <th align="center">Price/Unit</th>
+                                            <th align="center">Discount %</th>
+                                            <th align="center">Total Price</th>
+                                            <th align="center">CGST Rate</th>
+                                            <th align="center">CGST Amount</th>
+                                            <th align="center">SGST Rate</th>
+                                            <th align="center">SGST Amount</th>
                                             <!--<th>IGST Rate</th>
                                             <th>IGST Amount</th>-->
-                                            <th>CESS Rate</th>
-                                            <th>CESS Amount</th>
+                                            <th align="center">CESS Rate</th>
+                                            <th align="center">CESS Amount</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -174,21 +174,21 @@
                                                 <span th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.uom.UOM}">31,98</span>
                                             </td>
                                             <td th:text="${grnPreview.discount}">31,98</td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(grnPreview.totalPrice, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
-                                            <td th:text="${grnPreview.cgstRate}">31,98</td>
-                                            <td><span
+                                            <td align="right" th:text="${grnPreview.cgstRate}">31,98</td>
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(grnPreview.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
-                                            <td th:text="${grnPreview.sgstRate}">31,98</td>
-                                            <td><span
+                                            <td align="right" th:text="${grnPreview.sgstRate}">31,98</td>
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(grnPreview.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
                                             <!--<td th:text="${grnPreview.igstRate}">31,98</td>
                                             <td th:text="${grnPreview.igstAmount}">31,98</td>-->
-                                            <td th:text="${grnPreview.cessRate}">31,98</td>
-                                            <td><span
+                                            <td align="right" th:text="${grnPreview.cessRate}">31,98</td>
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(grnPreview.cessAmount, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
 
@@ -202,21 +202,21 @@
 
                                 <table class="table invoice-total">
                                     <tbody>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>Sub Total :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
                                                 th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="priceColor">
                                         <td><strong>TAX :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
                                                 th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
                                     <tr class="priceColor">
                                         <td><strong>TOTAL :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
                                                 th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
