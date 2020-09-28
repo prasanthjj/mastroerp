@@ -149,10 +149,13 @@
                                        <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
                                         <td><span th:text="${salesoderPreview.quantity}">26.00</span> <span
                                                 th:text="${salesoderPreview.product.uom.UOM}"></span></td>
-                                        <td th:text="${salesoderPreview.finalTaxableValue}">711.8580</td>
+                                    <!--    <td th:text="${salesoderPreview.finalTaxableValue}">711.8580</td>-->
+                                        <td th:text="${#numbers.formatDecimal(salesoderPreview.finalTaxableValue, 0, 'COMMA', 4, 'POINT')}"></td>
+
                                         <td th:text="${salesoderPreview.cgstAmount}"></td>
                                         <td th:text="${salesoderPreview.sgstAmount}"></td>
-                                        <td th:text="${salesoderPreview.netPrice}"></td>
+                                        <!--<td th:text="${salesoderPreview.netPrice}"></td>-->
+                                        <td th:text="${#numbers.formatDecimal(salesoderPreview.netPrice, 0, 'COMMA', 4, 'POINT')}"></td>
                                         <td th:text="${salesoderPreview.totalPrice}">839.9924</td>
 
                                     </tr>
@@ -196,22 +199,37 @@
                                 <tr>
 
                                     <td><strong>Sub Total :</strong></td>
-                                    <td>    <span th:text="${subTotal}">1261.98</span></td>
+                                   <!-- <td>    <span th:text="${subTotal}">1261.98</span></td>-->
+                                    <td th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}"></td>
                                 </tr>
 
                                 <tr>
 
                                     <td><strong> Total :</strong></td>
+<!--
                                     <td>    <span th:text="${finalTotal}">1261.98</span></td>
+-->
+                                    <td th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></td>
                                 </tr>
                                 <tr>
 
                                     <td><strong>Round Off :</strong></td>
                                     <td>  <span th:text="${roundOff}">1261.98</span></td>
+<!--
+                                    <td th:text="${#numbers.formatDecimal(roundOff, 0, 'COMMA', 4, 'POINT')}"></td>
+-->
+
                                 </tr>
                                 <tr class="priceColor">
                                     <td><strong>Grand TOTAL :</strong></td>
+
                                     <td>    <span th:text="${grandTotal}">1261.98</span></td>
+
+<!--
+                                    <td th:text="${#numbers.formatDecimal(grandTotal, 0, 'COMMA', 4, 'POINT')}"></td>
+-->
+
+
                                 </tr>
                                 </tbody>
                             </table>

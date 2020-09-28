@@ -100,11 +100,11 @@
                                         <th class="mastro-blue-bg txt-white">Item</th>
                                         <th class="mastro-blue-bg txt-white">Quantity</th>
                                         <th class="mastro-blue-bg txt-white">Unit Rate</th>
-                                        <th class="mastro-blue-bg txt-white">Discount%</th>
-                                        <th class="mastro-blue-bg txt-white">Taxable Value</th>
-                                        <th class="mastro-blue-bg txt-white">CGST</th>
-                                        <th class="mastro-blue-bg txt-white">SGST</th>
-                                        <th class="mastro-blue-bg txt-white">Total</th>
+                                        <th align="center"Add Purchase Invoice class="mastro-blue-bg txt-white">Discount%</th>
+                                        <th align="center" class="mastro-blue-bg txt-white">Taxable Value</th>
+                                        <th align="center" class="mastro-blue-bg txt-white">CGST</th>
+                                        <th align="center" class="mastro-blue-bg txt-white">SGST</th>
+                                        <th  align="center" class="mastro-blue-bg txt-white">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -116,15 +116,15 @@
                                         <td th:text="${grnItemObj.nameOfProduct}">Angles 25x6 (1x1/4)</td>
                                         <td><span th:text="${grnItemObj.quantityDc}"></span> <span
                                                 th:text="${grnItemObj.uomPurchase}"></span></td>
-                                        <td><span th:text="${grnItemObj.rate}"></span>/<span
+                                        <td ><span th:text="${grnItemObj.rate}"></span>/<span
                                                 th:text="${grnItemObj.uomBase}"></span></td>
-                                        <td th:text="${grnItemObj.discount}"></td>
-                                        <td th:text="${#numbers.formatDecimal(grnItemObj.itemTotal, 0, 'COMMA', 4, 'POINT')}">
+                                        <td  align="right" th:text="${grnItemObj.discount}"></td>
+                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemTotal, 0, 'COMMA', 4, 'POINT')}">
                                             711.8580
                                         </td>
-                                        <td th:text="${#numbers.formatDecimal(grnItemObj.itemCgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
-                                        <td th:text="${#numbers.formatDecimal(grnItemObj.itemSgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
-                                        <td th:text="${#numbers.formatDecimal(grnItemObj.finalItemTotal, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemCgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemSgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.finalItemTotal, 0, 'COMMA', 4, 'POINT')}"></td>
 
                                     </tr>
 
@@ -140,7 +140,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><span th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">839.9924</span>
+                                        <td  align="right"><span th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">839.9924</span>
                                         </td>
 
 
@@ -153,16 +153,16 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><span
+                                        <td  align="right"><span
                                                 th:text="${#numbers.formatDecimal(loadingChargeSum, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
-                                        <td><span
+                                        <td  align="right"><span
                                                 th:text="${#numbers.formatDecimal(loadingChargeCgstAmt, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
-                                        <td><span
+                                        <td  align="right"><span
                                                 th:text="${#numbers.formatDecimal(loadingChargeSgstAmt, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
-                                        <td><span
+                                        <td  align="right"><span
                                                 th:text="${#numbers.formatDecimal(finalLoadingCharge, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
 
@@ -179,7 +179,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><span
+                                        <td align="right"><span
                                                 th:text="${#numbers.formatDecimal(cessTotal, 0, 'COMMA', 4, 'POINT')}">7.1586</span>
                                         </td>
 
@@ -223,18 +223,18 @@
                                             <tbody>
                                             <tr class="priceColor">
                                                 <td><strong>Total :</strong></td>
-                                                <td>Rs <span
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i>  <span
                                                         th:text="${#numbers.formatDecimal(totalAmt, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
                                                 </td>
                                             </tr>
                                             <tr class="priceColor">
                                                 <td><strong>Round Off :</strong></td>
-                                                <td>Rs <span th:text="${roundValue}"></span>
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i>  <span th:text="${roundValue}"></span>
                                                 </td>
                                             </tr>
                                             <tr class="priceColor">
                                                 <td><strong>Grand Total :</strong></td>
-                                                <td>Rs <span th:text="${#numbers.formatDecimal(grandTotal, 0, 'COMMA', 0, 'POINT')}"></span>
+                                                <td><i class="fa fa-inr" aria-hidden="true"></i> <span th:text="${#numbers.formatDecimal(grandTotal, 0, 'COMMA', 0, 'POINT')}"></span>
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -136,13 +136,13 @@
                                                     (10')</strong></div>
                                             </td>
                                             <td th:text="${poPreview.hsnnoo}">1</td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(poPreview.qty, 0, 'COMMA', 3, 'POINT')}">26.00</span>
                                                 <span
                                                         th:text="${poPreview.purchaseuom}"></span></td>
-                                            <td><span th:text="${poPreview.rate}">26.00</span>/<span
+                                            <td align="right"><span th:text="${poPreview.rate}">26.00</span>/<span
                                                     th:text="${poPreview.baseuom}"></span></td>
-                                            <td><span
+                                            <td align="right"><span
                                                     th:text="${#numbers.formatDecimal(poPreview.total, 0, 'COMMA', 4, 'POINT')}"></span>
                                             </td>
 
@@ -157,19 +157,19 @@
                                     <tbody>
                                     <tr class="priceColor">
                                         <td><strong>Sub Total :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
                                                 th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
                                         </td>
                                     </tr>
                                     <tr class="priceColor">
                                         <td><strong>TAX :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i>  <span
                                                 th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
                                     <tr class="priceColor">
                                         <td ><strong>TOTAL :</strong></td>
-                                        <td>Rs <span
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i>  <span
                                                 th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
                                         </td>
                                     </tr>
