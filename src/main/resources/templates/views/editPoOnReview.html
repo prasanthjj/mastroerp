@@ -85,7 +85,9 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Indent Date</label>
-                                            <div>----</div>
+                                            <div>
+                                                <p th:text="${#dates.format(indentDetails.createdDate, 'dd-MMMM-yyyy')}"></p>
+                                            </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                     </div>
@@ -134,10 +136,10 @@
                                             <span th:unless="${indentItemObj.purchaseUOM!= null}">
                                     <td>----</td>
                                     </span>
-                                            <span th:if="${indentItemObj.requiredByDate!= null}">
-                                    <td th:text="${#dates.format(indentItemObj.requiredByDate, 'dd-MMMM-yyyy')}">30/06/2020</td>
+                                            <span th:if="${indentDetails.indentDate!= null}">
+                                    <td th:text="${#dates.format(indentDetails.indentDate, 'dd-MMMM-yyyy')}">30/06/2020</td>
                                     </span>
-                                            <span th:unless="${indentItemObj.requiredByDate!= null}">
+                                            <span th:unless="${indentDetails.indentDate!= null}">
                                     <td>----</td>
                                     </span>
                                             <td th:text="${indentItemObj.soReferenceNo}"></td>

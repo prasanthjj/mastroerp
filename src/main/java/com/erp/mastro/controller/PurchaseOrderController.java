@@ -553,6 +553,14 @@ public class PurchaseOrderController {
             model.addAttribute("itemStockDetails", itemStockDetails);
             model.addAttribute("indentItemPartyGroupForm", indentItemPartyGroupRequestModel);
             model.addAttribute("indentItemId", itemStockDetails.getId());
+
+            Double qtyRequired = 0.0d;
+            if (itemStockDetails.getPurchaseQuantity() != null) {
+                qtyRequired = itemStockDetails.getQuantityToIndent() - itemStockDetails.getPurchaseQuantity();
+            } else {
+                qtyRequired = itemStockDetails.getQuantityToIndent();
+            }
+            model.addAttribute("qtyRequired", qtyRequired);
             return "views/splitIndentItemonReviewEdit";
 
         } catch (Exception e) {

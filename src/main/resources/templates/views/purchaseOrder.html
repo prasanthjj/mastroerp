@@ -161,6 +161,21 @@
                                                     <!-- </span>-->
                                                 </ul>
                                             </div>
+                                            <div class="btn-group"
+                                                 th:if="${purchaseObj.status== 'Review in progress'}">
+                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu"
+                                                    th:if="${purchaseObj.status== 'Review in progress'}">
+
+                                                    <li><a class="dropdown-item font-bold"
+                                                           th:href="${'/purchase/getPurchaseOrderOnReview?indentId='+{purchaseObj.indent.id}+'&poId='+{purchaseObj.id}}"><i
+                                                            class="fa fa-edit"></i> Manage</a></li>
+
+
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
 
