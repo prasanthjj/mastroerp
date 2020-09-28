@@ -166,6 +166,7 @@
                                 <th class="mastro-blue-bg txt-white">No</th>
                                 <th>Sales Slip No.</th>
                                 <th>Sales Slip Date</th>
+                                <th>Party</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -180,6 +181,7 @@
                                 <span th:unless="${salesSlip.createdDate!= null}">
                                         <td></td>
                                         </span>
+                                <td th:text="${salesSlip.party.partyName}"></td>
                             </tr>
 
                             </tbody>
