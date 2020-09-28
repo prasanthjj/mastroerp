@@ -164,6 +164,13 @@ public class PurchaseOrderController {
             model.addAttribute("itemStockDetails", itemStockDetails);
             model.addAttribute("indentItemPartyGroupForm", new IndentItemPartyGroupRequestModel());
             model.addAttribute("indentItemId", itemStockDetails.getId());
+            Double qtyRequired = 0.0d;
+            if (itemStockDetails.getPurchaseQuantity() != null) {
+                qtyRequired = itemStockDetails.getQuantityToIndent() - itemStockDetails.getPurchaseQuantity();
+            } else {
+                qtyRequired = itemStockDetails.getQuantityToIndent();
+            }
+            model.addAttribute("qtyRequired", qtyRequired);
             return "views/splitIndentItem";
 
         } catch (Exception e) {
@@ -202,6 +209,13 @@ public class PurchaseOrderController {
                 }
             }
             model.addAttribute("supplierList", partySet);
+            Double qtyRequired = 0.0d;
+            if (itemStockDetails.getPurchaseQuantity() != null) {
+                qtyRequired = itemStockDetails.getQuantityToIndent() - itemStockDetails.getPurchaseQuantity();
+            } else {
+                qtyRequired = itemStockDetails.getQuantityToIndent();
+            }
+            model.addAttribute("qtyRequired", qtyRequired);
             return "views/splitIndentItem";
         } catch (ModelNotFoundException e) {
             logger.error("IndentItemPartyGroupRequestModel empty", e, this);

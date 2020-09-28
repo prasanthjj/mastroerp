@@ -83,8 +83,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-2">
                                         <button class="btn btn-primary" type="submit">Select</button>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p><strong>
+                                            Quantity Required:
+                                            <span th:if="${qtyRequired!= 0}"> <span
+                                                    th:text="${#numbers.formatDecimal(qtyRequired, 0, 'COMMA', 2, 'POINT')}"></span></span>
+                                            <span th:unless="${qtyRequired!= 0}"> <span th:text="${qtyRequired}"></span></span>
+                                        </strong></p>
                                     </div>
                                 </div>
 
