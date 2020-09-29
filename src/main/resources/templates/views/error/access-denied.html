@@ -52,6 +52,7 @@
             <div class="col-lg-7">
                 <h2 class="text-info m-t-lg"><i class="fa fa-barcode"></i> Access Denied</h2>
 
+
             </div>
             <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
         </div>
@@ -63,6 +64,9 @@
                             <h3 class="text-info"> Acess Denied</h3>
                             <div class="ibox-tools">
 
+                                <a th:href="@{/home}" class="btn btn-primary m-t-sm"><i class="fa fa-arrow-left"
+                                                                                        aria-hidden="true"></i> Back To
+                                    Dashboard </a>
                             </div>
                         </div>
                         <div class="ibox-content">
