@@ -372,6 +372,9 @@ $("#createAssetsForm").steps({
                 city:{
                     required:true,
                     },
+                    industryid:{
+                        required:true,
+                         },
                 pinCode:{
                     required:true,
                     },
@@ -526,9 +529,48 @@ $("#createAssetsForm").steps({
                           {
                               element.before(error);
                           },
-                          rules: {
+                            rules: {
+                                                 partyType: {
+                                                     required:true
+                                                  },
+                                                  partyName: {
+                                                     required:true
+                                                  },
+                                                   categoryType: {
+                                                          required:true
+                                                              },
+                                              type:{
+                                              required:true,
+                                             },
+                                         contactPersonName:{
+                                             required:true,
+                                             },
+                                         telephoneNo:{
+                                             required:true,
+                                             number: true,
+                                             maxlength:10,
+                                             },
+                                         emailId:{
+                                             number: true,
+                                             maxlength:10,
+                                             },
+                                         country:{
+                                             required:true,
+                                             },
+                                         state:{
+                                             required:true,
+                                             },
+                                         city:{
+                                             required:true,
+                                             },
+                                             industryid:{
+                                                 required:true,
+                                                  },
+                                         pinCode:{
+                                             required:true,
+                                             },
 
-                       }
+                                         }
                       });
               // view party form end
 

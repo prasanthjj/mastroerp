@@ -146,9 +146,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Industry Type</label>
+                                                <label>Industry Type<i class="fa fa-asterisk "></i></label>
                                                 <select class="form-control m-b partyIndustryType" id="industryType"
-                                                        name="industryid">
+                                                        name="industryid" required>
                                                     <option value="">Select</option>
                                                     <option th:each="indtype : ${industryTypes}"
                                                             th:value="${indtype .id}"

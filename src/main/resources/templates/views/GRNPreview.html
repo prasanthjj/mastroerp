@@ -150,25 +150,37 @@
                                                     .47 Red 3.05mtr
                                                     (10')</strong></div>
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(grnPreview.pending, 0, 'COMMA', 3, 'POINT')}">
-                                                1
+                                            <td><span th:if="${grnPreview.pending!= 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.pending, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                </span>
+                                                <span th:unless="${grnPreview.pending!= 0}"> <span
+                                                        th:text="${grnPreview.pending}"></span></span>
+
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(grnPreview.quantityDc, 0, 'COMMA', 3, 'POINT')}">
+                                            <td th:text="${#numbers.formatDecimal(grnPreview.quantityDc, 0, 'COMMA', 2, 'POINT')}">
                                                 26.00
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(grnPreview.received, 0, 'COMMA', 3, 'POINT')}">
+                                            <td th:text="${#numbers.formatDecimal(grnPreview.received, 0, 'COMMA', 2, 'POINT')}">
                                                 5.98
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(grnPreview.shortage, 0, 'COMMA', 3, 'POINT')}">
-                                                31,98
+                                            <td>
+                                                <span th:if="${grnPreview.shortage!= 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.shortage, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                </span>
+                                                <span th:unless="${grnPreview.shortage!= 0}"> <span
+                                                        th:text="${grnPreview.shortage}"></span></span>
                                             </td>
                                             <td><span
-                                                    th:text="${#numbers.formatDecimal(grnPreview.accepted, 0, 'COMMA', 3, 'POINT')}">31,98</span>
+                                                    th:text="${#numbers.formatDecimal(grnPreview.accepted, 0, 'COMMA', 2, 'POINT')}">31,98</span>
                                                 <span
                                                         th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.purchaseUOM.UOM}">kg</span>
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(grnPreview.rejected, 0, 'COMMA', 3, 'POINT')}">
-                                                31,98
+                                            <td>
+                                                 <span th:if="${grnPreview.rejected!= 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.rejected, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                 </span>
+                                                <span th:unless="${grnPreview.rejected!= 0}"> <span
+                                                        th:text="${grnPreview.rejected}"></span></span>
                                             </td>
                                             <td><span th:text="${grnPreview.indentItemPartyGroup.rate}">31,98</span>/
                                                 <span th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.uom.UOM}">31,98</span>
