@@ -219,9 +219,9 @@ public class UserController {
     public void register() {
 
         User user = new User();
-        user.setUserName("anju@halo.ae");
-        user.setEmail("anju@halo.ae");
-        user.setPassword(bCryptPasswordEncoder.encode("anju"));
+        user.setUserName("admin");
+        user.setEmail("admin@mastrometals.com");
+        user.setPassword(bCryptPasswordEncoder.encode("Aa12345@"));
         user.setEnabled(true);
 
         Set<Roles> rolesSet = new HashSet();

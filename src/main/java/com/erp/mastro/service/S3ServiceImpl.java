@@ -25,7 +25,7 @@ public class S3ServiceImpl implements S3Service {
     private AmazonS3 s3client;
 
     @Value("${jsa.s3.bucket}")
-    String bucketName = "mastro-erp";
+    String bucketName = "mastro";
 
     @Value("{jsa.aws.access_key_id}")
     private String s3AccessKey;
@@ -64,7 +64,7 @@ public class S3ServiceImpl implements S3Service {
         try {
 
             File file = new File(uploadFilePath);
-            bucketName = "mastro-erp/products" + "/" + productId + "/" + ftype;
+            bucketName = "mastro/products" + "/" + productId + "/" + ftype;
 
             s3client.putObject(new PutObjectRequest(bucketName, keyName, file));
             logger.info("===================== Upload File - Done! =====================");
@@ -84,7 +84,7 @@ public class S3ServiceImpl implements S3Service {
     }
 
     public void deleteProductImage(Long productId, String fileName) throws AmazonClientException {
-        bucketName = "mastro-erp/products" + "/" + productId + "/productImg";
+        bucketName = "mastro/products" + "/" + productId + "/productImg";
         s3client.deleteObject(bucketName, fileName);
 
     }
