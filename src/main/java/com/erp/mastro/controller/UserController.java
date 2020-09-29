@@ -5,10 +5,7 @@ import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
-import com.erp.mastro.entities.Branch;
-import com.erp.mastro.entities.Employee;
-import com.erp.mastro.entities.Roles;
-import com.erp.mastro.entities.User;
+import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.MastroEntityException;
 import com.erp.mastro.model.request.UserModel;
 import com.erp.mastro.service.interfaces.BranchService;
@@ -112,10 +109,17 @@ public class UserController {
 
         if (mastroApplicationUtils.isAdminAuthority(auth)) {
 
-           /*Employee employee = userDetails.getEmployee();
-           String organisation = employee.getOrganisation().getName();*/
-
-            session.setAttribute("adminBranch", "MASTRO");
+            Employee employee = userDetails.getEmployee();
+            if (employee != null) {
+                Organisation organisation = employee.getOrganisation();
+                if (organisation != null) {
+                    session.setAttribute("adminBranch", organisation.getName());
+                } else {
+                    session.setAttribute("adminBranch", "MASTRO");
+                }
+            } else {
+                session.setAttribute("adminBranch", "MASTRO");
+            }
             session.setAttribute("selectedBranch", currentBranch);
         } else {
             session.setAttribute("selectedBranch", currentBranch);
