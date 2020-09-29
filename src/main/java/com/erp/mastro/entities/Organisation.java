@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -33,10 +35,15 @@ public class Organisation {
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @OneToOne(mappedBy = "organisation",
+    /*@OneToOne(mappedBy = "organisation",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true)
-    private Employee employee;
+    private Employee employee;*/
+
+    @OneToMany(mappedBy = "organisation",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Employee> employee = new HashSet<>();
 
 }

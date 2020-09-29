@@ -47,7 +47,11 @@ public class Employee {
             orphanRemoval = true)
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
+   /* @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "organisation_id")
+    private Organisation organisation;*/
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
 
