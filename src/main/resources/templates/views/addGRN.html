@@ -541,7 +541,7 @@ else if (id == 'invoiceBtn'){
     var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
     var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
     var indentItemPartyGroupId=document.getElementById('grnpoItemsModels'+arg+'.itemPartyGroupId').value;
-   
+
       $.ajax({
         url: '/inventory/getGRNTolerenceCheck',
         type: 'GET',
