@@ -108,4 +108,7 @@ public class Product extends Auditable<String>{
             orphanRemoval = true)
     private Set<StockLedger> stockLedgers = new HashSet<>();
 
+    @Column(name = "product_code")
+    private String productCode;
+
 }

@@ -150,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setBrand(brand);
                 Map<String, byte[]> productDocs = (Map<String, byte[]>) userDetailsServiceImpl.getDataMap().get(Constants.PRODUCT);
                 setProductDocs(productDocs, product);
-
+                product.setProductCode("P-" + product.getProductName());
                 product = productRepository.save(product);
                 if ((product.getId() != null) && (productDocs != null)) {
                     saveProductFilesToFileDB(product.getId(), productDocs);
@@ -191,7 +191,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setBrand(brand);
                 Map<String, byte[]> productDocs = (Map<String, byte[]>) userDetailsServiceImpl.getDataMap().get(Constants.PRODUCT);
                 setProductDocs(productDocs, product);
-
+                product.setProductCode("P-" + product.getProductName());
                 product = productRepository.save(product);
                 if ((product.getId() != null) && (productDocs != null)) {
                     saveProductFilesToFileDB(product.getId(), productDocs);
