@@ -62,6 +62,18 @@ public class MastroApplicationUtils {
     }
 
     /**
+     * Method to generate code
+     *
+     * @param type
+     * @param id
+     * @return string
+     */
+    public static String generateCode(String type, Long id) {
+        String str = type + "-" + String.format("%05d", id);
+        return str;
+    }
+
+    /**
      * Below are the methods used for calculating the totals and Taxes
      */
 

@@ -1,5 +1,6 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -165,7 +166,11 @@ public class PartyServiceImpl implements PartyService {
                     party.setPartyDate(date1);
                 }
                 partyRepository.save(party);
-
+                if (party.getPartyType().equals("Customer")) {
+                    party.setPartyCode(MastroApplicationUtils.generateCode("C", party.getId()));
+                } else {
+                    party.setPartyCode(MastroApplicationUtils.generateCode("S", party.getId()));
+                }
                 MastroLogUtils.info(PartyService.class, "Added" + party.getPartyName() + "successfully");
 
             } else {
