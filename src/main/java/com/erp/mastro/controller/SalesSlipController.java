@@ -218,10 +218,16 @@ public class SalesSlipController {
                     .filter(grnitemData -> (null != grnitemData))
                     .filter(grnitemData -> (0 != grnitemData.getAccepted()))
                     .sorted(Comparator.comparing(
-                            GRNItems::getId).reversed())
+                            GRNItems::getId))
                     .collect(Collectors.toList());
+
+            List<GRNItems> grnItemsList1 = grnItemsList.stream()
+                    .limit(5)
+                    .collect(Collectors.toList());
+            /*grnItemsList1.limit(5).findFirst();*/
+
             ProductUOM salesUom = productUOMRepository.findById(productSaleUomId).get();
-            for (GRNItems grnItems : grnItemsList) {
+            for (GRNItems grnItems : grnItemsList1) {
                 GRNRequestModel.GRNItemModel grnItemModel = new GRNRequestModel.GRNItemModel();
                 grnItemModel.setId(grnItems.getId());
                 grnItemModel.setAcceptedqty(grnItems.getAccepted());
