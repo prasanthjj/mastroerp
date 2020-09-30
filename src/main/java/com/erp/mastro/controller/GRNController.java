@@ -9,6 +9,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.repository.GRNRepository;
+import com.erp.mastro.repository.IndentItemPartyGroupRepository;
 import com.erp.mastro.service.interfaces.GRNService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.UserService;
@@ -46,6 +47,9 @@ public class GRNController {
 
     @Autowired
     private GRNRepository grnRepository;
+
+    @Autowired
+    private IndentItemPartyGroupRepository indentItemPartyGroupRepository;
 
     /**
      * Method to get all GRN and display as a list
@@ -279,6 +283,33 @@ public class GRNController {
 
         } catch (Exception e) {
             MastroLogUtils.error(this, "Error Occured on Discard grn:{}", e);
+
+            throw e;
+        }
+
+    }
+
+    /**
+     * GRN tolerence check method
+     *
+     * @param model
+     * @param request
+     * @param dcQty
+     * @param pendingQty
+     * @param indentItemPartyGroupId
+     * @return response
+     */
+    @GetMapping("/getGRNTolerenceCheck")
+    @ResponseBody
+    public GenericResponse getGRNTolerenceCheck(Model model, HttpServletRequest request, @RequestParam("dcQty") Double dcQty, @RequestParam("pendingQty") Double pendingQty, @RequestParam("indentItemPartyGroupId") Long indentItemPartyGroupId) {
+        MastroLogUtils.info(GRNController.class, "Going to tplerence check for dcQty" + dcQty);
+        try {
+            boolean qtyDcMismatch = grnService.qtyMismatchChecking(indentItemPartyGroupId, dcQty, pendingQty);
+            return new GenericResponse(true, "sucess")
+                    .setProperty("qtyDcMismatch", qtyDcMismatch);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, "Error Occured on Tolerence check", e);
 
             throw e;
         }

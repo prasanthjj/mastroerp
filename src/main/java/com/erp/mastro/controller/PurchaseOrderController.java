@@ -641,7 +641,11 @@ public class PurchaseOrderController {
                 GRNRequestModel.GRNPOItemsModel grnpoItemsModel = new GRNRequestModel.GRNPOItemsModel();
                 grnpoItemsModel.setAccepted(grnItems.getAccepted());
                 grnpoItemsModel.setDiscount(grnItems.getDiscount());
-                grnpoItemsModel.setPending(grnItems.getPending());
+                if (grnItems.getPending() <= 0) {
+                    grnpoItemsModel.setPending(0.0d);
+                } else {
+                    grnpoItemsModel.setPending(grnItems.getPending());
+                }
                 grnpoItemsModel.setReceived(grnItems.getReceived());
                 grnpoItemsModel.setRejected(grnItems.getRejected());
                 grnpoItemsModel.setShortage(grnItems.getShortage());
@@ -707,7 +711,7 @@ public class PurchaseOrderController {
             for (GRN grn : grnSet) {
                 Set<GRNItems> grnItems = grn.getGrnItems().stream()
                         .filter(grnItem -> (null != grnItem))
-                        .filter(grnItem -> (grnItem.getPending() != 0))
+                        .filter(grnItem -> (!(grnItem.getPending() <= 0)))
                         .collect(Collectors.toSet());
                 grnItemsSet.addAll(grnItems);
                 grn.setCreateAnotherPO(0);

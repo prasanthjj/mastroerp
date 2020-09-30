@@ -207,8 +207,8 @@
                                         <div class="col-lg-6">
                                             <div class="form-group"><label>Purchase Order No</label>
 
-                                                  <label class="col-sm-7 col-form-label"
-                                                         th:text="${grnDetails.purchaseOrder.id}">: HSN001</label>
+                                                  <label class="col-sm-9 col-form-label"
+                                                         th:text="${grnDetails.purchaseOrder.poNo}">: HSN001</label>
                                                 <!--   <select class="form-control" id="partyPo" name="poId">
 
                                                    </select>-->
@@ -540,20 +540,31 @@ else if (id == 'invoiceBtn'){
  function dcorInvoiceFunction(arg) {
     var dcQty=document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value;
     var pendingQty=document.getElementById('grnpoItemsModels'+arg+'.pending').value;
+    var indentItemPartyGroupId=document.getElementById('grnpoItemsModels'+arg+'.itemPartyGroupId').value;
+   
+      $.ajax({
+        url: '/inventory/getGRNTolerenceCheck',
+        type: 'GET',
+        dataType : 'json',
+        data: { 'dcQty': dcQty,'pendingQty':pendingQty,'indentItemPartyGroupId':indentItemPartyGroupId },
+        success: function(data){
+            if(data.success) {
 
-    if(parseFloat(dcQty) <= parseFloat(pendingQty))
-    {
-
-    }
-    else
-    {
-    document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value='';
+                 if(data.data.qtyDcMismatch==true)
+                 {
+                 document.getElementById('grnpoItemsModels'+arg+'.quantityDc').value='';
       swal({
   title: "Quantity Mismatch",
- text: "DC/Invoice quantity must be less than or equal to pending quantity"
+ text: "DC/Invoice quantity must be less than or equal to pending quantity tolerence level"
          });
+                 }
+            }
+        },
+        error: function(jqXHR, textStatus) {
+            alert('Error Occured');
+        }
+    });
 
-    }
 
 }
 

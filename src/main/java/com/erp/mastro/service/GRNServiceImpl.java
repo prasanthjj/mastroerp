@@ -152,7 +152,7 @@ public class GRNServiceImpl implements GRNService {
 
             int count = grnItemsSet.size();
             for (GRNItems grnItems : grnItemsSet) {
-                if (grnItems.getPending() == 0) {
+                if (grnItems.getPending() <= 0) {
                     IndentItemPartyGroup indentItemPartyGroup = grnItems.getIndentItemPartyGroup();
                     indentItemPartyGroup.setGrnPendingStatus(1);
                     indentItemPartyGroupRepository.save(indentItemPartyGroup);
@@ -325,4 +325,31 @@ public class GRNServiceImpl implements GRNService {
         return grnItem;
     }
 
+    /**
+     * Method to check dc qty mismatch
+     *
+     * @param indentItemPartyGroupId
+     * @param dcQty
+     * @param pendingQty
+     * @return boolean
+     */
+    public boolean qtyMismatchChecking(Long indentItemPartyGroupId, Double dcQty, Double pendingQty) {
+
+        MastroLogUtils.info(GRNService.class, "Going to check Qty mismatch for the dc qty : {}" + dcQty);
+        IndentItemPartyGroup indentItemPartyGroup = indentItemPartyGroupRepository.findById(indentItemPartyGroupId).get();
+        Product product = indentItemPartyGroup.getItemStockDetails().getStock().getProduct();
+        String tolerenceType = product.getToleranceType();
+        Double amount = product.getAmount();
+        Double maximumQty = 0.0d;
+        boolean qtyDcMismatch = false;
+        if (tolerenceType.equals("Flat-Amount")) {
+            maximumQty = pendingQty + amount;
+        } else {
+            maximumQty = pendingQty + (pendingQty * (amount / 100));
+        }
+        if (dcQty > maximumQty) {
+            qtyDcMismatch = true;
+        }
+        return qtyDcMismatch;
+    }
 }

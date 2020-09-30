@@ -21,4 +21,6 @@ public interface GRNService {
 
     GRNItems getGRNItemById(Long id);
 
+    boolean qtyMismatchChecking(Long indentItemPartyGroupId, Double dcQty, Double pendingQty);
+
 }
