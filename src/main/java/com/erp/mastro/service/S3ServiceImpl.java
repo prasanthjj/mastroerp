@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.service.interfaces.S3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class S3ServiceImpl implements S3Service {
     private AmazonS3 s3client;
 
     @Value("${jsa.s3.bucket}")
-    String bucketName = "mastro";
+    String bucketName = Constants.S3_MASTRO;
 
     @Value("{jsa.aws.access_key_id}")
     private String s3AccessKey;
@@ -38,9 +39,9 @@ public class S3ServiceImpl implements S3Service {
 
         try {
 
-            System.out.println("Downloading an object");
+            logger.info("Downloading an object");
             S3Object s3object = s3client.getObject(new GetObjectRequest(bucketName, keyName));
-            System.out.println("Content-Type: " +
+            logger.info("Content-Type: " +
                     s3object.getObjectMetadata().getContentType());
             MastroLogUtils.error(s3object, "Error");
             logger.info("===================== Import File - Done! =====================");
@@ -64,7 +65,7 @@ public class S3ServiceImpl implements S3Service {
         try {
 
             File file = new File(uploadFilePath);
-            bucketName = "mastro/products" + "/" + productId + "/" + ftype;
+            bucketName = Constants.PRODUCTS_PATH + Constants.FILE_SEPARATOR + productId + Constants.FILE_SEPARATOR + ftype;
 
             s3client.putObject(new PutObjectRequest(bucketName, keyName, file));
             logger.info("===================== Upload File - Done! =====================");
@@ -84,7 +85,7 @@ public class S3ServiceImpl implements S3Service {
     }
 
     public void deleteProductImage(Long productId, String fileName) throws AmazonClientException {
-        bucketName = "mastro/products" + "/" + productId + "/productImg";
+        bucketName = Constants.PRODUCTS_PATH + Constants.FILE_SEPARATOR + productId + Constants.PRODUCT_IMG_FOLDER;
         s3client.deleteObject(bucketName, fileName);
 
     }

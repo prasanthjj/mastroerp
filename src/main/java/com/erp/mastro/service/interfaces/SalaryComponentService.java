@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface SalaryComponentService {
 
-    List<SalaryComponent> getAllSalaryComonents();
+    List<SalaryComponent> getAllSalaryComponents();
 
     SalaryComponent getSalaryComponentId(Long id);
 

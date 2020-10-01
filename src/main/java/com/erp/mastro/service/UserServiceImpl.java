@@ -36,7 +36,6 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private MailUtils mailUtils;
@@ -92,7 +91,7 @@ public class UserServiceImpl implements UserService {
             MastroLogUtils.info(UserService.class, "Going to Add User {}" + userModel.toString());
             Employee employee = employeeRepository.findByEmail(userModel.getEmail());
             if (employee != null) {
-                System.out.println("employee :: " + employee);
+                MastroLogUtils.info(UserService.class, "employee :: " + employee);
                 user.setUserName(employee.getEmail());
                 user.setEmployee(employee);
                 user.setEmail(userModel.getEmail());
@@ -245,6 +244,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @param password
      */
+    @Transactional(rollbackOn = {Exception.class})
     public void saveChangedPassword(User user, String password) {
         MastroLogUtils.info(UserServiceImpl.class, "Going to encrypt passwod : {}");
         user.setPassword(password);

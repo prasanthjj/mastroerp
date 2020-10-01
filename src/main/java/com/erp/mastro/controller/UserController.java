@@ -3,6 +3,7 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MailUtils;
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.*;
@@ -115,10 +116,10 @@ public class UserController {
                 if (organisation != null) {
                     session.setAttribute("adminBranch", organisation.getName());
                 } else {
-                    session.setAttribute("adminBranch", "MASTRO");
+                    session.setAttribute("adminBranch", Constants.ORG_NAME);
                 }
             } else {
-                session.setAttribute("adminBranch", "MASTRO");
+                session.setAttribute("adminBranch", Constants.ORG_NAME);
             }
             session.setAttribute("selectedBranch", currentBranch);
         } else {
@@ -165,7 +166,7 @@ public class UserController {
      */
     @RequestMapping("/admin/addUser")
     public String addUser(Model model) {
-        MastroLogUtils.info(UserController.class, "Going to create User :{}");
+        MastroLogUtils.info(UserController.class, "Going to create User ");
         try {
 
             List<String> emailList = new ArrayList<String>();
@@ -209,7 +210,7 @@ public class UserController {
             model.addAttribute("branchList",branchList);
             return "views/user_master";
         } catch (Exception e) {
-            MastroLogUtils.error(UserController.class, "Error occured while adding user : {}");
+            MastroLogUtils.error(UserController.class, "Error occurred while adding user");
             throw e;
         }
     }
@@ -247,12 +248,12 @@ public class UserController {
      */
     @PostMapping(value = "/admin/registerUser")
     public String register(@ModelAttribute("addUserForm") @Valid UserModel userModel, HttpServletRequest request, Model model) throws MastroEntityException {
-        MastroLogUtils.info(UserController.class, "Going to save User :{}");
+        MastroLogUtils.info(UserController.class, "Going to save User "+userModel.getEmail());
         try {
             userService.saveOrUpdateUser(userModel, request);
             return "redirect:/admin/addUser";
         } catch (Exception e) {
-            MastroLogUtils.error(UserController.class, "Error occured while registering user : {}", e);
+            MastroLogUtils.error(UserController.class, "Error occurred while registering user : ", e);
             throw e;
         }
 
@@ -289,7 +290,7 @@ public class UserController {
     @ResponseBody
     public GenericResponse getRoleForEdit(Model model, HttpServletRequest request, @RequestParam("userId") Long userId) {
 
-        MastroLogUtils.info(UserController.class, "Going to edit User :{}" + userId);
+        MastroLogUtils.info(UserController.class, "Going to edit User " + userId);
         User userDetails = userService.getUserById(userId);
         Set<UserModel.UserModelEdit> userModelEdits = new HashSet<>();
          for (Roles roles : userDetails.getRoles() ){
@@ -376,7 +377,7 @@ public class UserController {
     @GetMapping("/admin/getActivateOrDeactivateUser")
     @ResponseBody
     public GenericResponse getUserActivate(Model model, HttpServletRequest request, @RequestParam("userId") Long userId) {
-        MastroLogUtils.info(UserController.class, "Going to Activate or Deactivate User :{}" + userId);
+        MastroLogUtils.info(UserController.class, "Going to Activate or Deactivate User " + userId);
         User userDetails = userService.getUserById(userId);
         userService.activateOrDeactivateUser(userId);
         return new GenericResponse(true,"get User details")

@@ -1,6 +1,5 @@
 package com.erp.mastro.service.interfaces;
 
-import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.Organisation;
 import org.springframework.stereotype.Service;
 

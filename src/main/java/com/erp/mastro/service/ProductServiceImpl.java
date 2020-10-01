@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setToleranceType(productRequestModel.getToleranceType());
                 product.setEnabled(true);
                 product.setToleranceType(value);
-                if (product.getToleranceType().equals("Flat-Amount")) {
+                if (product.getToleranceType().equals(Constants.FLAT_AMOUNT)) {
                     product.setAmount(productRequestModel.getAmount());
                 } else {
                     product.setAmount(productRequestModel.getPercentageAmount());
@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setLoadingCharge(productRequestModel.getLoadingCharge());
                 product.setToleranceType(value);
                // product.setAmount(productRequestModel.getAmount());
-                if (product.getToleranceType().equals("Flat-Amount")) {
+                if (product.getToleranceType().equals(Constants.FLAT_AMOUNT)) {
                     product.setAmount(productRequestModel.getAmount());
                 } else {
                     product.setAmount(productRequestModel.getPercentageAmount());

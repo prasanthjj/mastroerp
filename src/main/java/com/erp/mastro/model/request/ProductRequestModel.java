@@ -1,5 +1,6 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.ProductUOM;
 import lombok.AccessLevel;
@@ -54,7 +55,7 @@ public class ProductRequestModel {
             this.setPropertySize(product.getPropertySize());
             this.setLoadingCharge(product.getLoadingCharge());
             this.setToleranceType(product.getToleranceType());
-            if (product.getToleranceType().equals("Flat-Amount")) {
+            if (product.getToleranceType().equals(Constants.FLAT_AMOUNT)) {
                 this.amount = product.getAmount();
             } else {
                 this.percentageAmount = product.getAmount();
