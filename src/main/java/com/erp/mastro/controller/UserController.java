@@ -124,6 +124,8 @@ public class UserController {
             session.setAttribute("selectedBranch", currentBranch);
         } else {
             session.setAttribute("selectedBranch", currentBranch);
+            session.setAttribute("adminBranch", currentBranch);
+
 
         }
         session.setAttribute("ActiveUser", userListCount.size());
