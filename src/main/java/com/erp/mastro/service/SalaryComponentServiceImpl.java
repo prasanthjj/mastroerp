@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.SalaryComponent;
 import com.erp.mastro.model.request.SalaryComponentRequestModel;
 import com.erp.mastro.repository.SalaryComponentRepository;
@@ -30,7 +31,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
      * @return salaryComponent list
      */
     @Override
-    public List<SalaryComponent> getAllSalaryComonents() {
+    public List<SalaryComponent> getAllSalaryComponents() {
         List<SalaryComponent> salaryComponentList = new ArrayList<>();
         salaryComponentRepository.findAll().forEach(salaryComponent -> salaryComponentList.add(salaryComponent));
         return salaryComponentList;
@@ -40,7 +41,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
      * method to get salary component according to id
      *
      * @param id
-     * @return salrycomponent
+     * @return salarycomponent
      */
 
     @Override
@@ -58,14 +59,14 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateSalaryComponent(SalaryComponentRequestModel salaryComponentRequestModel, String value) {
         if (salaryComponentRequestModel.getId() == null) {
-            MastroLogUtils.info(SalaryComponentService.class, "Going to save salarycomponent {}" + salaryComponentRequestModel.toString());
+            MastroLogUtils.info(SalaryComponentService.class, "Going to save salary component " + salaryComponentRequestModel.toString());
             SalaryComponent salaryComponent = new SalaryComponent();
             salaryComponent.setComponentType(salaryComponentRequestModel.getComponentType());
             salaryComponent.setComponentName(salaryComponentRequestModel.getComponentName());
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());
             //salaryComponent.setCalculation_Type(salaryComponentRequestModel.getCalculation_Type());
             salaryComponent.setCalculation_Type(value);
-            if (salaryComponent.getCalculation_Type().equals("Flat-Amount")) {
+            if (salaryComponent.getCalculation_Type().equals(Constants.FLAT_AMOUNT)) {
                 salaryComponent.setAmount(salaryComponentRequestModel.getAmount());
             } else {
                 salaryComponent.setAmount(salaryComponentRequestModel.getPercentageAmount());
@@ -75,7 +76,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             MastroLogUtils.info(SalaryComponentService.class, "Saved " + salaryComponent.getComponentName() + " successfully.");
 
         } else {
-            MastroLogUtils.info(SalaryComponentService.class, "Going to edit Salary Component {}" + salaryComponentRequestModel.toString());
+            MastroLogUtils.info(SalaryComponentService.class, "Going to edit Salary Component  " + salaryComponentRequestModel.toString());
             SalaryComponent salaryComponent = getSalaryComponentId(salaryComponentRequestModel.getId());
             //SalaryComponent salaryComponent = salaryComponentRepository.findById(salaryComponentRequestModel.getId()).get();
             salaryComponent.setComponentType(salaryComponentRequestModel.getComponentType());
@@ -83,7 +84,7 @@ public class SalaryComponentServiceImpl implements SalaryComponentService {
             salaryComponent.setPayslipName(salaryComponentRequestModel.getPayslipName());
             salaryComponent.setCalculation_Type(value);
             salaryComponent.setCalculation_Type(value);
-            if (salaryComponent.getCalculation_Type().equals("Flat-Amount")) {
+            if (salaryComponent.getCalculation_Type().equals(Constants.FLAT_AMOUNT)) {
                 salaryComponent.setAmount(salaryComponentRequestModel.getAmount());
             } else {
                 salaryComponent.setAmount(salaryComponentRequestModel.getPercentageAmount());

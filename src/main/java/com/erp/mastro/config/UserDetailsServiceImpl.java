@@ -1,6 +1,5 @@
 package com.erp.mastro.config;
 
-import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.dto.CurrentUserDetails;
 import com.erp.mastro.entities.User;
 import com.erp.mastro.repository.UserRepository;
@@ -10,9 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

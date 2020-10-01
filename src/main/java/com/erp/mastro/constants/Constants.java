@@ -2,15 +2,24 @@ package com.erp.mastro.constants;
 
 public class Constants {
 
-    public static String ROLE_ADMIN = "ADMIN";
-    public static String ROLE_SUPERADMIN = "SUPERADMIN";
-    public static String ROLE_HR = "HR";
+    public static final String PRODUCTS_PATH = "mastro/products";
+    public static final String PRODUCT_IMG_FOLDER = "/productImg";
+    public static final String FILE_SEPARATOR = "/";
+    public static final String S3_MASTRO = "mastro";
+    public static final String FLAT_AMOUNT = "Flat-Amount";
+    public static final String PURCHASE_MODULE = "purchaseModule";
+    public static final String PURCHASE = "purchase";
+    public static final String PURCHASE_TAB = "purchaseTab";
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_SUPERADMIN = "SUPERADMIN";
+    public static final String ROLE_HR = "HR";
 
-    public static String TEMPLATE_WELCOMEMAIL = "email/welcome.html";
+    public static final String TEMPLATE_WELCOMEMAIL = "email/welcome.html";
 
-    public static String TEMPLATE_FORGOTPASSWORD = "views/passwordreset.html";
+    public static final String TEMPLATE_FORGOTPASSWORD = "views/passwordreset.html";
 
     public static final String PRODUCT = "productPic";
+    public static final String ORG_NAME = "MASTRO";
 
     public static final String STATUS_APPROVED = "Approved";
     public static final String STATUS_DRAFT = "Draft";

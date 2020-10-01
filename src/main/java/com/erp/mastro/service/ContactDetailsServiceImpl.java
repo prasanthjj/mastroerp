@@ -1,10 +1,7 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.ContactDetails;
-import com.erp.mastro.repository.CatalogRepository;
 import com.erp.mastro.repository.ContactDetailsRepository;
-import com.erp.mastro.service.interfaces.CatalogService;
 import com.erp.mastro.service.interfaces.ContactDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

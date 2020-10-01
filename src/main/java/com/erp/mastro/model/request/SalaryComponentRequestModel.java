@@ -1,5 +1,6 @@
 package com.erp.mastro.model.request;
 
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.SalaryComponent;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class SalaryComponentRequestModel {
             this.componentName = salaryComponent.getComponentName();
             this.payslipName = salaryComponent.getPayslipName();
             this.calculation_Type = salaryComponent.getCalculation_Type();
-            if (salaryComponent.getCalculation_Type().equals("Flat-Amount")) {
+            if (salaryComponent.getCalculation_Type().equals(Constants.FLAT_AMOUNT)) {
                 this.amount = salaryComponent.getAmount();
             } else {
                 this.percentageAmount = salaryComponent.getAmount();

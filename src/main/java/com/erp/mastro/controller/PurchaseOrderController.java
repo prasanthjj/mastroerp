@@ -80,8 +80,8 @@ public class PurchaseOrderController {
                     .sorted(Comparator.comparing(
                             PurchaseOrder::getId).reversed())
                     .collect(Collectors.toList());
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             model.addAttribute("purchaseList", purchaseList);
             List<Indent> indentSet = currentBranch.getIndentSet().stream()
                     .filter(indentData -> (null != indentData))
@@ -113,8 +113,8 @@ public class PurchaseOrderController {
     public String getPurchaseOrderViaIndent(HttpServletRequest request, @RequestParam("indentId") Long indentId, Model model) {
         logger.info("Going to get indent :" + indentId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             if (indentId != null) {
                 Indent indent = indentService.getIndentById(indentId);
                 model.addAttribute("indentDetails", indent);
@@ -140,8 +140,8 @@ public class PurchaseOrderController {
     public String getsplitIndentItem(HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId, Model model) {
         logger.info("Going to get indent item supplyers:" + indentItemId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             model.addAttribute("indentItemId", indentItemId);
 
             if (indentId != null) {
@@ -192,8 +192,8 @@ public class PurchaseOrderController {
         logger.info("Going to create IndentItemPartyGroup : " + indentItemPartyGroupRequestModel.toString());
         try {
             ItemStockDetails itemStockDetails = purchaseOrderService.IndentItemPartyGroup(indentItemPartyGroupRequestModel);
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             model.addAttribute("itemStockDetails", itemStockDetails);
             model.addAttribute("indentItemPartyGroupForm", new IndentItemPartyGroupRequestModel(itemStockDetails));
 
@@ -350,8 +350,8 @@ public class PurchaseOrderController {
     public String getPurchaseOrderPreview(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
         logger.info("Going to get PurchaseOrderPreview :" + poId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             if (poId != null) {
                 PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
                 model.addAttribute("purchaseOrderDetails", purchaseOrder);
@@ -499,8 +499,8 @@ public class PurchaseOrderController {
     public String getPurchaseOrderOnReview(HttpServletRequest request, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
         logger.info("Going to get indent :" + indentId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             if (indentId != null) {
                 Indent indent = indentService.getIndentById(indentId);
                 model.addAttribute("indentDetails", indent);
@@ -519,8 +519,8 @@ public class PurchaseOrderController {
     public String getsplitIndentItemReviewEdit(HttpServletRequest request, @RequestParam("indentItemId") Long indentItemId, @RequestParam("indentId") Long indentId, @RequestParam("poId") Long poId, Model model) {
         logger.info("Going to get indent item supplyers edit:" + indentItemId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             model.addAttribute("indentItemId", indentItemId);
             model.addAttribute("poId", poId);
 
@@ -603,11 +603,11 @@ public class PurchaseOrderController {
 
     @GetMapping("/getPurchaseOrderGRN")
     public String getPurchaseOrderGRN(Model model, @RequestParam("poId") Long poId, HttpServletRequest req) {
-        logger.info("Going to get po GRNS : po id is" + poId);
+        logger.info("Going to get po GRNS : po id is " + poId);
         try {
             PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseOrderById(poId);
-            model.addAttribute("purchaseModule", "purchaseModule");
-            model.addAttribute("purchaseTab", "purchase");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
+            model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             model.addAttribute("purchaseOrderDetails", purchaseOrder);
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<GRN> poGRNs = purchaseOrder.getGrnSet().stream()
@@ -621,7 +621,7 @@ public class PurchaseOrderController {
             model.addAttribute("grnList", poGRNs);
             return "views/POGRNList";
         } catch (Exception e) {
-            logger.error("Error occured while getting po grns " + poId, e);
+            logger.error("Error occurred while getting po grns " + poId, e);
             throw e;
         }
 

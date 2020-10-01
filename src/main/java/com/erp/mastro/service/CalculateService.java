@@ -1,7 +1,6 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.HSN;
-import com.erp.mastro.entities.Product;
 import com.erp.mastro.entities.ProductPartyRateRelation;
 import org.springframework.stereotype.Component;
 
