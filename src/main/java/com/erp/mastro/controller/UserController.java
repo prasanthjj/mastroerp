@@ -139,7 +139,7 @@ public class UserController {
      * @param branchId
      * @param model
      * @return selected branch name
-     */
+     *//*
     @PostMapping("/admin/selectBranchName")
     public String getBranchName( Model model, @Valid Long branchId) {
         Branch branch = branchService.getBranchById(branchId);
@@ -148,7 +148,7 @@ public class UserController {
         userService.saveCurrentBranch(branchId,userDetails);
         model.addAttribute("branchName",branchName);
         return "redirect:/home";
-    }
+    }*/
 
     /**
      * Method to redirect to access denied

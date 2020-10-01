@@ -190,7 +190,7 @@
                                                         <span th:unless="${productForm.toleranceType == 'Percentage'}">
                                                 <input type="radio" id="flatAmount" checked th:value=${"Flat-Amount"}
                                                        name="toleranceType"> Flat Amount <br>
-                                                    <input type="radio" th:value=${"Percentage"} name="toleranceType"> Percentage of CTC
+                                                    <input type="radio" th:value=${"Percentage"} name="toleranceType"> Percentage
                                                 </span>
                                                     </div>
                                                 </div>
@@ -334,7 +334,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4"><div class="form-group  row"><label
-                                                            class="col-sm-12 col-form-label">Convention Factor <i
+                                                            class="col-sm-12 col-form-label">Conversion Factor <i
                                                             class="fa fa-asterisk"></i></label><div
                                                             class="col-sm-10"><input type="text" required
                                                                                      class="form-control"
@@ -538,6 +538,7 @@ buttondown_class:'btn btn-white',
 buttonup_class:'btn btn-white'
 });
 
+$("#tolerancePercentage").hide();
 if ($("#flatAmount").is(":checked")) {
 $("#toleranceAmount").show();
 $("#tolerancePercentage").hide();
@@ -545,6 +546,15 @@ $("#tolerancePercentage").hide();
 $("#tolerancePercentage").show();
 $("#toleranceAmount").hide();
 }
+$("input[name='toleranceType']").click(function() {
+if ($("#flatAmount").is(":checked")) {
+$("#toleranceAmount").show();
+$("#tolerancePercentage").hide();
+} else {
+$("#tolerancePercentage").show();
+$("#toleranceAmount").hide();
+}
+});
 // tolerance percentage tolerance end
 
 
