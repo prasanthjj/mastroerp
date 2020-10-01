@@ -36,7 +36,7 @@ public class SalaryComponentController {
         try {
 
             List<SalaryComponent> salaryComponentList = new ArrayList<>();
-            for (SalaryComponent salaryComponent : salaryComponentService.getAllSalaryComonents()) {
+            for (SalaryComponent salaryComponent : salaryComponentService.getAllSalaryComponents()) {
                 /*  if (salaryComponent.isative() != 1) {*/
                 salaryComponentList.add(salaryComponent);
                 /*  }*/
@@ -57,7 +57,7 @@ public class SalaryComponentController {
         MastroLogUtils.info(SalaryComponentController.class, "Going to add Salary component list : {}");
 
         try {
-            List<SalaryComponent> salaryComponentList = salaryComponentService.getAllSalaryComonents().stream()
+            List<SalaryComponent> salaryComponentList = salaryComponentService.getAllSalaryComponents().stream()
                     .filter(salarycomponentData -> (null != salarycomponentData))
 
                     .sorted(Comparator.comparing(
