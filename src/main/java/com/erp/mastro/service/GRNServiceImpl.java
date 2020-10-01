@@ -342,7 +342,7 @@ public class GRNServiceImpl implements GRNService {
         Double amount = product.getAmount();
         Double maximumQty = 0.0d;
         boolean qtyDcMismatch = false;
-        if (tolerenceType.equals("Flat-Amount")) {
+        if (tolerenceType.equals(Constants.FLAT_AMOUNT)) {
             maximumQty = pendingQty + amount;
         } else {
             maximumQty = pendingQty + (pendingQty * (amount / 100));

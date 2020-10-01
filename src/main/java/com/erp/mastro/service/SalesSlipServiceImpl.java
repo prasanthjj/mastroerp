@@ -215,7 +215,10 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 stockLedger.setIssuedStock(salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
                 stockLedger.setBranch(stock.getBranch());
                 stockLedgerRepository.save(stockLedger);
-
+                Double averageConsumption = 0.0d;
+                averageConsumption = MastroApplicationUtils.averageConsumption(stock.getProduct(), stock.getBranch());
+                stock.setAverageConsumption(averageConsumption);
+                stockRepository.save(stock);
             } else if (salesQtyInSalesUOM < grnItemQtyInSalesUOMs) {
                 grnItemQtyInSalesUOMs = grnItemQtyInSalesUOMs - salesQtyInSalesUOM;
                 Double currentStock = stock.getCurrentStock() - (salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
@@ -250,6 +253,11 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 stockLedger.setIssuedStock(salesQtyInSalesUOM * (productSaleUOM.getConvertionFactor()));
                 stockLedger.setBranch(stock.getBranch());
                 stockLedgerRepository.save(stockLedger);
+
+                Double averageConsumption = 0.0d;
+                averageConsumption = MastroApplicationUtils.averageConsumption(stock.getProduct(), stock.getBranch());
+                stock.setAverageConsumption(averageConsumption);
+                stockRepository.save(stock);
             } else {
                 salesQtyInSalesUOM = salesQtyInSalesUOM - grnItemQtyInSalesUOMs;
                 Double currentStock = stock.getCurrentStock() - grnItemQtyInBaseUOM;
@@ -282,6 +290,11 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 stockLedger.setIssuedStock(grnItemQtyInBaseUOM);
                 stockLedger.setBranch(stock.getBranch());
                 stockLedgerRepository.save(stockLedger);
+
+                Double averageConsumption = 0.0d;
+                averageConsumption = MastroApplicationUtils.averageConsumption(stock.getProduct(), stock.getBranch());
+                stock.setAverageConsumption(averageConsumption);
+                stockRepository.save(stock);
             }
             Set<SalesSlipItems> salesSlipItemsSet = salesSlip.getSalesSlipItemsSet();
             salesSlipItemsSet.add(salesSlipItems);

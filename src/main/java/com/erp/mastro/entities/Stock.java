@@ -64,4 +64,7 @@ public class Stock extends Auditable<String> {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name = "average_consumption")
+    private Double averageConsumption;
+
 }

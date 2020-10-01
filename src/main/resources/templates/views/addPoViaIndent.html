@@ -108,13 +108,13 @@
                                             th:each="indentItemObj,iterator:${indentDetails.itemStockDetailsSet}">
                                             <td th:text="${iterator.index+1}"></td>
                                             <td th:text="${indentItemObj.stock.product.productName}">Pipe</td>
-                                            <td th:text="${#numbers.formatDecimal(indentItemObj.stock.currentStock, 0, 'COMMA', 3, 'POINT')}">
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.stock.currentStock, 0, 'COMMA', 2, 'POINT')}">
                                                 50
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(indentItemObj.quantityToIndent, 0, 'COMMA', 3, 'POINT')}">
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.quantityToIndent, 0, 'COMMA', 2, 'POINT')}">
                                                 120
                                             </td>
-                                            <td th:text="${#numbers.formatDecimal(indentItemObj.purchaseQuantity, 0, 'COMMA', 3, 'POINT')}">
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.purchaseQuantity, 0, 'COMMA', 2, 'POINT')}">
                                                 0
                                             </td>
                                             <span th:if="${indentItemObj.purchaseUOM!= null}">
@@ -130,7 +130,7 @@
                                     <td>----</td>
                                     </span>
                                             <td th:text="${indentItemObj.soReferenceNo}"></td>
-                                            <td></td>
+                                            <td th:text="${#numbers.formatDecimal(indentItemObj.stock.averageConsumption, 0, 'COMMA', 2, 'POINT')}"></td>
                                             <td class="center">
                                                 <div class="btn-group">
                                                     <button data-toggle="dropdown"

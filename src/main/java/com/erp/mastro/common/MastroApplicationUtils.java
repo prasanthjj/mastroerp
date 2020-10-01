@@ -1,7 +1,9 @@
 package com.erp.mastro.common;
 
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.entities.Product;
+import com.erp.mastro.entities.StockLedger;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,10 +11,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class that included all common Util methods
@@ -193,6 +200,46 @@ public class MastroApplicationUtils {
             roundoffvalue = (int) result;
         }
         return roundoffvalue;
+    }
+
+    /**
+     * Method to calculate average consumption
+     *
+     * @param product
+     * @param branch
+     * @return average consumption
+     */
+    public static Double averageConsumption(Product product, Branch branch) {
+
+        Double averageConsumption = 0.0d;
+        Set<StockLedger> stockLedgers = product.getStockLedgers().stream()
+                .filter(stockGeneralData -> (null != stockGeneralData))
+                .filter(stockGeneralData -> stockGeneralData.getBranch().getId().equals(branch.getId()))
+                .collect(Collectors.toSet());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        int year = cal.get(Calendar.YEAR);
+        String fromDate = year + "-01-01";
+        String toDate = year + "-12-31";
+        Set<StockLedger> stockLedgerFinal = new HashSet<>();
+        for (StockLedger stockLedger : stockLedgers) {
+            String creationDate = formatter.format(stockLedger.getCreationDate());
+            if ((creationDate.compareToIgnoreCase(fromDate) >= 0) && (creationDate.compareToIgnoreCase(toDate) <= 0)) {
+                stockLedgerFinal.add(stockLedger);
+            }
+        }
+        Double totalIssued = 0.0d;
+        for (StockLedger stockGenerall : stockLedgerFinal) {
+            if (stockGenerall.getIssuedStock() != null) {
+                totalIssued = totalIssued + stockGenerall.getIssuedStock();
+            }
+
+        }
+        averageConsumption = totalIssued / 12;
+        return MastroApplicationUtils.roundTwoDecimals(averageConsumption);
+
     }
 
 }
