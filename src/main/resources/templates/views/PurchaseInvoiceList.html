@@ -85,6 +85,7 @@
                                         <th>Purchase No</th>
                                         <th>Party Name</th>
                                         <th>Grand Total</th>
+                                        <th>Payment Mode</th>
                                         <th>Controls</th>
                                     </tr>
                                     </thead>
@@ -108,7 +109,7 @@
                                         <td><i class="fa fa-inr" aria-hidden="true"></i> <span
                                                 th:text="${#numbers.formatDecimal(poInvoiceobj.grandTotal, 0, 'COMMA',2, 'POINT')}"></span>
                                         </td>
-
+                                        <td th:text="${poInvoiceobj.paymentMode}"></td>
                                         <td class="center">
 
                                             <div class="btn-group">

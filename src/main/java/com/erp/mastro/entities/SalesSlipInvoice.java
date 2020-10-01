@@ -54,4 +54,7 @@ public class SalesSlipInvoice extends Auditable<String> {
     @Column(name = "sales_slip_invoice_no")
     private String salesSlipInvoiceNo;
 
+    @Column(name = "payment_mode")
+    private String paymentMode;
+
 }

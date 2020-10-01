@@ -359,6 +359,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlipInvoice.setRoundOff(salesSlipRequestModel.getRoundOff());
             salesSlipInvoice.setTotalAmt(salesSlipRequestModel.getTotalAmt());
             salesSlipInvoice.setGrandTotal(salesSlipRequestModel.getGrandTotal());
+            salesSlipInvoice.setPaymentMode(salesSlipRequestModel.getPaymentMode());
             salesSlipInvoiceRepository.save(salesSlipInvoice);
             String currentBranchCode = salesSlipInvoice.getBranch().getBranchCode();
             if (currentBranchCode != null) {

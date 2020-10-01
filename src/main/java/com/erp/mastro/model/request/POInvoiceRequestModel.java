@@ -20,6 +20,7 @@ public class POInvoiceRequestModel {
     private Double totalTaxableValue;
     private Double totalCgst;
     private Double totalSgst;
+    private String paymentMode;
 
     @Override
     public String toString() {

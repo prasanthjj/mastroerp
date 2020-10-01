@@ -26,6 +26,7 @@ public class SalesSlipRequestModel {
     private Double loadingChargeSum;
     private Double loadingChargeCgst;
     private Double loadingChargesgst;
+    private String paymentMode;
 
     @Override
     public String toString() {

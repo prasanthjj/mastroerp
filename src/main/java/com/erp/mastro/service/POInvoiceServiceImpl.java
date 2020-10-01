@@ -55,6 +55,7 @@ public class POInvoiceServiceImpl implements POInvoiceService {
             poInvoice.setRoundOff(poInvoiceRequestModel.getRoundValue());
             poInvoice.setTotalAmt(poInvoiceRequestModel.getTotalAmt());
             poInvoice.setGrandTotal(poInvoiceRequestModel.getGrandTotal());
+            poInvoice.setPaymentMode(poInvoiceRequestModel.getPaymentMode());
             poInvoiceRepository.save(poInvoice);
             String currentBranchCode = poInvoice.getBranch().getBranchCode();
             if (currentBranchCode != null) {

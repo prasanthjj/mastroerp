@@ -54,4 +54,7 @@ public class POInvoice extends Auditable<String> {
     @Column(name = "po_invoice_no")
     private String poInvoiceNo;
 
+    @Column(name = "payment_mode")
+    private String paymentMode;
+
 }
