@@ -128,7 +128,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Industry Type<i class="fa fa-asterisk "></i></label>
+                                                <label>Industry Type</label>
                                                 <select class="form-control m-b partyIndustryType" id="industryType"
                                                         name="industryid">
                                                     <option value="">Select</option>
@@ -155,10 +155,10 @@
                                                            class="form-control " required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Address</label>
+                                                    <label>Address<i class="fa fa-asterisk"></i></label>
                                                     <textarea class="form-control" rows="5"
-                                                              name="contactDetailsModelList[0].address">
-                                                        </textarea>
+                                                              name="contactDetailsModelList[0].address"
+                                                              required="required"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -304,9 +304,9 @@
                                                        class="form-control" required>
                                             </div>
                                             <div class="form-group">
-                                                <label>Street/Lane</label>
+                                                <label>Street/Lane <i class="fa fa-asterisk "></i></label>
                                                 <textarea class="form-control " rows="4"
-                                                          name="billingDetailsModelList[0].street"></textarea>
+                                                          name="billingDetailsModelList[0].street" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -379,8 +379,10 @@
                                             <td><input name="creditLimit" type="text" class="form-control" required>
                                             </td>
                                             <td><input name="creditDays" type="text" class="form-control" required></td>
-                                            <td><input name="creditWorthiness" type="text" class="form-control"></td>
-                                            <td><input name="interestRates" type="text" class="form-control"></td>
+                                            <td><input name="creditWorthiness" type="text" value="0"
+                                                       class="form-control"></td>
+                                            <td><input name="interestRates" type="text" value="0" class="form-control">
+                                            </td>
                                             <td><textarea class="form-control " rows="1" name="remarks"></textarea></td>
                                         </tr>
 

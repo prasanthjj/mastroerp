@@ -115,9 +115,12 @@
                                             <div class="row">
                                                 <label class="col-sm-5 col-form-label"><strong>Industry
                                                     Type</strong></label>
+                                                <span
+                                                        th:if="${partyDetails.industryType != null}">
                                                 <label class="col-sm-7 col-form-label"
                                                        th:text="${partyDetails.industryType.industryType}">:
                                                     HSN001</label>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

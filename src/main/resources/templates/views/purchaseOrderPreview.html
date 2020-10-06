@@ -123,7 +123,7 @@
                                         <thead>
                                         <tr class="text-info">
                                             <th><strong>Item List</strong></th>
-                                            <th><strong>HSN/SACt</strong></th>
+                                            <th><strong>HSN/SAC</strong></th>
                                             <th><strong>Indent Quantity</strong></th>
                                             <th> <strong>Unit Rate ( per base UOM )</strong></th>
                                             <th><strong>Total Price</strong></th>
@@ -137,7 +137,7 @@
                                             </td>
                                             <td th:text="${poPreview.hsnnoo}">1</td>
                                             <td align="right"><span
-                                                    th:text="${#numbers.formatDecimal(poPreview.qty, 0, 'COMMA', 3, 'POINT')}">26.00</span>
+                                                    th:text="${#numbers.formatDecimal(poPreview.qty, 0, 'COMMA', 2, 'POINT')}">26.00</span>
                                                 <span
                                                         th:text="${poPreview.purchaseuom}"></span></td>
                                             <td align="right"><span th:text="${poPreview.rate}">26.00</span>/<span

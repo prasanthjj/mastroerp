@@ -130,7 +130,7 @@ public class PartyServiceImpl implements PartyService {
                 MastroLogUtils.info(PartyService.class, "Going to Add Party  " + partyRequestModel.toString());
 
                 party.setPartyType(partyRequestModel.getPartyType());
-                party.setPartyCode(partyRequestModel.getPartyCode());
+               /* party.setPartyCode(partyRequestModel.getPartyCode());*/
                 party.setPartyName(partyRequestModel.getPartyName());
                 party.setStatus(partyRequestModel.getStatus());
                 party.setPaymentTerms(partyRequestModel.getPaymentTerms());
@@ -158,8 +158,10 @@ public class PartyServiceImpl implements PartyService {
                 party.setBillingDetails(billingDetails);
                 Set<CreditDetails> creditDetails = new HashSet<>();
                 party.setCreditDetails(creditDetails);
-                creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
-                party.setCreditDetails(creditDetails);
+                if (branchids != null) {
+                    creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                    party.setCreditDetails(creditDetails);
+                }
                 String sDate1 = partyRequestModel.getSpartyDate();
                 if (sDate1 != "") {
                     Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
@@ -178,7 +180,7 @@ public class PartyServiceImpl implements PartyService {
 
                 party = partyRepository.findById(partyRequestModel.getId()).get();
                 party.setPartyType(partyRequestModel.getPartyType());
-                party.setPartyCode(partyRequestModel.getPartyCode());
+                /*party.setPartyCode(partyRequestModel.getPartyCode());*/
                 party.setPartyName(partyRequestModel.getPartyName());
                 party.setStatus(partyRequestModel.getStatus());
                 party.setPaymentTerms(partyRequestModel.getPaymentTerms());
@@ -207,14 +209,21 @@ public class PartyServiceImpl implements PartyService {
                 party.setBillingDetails(billingDetails);
                 Set<CreditDetails> creditDetails = new HashSet<>();
                 party.setCreditDetails(creditDetails);
-                creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
-                party.setCreditDetails(creditDetails);
+                if (branchids != null) {
+                    creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                    party.setCreditDetails(creditDetails);
+                }
                 String sDate1 = partyRequestModel.getSpartyDate();
                 if (sDate1 != "") {
                     Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
                     party.setPartyDate(date1);
                 }
                 partyRepository.save(party);
+                if (party.getPartyType().equals("Customer")) {
+                    party.setPartyCode(MastroApplicationUtils.generateCode("C", party.getId()));
+                } else {
+                    party.setPartyCode(MastroApplicationUtils.generateCode("S", party.getId()));
+                }
 
                 MastroLogUtils.info(PartyService.class, "Updated" + party.getPartyName() + "successfully");
             }

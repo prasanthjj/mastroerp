@@ -114,17 +114,23 @@
                                         <td th:text="${grnItemObj.hsncode}">HSN-0265</td>
                                         <td th:text="${grnItemObj.grnno}">GRN-0265</td>
                                         <td th:text="${grnItemObj.nameOfProduct}">Angles 25x6 (1x1/4)</td>
-                                        <td><span th:text="${grnItemObj.quantityDc}"></span> <span
-                                                th:text="${grnItemObj.uomPurchase}"></span></td>
-                                        <td ><span th:text="${grnItemObj.rate}"></span>/<span
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(grnItemObj.quantityDc, 0, 'COMMA', 2, 'POINT')}"></span>
+                                            <span
+                                                    th:text="${grnItemObj.uomPurchase}"></span></td>
+                                        <td><span th:text="${grnItemObj.rate}"></span>/<span
                                                 th:text="${grnItemObj.uomBase}"></span></td>
-                                        <td  align="right" th:text="${grnItemObj.discount}"></td>
-                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemTotal, 0, 'COMMA', 4, 'POINT')}">
+                                        <td align="right" th:text="${grnItemObj.discount}"></td>
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(grnItemObj.itemTotal, 0, 'COMMA', 4, 'POINT')}">
                                             711.8580
                                         </td>
-                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemCgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
-                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.itemSgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
-                                        <td  align="right" th:text="${#numbers.formatDecimal(grnItemObj.finalItemTotal, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(grnItemObj.itemCgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(grnItemObj.itemSgstAmt, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td align="right"
+                                            th:text="${#numbers.formatDecimal(grnItemObj.finalItemTotal, 0, 'COMMA', 4, 'POINT')}"></td>
 
                                     </tr>
 

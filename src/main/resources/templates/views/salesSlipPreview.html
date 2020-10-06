@@ -151,8 +151,12 @@
                                             <td th:text="${saleSlipItem.hsnCode}">HSN-0265</td>
                                             <td th:text="${saleSlipItem.product.productName}">Angles 25x6 (1x1/4)</td>
                                             <!-- <td th:text="${salesoderPreview.product.hsn.igst}">18</td>-->
-                                            <td><span th:text="${saleSlipItem.grnQty}">26.00</span> <span
-                                                    th:text="${saleSlipItem.productUOM.uom.UOM}"></span></td>
+                                            <!-- <td><span th:text="${saleSlipItem.grnQty}">26.00</span>-->
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(saleSlipItem.grnQty, 0, 'COMMA', 2, 'POINT')}">26.00</span>
+
+                                                <span
+                                                        th:text="${saleSlipItem.productUOM.uom.UOM}"></span></td>
                                             <td align="right"
                                                 th:text="${#numbers.formatDecimal(saleSlipItem.totalAmount, 0, 'COMMA', 4, 'POINT')}">
                                                 711.8580

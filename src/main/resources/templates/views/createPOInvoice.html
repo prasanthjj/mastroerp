@@ -114,8 +114,11 @@
                                         <td th:text="${grnItemObj.hsncode}">HSN-0265</td>
                                         <td th:text="${grnItemObj.grnno}">GRN-0265</td>
                                         <td th:text="${grnItemObj.nameOfProduct}">Angles 25x6 (1x1/4)</td>
-                                        <td><span th:text="${grnItemObj.quantityDc}"></span> <span
-                                                th:text="${grnItemObj.uomPurchase}"></span></td>
+                                        <!--  <td><span th:text="${grnItemObj.quantityDc}"></span>-->
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(grnItemObj.quantityDc, 0, 'COMMA', 2, 'POINT')}"></span>
+                                            <span
+                                                    th:text="${grnItemObj.uomPurchase}"></span></td>
                                         <td><span th:text="${grnItemObj.rate}"></span>/<span
                                                 th:text="${grnItemObj.uomBase}"></span></td>
                                         <td align="right" th:text="${grnItemObj.discount}"></td>

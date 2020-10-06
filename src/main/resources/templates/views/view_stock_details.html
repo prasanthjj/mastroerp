@@ -72,13 +72,14 @@
                                             <label class="col-sm-5 col-form-label"><strong>Opening
                                                 Stock </strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.openingStock}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.openingStock, 0, 'COMMA', 2, 'POINT')}">:</label>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Rejected
                                                 Stock </strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.rejectedStock}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.rejectedStock, 0, 'COMMA', 2, 'POINT')}">:</label>
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Min. Lead
@@ -95,13 +96,13 @@
                                             <label class="col-sm-5 col-form-label"><strong>Current
                                                 Stock</strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.currentStock}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.currentStock, 0, 'COMMA', 2, 'POINT')}">:</label>
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Reserve
                                                 Stock</strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.reserveStock}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.reserveStock, 0, 'COMMA', 2, 'POINT')}">:</label>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +118,8 @@
                                             <label class="col-sm-5 col-form-label"><strong>Minimum Stock
                                                 Qty </strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.minimumStockQuantity}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.minimumStockQuantity, 0, 'COMMA', 2, 'POINT')}">:</label>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Reorder
@@ -129,7 +131,8 @@
                                             <label class="col-sm-5 col-form-label"><strong>Minimum Order
                                                 Qty</strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.minimumOrderQuantity}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.minimumOrderQuantity, 0, 'COMMA', 2, 'POINT')}">:</label>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-5 col-form-label"><strong>Base UOM</strong></label>
@@ -140,7 +143,8 @@
                                             <label class="col-sm-5 col-form-label"><strong>Maximum Stock
                                                 Qty</strong></label>
                                             <label class="col-sm-7 col-form-label"
-                                                   th:text="${stockDetails.maximumStockQuantity}">:</label>
+                                                   th:text="${#numbers.formatDecimal(stockDetails.maximumStockQuantity, 0, 'COMMA', 2, 'POINT')}">:</label>
+
                                         </div>
                                     </div>
                                 </div>
