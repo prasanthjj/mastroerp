@@ -57,7 +57,8 @@
                             <form th:action="@{/inventory/getStockSelectedProduct}" method="get"
                                   id="selectStockItemForm">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Item Name</label>
+                                    <label class="col-lg-2 col-form-label">Item Name <i
+                                            class="fa fa-asterisk "></i></label>
                                     <div class="col-lg-4">
                                         <input type="hidden" name="selectedStockProduct" id="itemIdInput">
                                         <input type="text" class="form-control stockitemautocomplete" required
@@ -74,24 +75,27 @@
 
                                 </div>
                             </form>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
-                                        Name</label>
 
-                                        <div class="col-sm-8 m-t-sm"><p><span th:if="${productDetails!= null}"><b
-                                                th:text="${productDetails.productName}">.47 Red 3.05mtr (10')</b></span>
-                                        </p></div>
+                            <form th:action="@{/inventory/saveStock}" th:object="${stockForm}" id="addStockDetailsForm"
+                                  name="stockForm" method="post" th:if="${productDetails!= null}">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Item
+                                            Name</label>
+
+                                            <div class="col-sm-8 m-t-sm"><p><span th:if="${productDetails!= null}"><b
+                                                    th:text="${productDetails.productName}">.47 Red 3.05mtr (10')</b></span>
+                                            </p></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <form th:action="@{/inventory/saveStock}" th:object="${stockForm}" id="addStockDetailsForm"
-                                  name="stockForm" method="post">
                                 <h2>Stock Details</h2>
                                 <div class="row">
-                                    <span th:if="${productDetails!= null}">
+
+                                    <span>
                                     <input type="hidden" name="productId" th:value="${productDetails.id}">
-                                    </span>
+ </span>
+
                                     <div class="col-lg-4">
                                         <div class="form-group"><label>Opening Stock <i
                                                 class="fa fa-asterisk "></i></label>
@@ -151,6 +155,7 @@
                                     <div class="col-lg-12 text-right">
                                         <button class="btn btn-primary btn-sm" type="submit">Save</button>
                                     </div>
+
                                 </div>
                             </form>
                         </div>

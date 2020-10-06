@@ -163,11 +163,10 @@
                                                            class="form-control ">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Address</label>
+                                                    <label>Address <i class="fa fa-asterisk"></i></label>
                                                     <textarea class="form-control " rows="5"
-                                                              th:field="${partyForm.contactDetailsModelList[__${iter.index}__].address}">
-
-                                                </textarea>
+                                                              th:field="${partyForm.contactDetailsModelList[__${iter.index}__].address}"
+                                                              required="required"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -320,9 +319,10 @@
                                                        type="text" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label>Street/Lane</label>
+                                                <label>Street/Lane <i class="fa fa-asterisk"></i></label>
                                                 <textarea class="form-control " rows="4"
-                                                          th:field="${partyForm.billingDetailsModelList[__${iter.index}__].street}"></textarea>
+                                                          th:field="${partyForm.billingDetailsModelList[__${iter.index}__].street}"
+                                                          required="required"></textarea>
                                             </div>
                                         </div>
                                     </div>

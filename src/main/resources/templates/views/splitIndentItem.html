@@ -71,11 +71,12 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group  row"><label class="col-sm-4 col-form-label">Party
-                                            Name</label>
+                                            Name <i class="fa fa-asterisk "></i></label>
 
 
                                             <div class="col-sm-8">
-                                                <select class="form-control m-b selectSplitPartyCode" name="partyId">
+                                                <select class="form-control m-b selectSplitPartyCode" name="partyId"
+                                                        required>
                                                     <option value="">select</option>
                                                     <option th:each="supplierList: ${supplierList}"
                                                             th:value="${supplierList.id}"
@@ -133,7 +134,8 @@
                                             <td class="center">
                                                 <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].enabled== false}">
                                                 <input class="form-control" type="text"
-                                                       th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
+                                                       th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"
+                                                       required/>
                                                 </span>
                                                  <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].enabled== false}">
                                                 <input class="form-control" type="text" readonly
@@ -165,8 +167,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 text-right">
+
+                                    <div class="col-lg-12 text-right" th:if="${indentItemPartyGroupForm != null}">
+                                        <span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels != null and !indentItemPartyGroupForm.indentItemPartyGroupRequestModels.empty}">
                                         <button class="btn btn-primary" type="submit">Save</button>
+                                            </span>
                                     </div>
                                 </div>
                             </form>

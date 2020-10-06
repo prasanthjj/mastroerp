@@ -372,9 +372,6 @@ $("#createAssetsForm").steps({
                 city:{
                     required:true,
                     },
-                    industryid:{
-                        required:true,
-                         },
                 pinCode:{
                     required:true,
                     },
@@ -563,9 +560,6 @@ $("#createAssetsForm").steps({
                                          city:{
                                              required:true,
                                              },
-                                             industryid:{
-                                                 required:true,
-                                                  },
                                          pinCode:{
                                              required:true,
                                              },

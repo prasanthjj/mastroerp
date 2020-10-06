@@ -97,7 +97,7 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label>Item Name</label>
+                                            <label>Item Name <i class="fa fa-asterisk "></i> </label>
                                             <input type="hidden" name="productId" id="itemIdInput">
                                             <input type="text" class="form-control indentitemautocmoplete"
                                                    placeholder="Enter Item Name" required>
@@ -137,12 +137,12 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label>SO Refernce No</label>
-                                                    <input class="form-control" name="soReferenceNo"  th:field="*{soReferenceNo}">
-                                                </div>
-                                            </div>
+                                            <!-- <div class="col-lg-3">
+                                                 <div class="form-group">
+                                                     <label>SO Refernce No</label>
+                                                     <input class="form-control" name="soReferenceNo"  th:field="*{soReferenceNo}">
+                                                 </div>
+                                             </div>-->
                                             <div class="col-lg-2 m-t-lg">
                                                 <button class="btn btn-primary" id="addIndentItemDetailsBtn">Add</button>
                                             </div>
@@ -167,7 +167,7 @@
 
                                                     <th>Current Stock</th>
                                                     <th>Qty. To Indent</th>
-                                                    <th>So reference no</th>
+                                                    <!--<th>So reference no</th>-->
                                                     <th>Base UOM</th>
                                                     <th>Purchase UOM</th>
                                                     <th>Controls</th>
@@ -193,10 +193,10 @@
                                                 th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].quantityToIndent}">
 
                                             </td>
-                                            <td class="center"
-                                                th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
+                                            <!-- <td class="center"
+                                                 th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].soReferenceNo}">
 
-                                            </td>
+                                             </td>-->
 
                                              <td class="center"
                                                  th:text="${indentForm.indentItemStockDetailsModels[__${iterator.index}__].stock.product.uom.UOM}">
@@ -222,9 +222,12 @@
 
 
                                         </div>
+                                        <span th:if="${indentForm.id!= null}">
                                         <div class="col-lg-12 text-right">
                                             <button class="btn btn-primary" type="submit">Save</button>
+                                            <!--<span th:text="${indentForm.id}"></span>-->
                                         </div>
+                                            </span>
                                     </form>
                                 </div>
                             </div>
