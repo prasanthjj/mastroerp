@@ -35,4 +35,12 @@ public class Constants {
     public static final String STATUS_PO_DELIVERED = "Delivered";
     public static final String STATUS_PO_INVOICED = "Invoiced";
 
+    public static final String CUSTOMER = "Customer";
+
+    public static final String PARTY_TYPE_A = "A";
+    public static final String PARTY_TYPE_B = "B";
+    public static final String PARTY_TYPE_C = "C";
+
+    public static final String PARTY_TYPE_S = "S";
+
 }

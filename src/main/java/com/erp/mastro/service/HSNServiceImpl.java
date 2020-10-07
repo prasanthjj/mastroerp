@@ -26,47 +26,38 @@ public class HSNServiceImpl implements HSNService {
     }
 
     public HSN getHSNById(Long id) {
-        MastroLogUtils.info(HSNService.class, "Going to get all hsn by id :{}" + id);
+        MastroLogUtils.info(HSNService.class, "Going to get all hsn by id :" + id);
         return hsnRepository.findById(id).get();
     }
 
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateHSN(HSNRequestModel hsnRequestModel) {
         if (hsnRequestModel.getId() == null) {
-            MastroLogUtils.info(HSNService.class, "Going to Add HSN  {}" + hsnRequestModel.toString());
+            MastroLogUtils.info(HSNService.class, "Going to Add HSN  " + hsnRequestModel.toString());
             HSN hsn = new HSN();
-            hsn.setEntryDate(hsnRequestModel.getEntryDate());
-            hsn.setSection(hsnRequestModel.getSection());
-            hsn.setChapter(hsnRequestModel.getChapter());
-            hsn.setHeading(hsnRequestModel.getHeading());
-            hsn.setSubHeading(hsnRequestModel.getSubHeading());
-            hsn.setHsnCode(hsnRequestModel.getHsnCode());
-            hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
-            hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
-            hsn.setSgst(hsnRequestModel.getSgst());
-            hsn.setCgst(hsnRequestModel.getCgst());
-            hsn.setIgst(hsnRequestModel.getIgst());
-            hsn.setUtgst(hsnRequestModel.getUtgst());
-            hsn.setCess(hsnRequestModel.getCess());
-            hsnRepository.save(hsn);
+            setHSNData(hsnRequestModel, hsn);
         } else {
-            MastroLogUtils.info(HSNService.class, "Going to Edit HSN  {}" + hsnRequestModel.toString());
+            MastroLogUtils.info(HSNService.class, "Going to Edit HSN  " + hsnRequestModel.toString());
             HSN hsn = hsnRepository.findById(hsnRequestModel.getId()).get();
-            hsn.setEntryDate(hsnRequestModel.getEntryDate());
-            hsn.setSection(hsnRequestModel.getSection());
-            hsn.setChapter(hsnRequestModel.getChapter());
-            hsn.setHeading(hsnRequestModel.getHeading());
-            hsn.setSubHeading(hsnRequestModel.getSubHeading());
-            hsn.setHsnCode(hsnRequestModel.getHsnCode());
-            hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
-            hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
-            hsn.setSgst(hsnRequestModel.getSgst());
-            hsn.setCgst(hsnRequestModel.getCgst());
-            hsn.setIgst(hsnRequestModel.getIgst());
-            hsn.setUtgst(hsnRequestModel.getUtgst());
-            hsn.setCess(hsnRequestModel.getCess());
-            hsnRepository.save(hsn);
+            setHSNData(hsnRequestModel, hsn);
         }
+    }
+
+    private void setHSNData(HSNRequestModel hsnRequestModel, HSN hsn) {
+        hsn.setEntryDate(hsnRequestModel.getEntryDate());
+        hsn.setSection(hsnRequestModel.getSection());
+        hsn.setChapter(hsnRequestModel.getChapter());
+        hsn.setHeading(hsnRequestModel.getHeading());
+        hsn.setSubHeading(hsnRequestModel.getSubHeading());
+        hsn.setHsnCode(hsnRequestModel.getHsnCode());
+        hsn.setGstGoodsName(hsnRequestModel.getGstGoodsName());
+        hsn.setEffectiveFrom(hsnRequestModel.getEffectiveFrom());
+        hsn.setSgst(hsnRequestModel.getSgst());
+        hsn.setCgst(hsnRequestModel.getCgst());
+        hsn.setIgst(hsnRequestModel.getIgst());
+        hsn.setUtgst(hsnRequestModel.getUtgst());
+        hsn.setCess(hsnRequestModel.getCess());
+        hsnRepository.save(hsn);
     }
 
     public void deleteHSN(Long id) {
@@ -75,7 +66,7 @@ public class HSNServiceImpl implements HSNService {
 
     @Transactional(rollbackOn = {Exception.class})
     public void deleteHsnDetails(Long id) {
-        MastroLogUtils.info(HSNService.class, "Going to delete HsnDetails by id :{}" + id);
+        MastroLogUtils.info(HSNService.class, "Going to delete HsnDetails by id :" + id);
         HSN hsn = getHSNById(id);
         hsn.setHsnDeleteStatus(1);
         hsnRepository.save(hsn);

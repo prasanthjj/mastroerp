@@ -30,21 +30,20 @@ public class LocationServiceImpl implements LocationService {
     public void saveOrUpdateLocation(LocationRequestModel locationRequestModel) {
         if (locationRequestModel.getId() == null) {
             Location location = new Location();
-            location.setCountryName(locationRequestModel.getCountryName());
-            location.setStateName(locationRequestModel.getStateName());
-            location.setCityName(locationRequestModel.getCityName());
-            location.setAreaName(locationRequestModel.getAreaName());
-            location.setPincode(locationRequestModel.getPincode());
-            locationRepository.save(location);
+            setLocationData(locationRequestModel, location);
         } else {
             Location location = locationRepository.findById(locationRequestModel.getId()).get();
-            location.setCountryName(locationRequestModel.getCountryName());
-            location.setStateName(locationRequestModel.getStateName());
-            location.setCityName(locationRequestModel.getCityName());
-            location.setAreaName(locationRequestModel.getAreaName());
-            location.setPincode(locationRequestModel.getPincode());
-            locationRepository.save(location);
+            setLocationData(locationRequestModel, location);
         }
+    }
+
+    private void setLocationData(LocationRequestModel locationRequestModel, Location location) {
+        location.setCountryName(locationRequestModel.getCountryName());
+        location.setStateName(locationRequestModel.getStateName());
+        location.setCityName(locationRequestModel.getCityName());
+        location.setAreaName(locationRequestModel.getAreaName());
+        location.setPincode(locationRequestModel.getPincode());
+        locationRepository.save(location);
     }
 
     public void deleteLocation(Long id) {

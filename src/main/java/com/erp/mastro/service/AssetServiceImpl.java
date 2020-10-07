@@ -9,8 +9,6 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.AssetRequestModel;
 import com.erp.mastro.repository.AssetRepository;
 import com.erp.mastro.service.interfaces.AssetService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +22,6 @@ import java.util.stream.Collectors;
  */
 public class AssetServiceImpl implements AssetService {
 
-    private Logger logger = LoggerFactory.getLogger(AssetServiceImpl.class);
-
     @Autowired
     private AssetRepository assetRepository;
 
@@ -36,7 +32,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     /**
-     * method to get asset accroding to id
+     * method to get asset according to id
      *
      * @param id
      * @return asset
@@ -70,36 +66,7 @@ public class AssetServiceImpl implements AssetService {
 
                 MastroLogUtils.info(AssetService.class, "Going to Add asset  {}" + assetRequestModel.toString());
 
-                assets.setAssetName(assetRequestModel.getAssetName());
-                assets.setAssetType(assetRequestModel.getAssetType());
-                assets.setAssetLocation(assetRequestModel.getAssetLocation());
-                assets.setSubLocation(assetRequestModel.getSubLocation());
-                assets.setPartyNo(assetRequestModel.getPartyNo());
-                assets.setHoursUtilized(assetRequestModel.getHoursUtilized());
-                assets.setInstallationDate(assetRequestModel.getInstallationDate());
-                assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
-                assets.setCapacity(assetRequestModel.getCapacity());
-                assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
-
-                if (assetRequestModel.getActive() != null) {
-                    assets.setActive(assetRequestModel.getActive());
-                } else {
-                    assets.setActive(false);
-                }
-                if (assetRequestModel.getMaintenanceRequired() != null) {
-                    assets.setMaintenanceRequired(assetRequestModel.getMaintenanceRequired());
-                } else {
-                    assets.setMaintenanceRequired(false);
-                }
-                assets.setMake(assetRequestModel.getMake());
-                Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
-                assets.setAssetCharacteristics(assetCharacteristics);
-                Set<AssetMaintenanceActivities> assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
-                assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
-                Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
-                assets.setAssetChecklists(assetChecklist);
-
-                assetRepository.save(assets);
+                populateAssets(assetRequestModel, assets);
 
                 MastroLogUtils.info(AssetService.class, "Added " + assets.getAssetName() + " succesfully.");
 
@@ -107,35 +74,7 @@ public class AssetServiceImpl implements AssetService {
                 MastroLogUtils.info(AssetService.class, "Going to edit asset  {}" + assetRequestModel.toString());
 
                 assets = assetRepository.findById(assetRequestModel.getId()).get();
-                assets.setAssetName(assetRequestModel.getAssetName());
-                assets.setAssetType(assetRequestModel.getAssetType());
-                assets.setAssetLocation(assetRequestModel.getAssetLocation());
-                assets.setSubLocation(assetRequestModel.getSubLocation());
-                assets.setPartyNo(assetRequestModel.getPartyNo());
-                assets.setHoursUtilized(assetRequestModel.getHoursUtilized());
-                assets.setInstallationDate(assetRequestModel.getInstallationDate());
-                assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
-                assets.setCapacity(assetRequestModel.getCapacity());
-                assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
-                if (assetRequestModel.getActive() != null) {
-                    assets.setActive(assetRequestModel.getActive());
-                } else {
-                    assets.setActive(false);
-                }
-                if (assetRequestModel.getMaintenanceRequired() != null) {
-                    assets.setMaintenanceRequired(assetRequestModel.getMaintenanceRequired());
-                } else {
-                    assets.setMaintenanceRequired(false);
-                }
-                assets.setMake(assetRequestModel.getMake());
-                Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
-                assets.setAssetCharacteristics(assetCharacteristics);
-                Set<AssetMaintenanceActivities> assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
-                assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
-                Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
-                assets.setAssetChecklists(assetChecklist);
-
-                assetRepository.save(assets);
+                populateAssets(assetRequestModel, assets);
 
                 MastroLogUtils.info(AssetService.class, "Updated " + assets.getAssetName() + " succesfully.");
 
@@ -143,6 +82,44 @@ public class AssetServiceImpl implements AssetService {
             return assets;
         }
 
+    }
+
+    /**
+     *
+     * @param assetRequestModel
+     * @param assets
+     * @throws ModelNotFoundException
+     */
+    private void populateAssets(AssetRequestModel assetRequestModel, Assets assets) throws ModelNotFoundException {
+        assets.setAssetName(assetRequestModel.getAssetName());
+        assets.setAssetType(assetRequestModel.getAssetType());
+        assets.setAssetLocation(assetRequestModel.getAssetLocation());
+        assets.setSubLocation(assetRequestModel.getSubLocation());
+        assets.setPartyNo(assetRequestModel.getPartyNo());
+        assets.setHoursUtilized(assetRequestModel.getHoursUtilized());
+        assets.setInstallationDate(assetRequestModel.getInstallationDate());
+        assets.setEffectiveDate(assetRequestModel.getEffectiveDate());
+        assets.setCapacity(assetRequestModel.getCapacity());
+        assets.setMaintenancePriority(assetRequestModel.getMaintenancePriority());
+        if (assetRequestModel.getActive() != null) {
+            assets.setActive(assetRequestModel.getActive());
+        } else {
+            assets.setActive(false);
+        }
+        if (assetRequestModel.getMaintenanceRequired() != null) {
+            assets.setMaintenanceRequired(assetRequestModel.getMaintenanceRequired());
+        } else {
+            assets.setMaintenanceRequired(false);
+        }
+        assets.setMake(assetRequestModel.getMake());
+        Set<AssetCharacteristics> assetCharacteristics = saveOrUpdateAssetCharacteristics(assetRequestModel, assets);
+        assets.setAssetCharacteristics(assetCharacteristics);
+        Set<AssetMaintenanceActivities> assetMaintenanceActivities = saveOrUpdateAssetMaintenanceActivities(assetRequestModel, assets);
+        assets.setAssetMaintenanceActivities(assetMaintenanceActivities);
+        Set<AssetChecklist> assetChecklist = saveOrUpdateAssetChecklist(assetRequestModel, assets);
+        assets.setAssetChecklists(assetChecklist);
+
+        assetRepository.save(assets);
     }
 
     /**

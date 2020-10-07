@@ -2,6 +2,7 @@ package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.IndustryTypeRequestModel;
@@ -29,8 +30,6 @@ import java.util.stream.Collectors;
  */
 
 public class PartyServiceImpl implements PartyService {
-
-    private Logger logger = LoggerFactory.getLogger(PartyServiceImpl.class);
 
     @Autowired
     private PartyRepository partyRepository;
@@ -129,49 +128,11 @@ public class PartyServiceImpl implements PartyService {
 
                 MastroLogUtils.info(PartyService.class, "Going to Add Party  " + partyRequestModel.toString());
 
-                party.setPartyType(partyRequestModel.getPartyType());
-               /* party.setPartyCode(partyRequestModel.getPartyCode());*/
-                party.setPartyName(partyRequestModel.getPartyName());
-                party.setStatus(partyRequestModel.getStatus());
-                party.setPaymentTerms(partyRequestModel.getPaymentTerms());
-                party.setCategoryType(partyRequestModel.getCategoryType());
-                party.setOldReferCode(partyRequestModel.getOldReferCode());
-                party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
-                party.setEnabled(true);
-                if (partyRequestModel.getIndustryid() != null) {
-                    party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("A")) {
-                    party.setPriceList(getPriceList("A"));
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("B")) {
-                    party.setPriceList(getPriceList("B"));
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("C")) {
-                    party.setPriceList(getPriceList("C"));
-                }
-                Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
-                party.setContactDetails(contactDetails);
-                Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
-                party.setBankDetails(bankDetails);
-                Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
-                party.setBillingDetails(billingDetails);
-                Set<CreditDetails> creditDetails = new HashSet<>();
-                party.setCreditDetails(creditDetails);
-                if (branchids != null) {
-                    creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
-                    party.setCreditDetails(creditDetails);
-                }
-                String sDate1 = partyRequestModel.getSpartyDate();
-                if (sDate1 != "") {
-                    Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
-                    party.setPartyDate(date1);
-                }
-                partyRepository.save(party);
-                if (party.getPartyType().equals("Customer")) {
-                    party.setPartyCode(MastroApplicationUtils.generateCode("C", party.getId()));
+                setPartyData(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                if (party.getPartyType().equals(Constants.CUSTOMER)) {
+                    party.setPartyCode(MastroApplicationUtils.generateCode(Constants.PARTY_TYPE_C, party.getId()));
                 } else {
-                    party.setPartyCode(MastroApplicationUtils.generateCode("S", party.getId()));
+                    party.setPartyCode(MastroApplicationUtils.generateCode(Constants.PARTY_TYPE_S, party.getId()));
                 }
                 MastroLogUtils.info(PartyService.class, "Added" + party.getPartyName() + "successfully");
 
@@ -179,56 +140,102 @@ public class PartyServiceImpl implements PartyService {
                 MastroLogUtils.info(PartyService.class, "Going to edit party " + partyRequestModel.toString());
 
                 party = partyRepository.findById(partyRequestModel.getId()).get();
-                party.setPartyType(partyRequestModel.getPartyType());
-                /*party.setPartyCode(partyRequestModel.getPartyCode());*/
-                party.setPartyName(partyRequestModel.getPartyName());
-                party.setStatus(partyRequestModel.getStatus());
-                party.setPaymentTerms(partyRequestModel.getPaymentTerms());
-                party.setCategoryType(partyRequestModel.getCategoryType());
-                party.setPartyDate(partyRequestModel.getPartyDate());
-                party.setOldReferCode(partyRequestModel.getOldReferCode());
-                party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
-                party.setEnabled(true);
-                if (partyRequestModel.getIndustryid() != null) {
-                    party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("A")) {
-                    party.setPriceList(getPriceList("A"));
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("B")) {
-                    party.setPriceList(getPriceList("B"));
-                }
-                if (partyRequestModel.getPartyType().equals("Customer") && partyRequestModel.getCategoryType().equals("C")) {
-                    party.setPriceList(getPriceList("C"));
-                }
-                Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
-                party.setContactDetails(contactDetails);
-                Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
-                party.setBankDetails(bankDetails);
-                Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
-                party.setBillingDetails(billingDetails);
-                Set<CreditDetails> creditDetails = new HashSet<>();
-                party.setCreditDetails(creditDetails);
-                if (branchids != null) {
-                    creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
-                    party.setCreditDetails(creditDetails);
-                }
-                String sDate1 = partyRequestModel.getSpartyDate();
-                if (sDate1 != "") {
-                    Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
-                    party.setPartyDate(date1);
-                }
-                partyRepository.save(party);
-                if (party.getPartyType().equals("Customer")) {
-                    party.setPartyCode(MastroApplicationUtils.generateCode("C", party.getId()));
+                setPartyDataforEdit(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+                if (party.getPartyType().equals(Constants.CUSTOMER)) {
+                    party.setPartyCode(MastroApplicationUtils.generateCode(Constants.PARTY_TYPE_C, party.getId()));
                 } else {
-                    party.setPartyCode(MastroApplicationUtils.generateCode("S", party.getId()));
+                    party.setPartyCode(MastroApplicationUtils.generateCode(Constants.PARTY_TYPE_S, party.getId()));
                 }
 
                 MastroLogUtils.info(PartyService.class, "Updated" + party.getPartyName() + "successfully");
             }
             return party;
         }
+    }
+
+    private void setPartyDataforEdit(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party) throws ModelNotFoundException, ParseException {
+        party.setPartyType(partyRequestModel.getPartyType());
+        /*party.setPartyCode(partyRequestModel.getPartyCode());*/
+        party.setPartyName(partyRequestModel.getPartyName());
+        party.setStatus(partyRequestModel.getStatus());
+        party.setPaymentTerms(partyRequestModel.getPaymentTerms());
+        party.setCategoryType(partyRequestModel.getCategoryType());
+        party.setPartyDate(partyRequestModel.getPartyDate());
+        party.setOldReferCode(partyRequestModel.getOldReferCode());
+        party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
+        party.setEnabled(true);
+        if (partyRequestModel.getIndustryid() != null) {
+            party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_A)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_A));
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_B)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_B));
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_C)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_C));
+        }
+        Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
+        party.setContactDetails(contactDetails);
+        Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
+        party.setBankDetails(bankDetails);
+        Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
+        party.setBillingDetails(billingDetails);
+        Set<CreditDetails> creditDetails = new HashSet<>();
+        party.setCreditDetails(creditDetails);
+        if (branchids != null) {
+            creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+            party.setCreditDetails(creditDetails);
+        }
+        String sDate1 = partyRequestModel.getSpartyDate();
+        if (sDate1 != "") {
+            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            party.setPartyDate(date1);
+        }
+        partyRepository.save(party);
+    }
+
+    private void setPartyData(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party) throws ModelNotFoundException, ParseException {
+        party.setPartyType(partyRequestModel.getPartyType());
+        /* party.setPartyCode(partyRequestModel.getPartyCode());*/
+        party.setPartyName(partyRequestModel.getPartyName());
+        party.setStatus(partyRequestModel.getStatus());
+        party.setPaymentTerms(partyRequestModel.getPaymentTerms());
+        party.setCategoryType(partyRequestModel.getCategoryType());
+        party.setOldReferCode(partyRequestModel.getOldReferCode());
+        party.setRelationshipMananger(partyRequestModel.getRelationshipMananger());
+        party.setEnabled(true);
+        if (partyRequestModel.getIndustryid() != null) {
+            party.setIndustryType(industryTypeRepository.findById(partyRequestModel.getIndustryid()).get());
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_A)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_A));
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_B)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_B));
+        }
+        if (partyRequestModel.getPartyType().equals(Constants.CUSTOMER) && partyRequestModel.getCategoryType().equals(Constants.PARTY_TYPE_C)) {
+            party.setPriceList(getPriceList(Constants.PARTY_TYPE_C));
+        }
+        Set<ContactDetails> contactDetails = saveOrUpdatePartyContactDetails(partyRequestModel, party);
+        party.setContactDetails(contactDetails);
+        Set<BankDetails> bankDetails = saveOrUpdatePartyBankDetails(partyRequestModel, party);
+        party.setBankDetails(bankDetails);
+        Set<BillingDetails> billingDetails = saveOrUpdatePartyBillingDetails(partyRequestModel, party);
+        party.setBillingDetails(billingDetails);
+        Set<CreditDetails> creditDetails = new HashSet<>();
+        party.setCreditDetails(creditDetails);
+        if (branchids != null) {
+            creditDetails = saveOrUpdatePartyCreditDetails(partyRequestModel, branchids, creditLimits, creditDays, creditWorthiness, interestRates, remarks, party);
+            party.setCreditDetails(creditDetails);
+        }
+        String sDate1 = partyRequestModel.getSpartyDate();
+        if (sDate1 != "") {
+            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            party.setPartyDate(date1);
+        }
+        partyRepository.save(party);
     }
 
     /**
@@ -240,7 +247,7 @@ public class PartyServiceImpl implements PartyService {
                 .filter(priceListData -> (null != priceListData))
                 .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
                 .filter(priceListData -> (priceListData.getCategoryType().equals(customerType)))
-                .filter(priceListData -> (priceListData.getPartyType().equals("Customer")))
+                .filter(priceListData -> (priceListData.getPartyType().equals(Constants.CUSTOMER)))
                 .findFirst().get();
     }
 
