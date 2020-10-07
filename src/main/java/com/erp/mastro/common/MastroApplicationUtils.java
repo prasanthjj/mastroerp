@@ -1,5 +1,6 @@
 package com.erp.mastro.common;
 
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.entities.Product;
@@ -36,7 +37,7 @@ public class MastroApplicationUtils {
      * @return String format of Date
      */
     public static String getStringFromDate(String dateString, Date date) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(Constants.DATEFORMAT_MM_DD_YYYY);
         if (dateString != null) {
             return dateString;
         }

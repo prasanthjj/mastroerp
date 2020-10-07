@@ -5,8 +5,7 @@ import com.erp.mastro.entities.Roles;
 import com.erp.mastro.model.request.RolesRequestModel;
 import com.erp.mastro.repository.RolesRepository;
 import com.erp.mastro.service.interfaces.RolesService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,6 @@ import java.util.List;
 @Service
 public class RolesServiceImpl implements RolesService {
 
-    private Logger logger = LoggerFactory.getLogger(RolesServiceImpl.class);
-
     @Autowired
     private RolesRepository rolesRepository;
 
@@ -32,7 +29,7 @@ public class RolesServiceImpl implements RolesService {
      */
     @Override
     public List<Roles> getAllRoles() {
-        List<Roles> rolesList = new ArrayList<Roles>();
+        List<Roles> rolesList = new ArrayList<>();
         rolesRepository.findAll().forEach(roles -> rolesList.add(roles));
         return rolesList;
     }

@@ -121,7 +121,7 @@ public class GRNController {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             Set<PurchaseOrder> purchaseOrderSet = party.getPurchaseOrders().stream()
                     .filter(poData -> (null != poData))
-                    .filter(po -> ((po.getStatus().equals(Constants.STATUS_APPROVED))))
+                    .filter(po -> (po.getStatus().equals(Constants.STATUS_APPROVED)))
                     .filter(po -> (po.getIndent().getBranch().getId().equals(currentBranch.getId())))
                     .collect(Collectors.toSet());
 

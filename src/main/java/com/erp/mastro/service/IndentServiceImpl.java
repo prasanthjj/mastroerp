@@ -194,7 +194,7 @@ public class IndentServiceImpl implements IndentService {
             indent.getItemStockDetailsSet().add(itemStockDetails);
         }
         else {
-            Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
+            Set<ItemStockDetails> itemStockDetailsSet;
             itemStockDetailsSet = indent.getItemStockDetailsSet();
             Set<ItemStockDetails> newitemstockDetails = itemStockDetailsSet.stream()
                     .filter(itemStockData -> (null != itemStockData))
@@ -296,7 +296,7 @@ public class IndentServiceImpl implements IndentService {
                     if (!sDate1.equals("")) {
                         Date date1 = null;
                         try {
-                            date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+                            date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
      * @return the productset
      */
     public Set<Product> getSubCategoryProducts(SubCategory subCategory) {
-        Set<Product> productSetSet = new HashSet<>();
+        Set<Product> productSetSet;
         productSetSet = subCategory.getProductSet();
         return productSetSet;
     }
@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Long id) {
         Product product = new Product();
         if (id != null) {
-            MastroLogUtils.info(ProductService.class, "Going to getProductBy Id : {}" + id);
+            MastroLogUtils.info(ProductService.class, "Going to getProductBy Id :" + id);
             product = productRepository.findById(id).get();
         }
         return product;
@@ -119,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
             throw new ModelNotFoundException("ProductRequestModel model is empty");
         } else {
             if (productRequestModel.getId() == null) {
-                MastroLogUtils.info(ProductService.class, "Going to Add product  {}" + productRequestModel.toString());
+                MastroLogUtils.info(ProductService.class, "Going to Add product " + productRequestModel.toString());
                 SubCategory subCategory = subCategoryRepository.findById(productRequestModel.getSubCategoryId()).get();
                 product.setSubCategory(subCategory);
                 product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension());
@@ -155,13 +155,13 @@ public class ProductServiceImpl implements ProductService {
                 if ((product.getId() != null) && (productDocs != null)) {
                     saveProductFilesToFileDB(product.getId(), productDocs);
                     String sproductId = String.valueOf(product.getId());
-                    final File folder = new File(getUserFolder() + "/" + sproductId + "/productPic/");
+                    final File folder = new File(getUserFolder() + "/" + sproductId + Constants.PRODUCT_PIC_FOLDER);
                     productUploasS3(folder, sproductId);
                     userDetailsServiceImpl.getDataMap().clear();
                 }
 
             } else {
-                MastroLogUtils.info(ProductService.class, "Going to edit product  {}" + productRequestModel.toString());
+                MastroLogUtils.info(ProductService.class, "Going to edit product " + productRequestModel.toString());
                 product = getProductById(productRequestModel.getId());
                 SubCategory subCategory = subCategoryRepository.findById(productRequestModel.getSubCategoryId()).get();
                 product.setSubCategory(subCategory);
@@ -196,7 +196,7 @@ public class ProductServiceImpl implements ProductService {
                 if ((product.getId() != null) && (productDocs != null)) {
                     saveProductFilesToFileDB(product.getId(), productDocs);
                     String sproductId = String.valueOf(product.getId());
-                    final File folder = new File(getUserFolder() + "/" + sproductId + "/productPic/");
+                    final File folder = new File(getUserFolder() + "/" + sproductId + Constants.PRODUCT_PIC_FOLDER);
                     productUploasS3(folder, sproductId);
                     userDetailsServiceImpl.getDataMap().clear();
                 }
@@ -216,7 +216,7 @@ public class ProductServiceImpl implements ProductService {
 
     private Set<ProductUOM> saveOrUpdateProductUOM(ProductRequestModel productRequestModel, Product product) {
 
-        MastroLogUtils.info(ProductService.class, "Going to save productuoms   {}" + productRequestModel.toString());
+        MastroLogUtils.info(ProductService.class, "Going to save productuoms  " + productRequestModel.toString());
         Set<ProductUOM> productUOMSet = new HashSet<>();
 
         if (productRequestModel.getProductUOMModelList().isEmpty() == false) {
@@ -253,10 +253,6 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
-   /* public void saveOrUpdateProductPartys(Product product, Set<Party> parties) {
-        product.setParties(parties);
-        productRepository.save(product);
-    }*/
 
     /**
      * Method to enable or disable product
@@ -293,7 +289,7 @@ public class ProductServiceImpl implements ProductService {
      */
     private void setProductDocs(Map<String, byte[]> productDocs, Product product) {
         if (productDocs != null && !productDocs.isEmpty()) {
-            MastroLogUtils.info(ProductService.class, "Going to save productImages   {}" + productDocs);
+            MastroLogUtils.info(ProductService.class, "Going to save productImages  " + productDocs);
             Set<ProductImages> newProductImages = new HashSet<>();
             productDocs.forEach((x, y) -> {
                 if (!containsInList(x,
@@ -323,7 +319,7 @@ public class ProductServiceImpl implements ProductService {
      */
     private void saveProductFilesToFileDB(Long productId, Map<String, byte[]> productDocs) throws FileStoreException {
         if (productDocs != null && !productDocs.isEmpty()) {
-            MastroLogUtils.info(ProductService.class, "Going to save productImages in folder   {}" + productDocs);
+            MastroLogUtils.info(ProductService.class, "Going to save productImages in folder  " + productDocs);
             saveProductFile(productId.toString(), productDocs, MastroFileStore.FileType.productImage);
 
         }
@@ -338,8 +334,8 @@ public class ProductServiceImpl implements ProductService {
     public void productUploasS3(final File folder, String sproductId) {
         for (final File fileEntry : folder.listFiles()) {
             try {
-                MastroLogUtils.info(ProductService.class, "Going to save productImages in s3   {}" + sproductId);
-                String uploadFilePath = getUserFolder() + "/" + sproductId + "/productPic/" + fileEntry.getName();
+                MastroLogUtils.info(ProductService.class, "Going to save productImages in s3  " + sproductId);
+                String uploadFilePath = getUserFolder() + "/" + sproductId + Constants.PRODUCT_PIC_FOLDER + fileEntry.getName();
                 String ftype = "productImg";
                 s3Services.uploadFile(fileEntry.getAbsoluteFile().getName(), uploadFilePath, sproductId, ftype);
             } catch (FileStoreException e) {
@@ -358,17 +354,15 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = getProductById(id);
         if (product.getProductImages() != null) {
-            MastroLogUtils.info(ProductService.class, "Going to remove productImages in s3   {}");
+            MastroLogUtils.info(ProductService.class, "Going to remove productImages in s3  ");
             Set<ProductImages> productImages = getProductById(id).getProductImages();
             Iterator<ProductImages> productImageSet = productImages.iterator();
             for (Iterator<ProductImages> images = productImageSet; images.hasNext(); ) {
                 ProductImages productImage = images.next();
-                if (productImage != null) {
-                    if (productImage.getFileName().equals(fileName)) {
+                    if (productImage != null && productImage.getFileName().equals(fileName)) {
                         productImageSet.remove();
                         s3Services.deleteProductImage(id, fileName);
                     }
-                }
             }
 
         }
@@ -386,7 +380,7 @@ public class ProductServiceImpl implements ProductService {
     public void addPartyToProduct(Long productId, Long partyId) {
 
         if (productId != null && partyId != null) {
-            MastroLogUtils.info(ProductService.class, "Going to add party to party   {}");
+            MastroLogUtils.info(ProductService.class, "Going to add party to party  ");
             Set<ProductPartyRateRelation> productPartyRateRelationsSet = getAllProductPartyRateRelation().stream()
                     .filter(relationData -> (null != relationData))
                     .filter(relationData -> (productId.equals(relationData.getProduct().getId())))
@@ -423,61 +417,47 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateItemParty(String[] productPartyRateIds, String[] rates, String[] discounts, String[] creditDays, String[] allowedPriceUpper, String[] allowedDevLower) {
 
-        MastroLogUtils.info(ProductService.class, "Going to save product party relation details {}" + productPartyRateIds);
+        MastroLogUtils.info(ProductService.class, "Going to save product party relation details" + productPartyRateIds);
 
         for (int i = 0; i < productPartyRateIds.length; i++) {
             PartyPriceList partyPriceList;
             ProductPartyRateRelation productPartyRateRelation = productPartyRateRelationRepository.findById(Long.parseLong(productPartyRateIds[i])).get();
             if (productPartyRateRelation.getPartyPriceList() == null) {
                 partyPriceList = new PartyPriceList();
-                Party party = productPartyRateRelation.getParty();
-                partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
-                partyPriceList.setRate(Double.parseDouble(rates[i]));
-                if (party.getPartyType().equals("Supplier")) {
-                    partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
-                    partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
-                    partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
-                } else {
-                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
-                            .filter(priceListData -> (null != priceListData))
-                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
-                            .collect(Collectors.toSet());
-                    for (PriceList priceList : priceListSet) {
-                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
-                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
-                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
-                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
-                        }
-                    }
-                }
+                setPartyPriceData(partyPriceList, productPartyRateRelation, creditDays[i], rates[i], discounts[i], allowedPriceUpper[i], allowedDevLower[i]);
             } else {
-                MastroLogUtils.info(ProductService.class, "Going to edit product party relation details {}" + productPartyRateIds);
+                MastroLogUtils.info(ProductService.class, "Going to edit product party relation details" + productPartyRateIds);
                 partyPriceList = productPartyRateRelation.getPartyPriceList();
-                Party party = productPartyRateRelation.getParty();
-                partyPriceList.setCreditDays(Integer.parseInt(creditDays[i]));
-                partyPriceList.setRate(Double.parseDouble(rates[i]));
-                if (party.getPartyType().equals("Supplier")) {
-                    partyPriceList.setDiscount(Double.parseDouble(discounts[i]));
-                    partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper[i]));
-                    partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower[i]));
-                } else {
-                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
-                            .filter(priceListData -> (null != priceListData))
-                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
-                            .collect(Collectors.toSet());
-                    for (PriceList priceList : priceListSet) {
-                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
-                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
-                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
-                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
-                        }
-                    }
-                }
+                setPartyPriceData(partyPriceList, productPartyRateRelation, creditDays[i], rates[i], discounts[i], allowedPriceUpper[i], allowedDevLower[i]);
             }
             productPartyRateRelation.setPartyPriceList(partyPriceList);
             productPartyRateRelationRepository.save(productPartyRateRelation);
         }
 
+    }
+
+    private void setPartyPriceData(PartyPriceList partyPriceList, ProductPartyRateRelation productPartyRateRelation, String creditDay, String rate,
+                                   String discount, String allowedPriceUpper, String allowedDevLower) {
+        Party party = productPartyRateRelation.getParty();
+        partyPriceList.setCreditDays(Integer.parseInt(creditDay));
+        partyPriceList.setRate(Double.parseDouble(rate));
+        if (party.getPartyType().equals(Constants.SUPPLIER)) {
+            partyPriceList.setDiscount(Double.parseDouble(discount));
+            partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble(allowedPriceUpper));
+            partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble(allowedDevLower));
+        } else {
+            Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
+                    .filter(priceListData -> (null != priceListData))
+                    .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                    .collect(Collectors.toSet());
+            for (PriceList priceList : priceListSet) {
+                if (party.getCategoryType().equals(priceList.getCategoryType())) {
+                    partyPriceList.setDiscount(priceList.getDiscountPercentage());
+                    partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
+                    partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                }
+            }
+        }
     }
 
     /**
@@ -494,63 +474,51 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdatePartyItems(String[] productPartyRateIds, String[] rates, String[] remarks) {
 
-        MastroLogUtils.info(ProductService.class, "Going to save party item relation details {}" + productPartyRateIds);
+        MastroLogUtils.info(ProductService.class, "Going to save party item relation details " + productPartyRateIds);
 
         for (int i = 0; i < productPartyRateIds.length; i++) {
             PartyPriceList partyPriceList;
             ProductPartyRateRelation productPartyRateRelation = productPartyRateRelationRepository.findById(Long.parseLong(productPartyRateIds[i])).get();
             if (productPartyRateRelation.getPartyPriceList() == null) {
                 partyPriceList = new PartyPriceList();
-                Party party = productPartyRateRelation.getParty();
+                partyPriceList.setDiscount(Double.parseDouble("0"));
+                partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble("0"));
+                partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble("0"));
                 partyPriceList.setCreditDays(0);
-                partyPriceList.setRate(Double.parseDouble(rates[i]));
-                partyPriceList.setRemarks(remarks[i]);
-                if (party.getPartyType().equals("Supplier")) {
-                    partyPriceList.setDiscount(Double.parseDouble("0"));
-                    partyPriceList.setAllowedPriceDevPerUpper(Double.parseDouble("0"));
-                    partyPriceList.setAllowedPriceDevPerLower(Double.parseDouble("0"));
-                } else {
-                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
-                            .filter(priceListData -> (null != priceListData))
-                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
-                            .collect(Collectors.toSet());
-                    for (PriceList priceList : priceListSet) {
-                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
-                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
-                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
-                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
-                        }
-                    }
-                }
+                setPartyPriceData(partyPriceList, productPartyRateRelation, rates[i], remarks[i]);
             } else {
-                MastroLogUtils.info(ProductService.class, "Going to edit product party relation details {}" + productPartyRateIds);
+                MastroLogUtils.info(ProductService.class, "Going to edit product party relation details" + productPartyRateIds);
                 partyPriceList = productPartyRateRelation.getPartyPriceList();
-                Party party = productPartyRateRelation.getParty();
-                partyPriceList.setCreditDays(partyPriceList.getCreditDays());
-                partyPriceList.setRate(Double.parseDouble(rates[i]));
-                partyPriceList.setRemarks(remarks[i]);
-                if (party.getPartyType().equals("Supplier")) {
-                    partyPriceList.setDiscount(partyPriceList.getDiscount());
-                    partyPriceList.setAllowedPriceDevPerUpper(partyPriceList.getAllowedPriceDevPerUpper());
-                    partyPriceList.setAllowedPriceDevPerLower(partyPriceList.getAllowedPriceDevPerLower());
-                } else {
-                    Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
-                            .filter(priceListData -> (null != priceListData))
-                            .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
-                            .collect(Collectors.toSet());
-                    for (PriceList priceList : priceListSet) {
-                        if (party.getCategoryType().equals(priceList.getCategoryType())) {
-                            partyPriceList.setDiscount(priceList.getDiscountPercentage());
-                            partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
-                            partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
-                        }
-                    }
-                }
+                setPartyPriceData(partyPriceList, productPartyRateRelation,   rates[i], remarks[i]);
             }
             productPartyRateRelation.setPartyPriceList(partyPriceList);
             productPartyRateRelationRepository.save(productPartyRateRelation);
         }
 
+    }
+
+    private void setPartyPriceData(PartyPriceList partyPriceList, ProductPartyRateRelation productPartyRateRelation, String rate, String remark) {
+        Party party = productPartyRateRelation.getParty();
+        partyPriceList.setCreditDays(partyPriceList.getCreditDays());
+        partyPriceList.setRate(Double.parseDouble(rate));
+        partyPriceList.setRemarks(remark);
+        if (party.getPartyType().equals(Constants.SUPPLIER)) {
+            partyPriceList.setDiscount(partyPriceList.getDiscount());
+            partyPriceList.setAllowedPriceDevPerUpper(partyPriceList.getAllowedPriceDevPerUpper());
+            partyPriceList.setAllowedPriceDevPerLower(partyPriceList.getAllowedPriceDevPerLower());
+        } else {
+            Set<PriceList> priceListSet = priceListService.getAllPriceList().stream()
+                    .filter(priceListData -> (null != priceListData))
+                    .filter(priceListData -> (1 != priceListData.getPricelistDeleteStatus()))
+                    .collect(Collectors.toSet());
+            for (PriceList priceList : priceListSet) {
+                if (party.getCategoryType().equals(priceList.getCategoryType())) {
+                    partyPriceList.setDiscount(priceList.getDiscountPercentage());
+                    partyPriceList.setAllowedPriceDevPerUpper(priceList.getAllowedPriceDevPerUpper());
+                    partyPriceList.setAllowedPriceDevPerLower(priceList.getAllowedPriceDevPerLower());
+                }
+            }
+        }
     }
 
 }

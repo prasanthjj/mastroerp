@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +51,7 @@ public class AutocompleteController {
     public GenericResponse products(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
-            List<Product> productsFinal = new ArrayList<>();
+            List<Product> productsFinal;
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
                     .filter(productData -> (null != productData))
@@ -85,7 +84,7 @@ public class AutocompleteController {
     public GenericResponse getPartys(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : {}");
-            List<Party> partyFinal = new ArrayList<>();
+            List<Party> partyFinal;
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
                     .filter(partysData -> (null != partysData))
@@ -119,7 +118,7 @@ public class AutocompleteController {
     public GenericResponse getPartysOnType(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyType") String partyType) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete based on type : {}");
-            List<Party> partyFinal = new ArrayList<>();
+            List<Party> partyFinal;
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
                     .filter(partysData -> (null != partysData))
@@ -153,7 +152,7 @@ public class AutocompleteController {
     public GenericResponse productsInIndent(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
-            List<Product> productsFinal = new ArrayList<>();
+            List<Product> productsFinal;
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
                     .filter(productData -> (null != productData))
@@ -203,7 +202,6 @@ public class AutocompleteController {
     public GenericResponse productsInStock(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(com.erp.mastro.controller.AutocompleteController.class, "Going to get product in autocomplete : {}");
-            User userDetails = userController.getCurrentUser();
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             List<Product> productsFinal = products.stream()
                     .filter(productData -> (null != productData))
@@ -253,7 +251,7 @@ public class AutocompleteController {
     public GenericResponse branches(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get Branch in autocomplete : {}");
-            List<Branch> branchFinal = new ArrayList<>();
+            List<Branch> branchFinal;
             List<Branch> branches = autoPopulateDao.getAutoPopulateList("branchName", searchTerm, Branch.class, 50);
             branchFinal = branches.stream()
                     .filter(branchData -> (null != branchData))
@@ -287,7 +285,7 @@ public class AutocompleteController {
     public GenericResponse productsInSalesSlip(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyId") Long partyId) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
-            List<Product> productsFinal = new ArrayList<>();
+            List<Product> productsFinal;
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
                     .filter(productData -> (null != productData))
@@ -333,7 +331,7 @@ public class AutocompleteController {
     public GenericResponse getCustomerPartys(@RequestParam("searchTerm") String searchTerm) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get party in autocomplete : {}");
-            List<Party> partyFinal = new ArrayList<>();
+            List<Party> partyFinal;
             List<Party> partys = autoPopulateDao.getAutoPopulateList("partyName", searchTerm, Party.class, 50);
             partyFinal = partys.stream()
                     .filter(partysData -> (null != partysData))
@@ -361,7 +359,7 @@ public class AutocompleteController {
     public GenericResponse productsInCustomer(@RequestParam("searchTerm") String searchTerm, @RequestParam("partyId") Long partyId) {
         try {
             MastroLogUtils.info(AutocompleteController.class, "Going to get product in autocomplete : {}");
-            List<Product> productsFinal = new ArrayList<>();
+            List<Product> productsFinal;
             List<Product> products = autoPopulateDao.getAutoPopulateList("productName", searchTerm, Product.class, 50);
             productsFinal = products.stream()
                     .filter(productData -> (null != productData))

@@ -190,7 +190,7 @@ public class PartyServiceImpl implements PartyService {
         }
         String sDate1 = partyRequestModel.getSpartyDate();
         if (sDate1 != "") {
-            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
             party.setPartyDate(date1);
         }
         partyRepository.save(party);
@@ -232,7 +232,7 @@ public class PartyServiceImpl implements PartyService {
         }
         String sDate1 = partyRequestModel.getSpartyDate();
         if (sDate1 != "") {
-            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
+            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
             party.setPartyDate(date1);
         }
         partyRepository.save(party);

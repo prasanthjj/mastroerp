@@ -99,7 +99,7 @@ public class UserController {
             if (userDetails.getUserSelectedBranch() != null && userDetails.getUserSelectedBranch().getCurrentBranch() != null) {
                 currentBranch = userDetails.getUserSelectedBranch().getCurrentBranch().getBranchName();
             }
-        }
+
         Set<User> userListCount = userService.getAllUsers().stream()
                 .filter(userData -> (null != userData))
                 .filter(userData -> (false != userData.isEnabled()))
@@ -131,7 +131,7 @@ public class UserController {
         session.setAttribute("ActiveUser", userListCount.size());
         session.setAttribute("lastLoginDate", userDetails.getLastLogin());
         session.setAttribute("branchList", branchList);
-
+        }
         return "views/dashboard";
     }
 

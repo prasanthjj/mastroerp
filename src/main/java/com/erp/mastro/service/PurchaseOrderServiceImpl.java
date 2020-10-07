@@ -127,12 +127,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      */
     @Transactional(rollbackOn = {Exception.class})
     public ItemStockDetails IndentItemGroupDatas(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
-
-        ItemStockDetails itemStockDetails = itemStockDetailsRepository.findById(indentItemPartyGroupRequestModel.getIndentItemId()).get();
-
+        ItemStockDetails itemStockDetails;
         if (indentItemPartyGroupRequestModel == null) {
             throw new ModelNotFoundException("indentItemPartyGroupRequestModel model is empty");
         } else {
+         itemStockDetails = itemStockDetailsRepository.findById(indentItemPartyGroupRequestModel.getIndentItemId()).get();
+
+
 
             MastroLogUtils.info(PurchaseOrderService.class, "Going to edit indentItemPartyGroup Items {}" + indentItemPartyGroupRequestModel.toString());
             Set<IndentItemPartyGroup> indentItemPartyGroups = saveOrUpdateIndentItemsPartyGroups(indentItemPartyGroupRequestModel, itemStockDetails);
@@ -209,7 +210,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             indentItemPartyGroups.addAll(indentItemPartyGroupsss);
         }
         if (indentItemPartyGroups.isEmpty() == false) {
-            Set<Party> partySet = new HashSet();
+            Set<Party> partySet = new HashSet<>();
 
             for (IndentItemPartyGroup indentItemPartyGroup : indentItemPartyGroups) {
                 partySet.add(indentItemPartyGroup.getParty());
@@ -262,11 +263,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 count = count + 1;
             }
         }
-        if (count == 0) {
-            if (indentItemPartyGroups.isEmpty() == false) {
+        if (count == 0&&indentItemPartyGroups.isEmpty() == false) {
                 indent.setIndentStatus("CLOSED");
                 indentRepository.save(indent);
-            }
         }
 
         MastroLogUtils.info(PurchaseOrderService.class, "create purchase orders  succesfully.");
@@ -318,13 +317,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Transactional(rollbackOn = {Exception.class})
     public ItemStockDetails IndentItemGroupDatasInEdit(IndentItemPartyGroupRequestModel indentItemPartyGroupRequestModel) throws ModelNotFoundException {
-
-        ItemStockDetails itemStockDetails = itemStockDetailsRepository.findById(indentItemPartyGroupRequestModel.getIndentItemId()).get();
-
+        ItemStockDetails itemStockDetails;
         if (indentItemPartyGroupRequestModel == null) {
             throw new ModelNotFoundException("indentItemPartyGroupRequestModel model is empty");
         } else {
-
+            itemStockDetails = itemStockDetailsRepository.findById(indentItemPartyGroupRequestModel.getIndentItemId()).get();
             MastroLogUtils.info(PurchaseOrderService.class, "Going to edit indentItemPartyGroup Items {}" + indentItemPartyGroupRequestModel.toString());
             Double purchaseQuantity = 0d;
             purchaseQuantity = itemStockDetails.getPurchaseQuantity();

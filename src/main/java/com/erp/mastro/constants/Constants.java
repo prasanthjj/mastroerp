@@ -43,4 +43,10 @@ public class Constants {
 
     public static final String PARTY_TYPE_S = "S";
 
+    public static final String DATEFORMAT_MM_DD_YYYY = "MM/dd/yyyy";
+
+    public static final String PRODUCT_PIC_FOLDER = "/productPic/";
+
+    public static final String SUPPLIER = "Supplier";
+
 }

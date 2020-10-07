@@ -1,6 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.GatePass;
 import com.erp.mastro.model.request.GatePassRequestModel;
 import com.erp.mastro.repository.GatePassRepository;
@@ -59,71 +60,41 @@ public class GatePassServiceImpl implements GatePassService {
     @Override
     @Transactional(rollbackOn = {Exception.class})
     public void saveOrUpdateGatePass(GatePassRequestModel gatePassRequestModel, String value, String val) throws ParseException {
+        GatePass gatePass;
         if (gatePassRequestModel.getId() == null) {
             MastroLogUtils.info(GatePassService.class, "Going to save GAte Pass {}" + gatePassRequestModel.toString());
-            GatePass gatePass = new GatePass();
-            gatePass.setVehicleMovementType(value);
-            if (gatePass.getVehicleMovementType().equals("Inward")) {
-                gatePass.setVehicleMovementType("Inward");
-            } else {
-                gatePass.setVehicleMovementType("Outward");
-            }
-
-            gatePass.setEmptyMaterial(val);
-            if (gatePass.getEmptyMaterial().equals("Empty")) {
-                gatePass.setEmptyMaterial("Empty");
-            } else {
-                gatePass.setEmptyMaterial("With_Matrial");
-            }
-            System.out.println("inside the impl of matrial: " + gatePass.getEmptyMaterial());
-
-            gatePass.setEntryNo(gatePassRequestModel.getEntryNo());
-            gatePass.setEntryDate(gatePassRequestModel.getEntryDate());
-            String sDate1 = gatePassRequestModel.getsEntryDate();
-            if (sDate1 != "") {
-                Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
-
-                gatePass.setEntryDate(date1);
-            }
-
-            gatePass.setVehicleNo(gatePassRequestModel.getVehicleNo());
-            gatePass.setTransportName(gatePassRequestModel.getTransportName());
-            gatePass.setTransportAddress(gatePassRequestModel.getTransportAddress());
-            gatePass.setPreparedBy(gatePassRequestModel.getPreparedBy());
-            gatePass.setMaterialDescription(gatePassRequestModel.getMaterialDescription());
-            gatePass.setRemarks(gatePassRequestModel.getRemarks());
-            gatePass.setReferenceDocumentNo(gatePassRequestModel.getReferenceDocumentNo());
-            gatePass.setCustomerVendorName(gatePassRequestModel.getCustomerVendorName());
-            gatePass.setCustomerVendorAddress(gatePassRequestModel.getCustomerVendorAddress());
-            gatePass.setLRNo(gatePassRequestModel.getLRNo());
-            gatePassRepository.save(gatePass);
-            MastroLogUtils.info(GatePassService.class, "Saved " + gatePass.getCustomerVendorName() + " successfully.");
+            gatePass = new GatePass();
+            setGatePassData(gatePassRequestModel, value, val, gatePass);
         } else {
             MastroLogUtils.info(GatePassService.class, "Going to edit Gate Pass {}" + gatePassRequestModel.toString());
-            GatePass gatePass = getGatePassId(gatePassRequestModel.getId());
-            gatePass.setVehicleMovementType(value);
-            gatePass.setEmptyMaterial(val);
-            gatePass.setEntryNo(gatePassRequestModel.getEntryNo());
-            String sDate1 = gatePassRequestModel.getsEntryDate();
-
-            if (sDate1 != "") {
-                Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
-                gatePass.setEntryDate(date1);
-            }
-            gatePass.setVehicleNo(gatePassRequestModel.getVehicleNo());
-            gatePass.setTransportName(gatePassRequestModel.getTransportName());
-            gatePass.setTransportAddress(gatePassRequestModel.getTransportAddress());
-            gatePass.setPreparedBy(gatePassRequestModel.getPreparedBy());
-            gatePass.setMaterialDescription(gatePassRequestModel.getMaterialDescription());
-            gatePass.setRemarks(gatePassRequestModel.getRemarks());
-            gatePass.setReferenceDocumentNo(gatePassRequestModel.getReferenceDocumentNo());
-            gatePass.setCustomerVendorName(gatePassRequestModel.getCustomerVendorName());
-            gatePass.setCustomerVendorAddress(gatePassRequestModel.getCustomerVendorAddress());
-            gatePass.setLRNo(gatePassRequestModel.getLRNo());
-            gatePassRepository.save(gatePass);
-            MastroLogUtils.info(GatePassService.class, "Saved " + gatePass.getCustomerVendorName() + " successfully.");
+            gatePass = getGatePassId(gatePassRequestModel.getId());
+            setGatePassData(gatePassRequestModel, value, val, gatePass);
         }
+        MastroLogUtils.info(GatePassService.class, "Saved " + gatePass.getCustomerVendorName() + " successfully.");
 
+    }
+
+    private void setGatePassData(GatePassRequestModel gatePassRequestModel, String value, String val, GatePass gatePass) throws ParseException {
+        gatePass.setVehicleMovementType(value);
+        gatePass.setEmptyMaterial(val);
+        gatePass.setEntryNo(gatePassRequestModel.getEntryNo());
+        gatePass.setEntryDate(gatePassRequestModel.getEntryDate());
+        String sDate1 = gatePassRequestModel.getsEntryDate();
+        if (sDate1 != "") {
+            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+            gatePass.setEntryDate(date1);
+        }
+        gatePass.setVehicleNo(gatePassRequestModel.getVehicleNo());
+        gatePass.setTransportName(gatePassRequestModel.getTransportName());
+        gatePass.setTransportAddress(gatePassRequestModel.getTransportAddress());
+        gatePass.setPreparedBy(gatePassRequestModel.getPreparedBy());
+        gatePass.setMaterialDescription(gatePassRequestModel.getMaterialDescription());
+        gatePass.setRemarks(gatePassRequestModel.getRemarks());
+        gatePass.setReferenceDocumentNo(gatePassRequestModel.getReferenceDocumentNo());
+        gatePass.setCustomerVendorName(gatePassRequestModel.getCustomerVendorName());
+        gatePass.setCustomerVendorAddress(gatePassRequestModel.getCustomerVendorAddress());
+        gatePass.setLRNo(gatePassRequestModel.getLRNo());
+        gatePassRepository.save(gatePass);
     }
 
     /**
