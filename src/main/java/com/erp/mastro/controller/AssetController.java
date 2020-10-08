@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Assets;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -44,7 +45,7 @@ public class AssetController {
                             Assets::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("assetForm", new AssetRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("assetTab", "asset");
             model.addAttribute("assetList", assetsList);
 
@@ -68,7 +69,7 @@ public class AssetController {
         MastroLogUtils.info(AssetController.class, "Going to get CreateAsset : {}");
         try {
             model.addAttribute("assetForm", new AssetRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("assetTab", "asset");
             return "views/createAssets";
 
@@ -116,7 +117,7 @@ public class AssetController {
         MastroLogUtils.info(AssetController.class, "Going to edit asset : {}" + assetId);
         try {
 
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("assetTab", "asset");
             if (assetId != null) {
                 model.addAttribute("assetForm", new AssetRequestModel(assetService.getAssetsById(assetId)));
@@ -176,7 +177,7 @@ public class AssetController {
         try {
             Assets assets = assetService.getAssetsById(assetId);
             model.addAttribute("assetDetails", assets);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("assetTab", "asset");
             return "views/viewAssets";
         } catch (Exception e) {

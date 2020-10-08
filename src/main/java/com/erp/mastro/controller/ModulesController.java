@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Modules;
 import com.erp.mastro.entities.Roles;
@@ -51,7 +52,7 @@ public class ModulesController {
                 }
             }
             model.addAttribute("moduleForm", new ModuleRequestModel());
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("roleAccessTab", "roleAccess");
             model.addAttribute("modulesList", modulesSet);
             model.addAttribute("rolesList", rolesList);

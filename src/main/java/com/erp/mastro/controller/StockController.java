@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.Product;
@@ -51,7 +52,7 @@ public class StockController {
                     .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
                     .sorted(Comparator.comparing(Stock::getId).reversed())
                     .collect(Collectors.toList());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("stockTab", "stock");
             model.addAttribute("stockDetailsList", stockDetailsList);
             return "views/stockDetails";
@@ -75,7 +76,7 @@ public class StockController {
         MastroLogUtils.info(StockController.class, "Going to get stock :{}");
         try {
             model.addAttribute("stockForm", new StockRequestModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("stockTab", "stock");
             return "views/createStockDetails";
         } catch (Exception e) {
@@ -99,7 +100,7 @@ public class StockController {
         try {
             Product product = productService.getProductById(productId);
             model.addAttribute("productDetails", product);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("stockTab", "stock");
             model.addAttribute("stockForm", new StockRequestModel());
             return "views/createStockDetails";
@@ -146,7 +147,7 @@ public class StockController {
         try {
             Stock stockDetails = stockService.getStockById(stockId);
             model.addAttribute("stockDetails", stockDetails);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("stockTab", "stock");
             return "views/view_stock_details";
         } catch (Exception e) {
@@ -168,7 +169,7 @@ public class StockController {
         MastroLogUtils.info(StockController.class, "Going to edit stock : {}" + stockId);
         try {
             StockRequestModel stockRequestModel = new StockRequestModel();
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("stockTab", "stock");
             model.addAttribute("stockForm", stockService.getStockById(stockId));
             return "views/edit_stock_details";

@@ -204,7 +204,7 @@ public class UserController {
                     .collect(Collectors.toList());
 
             model.addAttribute("addUserForm", new UserModel());
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("userTab", "user");
             model.addAttribute("usersList",userList);
             model.addAttribute("employeesList",employeeList);

@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.HSN;
 import com.erp.mastro.model.request.HSNRequestModel;
@@ -33,7 +34,7 @@ public class HSNController {
                     .sorted(Comparator.comparing(
                             HSN::getId).reversed())
                     .collect(Collectors.toList());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("hsnTab", "hsn");
             model.addAttribute("hsnList", hsnList);
             return "views/hsn_master";
@@ -50,7 +51,7 @@ public class HSNController {
         MastroLogUtils.info(HSNController.class, "Going to get CreateHSN :{}");
         try {
             model.addAttribute("hsnForm", new HSNRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("hsnTab", "hsn");
             return "views/createHsnMaster";
 
@@ -79,7 +80,7 @@ public class HSNController {
         try {
             HSN hsn = hsnService.getHSNById(hsnId);
             model.addAttribute("hsnDetails", hsn);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("hsnTab", "hsn");
             return "views/viewHsn";
         } catch (Exception e) {
@@ -94,7 +95,7 @@ public class HSNController {
         MastroLogUtils.info(HSNController.class, "Going to get editHSN :{}" + hsnId);
         try {
             HSNRequestModel hsnRequestModel = new HSNRequestModel();
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("hsnTab", "hsn");
             model.addAttribute("hsnForm", hsnService.getHSNById(hsnId));
             return "views/editHsnMaster";

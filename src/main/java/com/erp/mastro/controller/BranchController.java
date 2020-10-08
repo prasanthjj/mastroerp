@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.model.request.BranchRequestModel;
@@ -41,7 +42,7 @@ public class BranchController {
                             Branch::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("branchForm", new BranchRequestModel());
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("branchTab", "branch");
             return "views/create_branch";
         } catch (Exception e) {
@@ -86,7 +87,7 @@ public class BranchController {
                 }
             }
             model.addAttribute("branchForm", new BranchRequestModel());
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("branchTab", "branch");
             model.addAttribute("branchList", branchList);
             return "views/branch_master";
@@ -111,7 +112,7 @@ public class BranchController {
             if (branchId != null) {
                 Branch branch = branchService.getBranchById(branchId);
                 BranchRequestModel branchRequestModel = new BranchRequestModel(branch);
-                model.addAttribute("adminModule", "adminModule");
+                model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
                 model.addAttribute("branchTab", "branch");
                 model.addAttribute("branchForm", branchRequestModel);
             }
@@ -135,7 +136,7 @@ public class BranchController {
         MastroLogUtils.info(BranchController.class, "Going to view Branch : {}" + branchId);
         try {
             model.addAttribute("branchForm", branchService.getBranchById(branchId));
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("branchTab", "branch");
             return "views/view_branch";
         } catch (Exception e) {

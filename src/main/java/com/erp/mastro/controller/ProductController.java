@@ -69,7 +69,7 @@ public class ProductController {
                     .sorted(Comparator.comparing(
                             Product::getId).reversed())
                     .collect(Collectors.toList());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("productTab", "product");
             model.addAttribute("productList", productList);
 
@@ -92,7 +92,7 @@ public class ProductController {
 
         try {
             model.addAttribute("productForm", new ProductRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("productTab", "product");
             List<HSN> hsnList = hsnService.getAllHSN().stream()
                     .filter(hsnData -> (null != hsnData))
@@ -212,7 +212,7 @@ public class ProductController {
 
         MastroLogUtils.info(ProductController.class, "Going to edit product : {}" + productId);
         try {
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("productTab", "product");
             List<HSN> hsnList = hsnService.getAllHSN().stream()
                     .filter(hsnData -> (null != hsnData))
@@ -309,7 +309,7 @@ public class ProductController {
         try {
             Product product = productService.getProductById(productId);
             model.addAttribute("productDetails", product);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("productTab", "product");
 
             if (product.getProductImages() != null) {

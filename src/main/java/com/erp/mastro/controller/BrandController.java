@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Brand;
 import com.erp.mastro.model.request.BrandRequestModel;
@@ -34,7 +35,7 @@ public class BrandController {
                             Brand::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("brandForm", new BrandRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("brandTab", "brand");
             model.addAttribute("brandList", brandList);
             return "views/brandMaster";

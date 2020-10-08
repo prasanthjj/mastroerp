@@ -2,6 +2,7 @@ package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
@@ -60,7 +61,7 @@ public class SalesOrderController {
                     .collect(Collectors.toList());
             model.addAttribute("salesForm", new SalesOrderRequestModel());
             model.addAttribute("salesOrderList", salesOrderList);
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("salesTab", "sales");
             return "views/salesOrder";
         } catch (Exception e) {
@@ -81,7 +82,7 @@ public class SalesOrderController {
         MastroLogUtils.info(SalesOrderController.class, "Going to add sales order : {}");
         try {
             model.addAttribute("salesForm", new SalesOrderRequestModel());
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("salesTab", "sales");
 
 
@@ -115,7 +116,7 @@ public class SalesOrderController {
             BillingDetails billingDetails = party.getBillingDetails().stream().filter(billingItem -> (null != billingItem))
                     .findFirst().get();
             model.addAttribute("partyBillingDetails", billingDetails);
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("salesTab", "sales");
             model.addAttribute("salesDetails", salesOrder);
             model.addAttribute("salesForm", new SalesOrderRequestModel());
@@ -146,7 +147,7 @@ public class SalesOrderController {
         try {
             Product product = productService.getProductById(productId);
             model.addAttribute("productDetails", product);
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("salesTab", "sales");
             SalesOrder salesOrder = salesOrderService.getSalesorderById(salesId);
             salesOrderService.saveOrUpdateSalesOrderProduct(salesOrderRequestModel, salesOrder, product, quantity);
@@ -301,7 +302,7 @@ public class SalesOrderController {
         MastroLogUtils.info(SalesOrderController.class, "Going to get SalesOrderPreview :{}" + soId);
         try {
 
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("salesTab", "sales");
             SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
             model.addAttribute("salesOrderDetails", salesOrder);
@@ -485,12 +486,11 @@ public class SalesOrderController {
     @RequestMapping(value = "/getSalesOrderOnReview", method = RequestMethod.GET)
     public String getSalesOrderOnReview(HttpServletRequest request, @RequestParam("soId") Long soId, Model model) {
 
-
-            model.addAttribute("salesModule", "salesModule");
-            model.addAttribute("salesTab", "sales");
-            SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
-            model.addAttribute("salesOrderDetails", salesOrder);
-            return "views/editSoOnReview";
+        model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
+        model.addAttribute("salesTab", "sales");
+        SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+        model.addAttribute("salesOrderDetails", salesOrder);
+        return "views/editSoOnReview";
 
     }
 

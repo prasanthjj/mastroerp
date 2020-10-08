@@ -93,7 +93,7 @@ public class GRNServiceImpl implements GRNService {
                 if (!sDate1.equals("")) {
                     Date date1 = null;
                     try {
-                        date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+                        date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

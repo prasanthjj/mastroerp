@@ -63,7 +63,7 @@ public class GRNController {
         try {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             model.addAttribute("grnForm", new GRNRequestModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("GRNTab", "GRN");
             List<GRN> grnList = grnService.getAllGRNs().stream()
                     .filter(grn -> (null != grn))
@@ -95,7 +95,7 @@ public class GRNController {
         MastroLogUtils.info(GRNController.class, "Going to get Create GRN : {}");
         try {
             model.addAttribute("grnForm", new GRNRequestModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("GRNTab", "GRN");
             return "views/addGRN";
 
@@ -154,7 +154,7 @@ public class GRNController {
     public String createGRNBasic(@ModelAttribute("grnForm") @Valid GRNRequestModel grnRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(GRNController.class, "Going to create basic GRN details :" + grnRequestModel.toString());
         try {
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("GRNTab", "GRN");
             GRN grn = grnService.createGRN(grnRequestModel);
             model.addAttribute("grnDetails", grn);
@@ -198,7 +198,7 @@ public class GRNController {
     public String getGRNPreview(HttpServletRequest request, @RequestParam("grnId") Long grnId, Model model) {
         MastroLogUtils.info(GRNController.class, "Going to get grnPreview :{}" + grnId);
         try {
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("GRNTab", "GRN");
             if (grnId != null) {
                 GRN grn = grnService.getGRNById(grnId);

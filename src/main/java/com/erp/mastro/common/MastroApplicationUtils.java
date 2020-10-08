@@ -37,7 +37,7 @@ public class MastroApplicationUtils {
      * @return String format of Date
      */
     public static String getStringFromDate(String dateString, Date date) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern(Constants.DATEFORMAT_MM_DD_YYYY);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(Constants.DATE_MM_DD_YYYY);
         if (dateString != null) {
             return dateString;
         }

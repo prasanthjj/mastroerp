@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.SalesSlip;
 import com.erp.mastro.model.request.DeliveryChellanRequestModel;
@@ -50,7 +51,7 @@ public class DeliveryChellanController {
 
         model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
         model.addAttribute("deliveryChellanForm", new DeliveryChellanRequestModel());
-        model.addAttribute("inventoryModule", "inventory");
+        model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
         model.addAttribute("deliveryChellanTab", "deliveryChellan");
         model.addAttribute("salesSlipList", salesSlipList);
         return "views/dc_purchase_slip";
@@ -63,7 +64,7 @@ public class DeliveryChellanController {
         Branch branch = branchService.getBranchById(branchId);
 
         model.addAttribute("deliveryChellanForm", new DeliveryChellanRequestModel());
-        model.addAttribute("inventoryModule", "inventory");
+        model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
         model.addAttribute("deliveryChellanTab", "deliveryChellan");
         model.addAttribute("branchDetails", branch);
             return "views/add_dc";
@@ -81,7 +82,7 @@ public class DeliveryChellanController {
             }
 
             model.addAttribute("deliveryChellanForm", new DeliveryChellanRequestModel());
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             model.addAttribute("branchList", branchList);
 

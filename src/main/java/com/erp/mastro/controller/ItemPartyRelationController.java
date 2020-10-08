@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.dao.AutoPopulateDAO;
 import com.erp.mastro.entities.Party;
 import com.erp.mastro.entities.Product;
@@ -46,7 +47,7 @@ public class ItemPartyRelationController {
 
         try {
 
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             model.addAttribute("showtab", "itemtab");
@@ -73,7 +74,7 @@ public class ItemPartyRelationController {
         try {
             Product product = productService.getProductById(productId);
             model.addAttribute("productDetails", product);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             model.addAttribute("showtab", "itemtab");
@@ -104,7 +105,7 @@ public class ItemPartyRelationController {
                 productService.addPartyToProduct(productId, partyId);
                 model.addAttribute("productDetails", productService.getProductById(productId));
             }
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             model.addAttribute("showtab", "itemtab");
@@ -132,7 +133,7 @@ public class ItemPartyRelationController {
                 productService.saveOrUpdateItemParty(productPartyRateIds, ratess, discountss, creditDays, allowedPriceDevPerUppers, allowedPriceDevPerLowers);
             }
 
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             model.addAttribute("showtab", "itemtab");
@@ -162,7 +163,7 @@ public class ItemPartyRelationController {
         try {
             Party party = partyService.getPartyById(partyId);
             model.addAttribute("partysDetails", party);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             model.addAttribute("showtab", "partytab");
@@ -195,7 +196,7 @@ public class ItemPartyRelationController {
 
             }
             model.addAttribute("showtab", "partytab");
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             return "views/itemPartyRelationMaster";
@@ -218,7 +219,7 @@ public class ItemPartyRelationController {
             if (productPartyRateIds != null) {
                 productService.saveOrUpdatePartyItems(productPartyRateIds, ratess, remarkss);
             }
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("itemPartyTab", "itemParty");
             model.addAttribute("itemPartyForm", new ItemPartyRelationModel());
             String partyId = request.getParameter("showedParty");

@@ -81,7 +81,7 @@ public class GatePassServiceImpl implements GatePassService {
         gatePass.setEntryDate(gatePassRequestModel.getEntryDate());
         String sDate1 = gatePassRequestModel.getsEntryDate();
         if (sDate1 != "") {
-            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+            Date date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
             gatePass.setEntryDate(date1);
         }
         gatePass.setVehicleNo(gatePassRequestModel.getVehicleNo());
