@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Manage Stock Details </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"
+          th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Manage Stock Details </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="stockDetails.html" th:href="@{/inventory/getStock}">Stock List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Manage Stock Details </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+
+                        <div class="ibox-content mastro-step-ibox-content">
+                            <form action="" id="selectStockItemForm">
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label">Item Name</label>
+                                    <h4 th:text="${stockForm.product.productName}"></h4>
+                                    <!--  <div class="col-lg-4">
+                                         <p></p>
+                                      </div>
+                                      <div class="col-lg-2">
+                                          <button type="button" class="btn btn-primary">Select</button>
+                                      </div>
+  -->
+                                </div>
+                            </form>
+                            <form id="stockForm" th:action="@{/inventory/saveStock}" th:object="${stockForm}"
+                                  name="stockForm" method="post">
+                                <input type="hidden" name="id" th:field="*{id}"/>
+                                <h2>Stock Details</h2>
+                                <div class="row">
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Opening Stock <i
+                                                class="fa fa-asterisk "></i></label>
+                                            <input type="text" th:field="*{openingStock}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Rejected Stock</label>
+                                            <input type="text" th:field="*{rejectedStock}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Min. Lead Time</label>
+                                            <input type="text" th:field="*{minimumLeadTime}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Rate</label>
+                                            <h4 th:text="${stockForm.product.basePrice}"></h4>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Current Stock <i
+                                                class="fa fa-asterisk "></i></label>
+                                            <input type="text" th:field="*{currentStock}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Reserve Stock</label>
+
+                                            <input type="text" th:field="*{reserveStock}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Max. Lead Time</label>
+
+                                            <input type="text" th:field="*{maximumLeadTime}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Minimum Stock Qty</label>
+
+                                            <input type="text" th:field="*{minimumStockQuantity}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group"><label>Reorder Level</label>
+                                            <input type="text" th:field="*{reorderLevel}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label> Minimum Order Qty</label>
+                                            <input type="text" th:field="*{minimumOrderQuantity}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Base UOM</label>
+                                            <h4 th:text="${stockForm.product.uom.UOM}"></h4>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group"><label>Maximum Stock Qty</label>
+                                            <input type="text" th:field="*{maximumStockQuantity}" class="form-control">
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js"
+        th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js"
+        th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js"
+        th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js"
+        th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js"
+        th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+</body>
+</html>

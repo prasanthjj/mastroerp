@@ -9,7 +9,7 @@ import java.util.Set;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name = "sub_category")
+@Table(name = "subcategory")
 public class SubCategory {
 
     @Id
@@ -22,6 +22,9 @@ public class SubCategory {
     @Column(name = "sub_category_description")
     private String subCategoryDescription;
 
+    @Column(name = "delete_status", nullable = false)
+    private int subCategoryDeleteStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "category_subcategory", joinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
@@ -32,12 +35,15 @@ public class SubCategory {
             , inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private Set<Product> productSet;
 
-    public SubCategory(Long id, String subCategoryName, String subCategoryDescription,Category category) {
+    public SubCategory() {
 
+    }
+
+    public SubCategory(Long id, String subCategoryName, String subCategoryDescription, Category category) {
         this.id = id;
-        this.subCategoryName= subCategoryName;
-        this.subCategoryDescription=subCategoryDescription;
-        this.category=category;
+        this.subCategoryName = subCategoryName;
+        this.subCategoryDescription = subCategoryDescription;
+        this.category = category;
 
     }
 

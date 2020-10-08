@@ -1,24 +1,25 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.repository.CatalogRepository;
-import com.erp.mastro.dao.LocationRepository;
 import com.erp.mastro.entities.Catalog;
-import com.erp.mastro.entities.Location;
+import com.erp.mastro.entities.Category;
+import com.erp.mastro.entities.SubCategory;
+import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.CatalogRequestModel;
+import com.erp.mastro.model.request.CategoryRequestModel;
+import com.erp.mastro.model.request.SubCategoryRequestModel;
+import com.erp.mastro.repository.CatalogRepository;
+import com.erp.mastro.repository.CategoryRepository;
+import com.erp.mastro.repository.SubCategoryRepository;
 import com.erp.mastro.service.interfaces.CatalogService;
-import com.erp.mastro.service.interfaces.LocationService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class CatalogServiceTest {
@@ -29,61 +30,151 @@ public class CatalogServiceTest {
     @MockBean
     private CatalogRepository catalogRepository;
 
-    public List<Catalog> addCatalogs() {
+    @MockBean
+    private CategoryRepository categoryRepository;
 
-        List<Catalog> catalogs = new ArrayList<Catalog>();
-        Stream<Catalog> stream = Stream.of(new Catalog(1L,"Metals","metals catalog"),
-                new Catalog (2L,"Electronics","electronics catalog"));
-        catalogs = stream.collect(Collectors.toList());
-        return catalogs;
+    @MockBean
+    private SubCategoryRepository subCategoryRepository;
 
+    public CatalogRequestModel catalogModel() {
+
+        CatalogRequestModel catalogRequestModel = new CatalogRequestModel();
+        catalogRequestModel.setCatalogName("sheet");
+        catalogRequestModel.setCatalogDescription("roofingsheets");
+
+        return catalogRequestModel;
     }
 
-    public Catalog addCatalog () {
-        Catalog catalog = new Catalog(3L, "a","b");
+    public Catalog getCatalog() {
+        Catalog catalog = new Catalog(1L, "sheet", "roofingsheets");
         return catalog;
     }
 
     @Test
-    public void testGetCatalogsSizeEqual() {
-        when(catalogRepository.findAll()).thenReturn(addCatalogs());
-        Assert.assertEquals(2,catalogService.getAllCatalogs().size());
+    public void testSaveOrUpdateCatalog() throws ModelNotFoundException {
+
+        Catalog catalog = catalogService.saveOrUpdateCatalog(catalogModel());
+        Assert.assertEquals("sheet", catalog.getCatalogName());
+        Assert.assertEquals("roofingsheets", catalog.getCatalogDescription());
+
     }
 
     @Test
-    public void testGetCatalogsSizeNotEqual() {
-        when(catalogRepository.findAll()).thenReturn(addCatalogs());
-        Assert.assertNotEquals(1,catalogService.getAllCatalogs().size());
-    }
+    public void testCatalogModelNull() {
 
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                catalogService.saveOrUpdateCatalog(null))
+                .isExactlyInstanceOf(ModelNotFoundException.class);
 
-    @Test
-    public void testGetById() {
-
-        when(catalogRepository.findById(3L)).thenReturn(Optional.of(addCatalog()));
-        Assert.assertEquals(addCatalog().getId(),catalogService.getCatalogById(addCatalog().getId()).getId());
-
-    }
-    @Test
-    public void testSaveCatalog()
-    {
-        Catalog catalog = new Catalog(3L, "a","b");
-        catalogService.saveOrUpdateCatalog(catalog);
-        verify(catalogRepository, times(1)).save(catalog);
     }
 
     @Test
-    public void testDeleteCatalog() {
-        catalogService.deleteCatalog(addCatalog().getId());
-        verify(catalogRepository,times(1)).deleteById(addCatalog().getId());
+    public void testCatalogGetById() {
+
+        when(catalogRepository.findById(1L)).thenReturn(Optional.of(getCatalog()));
+        Assert.assertEquals(getCatalog().getId(), catalogService.getCatalogById(getCatalog().getId()).getId());
+    }
+
+    public CategoryRequestModel categoryModel() {
+
+        CategoryRequestModel categoryRequestModel = new CategoryRequestModel();
+        categoryRequestModel.setCategoryName("category1");
+        categoryRequestModel.setCategoryDescription("desccategory");
+        categoryRequestModel.setCategoryShortCode("cat11");
+        categoryRequestModel.setCategoryType("a");
+        categoryRequestModel.setCatalogId(1L);
+
+        return categoryRequestModel;
+    }
+
+    public Category getCategory() {
+        Category category = new Category(1L, "category1", "desccategory", "cat11", "a", getCatalog());
+        return category;
     }
 
     @Test
-    public void testGetCatalogValidationSucess() {
+    public void testSaveorUpdateCategory() throws ModelNotFoundException {
 
-        when(catalogRepository.findById(addCatalog().getId())).thenReturn(Optional.of(addCatalog()));
-        Assert.assertEquals("a",catalogService.getCatalogById(addCatalog().getId()).getCatalogName());
-        Assert.assertEquals("b",catalogService.getCatalogById(addCatalog().getId()).getCatalogDescription());
+        when(catalogRepository.findById(1L)).thenReturn(Optional.of(getCatalog()));
+        Category category = catalogService.saveOrUpdateCategory(categoryModel());
+        Assert.assertEquals("category1", category.getCategoryName());
+        Assert.assertEquals("desccategory", category.getCategoryDescription());
+        Assert.assertEquals("cat11", category.getCategoryShortCode());
+        Assert.assertEquals("a", category.getCategoryType());
+
+    }
+
+    @Test
+    public void testCategoryModelNull() {
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                catalogService.saveOrUpdateCategory(null))
+                .isExactlyInstanceOf(ModelNotFoundException.class);
+
+    }
+
+    @Test
+    public void testCategoryGetById() {
+
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(getCategory()));
+        Assert.assertEquals(getCategory().getId(), catalogService.getCategoryById(getCategory().getId()).getId());
+    }
+
+    @Test
+    public void testDeleteCategory() {
+
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(getCategory()));
+        Category category = catalogService.deleteCategoryDetails(1L);
+        Assert.assertEquals(1, category.getCategoryDeleteStatus());
+    }
+
+    public SubCategoryRequestModel subCategoryModel() {
+
+        SubCategoryRequestModel subCategoryRequestModel = new SubCategoryRequestModel();
+        subCategoryRequestModel.setSubCategoryName("sub1");
+        subCategoryRequestModel.setSubCategoryDescription("sub1desc");
+        subCategoryRequestModel.setCategoryId(1L);
+
+        return subCategoryRequestModel;
+    }
+
+    public SubCategory getSubCategory() {
+        SubCategory subCategory = new SubCategory(1L, "sub1", "sub1desc", getCategory());
+        return subCategory;
+    }
+
+    @Test
+    public void testSaveOrUpdateSubCategory() throws ModelNotFoundException {
+
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(getCategory()));
+        SubCategory subCategory = catalogService.saveOrUpdateSubCategory(subCategoryModel());
+        Assert.assertEquals("sub1", subCategory.getSubCategoryName());
+        Assert.assertEquals("sub1desc", subCategory.getSubCategoryDescription());
+
+    }
+
+    @Test
+    public void testSubCategoryModelNull() {
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                catalogService.saveOrUpdateSubCategory(null))
+                .isExactlyInstanceOf(ModelNotFoundException.class);
+
+    }
+
+    @Test
+    public void testSubCategoryGetById() {
+
+        when(subCategoryRepository.findById(1L)).thenReturn(Optional.of(getSubCategory()));
+        Assert.assertEquals(getSubCategory().getId(), catalogService.getSubCategoryById(getSubCategory().getId()).getId());
+    }
+
+    @Test
+    public void testDeleteSubCategory() {
+
+        when(subCategoryRepository.findById(1L)).thenReturn(Optional.of(getSubCategory()));
+        SubCategory subCategory = catalogService.deleteSubCategoryDetails(1L);
+        Assert.assertEquals(1, subCategory.getSubCategoryDeleteStatus());
     }
 
 }

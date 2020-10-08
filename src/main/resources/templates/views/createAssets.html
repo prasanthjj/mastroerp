@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Assets</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
+    <link href="../resources/css/plugins/iCheck/custom.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/iCheck/custom.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Assets</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item ">
+                        <a th:href="@{/master/getAssetList}">List Assets</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Asset</strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content mastro-step-ibox-content">
+
+                            <form id="createAssetsForm" th:action="@{/master/saveAsset}" th:object="${assetForm}"
+                                  name="assetForm" method="post" class="wizard-big">
+                                <h1>General Details</h1>
+                                <fieldset>
+                                    <h2>General Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Asset Name <i class="fa fa-asterisk "></i></label>
+                                                <input name="assetName" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Asset Location <i class="fa fa-asterisk "></i></label>
+                                                <input type="text" name="assetLocation" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Hours Utilized</label>
+                                                <input name="hoursUtilized" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Capacity</label>
+                                                <input name="capacity" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input type="checkbox" class="i-checks" name="active" value="true">
+                                                <label>Is Active</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label>Asset Sub Location </label>
+                                                <input name="subLocation" type="text" class="form-control ">
+                                            </div>
+                                            <div class="form-group" id="addAssetInstallationDate">
+                                                <label>Installation Date <i class="fa fa-asterisk "></i></label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span><input type="text"
+                                                                                                     name="installationDate"
+                                                                                                     class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Maintenance Priority <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b" name="maintenancePriority">
+                                                    <option value="">Select</option>
+                                                    <option value="High priority"> High priority</option>
+                                                    <option value="Low priority">Low priority</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input type="checkbox" class="i-checks" name="maintenanceRequired"
+                                                       value="true"> <label>Maintenance Required</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Asset Type <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control m-b" name="assetType">
+                                                    <option value="">Select</option>
+                                                    <option value="Furniture">Furniture</option>
+                                                    <option value="Vehicles">Vehicles</option>
+                                                    <option value="PPE (Property, Plant, and Equipment)"> PPE (Property,
+                                                        Plant, and Equipment)
+                                                    </option>
+                                                    <option value="Cash and cash equivalents">Cash and cash
+                                                        equivalents
+                                                    </option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Party No</label>
+                                                <input name="partyNo" type="text" class="form-control ">
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group" id="assetEffectiveDate">
+                                                <label>Effective Date <i class="fa fa-asterisk "></i></label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span><input type="text"
+                                                                                                     name="effectiveDate"
+                                                                                                     class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Make</label>
+                                                <select class="form-control m-b" name="make">
+                                                    <option>Select</option>
+                                                    <option value="make1">Make1</option>
+                                                    <option value="make2">Make2</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <h1>Characteristics</h1>
+                                <fieldset>
+                                    <h2>Characteristics</h2>
+                                    <div id="assetCharacteristics">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Characteristics <i class="fa fa-asterisk"></i></label>
+                                                    <select class="form-control m-b" required
+                                                            name="assetCharacteristicsModel[0].character">
+                                                        <option value="">Select</option>
+                                                        <option value="Colour">Colour</option>
+                                                        <option value="Size">Size</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Value <i class="fa fa-asterisk "></i></label>
+                                                    <input name="assetCharacteristicsModel[0].value" type="text"
+                                                           class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Remarks</label>
+                                                    <textarea class="form-control " rows="5"
+                                                              name="assetCharacteristicsModel[0].assetRemarks"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hr-line-dashed"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button class="btn btn-primary dim" type="button"
+                                                    id="addAssetCharacteristics"><i class="fa fa-plus-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Maintenance Activities</h1>
+                                <fieldset>
+                                    <h2>Maintenance Activities</h2>
+                                    <div id="assetMaintenanceActivities">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+
+                                                <div class="form-group">
+                                                    <label> Activity Name</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].activityName"
+                                                           type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label> Upper Limit</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].upperLimit"
+                                                           type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Category</label>
+                                                    <select class="form-control m-b"
+                                                            name="assetMaintenanceActivitiesModel[0].category">
+                                                        <option value="">Select</option>
+                                                        <option value="Repair">Repair</option>
+                                                        <option value="Instalation">Instalation</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Standard Observation</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].standardObservation"
+                                                           type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Tolerance(%)</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].tolerence"
+                                                           type="text" class="form-control  ">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Lower Limit</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].tolerenceLowerlimit"
+                                                           type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Frequency(In Days)</label>
+                                                    <input name="assetMaintenanceActivitiesModel[0].frequency"
+                                                           type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hr-line-dashed"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button class="btn btn-primary dim" type="button"
+                                                    id="addAssetMaintenanceActivities"><i class="fa fa-plus-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <h1>Other CheckList</h1>
+                                <fieldset>
+                                    <h2>Other CheckList</h2>
+                                    <div id="assetOtherCheckList">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+                                                    <label>CheckList</label>
+                                                    <select class="form-control m-b"
+                                                            name="assetCheckListModel[0].checkList">
+                                                        <option value="">Select</option>
+                                                        <option value="check1">check1</option>
+                                                        <option value="check2">check2</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Remarks</label>
+                                                    <textarea class="form-control " rows="1"
+                                                              name="assetCheckListModel[0].remarks">
+
+                                                      </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hr-line-dashed"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button class="btn btn-primary dim" type="button"
+                                                    id="addAssetOtherCheckList"><i class="fa fa-plus-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <!--<div class="col-lg-12 text-right">
+                                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                </div>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Data picker -->
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"
+        th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<!-- Tags Input -->
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
+        th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/mastro/mastro_steps.js" th:src="@{/resources/js/mastro/mastro_steps.js}"></script>
+<!-- iCheck -->
+<script src="../resources/js/plugins/iCheck/icheck.min.js"
+        th:src="@{/resources/js/plugins/iCheck/icheck.min.js}"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+</body>
+</html>

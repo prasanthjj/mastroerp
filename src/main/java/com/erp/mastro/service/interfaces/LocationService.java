@@ -1,6 +1,7 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.Location;
+import com.erp.mastro.model.request.LocationRequestModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface LocationService {
 
     Location getLocationId(Long id);
 
-    void saveOrUpdateLocation(Location location);
+    void saveOrUpdateLocation(LocationRequestModel locationRequestModel);
 
     void deleteLocation(Long id);
 

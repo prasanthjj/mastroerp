@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add Purchase Invoice</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Sales slip Invoice</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Sales</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a th:href="@{/sales/getInvoiceList}">Sales Invoice</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Sales Slip Invoice</strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-content mastro-step-inbox-content">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <h5>Delivery Address:</h5>
+
+                                        <p><strong th:text="${contactDetails.contactPersonName}"></strong><br>
+                                            <span th:text="${contactDetails.designation}"></span><br>
+                                            <span th:text="${contactDetails.address}"></span><br>
+                                            <span>Phone no : <span
+                                                    th:text="${contactDetails.mobileNo}"></span></span><br>
+                                            <span>Email ID : <span
+                                                    th:text="${contactDetails.emailId}"></span></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <h4>Sales Slip No.</h4>
+                                    <h4 class="text-navy" th:text="${salesSlip.salesSlipNo}">INV-000567F7-00</h4>
+                                    <div class="form-group"><label>Billing Address</label>
+                                        <p><strong th:text="${billingDetails.contactPersonName}"></strong><br>
+                                            <span th:text="${billingDetails.city}"></span><br>
+                                            <span th:text="${billingDetails.state}"></span> ,
+                                            <span th:text="${billingDetails.country}"></span><br>
+                                            <span>Pincode : <span
+                                                    th:text="${billingDetails.pinCode}"></span></span><br>
+                                            <span>Phone no : <span
+                                                    th:text="${billingDetails.telephoneNo}"></span></span><br>
+                                            <span>Email ID : <span
+                                                    th:text="${billingDetails.emailId}"></span></span>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="form-group"><label>Pin Code :</label>
+                                         680502
+                                     </div>-->
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered  ">
+                                    <thead class="mastro-blue-bg ">
+                                    <tr class="mastro-blue-bg txt-white">
+                                        <th class="mastro-blue-bg ">No</th>
+                                        <th class="mastro-blue-bg txt-white">HSN / SAC</th>
+                                        <!--    <th class="mastro-blue-bg txt-white">GRN NO</th>-->
+                                        <th class="mastro-blue-bg txt-white">Item</th>
+                                        <th class="mastro-blue-bg txt-white">Quantity</th>
+                                        <th class="mastro-blue-bg txt-white">Net Price</th>
+                                        <th class="mastro-blue-bg txt-white">Discount%</th>
+                                        <th class="mastro-blue-bg txt-white">Taxable Value</th>
+                                        <th class="mastro-blue-bg txt-white">CGST</th>
+                                        <th class="mastro-blue-bg txt-white">SGST</th>
+                                        <th class="mastro-blue-bg txt-white">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr class="gradeX"
+                                        th:each="salesSlipItemObj,iterator:${salesSlip.salesSlipItemsSet}">
+                                        <td th:text="${iterator.index+1}">3</td>
+                                        <td th:text="${salesSlipItemObj.hsnCode}">HSN-0265</td>
+                                        <!-- <td th:text="${grnItemObj.grnno}">GRN-0265</td>-->
+                                        <td th:text="${salesSlipItemObj.product.productName}">Angles 25x6 (1x1/4)</td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlipItemObj.grnQty, 0, 'COMMA', 2, 'POINT')}">26.00</span>
+                                            <span
+                                                    th:text="${salesSlipItemObj.productUOM.uom.UOM}"></span></td>
+                                        <td th:text="${#numbers.formatDecimal(salesSlipItemObj.netPrice, 0, 'COMMA', 4, 'POINT')}">
+                                            /<span
+                                                th:text="${salesSlipItemObj.productUOM.uom.UOM}"></span></td>
+                                        <td th:text="${salesSlipItemObj.discountPercentage}"></td>
+                                        <td th:text="${#numbers.formatDecimal(salesSlipItemObj.totalAmount, 0, 'COMMA', 4, 'POINT')}">
+                                            711.8580
+                                        </td>
+                                        <td th:text="${#numbers.formatDecimal(salesSlipItemObj.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td th:text="${#numbers.formatDecimal(salesSlipItemObj.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+                                        <td th:text="${#numbers.formatDecimal(salesSlipItemObj.finalAmount, 0, 'COMMA', 4, 'POINT')}"></td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Sub Total</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.subTotal, 0, 'COMMA', 4, 'POINT')}">839.9924</span>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><span th:text="${loadingHSN.hsnCode}">7314</span></td>
+                                        <td>Loading Charges@<span th:text="${loadingHSN.igst}">18</span>%(Purchase)</td>
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.loadingChargeSum, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.loadingChargeCgst, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.loadingChargesgst, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.totalLoadingCharge, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Kerala Flood Cess</td>
+                                        <td></td>
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><span
+                                                th:text="${#numbers.formatDecimal(salesSlip.totalCess, 0, 'COMMA', 4, 'POINT')}">7.1586</span>
+                                        </td>
+
+
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <form th:action="@{/sales/createSalesSlipInvoice}" th:object="${salesSlipForm}"
+                                  name="salesSlipForm" method="post">
+                                <input type="hidden" name="id" th:value="${salesSlip.id}">
+                                <input type="hidden" name="totalLoadingCharge"
+                                       th:value="${salesSlip.totalLoadingCharge}">
+                                <input type="hidden" name="totalCess" th:value="${salesSlip.totalCess}">
+                                <input type="hidden" name="subTotal" th:value="${salesSlip.subTotal}">
+                                <input type="hidden" name="totalTaxableValue" th:value="${salesSlip.totalTaxableValue}">
+                                <input type="hidden" name="totalCgst" th:value="${salesSlip.totalCgst}">
+                                <input type="hidden" name="totalSgst" th:value="${salesSlip.totalSgst}">
+                                <input type="hidden" name="totalAmt" th:value="${salesSlip.totalAmt}">
+                                <input type="hidden" name="grandTotal" th:value="${salesSlip.grandTotal}">
+                                <input type="hidden" name="roundOff" th:value="${salesSlip.roundOff}">
+                                <input type="hidden" name="loadingChargeSum" th:value="${salesSlip.loadingChargeSum}">
+                                <input type="hidden" name="loadingChargeCgst" th:value="${salesSlip.loadingChargeCgst}">
+                                <input type="hidden" name="loadingChargesgst" th:value="${salesSlip.loadingChargesgst}">
+                                <div class="row m-t-md">
+
+                                    <div class="col-lg-12 text-right">
+                                        <h3 class=""> Total: Rs.
+                                            <span th:text="${#numbers.formatDecimal(salesSlip.totalAmt, 0, 'COMMA', 4, 'POINT')}"> 850.0000</span>
+                                        </h3>
+                                        <h3 class=""> Round Off : Rs.
+                                            <span th:text="${salesSlip.roundOff}"> 850.0000</span></h3>
+                                        <h3 class="priceColor">Grand Total : Rs. <span
+                                                th:text="${#numbers.formatDecimal(salesSlip.grandTotal, 0, 'COMMA', 0, 'POINT')}"></span>
+                                        </h3>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 ">
+                                    <div class="form-group  row"><label class="col-sm-4 col-form-label"> Payment
+                                        Mode</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control m-b" name="paymentMode">
+                                                <option value="Cash">Cash</option>
+                                                <option value="Bank">Bank</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-primary btn-sm grn" type="submit">Generate Invoice
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<!-- Mainly scripts -->
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<span id="partyAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/party/customer}"></span>
+<span id="productAutopopulateInSalesSlipUrl" th:data-url="@{/autopopulate/items/salesslip}"></span>
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script>
+      $(document).ready(function(){
+
+
+       var itemAutopopulateUrlInSales = $('#productAutopopulateInSalesSlipUrl').data('url');
+     $(".item_dropdown_sales").hide();
+     $(".itemautocmopleteinsalesslip").keyup(function () {
+
+		var val = $(this).val().trim();
+		if (val.length > 2) {
+		var partsSalesId=document.getElementById("partssalesid").value;
+		$(".item_dropdown_sales ul").empty();
+		     $.ajax({
+              url:itemAutopopulateUrlInSales,
+               type: 'GET',
+               dataType : 'json',
+               data: {'searchTerm':val,'partyId':partsSalesId},
+               success: function(data){
+                 if(data.success) {
+                        $.each(data.data.products, function(i){
+                                      $(".item_dropdown_sales ul").append('<li><a class="dynamicClick" data-itemsidsales="'+this['id'] +'" href="#">'+ this['productname'] +'</a></li>');
+                                        });
+                  }
+                   },
+               error: function(jqXHR, textStatus) {
+               alert('Error Occured');
+               }
+
+              });
+              $(".item_dropdown_sales").show();
+		}
+		else {
+        			$(".item_dropdown_sales").hide();
+        		}
+		});
+
+
+	$(".item_dropdown_sales").on('click','a.dynamicClick',function (e) {
+        		e.preventDefault();
+        		var value = $(this).text();
+        		var productIdSale = $(this).data('itemsidsales');
+        		var partysSalesIds=document.getElementById("partssalesid").value;
+                $(".itemautocmopleteinsalesslip").val(value);
+                $("#itemIdInputSale").val($(e.target).data('itemsidsales'));
+        		$(".item_dropdown_sales").hide();
+        		 $.ajax({
+                                                                  url: '/inventory/getProductDetailsInSales',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'partyIdSale': partysSalesIds,'productIdSale': productIdSale},
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+                                                                                  $("#saleuom").html("");
+                                                                                  $('#rate').val(data.data.rate);
+                                                                                    $.each(data.data.salesuoms, function(i){
+                                                              $('#saleuom').append($('<option>').val(this['id']).text(this['nameuom']));
+                                                               });
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+
+        	})
+
+      });
+
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -159,7 +159,7 @@ body.stop-scrolling {
   .sweet-alert.show-input input {
     display: block; }
   .sweet-alert button {
-    background-color: #0094db;
+    background-color: #05c34b !important;
     color: white;
     border: none;
     box-shadow: none;
@@ -178,11 +178,11 @@ body.stop-scrolling {
     .sweet-alert button:active {
       background-color: #81ccee; }
     .sweet-alert button.cancel {
-      background-color: #D0D0D0; }
+      background-color: #ed5565 !important; }
       .sweet-alert button.cancel:hover {
-        background-color: #c8c8c8; }
+        background-color: #bd2130 !important; }
       .sweet-alert button.cancel:active {
-        background-color: #b6b6b6; }
+        background-color: #bd2130 !important; }
       .sweet-alert button.cancel:focus {
         box-shadow: rgba(197, 205, 211, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px inset !important; }
     .sweet-alert button::-moz-focus-inner {
@@ -300,7 +300,7 @@ body.stop-scrolling {
       .sweet-alert .sa-icon.sa-success .sa-placeholder {
         width: 80px;
         height: 80px;
-        border: 4px solid rgba(165, 220, 134, 0.2);
+        border: 4px solid #05c34b;
         -webkit-border-radius: 40px;
         border-radius: 40px;
         border-radius: 50%;
@@ -321,7 +321,7 @@ body.stop-scrolling {
         transform: rotate(-45deg); }
       .sweet-alert .sa-icon.sa-success .sa-line {
         height: 5px;
-        background-color: #A5DC86;
+        background-color: #05c34b;
         display: block;
         border-radius: 2px;
         position: absolute;
@@ -713,3 +713,4 @@ body.stop-scrolling {
 
 .sweet-alert .sa-icon.sa-success .sa-line.sa-long {
   -ms-transform: rotate(-45deg) \9; }
+

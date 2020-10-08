@@ -1,9 +1,9 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.AssetCharacteristics;
-import com.erp.mastro.entities.AssetChecklist;
-import com.erp.mastro.entities.AssetMaintenanceActivities;
 import com.erp.mastro.entities.Assets;
+import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.AssetRequestModel;
 import com.erp.mastro.repository.AssetRepository;
 import com.erp.mastro.service.interfaces.AssetService;
 import org.junit.Assert;
@@ -13,8 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
@@ -26,91 +24,112 @@ public class AssetServiceTest {
 
     @MockBean
     private AssetRepository assetRepository;
+
     private boolean True;
     private boolean False;
 
-    public List<Assets> addAsset() {
-        List<Assets> asset = new ArrayList<Assets>();
-        Stream<Assets> stream = Stream.of(new Assets(1L, "Machine1", "E1", "S1", "S1a", "123", "2H", new Date(), new Date(), "12L", "P1", True, True, "M1"),
-                new Assets(2L, "Machine2", "E2", "S2", "S2b", "456", "5H", new Date(), new Date(), "5L", "P2", False, False, "M2"));
-        asset = stream.collect(Collectors.toList());
-        return asset;
+    public AssetRequestModel createAssetModel() {
+        AssetRequestModel assetRequestModel = new AssetRequestModel();
+        assetRequestModel.setMaintenanceRequired(true);
+        assetRequestModel.setAssetName("Table");
+        assetRequestModel.setAssetLocation("kottayam");
+        assetRequestModel.setSubLocation("vaikom");
+        assetRequestModel.setPartyNo("11");
+        assetRequestModel.setMaintenancePriority("high");
+        assetRequestModel.setInstallationDate(new Date());
+        assetRequestModel.setEffectiveDate(new Date());
+        assetRequestModel.setAssetType("furniture");
+        assetRequestModel.setAssetCharacteristicsModel(createAssetCharModel());
+        assetRequestModel.setAssetMaintenanceActivitiesModel(createAssetMaintananceModel());
+        assetRequestModel.setAssetCheckListModel(createAssetCheckListModel());
+        return assetRequestModel;
     }
 
-    public Assets addAssets() {
-        Assets assets = new Assets(3L, "M3", "E3", "S3", "S31", "333", "3H", new Date(), new Date(), "3L", "P2", False, False, "M3");
+    public List<AssetRequestModel.AssetCharacteristicsModel> createAssetCharModel() {
+
+        List<AssetRequestModel.AssetCharacteristicsModel> assetCharacteristicsModels = new ArrayList<>();
+        AssetRequestModel.AssetCharacteristicsModel assetCharacteristicsModel1 = new AssetRequestModel.AssetCharacteristicsModel();
+        assetCharacteristicsModel1.setCharacter("Colour");
+        assetCharacteristicsModel1.setValue("Red");
+        assetCharacteristicsModels.add(assetCharacteristicsModel1);
+        AssetRequestModel.AssetCharacteristicsModel assetCharacteristicsModel2 = new AssetRequestModel.AssetCharacteristicsModel();
+        assetCharacteristicsModel2.setCharacter("size");
+        assetCharacteristicsModel2.setValue("50m");
+        assetCharacteristicsModels.add(assetCharacteristicsModel2);
+        return assetCharacteristicsModels;
+    }
+
+    public List<AssetRequestModel.AssetMaintenanceActivitiesModel> createAssetMaintananceModel() {
+
+        List<AssetRequestModel.AssetMaintenanceActivitiesModel> assetMaintanceModels = new ArrayList<>();
+        AssetRequestModel.AssetMaintenanceActivitiesModel assetMaintanceModel1 = new AssetRequestModel.AssetMaintenanceActivitiesModel();
+        assetMaintanceModel1.setActivityName("Painting");
+        assetMaintanceModel1.setStandardObservation("ppp");
+        assetMaintanceModels.add(assetMaintanceModel1);
+        AssetRequestModel.AssetMaintenanceActivitiesModel assetMaintanceModel2 = new AssetRequestModel.AssetMaintenanceActivitiesModel();
+        assetMaintanceModel2.setActivityName("Washing");
+        assetMaintanceModel2.setStandardObservation("wwppp");
+        assetMaintanceModels.add(assetMaintanceModel2);
+        return assetMaintanceModels;
+    }
+
+    public List<AssetRequestModel.AssetCheckListModel> createAssetCheckListModel() {
+
+        List<AssetRequestModel.AssetCheckListModel> assetCheckModels = new ArrayList<>();
+        AssetRequestModel.AssetCheckListModel assetCheckModel1 = new AssetRequestModel.AssetCheckListModel();
+        assetCheckModel1.setCheckList("check1");
+        assetCheckModel1.setRemarks("ok");
+        assetCheckModels.add(assetCheckModel1);
+        AssetRequestModel.AssetCheckListModel assetCheckModel2 = new AssetRequestModel.AssetCheckListModel();
+        assetCheckModel2.setCheckList("check2");
+        assetCheckModel2.setRemarks("ok");
+        assetCheckModels.add(assetCheckModel2);
+        return assetCheckModels;
+    }
+
+    public Assets getAsset() {
+        Assets assets = new Assets(3L, "M3", "E3", "S3", "S31", "333", 25.5, new Date(), new Date(), "3L", "P2", False, False, "M3", getAssetCharacters());
         return assets;
     }
 
-    @Test
-    public void testGetAssetSizeEqual() {
-        when(assetRepository.findAll()).thenReturn(addAsset());
-        Assert.assertEquals(2, assetService.getAllAssets().size());
+    public Set<AssetCharacteristics> getAssetCharacters() {
+        Set<AssetCharacteristics> assetCharacteristicsSet = new HashSet<>();
+        AssetCharacteristics assetCharacteristics = new AssetCharacteristics(1L, "colour", "red", "ccc");
+        assetCharacteristicsSet.add(assetCharacteristics);
+        return assetCharacteristicsSet;
     }
 
     @Test
-    public void testGetAssetSizeNotEqual() {
-        when(assetRepository.findAll()).thenReturn(addAsset());
-        Assert.assertNotEquals(1, assetService.getAllAssets().size());
+    public void testSaveAsset() throws ModelNotFoundException {
+
+        Assets assets = assetService.saveOrUpdateAssets(createAssetModel());
+        Assert.assertEquals("Table", assets.getAssetName());
+        Assert.assertEquals("kottayam", assets.getAssetLocation());
+        Assert.assertEquals("vaikom", assets.getSubLocation());
+        Assert.assertEquals("high", assets.getMaintenancePriority());
+        Assert.assertEquals("furniture", assets.getAssetType());
+
+    }
+
+    @Test
+    public void testAssetModelNull() {
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                assetService.saveOrUpdateAssets(null))
+                .isExactlyInstanceOf(ModelNotFoundException.class);
+
     }
 
     @Test
     public void testGetById() {
 
-        when(assetRepository.findById(3L)).thenReturn(Optional.of(addAssets()));
-        Assert.assertEquals(addAssets().getId(), assetService.getAssetsById(addAssets().getId()).getId());
-    }
-
-    @Test
-    public void testSaveAsset() {
-        Assets assets = new Assets(3L, "M3", "E3", "S3", "S31", "333", "3H", new Date(), new Date(), "3L", "P2", False, False, "M3");
-        assetService.saveOrUpdateAssets(assets);
-        verify(assetRepository, times(1)).save(assets);
+        when(assetRepository.findById(3L)).thenReturn(Optional.of(getAsset()));
+        Assert.assertEquals(getAsset().getId(), assetService.getAssetsById(getAsset().getId()).getId());
     }
 
     @Test
     public void testDeletAsset() {
-        assetService.deleteAssets(addAssets().getId());
-        verify(assetRepository, times(1)).deleteById(addAssets().getId());
+        assetService.deleteAssets(getAsset().getId());
+        verify(assetRepository, times(1)).deleteById(getAsset().getId());
     }
-
-    @Test
-    public void testGetAssetValidationSuccess() {
-        when(assetRepository.findById(addAssets().getId())).thenReturn(Optional.of(addAssets()));
-        Assert.assertEquals("M3", assetService.getAssetsById(addAssets().getId()).getAssetName());
-        Assert.assertEquals("E3", assetService.getAssetsById(addAssets().getId()).getAssetType());
-        Assert.assertEquals("S3", assetService.getAssetsById(addAssets().getId()).getAssetLocation());
-        Assert.assertEquals("S31", assetService.getAssetsById(addAssets().getId()).getSubLocation());
-        Assert.assertEquals("333", assetService.getAssetsById(addAssets().getId()).getPartyNo());
-        Assert.assertEquals("3H", assetService.getAssetsById(addAssets().getId()).getHoursUtilized());
-        Assert.assertEquals("3L", assetService.getAssetsById(addAssets().getId()).getCapacity());
-        Assert.assertEquals("M3", assetService.getAssetsById(addAssets().getId()).getMake());
-        Assert.assertEquals(False, assetService.getAssetsById(addAssets().getId()).isActive());
-        Assert.assertEquals(False, assetService.getAssetsById(addAssets().getId()).isMaintenanceRequired());
-    }
-
-    @Test
-    public void testSaveAssetCharacteristics() {
-        Assets assets = addAssets();
-        AssetCharacteristics assetCharacteristics = new AssetCharacteristics(1L, "A", "25", "abc");
-        assetService.saveOrUpdateAssetCharacteristics(assets, assetCharacteristics);
-        verify(assetRepository, times(1)).save(assets);
-    }
-
-    @Test
-    public void testSaveAssetMaintenanceActivities() {
-        Assets assets = addAssets();
-        AssetMaintenanceActivities assetMaintenanceActivities = new AssetMaintenanceActivities(1L, "S1", "5", "2", "2", "120", "C1");
-        assetService.saveOrUpdateAssetMaintenanceActivities(assets, assetMaintenanceActivities);
-        verify(assetRepository, times(1)).save(assets);
-    }
-
-    @Test
-    public void testSaveAssetCheckList() {
-        Assets assets = addAssets();
-        AssetChecklist assetChecklist = new AssetChecklist(1L, "Cl", "R1");
-        assetService.saveOrUpdateAssetChecklist(assets, assetChecklist);
-        verify(assetRepository, times(1)).save(assets);
-    }
-
 }

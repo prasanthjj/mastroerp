@@ -20,9 +20,6 @@ public class Product extends Auditable<String>{
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "item_code")
-    private String itemCode;
-
     @Column(name = "dimension")
     private String dimension;
 
@@ -38,6 +35,28 @@ public class Product extends Auditable<String>{
     @Column(name = "property_size")
     private String propertySize;
 
+    @Column(name = "inspection_type")
+    private String inspectionType;
+
+    @Column(name = "loading_charge")
+    private Double loadingCharge;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uom_id")
+    private Uom uom;
+
+    @Column(name = "base_quantity")
+    private Double baseQuantity;
+
+    @Column(name = "base_price")
+    private Double basePrice;
+
+    @Column(name = "tolerance_type")
+    private String toleranceType;
+
+    @Column(name = "amount")
+    private Double amount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "subcategory_product", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sub_category_id", referencedColumnName = "id")})
@@ -46,48 +65,50 @@ public class Product extends Auditable<String>{
     @OneToMany(mappedBy = "product",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<ProductImages> productImages= new HashSet<>();
+    private Set<ProductImages> productImages = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_productuom", joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "productuom_id", referencedColumnName = "id")})
+    private Set<ProductUOM> productUOMSet = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hsn_id")
+    private HSN hsn;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @OneToMany(mappedBy = "product",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<ProductUOM> productUOMSet= new HashSet<>();
+    private Set<ProductPartyRateRelation> productPartyRateRelations = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hsn_id")
-    private HSN hsn;
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Stock> stockSet = new HashSet<>();
 
-    @Column(name = "base_uom")
-    private String baseUOM;
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesOrderProduct> salesOrderProductSet = new HashSet<>();
 
-    @Column(name = "base_quantity")
-    private String baseQuantity;
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlipItems> salesSlipItems = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "product_party",
-            joinColumns = { @JoinColumn(name = "product_id") },
-            inverseJoinColumns = { @JoinColumn(name = "party_id") }
-    )
-    Set<Party> parties = new HashSet<>();
-    public Product(Long id,String productName,String itemCode,String dimension,String colour,String guarantee,String warranty,String propertySize,SubCategory subCategory,HSN hsn,String baseUOM,String baseQuantity,Set<ProductImages> productImages,Set<ProductUOM> productUOMSet) {
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<StockLedger> stockLedgers = new HashSet<>();
 
-        this.id = id;
-        this.productName =productName;
-        this.itemCode=itemCode;
-        this.dimension= dimension;
-        this.colour=colour;
-        this.guarantee=guarantee;
-        this.warranty=warranty;
-        this.propertySize=propertySize;
-        this.subCategory=subCategory;
-        this.hsn=hsn;
-        this.baseUOM=baseUOM;
-        this.baseQuantity=baseQuantity;
-        this.productImages=productImages;
-        this.productUOMSet=productUOMSet;
-
-    }
-
+    @Column(name = "product_code")
+    private String productCode;
 
 }

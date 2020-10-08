@@ -1,8 +1,6 @@
 package com.erp.mastro.service;
 
-import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.CreditDetails;
-import com.erp.mastro.repository.CatalogRepository;
 import com.erp.mastro.repository.CreditDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Add PO Via Indent </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Ladda style -->
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Add Po Via Indent </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="#">Purchase Order </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Add Po Via Indent </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+
+                        <div class="ibox-content">
+                            <div class="col-lg-4">
+                                <p><strong>
+                                    Quantity Required:
+                                    <span th:if="${qtyRequired!= 0}"> <span
+                                            th:text="${#numbers.formatDecimal(qtyRequired, 0, 'COMMA', 2, 'POINT')}"></span></span>
+                                    <span th:unless="${qtyRequired!= 0}"> <span th:text="${qtyRequired}"></span></span>
+                                </strong></p>
+                            </div>
+                            <form id="indentItemPartyGroupForm" th:action="@{/purchase/saveIndentItemGroupDataOnEdit}"
+                                  th:object="${indentItemPartyGroupForm}"
+                                  name="indentItemPartyGroupForm" method="post">
+                                <input type="hidden" th:value="${poId}" name="poId">
+                                <input type="hidden" th:value="${indentDetails.id}" name="indentId">
+                                <input type="hidden" th:value="${indentItemId}" name="indentItemId">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped table-bordered table-hover dataTables-split">
+                                                <thead class="mastro-blue-bg txt-white">
+                                                <tr>
+                                                    <th class="mastro-blue-bg txt-white">No</th>
+                                                    <th>Party Name</th>
+                                                    <th>Qty</th>
+                                                    <th>Rate/per base UOM</th>
+                                                    <!--<th>Controls</th>-->
+
+                                                </tr>
+                                                </thead>
+                                                <tbody class="indentItemPartyDetails">
+                                                <span th:if="${indentItemPartyGroupForm!= null}">
+                                        <tr class="gradeX indentItemGroupDeleteBox"
+                                            th:each="indentItemGroupModelObj,iterator:${indentItemPartyGroupForm.indentItemPartyGroupRequestModels}">
+                                            <td th:text="${iterator.index+1}"></td>
+                                             <input type="hidden"
+                                                    th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].id}">
+                                            <td class="center"
+                                                th:text="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].party.partyName}">
+                                              dhdthtfh
+                                            </td>
+                                            <td class="center">
+                                                <input class="form-control" type="text"
+                                                       th:field="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity}"/>
+
+                                            </td>
+                                            <td class="center"
+                                                th:text="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].rate}">
+                                               <!-- <input class="form-control" type="text"/>-->
+                                            </td>
+                                            <!--<span th:if="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                            <td><a type='button'
+                                                   class='btn btn-danger dim removeSplitIndentItemDetailsBtn'
+                                                   th:data-splitindentitemsgroup="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].id}"
+                                                   th:data-indentitemsids="${indentItemPartyGroupForm.indentItemId}"><i
+                                                    class='fa fa-times-circle'></i></a></td>
+                                            </span>
+                                            <span th:unless="${indentItemPartyGroupForm.indentItemPartyGroupRequestModels[__${iterator.index}__].quantity== null}">
+                                            <td></td>
+                                            </span>-->
+                                        </tr>
+                                        </span>
+                                                </tbody>
+                                                <tfoot>
+
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Data picker -->
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"
+        th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script>
+$(document).ready(function(){
+    $('.dataTables-split').DataTable({
+        pageLength: 25,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [ ]
+
+     });
+
+     // add party in split autocomplete start
+                  $(".selectSplitPartyCode").select2({
+                      theme: 'bootstrap4',
+                  });
+                  // add party in split autocomplete end
+});
+
+
+
+ $(document).on('click', '.removeSplitIndentItemDetailsBtn', function() {
+    $(this).parents(".indentItemGroupDeleteBox").remove();
+});
+
+
+$('.removeSplitIndentItemDetailsBtn').click(function () {
+var indentItemId=$(this).data('indentitemsids');
+
+var indentItemGroupId=$(this).data('splitindentitemsgroup');
+
+  swal({
+            title: "Item gropu deleted",
+           text: "",
+             type: "success"
+             }, function () {
+           	$.ajax({
+                   url: '/purchase/removeIndentItemGroup',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'indentItemId': indentItemId,'indentItemGroupId': indentItemGroupId },
+
+                   success: function(data){
+                            if(data.success) {
+
+
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+
+
+
+    });
+       });
+
+
+</script>
+</body>
+</html>

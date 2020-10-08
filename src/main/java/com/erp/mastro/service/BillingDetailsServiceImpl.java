@@ -1,9 +1,7 @@
 package com.erp.mastro.service;
 
 import com.erp.mastro.entities.BillingDetails;
-import com.erp.mastro.entities.ContactDetails;
 import com.erp.mastro.repository.BillingDetailsRepository;
-import com.erp.mastro.repository.ContactDetailsRepository;
 import com.erp.mastro.service.interfaces.BillingDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

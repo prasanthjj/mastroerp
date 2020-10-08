@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Preview GRN</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Preview GRN Order </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">GRN</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Preview GRN Order </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <span th:if="${grnDetails.status== 'Draft'}">
+                        <div class="ibox-title mastro-inbox-title ">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="reason" placeholder="Approval / Rejection Remarks" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <p class="text-left">
+                                        <button class="btn btn-primary dim grnApproved"
+                                                th:data-grnids="${grnDetails.id}">Approve</button>
+                                        <!--  <button class="btn btn-warning dim grnReview"
+                                                  th:data-grnids="${grnDetails.id}">Review</button>-->
+                                        <!--  <button class="btn btn-danger dim grnDiscard"
+                                                  th:data-grnids="${grnDetails.id}">Discard</button>-->
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        </span>
+                        <span th:if="${grnDetails.status== 'Approved'}">
+                        <div class="ibox-title mastro-inbox-title ">
+                             <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary ">
+                                        <i class="fa fa-print "></i></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        </span>
+                        <div class="ibox-content mastro-inbox-content">
+
+
+                            <div class="ibox-content p-xl">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>From:</h5>
+                                        <address>
+                                            <span th:text="${partyContactDetails.address}"></span><br>
+                                            <!--  <strong>Mastro Metals</strong><br>
+                                              TMC. 1. 203 , 2nd floor
+                                              106 Jorg Avenu, 600/10,<br>
+                                              compass point,<br>Chiravakku, NH Taliparamba <br>-->
+                                            <abbr title="Phone">P:</abbr> <span
+                                                th:text="${partyContactDetails.mobileNo}"></span>
+                                        </address>
+                                    </div>
+
+                                    <div class="col-sm-6 text-right">
+                                        <h4>GRN No.</h4>
+                                        <h4 class="text-navy" th:text="${grnDetails.grnNo}">PO-000567F7-00</h4>
+                                        <span>To:</span>
+                                        <address>
+                                            <span th:text="${grnDetails.branch.branchAddress}"></span>
+                                            <!--<strong>Corporate, Inc.</strong><br>
+                                            112 Street Avenu, 1080<br>
+                                            Miami, CT 445611--><br>
+                                            <abbr title="Phone">P:</abbr> <span
+                                                th:text="${grnDetails.branch.phoneNo}"></span>
+                                        </address>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive m-t">
+                                    <table class="table invoice-table">
+                                        <thead>
+                                        <tr class="text-info">
+                                            <th>Item List</th>
+                                            <th>Pending</th>
+                                            <th>Quantity</th>
+                                            <th>Received</th>
+                                            <th>Shortage</th>
+                                            <th>Accepted</th>
+                                            <th>Rejected</th>
+                                            <th align="center">Price/Unit</th>
+                                            <th align="center">Discount %</th>
+                                            <th align="center">Total Price</th>
+                                            <th align="center">CGST Rate</th>
+                                            <th align="center">CGST Amount</th>
+                                            <th align="center">SGST Rate</th>
+                                            <th align="center">SGST Amount</th>
+                                            <!--<th>IGST Rate</th>
+                                            <th>IGST Amount</th>-->
+                                            <th align="center">CESS Rate</th>
+                                            <th align="center">CESS Amount</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="grnPreview,iterator:${grnDetails.grnItems}">
+                                            <td>
+                                                <div><strong
+                                                        th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.productName}">Oxy
+                                                    .47 Red 3.05mtr
+                                                    (10')</strong></div>
+                                            </td>
+                                            <td><span th:if="${grnPreview.pending!= 0}">
+                                                <span th:if="${grnPreview.pending< 0}">
+                                                <span>0.0</span>
+                                                </span>
+                                                  <span th:unless="${grnPreview.pending< 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.pending, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                </span>
+                                                </span>
+                                                <span th:unless="${grnPreview.pending!= 0}"> <span
+                                                        th:text="${grnPreview.pending}"></span></span>
+
+                                            </td>
+                                            <td th:text="${#numbers.formatDecimal(grnPreview.quantityDc, 0, 'COMMA', 2, 'POINT')}">
+                                                26.00
+                                            </td>
+                                            <td th:text="${#numbers.formatDecimal(grnPreview.received, 0, 'COMMA', 2, 'POINT')}">
+                                                5.98
+                                            </td>
+                                            <td>
+                                                <span th:if="${grnPreview.shortage!= 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.shortage, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                </span>
+                                                <span th:unless="${grnPreview.shortage!= 0}"> <span
+                                                        th:text="${grnPreview.shortage}"></span></span>
+                                            </td>
+                                            <td><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.accepted, 0, 'COMMA', 2, 'POINT')}">31,98</span>
+                                                <span
+                                                        th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.purchaseUOM.UOM}">kg</span>
+                                            </td>
+                                            <td>
+                                                 <span th:if="${grnPreview.rejected!= 0}">
+                                                <span th:text="${#numbers.formatDecimal(grnPreview.rejected, 0, 'COMMA', 2, 'POINT')}"></span>
+                                                 </span>
+                                                <span th:unless="${grnPreview.rejected!= 0}"> <span
+                                                        th:text="${grnPreview.rejected}"></span></span>
+                                            </td>
+                                            <td><span th:text="${grnPreview.indentItemPartyGroup.rate}">31,98</span>/
+                                                <span th:text="${grnPreview.indentItemPartyGroup.itemStockDetails.stock.product.uom.UOM}">31,98</span>
+                                            </td>
+                                            <td th:text="${grnPreview.discount}">31,98</td>
+                                            <td align="right"><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.totalPrice, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
+                                            <td align="right" th:text="${grnPreview.cgstRate}">31,98</td>
+                                            <td align="right"><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.cgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
+                                            <td align="right" th:text="${grnPreview.sgstRate}">31,98</td>
+                                            <td align="right"><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.sgstAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
+                                            <!--<td th:text="${grnPreview.igstRate}">31,98</td>
+                                            <td th:text="${grnPreview.igstAmount}">31,98</td>-->
+                                            <td align="right" th:text="${grnPreview.cessRate}">31,98</td>
+                                            <td align="right"><span
+                                                    th:text="${#numbers.formatDecimal(grnPreview.cessAmount, 0, 'COMMA', 4, 'POINT')}"></span>
+                                            </td>
+
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <table class="table invoice-total">
+                                    <tbody>
+                                    <tr class="priceColor">
+                                        <td><strong>Sub Total :</strong></td>
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}">1026.00</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="priceColor">
+                                        <td><strong>TAX :</strong></td>
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                th:text="${#numbers.formatDecimal(tax, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                    </tr>
+                                    <tr class="priceColor">
+                                        <td><strong>TOTAL :</strong></td>
+                                        <td><i class="fa fa-inr" aria-hidden="true"></i> <span
+                                                th:text="${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 4, 'POINT')}"></span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+
+                                <!-- <div class="well m-t"><strong>Comments</strong>
+                                     It is a long established fact that a reader will be distracted by the readable
+                                     content of a
+                                     page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                                     more-or-less
+                                 </div>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<script>
+        $(document).ready(function(){
+            $('.grnApproved').click(function(){
+            var reason=document.getElementById("reason").value;
+            var grnids=$(this).data('grnids');
+            swal({
+                title: "Approve?",
+                text: "Do you want to Approve GRN!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Approve it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/inventory/grnApprove',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'grnids':grnids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/inventory/getGRNList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+         $('.grnDiscard').click(function(){
+            var reason=document.getElementById("reason").value;
+            var grnids=$(this).data('grnids');
+            swal({
+                title: "Discard?",
+                text: "Do you want to Discard GRN!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Discard it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/inventory/grnDiscard',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'grnids':grnids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/inventory/getGRNList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+
+
+$('.grnReview').click(function(){
+            var reason=document.getElementById("reason").value;
+            var grnids=$(this).data('grnids');
+            swal({
+                title: "Review?",
+                text: "Do you want to Review GRN!",
+                type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0094db",
+            confirmButtonText: "Yes, Review it!",
+            closeOnConfirm: false
+                 },
+                 function () {
+
+                 	$.ajax({
+                   url: '/inventory/grnReview',
+                   type: 'POST',
+                   dataType : 'json',
+                   data: { 'reason': reason,'grnids':grnids },
+
+                   success: function(data){
+                            if(data.success) {
+
+                                var redirectionUrl= "/inventory/getGRNList";
+                                window.location.href = redirectionUrl;
+                                             }
+
+                                        },
+
+               error: function(jqXHR, textStatus)
+                {
+                alert('Error Occured');
+                 }
+                    });
+            });
+        });
+
+
+        });
+
+
+
+
+
+
+</script>
+</body>
+</html>

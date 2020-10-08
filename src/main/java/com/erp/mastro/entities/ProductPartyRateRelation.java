@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
@@ -15,39 +16,16 @@ public class ProductPartyRateRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "party_id")
     private Party party;
 
-    @Column(name = "rate")
-    private double rate;
-
-    @Column(name = "grade")
-    private String grade;
-
-    @Column(name = "discount_percentage")
-    private double discountPercentage;
-
-    @Column(name = "credit_days")
-    private String creditDays;
-
-    @Column(name = "allowed_price_dev_per_upper")
-    private double allowedPriceDevPerUpper;
-
-    @Column(name = "allowed_price_dev_per_lower")
-    private double allowedPriceDevPerLower;
-
-    public ProductPartyRateRelation(Long id, double rate, String grade, double discountPercentage, String creditDays, double allowedPriceDevPerUpper, double allowedPriceDevPerLower, Party party) {
-
-        this.id = id;
-        this.rate = rate;
-        this.grade = grade;
-        this.discountPercentage = discountPercentage;
-        this.creditDays = creditDays;
-        this.allowedPriceDevPerUpper = allowedPriceDevPerUpper;
-        this.allowedPriceDevPerLower = allowedPriceDevPerLower;
-        this.party = party;
-    }
-
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "party_pricelist_id")
+    private PartyPriceList partyPriceList;
 
 }

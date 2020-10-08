@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Delivery Challan / Sales Slip List</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Delivery Challan / Sales Slip List</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Delivery Challan / Sales Slip List</strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  ">
+                            <!-- <h5 class="text-info"> <strong> <i class="fa fa-barcode"></i> HSN List</strong></h5> -->
+                            <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                    <!--    <li><a class="dropdown-item font-bold"
+                                               th:href="@{/inventory/addDeliveryChellan}"><i
+                                                class="fa fa-plus-square"></i> Add Delivery Challan</a></li>
+                                        <li class="dropdown-divider"></li>-->
+                                        <li><a class="dropdown-item font-bold"
+                                               th:href="@{/inventory/getCreateSalesSlip}"><i
+                                                class="fa fa-plus-square"></i> Add Sales Slip</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item font-bold"><i class="fa fa-plus-square"></i> Add
+                                            Sales Slip Via Sales Order</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-hsn">
+                                    <thead class="mastro-blue-bg txt-white">
+                                    <tr>
+                                        <th class="mastro-blue-bg txt-white">No</th>
+                                        <th>Type</th>
+                                        <th>Number</th>
+                                        <th>Issue Date</th>
+                                        <th>Party Name</th>
+                                        <th>Status</th>
+                                        <th>Controls</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeX" th:each="salesslipObj,iterator:${salesSlipList}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td>Sales Slip</td>
+                                        <td th:text="${salesslipObj.salesSlipNo}">DC-75893425</td>
+
+                                        <span th:if="${salesslipObj.createdDate!= null}">
+                                        <td th:text="${#dates.format(salesslipObj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                        <span th:unless="${salesslipObj.createdDate!= null}">
+                                        <td></td>
+                                        </span>
+                                        <td class="center" th:text="${salesslipObj.party.partyName}">Mastro Metals Pvt
+                                            Ltd.
+                                        </td>
+                                        <td class="center"><a href="#"
+                                                              th:href="@{/inventory/getSalesSlipPreview?salesSlipId=__${salesslipObj.id}__}"><b
+                                                th:text="${salesslipObj.status}">Draft</b></a>
+                                        </td>
+                                        <td class="center">
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <!-- <li><a class="dropdown-item font-bold" href="#"><i
+                                                             class="fa fa-eye"></i> Browse</a></li>-->
+                                                    <li class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item font-bold" href="#"><i
+                                                            class="fa fa-edit"></i> Manage</a></li>
+                                                    <li class="dropdown-divider"></li>
+                                                    <!-- <li><a class="dropdown-item font-bold" href="#"><i
+                                                             class="fa fa-trash"></i> Remove</a></li>-->
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+    </div>
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/mastro/master.js" th:src="@{/resources/js/mastro/master.js}"></script>
+<script src="../resources/js/mastro/master_datatable.js" th:src="@{/resources/js/mastro/master_datatable.js}"></script>
+</body>
+</html>

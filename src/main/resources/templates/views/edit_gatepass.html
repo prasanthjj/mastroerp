@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Manage Gate Pass </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/iCheck/custom.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/iCheck/custom.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <link href="../resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link href="../resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/datapicker/datepicker3.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+    <link href="../resources/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Manage Gate Pass </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item ">
+                        <a th:href="@{/inventory/getGatePass}">Gate Pass List </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Manage Gate Pass </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-content mastro-step-ibox-content">
+                            <form id="editGatePassForm" th:action="@{/inventory/saveGatePass}"
+                                  th:object="${gatePassForm}"
+                                  name="gatePassForm" method="post">
+                                <input type="hidden" name="id" th:field="*{id}"/>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group  row"><label class="col-sm-6 col-form-label">Vehicle
+                                            Movement Type (In/Out)</label>
+
+                                            <div class="col-sm-6">
+                                                <div class="m-t-sm">
+                                                    <span th:if="${gatePassForm.vehicleMovementType == 'Inward'}">
+                                              <label class="m-r-sm"><input type="radio" checked th:value=${"Inward"}
+                                                                           name="vehicleMovement"> <i></i>Inward	</label>
+                                                <label> <input type="radio" th:value=${"Outward"}
+                                                               name="vehicleMovement"> <i></i>Outward</label>
+                                                </span>
+
+                                                    <span th:unless="${gatePassForm.vehicleMovementType == 'Inward'}">
+                                                 <label class="m-r-sm"><input type="radio" th:value=${"Inward"}
+                                                                              name="vehicleMovement"> <i></i>Inward	</label>
+                                                <label> <input type="radio" checked th:value=${"Outward"}
+                                                               name="vehicleMovement"> <i></i>Outward</label>
+                                                </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Vehicle
+                                            No. <i class="fa fa-asterisk "></i> </label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{vehicleNo}" required></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Transport
+                                            Name</label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{transportName}"></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Transport
+                                            Address</label>
+
+                                            <div class="col-sm-8"><textarea class="form-control"
+                                                                            th:field="*{transportAddress}">
+                                                
+                                        </textarea></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Prepared
+                                            By</label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{preparedBy}"></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Material
+                                            Description</label>
+
+                                            <div class="col-sm-8"><textarea class="form-control"
+                                                                            th:field="*{materialDescription}">
+                                                
+                                        </textarea></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label
+                                                class="col-sm-4 col-form-label">Remarks</label>
+
+                                            <div class="col-sm-8">
+                                            <textarea class="form-control" th:field="*{remarks}">
+
+                                            </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Material
+                                            Type <i class="fa fa-asterisk "></i></label>
+
+                                            <div class="col-sm-8">
+                                                <div class="m-t-sm">
+                                                <span th:if="${gatePassForm.emptyMaterial == 'Empty'}">
+                                              <label><input type="radio" checked th:value=${"Empty"}
+                                                            name="emptyMatrial"> <i></i>Empty	</label>
+                                                <label> <input type="radio" th:value=${"With_Matrial"}
+                                                               name="emptyMatrial"> <i></i>With Material
+                                                </label>
+                                                </span>
+
+                                                    <span th:unless="${gatePassForm.emptyMaterial == 'Empty'}">
+                                                 <label class="m-r-sm"><input type="radio" th:value=${"Empty"}
+                                                                              name="emptyMatrial"> <i></i>Empty	</label>
+                                                <label> <input type="radio" checked th:value=${"With_Matrial"}
+                                                               name="emptyMatrial"> <i></i>With Material
+                                                </label>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group row"><label class="col-sm-4 col-form-label"> Entry Date
+                                            <i class="fa fa-asterisk "></i></label>
+                                            <div class="col-sm-8" id="addGatePassDate">
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                    <input type="text" class="form-control" name="sEntryDate"
+                                                           th:value="${gatePassForm.sEntryDate}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Reference
+                                            Document No.</label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{referenceDocumentNo}"></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Customer/Vendor
+                                            Name</label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{customerVendorName}"></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">Customer/Vendor
+                                            Address</label>
+
+                                            <div class="col-sm-8"><textarea class="form-control"
+                                                                            th:field="*{customerVendorAddress}">
+                                                
+                                        </textarea></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group  row"><label class="col-sm-4 col-form-label">LR
+                                            No.</label>
+
+                                            <div class="col-sm-8"><input type="text" class="form-control"
+                                                                         th:field="*{LRNo}"></div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- iCheck -->
+<script src="../resources/js/plugins/iCheck/icheck.min.js"
+        th:src="@{/resources/js/plugins/iCheck/icheck.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- Data picker -->
+<script src="../resources/js/plugins/datapicker/bootstrap-datepicker.js"
+        th:src="@{/resources/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+<!-- Tags Input -->
+<script src="../resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"
+        th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+<script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+<script>
+        $(document).ready(function(){
+
+            $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+
+        });
+
+
+
+</script>
+</body>
+</html>

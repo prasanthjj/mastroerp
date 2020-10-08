@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class AssetMaintenanceActivities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="activity_name")
     private String activityName;
@@ -25,7 +25,7 @@ public class AssetMaintenanceActivities {
     @Column(name="standard_observation")
     private String standardObservation;
 
-    @Column(name="tolerence_lowerlimit")
+    @Column(name = "tolerence_lowerlimit")
     private String tolerenceLowerlimit;
 
     @Column(name = "frequency")
@@ -34,18 +34,13 @@ public class AssetMaintenanceActivities {
     @Column(name = "category")
     private String category;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private Assets assets;
+    @Column(name = "tolerence")
+    private Double tolerence;
 
-    public AssetMaintenanceActivities(long id, String activityName, String upperLimit, String standardObservation, String tolerenceLowerlimit, String frequency, String category) {
-        this.id = id;
-        this.activityName = activityName;
-        this.upperLimit = upperLimit;
-        this.standardObservation = standardObservation;
-        this.tolerenceLowerlimit = tolerenceLowerlimit;
-        this.frequency = frequency;
-        this.category = category;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})
+    private Assets asset;
+
 }
 

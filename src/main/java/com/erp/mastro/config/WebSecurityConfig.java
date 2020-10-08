@@ -1,16 +1,19 @@
 package com.erp.mastro.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.security.authentication.dao.*;
-import org.springframework.security.config.annotation.authentication.builders.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import static com.erp.mastro.constants.Constants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoggingAccessDeniedHandler accessDeniedHandler;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private CustomLogoutHandler customLogoutHandler;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
@@ -57,26 +63,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/register/**").permitAll()
+                .antMatchers("/addEmployee/**").permitAll()
+                .antMatchers("/updatePassword/**").permitAll()
+                .antMatchers("/master/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/inventory/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/sales/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/hr/**").hasAnyRole(ROLE_HR, ROLE_ADMIN)
+                .antMatchers("/purchase/**").hasAnyRole(ROLE_ADMIN, ROLE_SUPERADMIN)
+                .antMatchers("/branch/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")
-                .successHandler(successHandler())
+              //  .defaultSuccessUrl("/home")
+               .successHandler(successHandler())
                 .permitAll()
                 .and()
                 .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .addLogoutHandler(customLogoutHandler)
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler);
+
     }
 
-    @Bean
+   @Bean
     public MastroAuthenticationSuccessHandler successHandler() {
         return new MastroAuthenticationSuccessHandler();
     }
@@ -85,9 +101,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/resources/**"
-                        ,"/css/**",
+                        , "/css/**",
                         "/h2-console/**",
-                        "/register");
+                        "/register",
+                        "/addEmployee", "/changePassword",
+                        "/updatePassword",
+                        "/confirmPassword",
+                        "/forgotPassword",
+                        "/forgotPasswordAction");
     }
 
 }

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | Browse Assets </title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/steps/jquery.steps.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/steps/jquery.steps.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> Browse Assets</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a th:href="@{/master/getAssetList}">List Assets</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> Manage Asset</strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content mastro-step-ibox-content">
+                            <form id="viewAssetsForm" action="#" class="wizard-big">
+                                <h1>General Details</h1>
+                                <fieldset>
+                                    <h2>General Details</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset No</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetDetails.id}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Location</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetLocation}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Hours
+                                                    Utilized</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.hoursUtilized}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Capacity</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.capacity}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Is
+                                                    Active</strong></label>
+                                                <label class="col-sm-7 col-form-label"> <span
+                                                        th:if="${assetDetails.active==true}">
+                                                <h4>Yes</h4>
+                                                    </span>
+                                                    <span th:unless="${assetDetails.active== true}">
+                                                <h4>No</h4>
+                                                    </span></label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Type</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetType}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Party No</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.partyNo}">: HSN001</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset
+                                                    Name</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.assetName}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Asset Sub
+                                                    Location</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.subLocation}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Installation
+                                                    Date</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${#dates.format(assetDetails.installationDate, 'dd-MMMM-yyyy')}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Maintenance
+                                                    Priority</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetDetails.maintenancePriority}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Maintenance
+                                                    Required</strong></label>
+                                                <label class="col-sm-7 col-form-label">:
+                                                    <span th:if="${assetDetails.maintenanceRequired==true}">
+                                                Yes
+                                                </span>
+                                                    <span th:unless="${assetDetails.maintenanceRequired==true}">
+                                                No
+                                                </span>
+                                                </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Effective
+                                                    Date</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${#dates.format(assetDetails.effectiveDate, 'dd-MMMM-yyyy')}">:
+                                                    HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Make</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetDetails.make}">:
+                                                    HSN001</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <h1>Characteristics</h1>
+                                <fieldset>
+                                    <h2>Characteristics</h2>
+                                    <span th:each="assetObjList,iterator:${assetDetails.assetCharacteristics}">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Characteristics</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjList.character}">: HSN001</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Remarks</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjList.assetRemarks}">: HSN001</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Value</strong></label>
+                                                <label class="col-sm-7 col-form-label" th:text="${assetObjList.value}">: HSN001</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </span>
+
+                                </fieldset>
+
+                                <h1>Maintenance </h1>
+                                <fieldset>
+                                    <h2>Maintenance</h2>
+                                    <span th:each="assetObjMainList,iterator:${assetDetails.assetMaintenanceActivities}">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Activity Name</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.activityName}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Upper Limit</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.upperLimit}">: HSN001</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Category</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.category}">: HSN001</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Standard Observation</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.standardObservation}">: HSN001</label>
+                                            </div>
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Tolerance(%)</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.tolerence}">: HSN001</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Lower Limit</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.tolerenceLowerlimit}">: HSN001</label>
+                                            </div>
+                                           <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Frequency(In Days)</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjMainList.frequency}">: HSN001</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </span>
+                                    <div class="hr-line-dashed"></div>
+                                    <h2>Other CheckList</h2>
+                                    <span th:each="assetObjCheckList,iterator:${assetDetails.assetChecklists}">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>CheckList</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjCheckList.checkList}">: HSN001</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                             <div class="row">
+                                                <label class="col-sm-5 col-form-label"><strong>Remarks</strong></label>
+                                                <label class="col-sm-7 col-form-label"
+                                                       th:text="${assetObjCheckList.remarks}">: HSN001</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </span>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+
+<script src="../resources/js/mastro/mastro_steps.js" th:src="@{/resources/js/mastro/mastro_steps.js}"></script>
+</body>
+</html>

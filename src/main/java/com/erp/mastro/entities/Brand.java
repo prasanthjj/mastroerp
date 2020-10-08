@@ -1,7 +1,15 @@
 package com.erp.mastro.entities;
 
-import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "brand")
 public class Brand {
@@ -11,33 +19,17 @@ public class Brand {
     protected Long id;
 
     @Column(name = "brand_name")
-    protected  String brandName;
+    protected String brandName;
 
     @Column(name = "brand_description")
     protected String brandDescription;
 
-    public Long getId(){
-        return id;
-    }
+    @Column(name = "delete_status", nullable = false)
+    private int brandDeleteStatus;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
-    public String getBrandDescription() {
-        return brandDescription;
-    }
-
-    public void setBrandDescription(String brandDescription) {
-        this.brandDescription = brandDescription;
-    }
+    @OneToMany(mappedBy = "brand",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Product> productSet = new HashSet<>();
 
 }

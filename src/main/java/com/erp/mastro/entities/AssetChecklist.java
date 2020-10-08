@@ -15,7 +15,7 @@ public class AssetChecklist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "check_list")
     private String checkList;
@@ -23,13 +23,9 @@ public class AssetChecklist {
     @Column(name = "remarks")
     private String remarks;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private Assets assets;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "asset_assetchecklist", joinColumns = {@JoinColumn(name = "checklist_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")})
+    private Assets asset;
 
-    public AssetChecklist(long id, String checkList, String remarks) {
-        this.id = id;
-        this.checkList = checkList;
-        this.remarks = remarks;
-    }
 }

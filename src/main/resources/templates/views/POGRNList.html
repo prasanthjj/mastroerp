@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals |PO GRN List</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+    <link href="../resources/css/plugins/dataTables/datatables.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/dataTables/datatables.min.css}">
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <!-- Sweet Alert -->
+    <link href="../resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/sweetalert/sweetalert.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i>PO GRN List</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Inventory</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>GRN List </strong>
+                    </li>
+                </ol>
+            </div>
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title mastro-ibox-title ">
+                            <!-- <h5 class="text-info"> <strong> <i class="fa fa-barcode"></i> HSN List</strong></h5> -->
+                            <div class="ibox-tools">
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i
+                                            class="fa fa-cogs "></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item font-bold" th:href="@{/inventory/getCreateGRN}"><i
+                                                class="fa fa-plus-square"></i> Add GRN </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-grn">
+                                    <thead class="mastro-blue-bg txt-white">
+                                    <tr>
+                                        <th class="mastro-blue-bg txt-white">No</th>
+                                        <th>GRN No.</th>
+                                        <th>GRN Date</th>
+                                        <th>PO No.</th>
+                                        <!-- <th>Chalan Qty</th>-->
+                                        <!-- <th>Short Qty</th>
+                                         <th>Accepted Qty</th>
+                                         <th>Avl.Stock Qty</th>
+                                         <th>Rate</th>-->
+                                        <th>GRN Status</th>
+                                        <!-- <th>Controls</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeX" th:each="grnobj,iterator:${grnList}">
+                                        <td th:text="${iterator.index+1}">1</td>
+                                        <td th:text="${grnobj.grnNo}">GRN-06082020</td>
+                                        <span th:if="${grnobj.createdDate!= null}">
+                                        <td th:text="${#dates.format(grnobj.createdDate, 'dd-MMMM-yyyy')}"></td>
+                                        </span>
+                                        <span th:unless="${grnobj.createdDate!= null}">
+                                        <td></td>
+                                        </span>
+                                        <!-- <td></td>-->
+                                        <td th:text="${grnobj.purchaseOrder.id}">PO-28796452</td>
+                                        <!--<td>100</td>
+                                        <td class="center">50</td>
+                                        <td class="center">50</td>
+                                        <td class="center">200</td>
+                                        <td class="center">135</td>-->
+                                        <td><a data-toggle="modal" class=" btn btn-primary posGRNView"
+                                               data-target="#getPoGRN" href="#"
+                                               th:data-grnids="${grnobj.id}"><b
+                                                th:text="${grnobj.status}">Draft</b></a></td>
+                                        <!-- <td class="center">
+                                             <div class="btn-group">
+                                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                                                     Action
+                                                 </button>
+                                                 <ul class="dropdown-menu">
+                                                     &lt;!&ndash; <li><a class="dropdown-item font-bold" href="#"><i
+                                                              class="fa fa-eye"></i> Browse</a></li>
+                                                      <li class="dropdown-divider"></li>&ndash;&gt;
+                                                     <li><a class="dropdown-item font-bold" href="#"><i
+                                                             class="fa fa-edit"></i> Manage</a></li>
+                                                     <li class="dropdown-divider"></li>
+                                                     &lt;!&ndash; <li><a class="dropdown-item font-bold " href="#"><i
+                                                              class="fa fa-trash"></i> Remove</a></li>&ndash;&gt;
+                                                 </ul>
+                                             </div>
+                                         </td>-->
+                                    </tr>
+
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+<div class="modal inmodal" id="getPoGRN" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">View GRN </h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-bordered table-hover dataTables-example"
+                               id="pogrnview">
+                            <thead class="mastro-blue-bg txt-white">
+                            <tr>
+                                <th class="mastro-blue-bg txt-white">Item List</th>
+                                <th>HSN Code</th>
+                                <th>Pending</th>
+                                <th>DC/Invoice Quantity</th>
+                                <th>Received</th>
+                                <th>Shortage</th>
+                                <th>Accepted</th>
+                                <th>Rejected</th>
+                                <th>Price/Unit</th>
+                                <th>Discount %</th>
+                                <th>Total Price</th>
+                               <!-- <th>CGST Amount</th>
+                                <th>SGST Amount</th>
+                                <th>CESS Amount</th>-->
+
+                            </tr>
+                            </thead>
+                            <tbody class="">
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <table class="table invoice-total">
+                        <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>Rs <span id="subtotal"
+                            >1026.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>TAX :</strong></td>
+                            <td>Rs <span id="tax"
+                            ></span>
+                            </td>
+                        </tr>
+                        <tr class="priceColor">
+                            <td><strong>TOTAL :</strong></td>
+                            <td>Rs <span id="total"
+                            ></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<script src="../resources/js/plugins/dataTables/datatables.min.js"
+        th:src="@{/resources/js/plugins/dataTables/datatables.min.js}"></script>
+<script src="../resources/js/plugins/dataTables/dataTables.bootstrap4.min.js"
+        th:src="@{/resources/js/plugins/dataTables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+<!-- Sweet alert -->
+<script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
+        th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../resources/js/mastro/mastro_datatables.js"
+        th:src="@{/resources/js/mastro/mastro_datatables.js}"></script>
+<script>
+
+      $("body").on('click','.posGRNView',function (e) {
+
+        e.preventDefault();
+         var poGRNId=$(this).data('grnids');
+
+         	$.ajax({
+          url: '/purchase/getPOGRNView',
+          type: 'GET',
+          dataType : 'json',
+          data: { 'poGRNId': poGRNId },
+
+          success: function(data){
+                   if(data.success) {
+      $("#pogrnview tbody").html("");
+       $.each(data.data.poGRNItemsModelList, function(){
+       var tblRow = "<tr class='gradeX'>" + "<td>" + this['nameOfProduct'] + "</td>"+ "<td class='center'>" + this['hsncode'] + "</td>" + "<td class='center'>" + this['pending'] +"</td>" +"<td class='center'>"+this['quantityDc']+"</td>"+"<td class='center'>"+this['received']+"</td>"+"<td class='center'>"+this['shortage']+"</td>"+"<td class='center'>"+this['accepted']+" "+this['uomPurchase']+"</td>"+"<td class='center'>"+this['rejected']+"</td>"+"<td class='center'>"+this['rate']+"/"+this['uomBase']+"</td>"+"<td class='center'>"+this['discount']+"</td>"+"<td class='center'>"+this['itemTotal']+"</td>"+"</tr>";
+       $(tblRow).appendTo("#pogrnview tbody");
+
+       });
+        $('#subtotal').text(data.data.totalPrice);
+         $('#tax').text(data.data.tax);
+          $('#total').text(data.data.finalTotal);
+
+                                    }
+
+                               },
+
+      error: function(jqXHR, textStatus)
+       {
+       alert('Error Occured');
+        }
+           });
+       });
+
+</script>
+</body>
+</html>

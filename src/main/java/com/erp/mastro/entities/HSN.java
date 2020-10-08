@@ -27,56 +27,47 @@ public class HSN {
     @Column(name="section")
     private String section;
 
-    @Column(name="chapter")
+    @Column(name = "chapter")
     private String chapter;
 
-    @Column(name="heading")
+    @Column(name = "heading")
     private String heading;
 
-    @Column(name="sub_heading")
+    @Column(name = "sub_heading")
     private String subHeading;
 
-    @Column(name="hsn_name")
-    private String hsn_name;
+    @Column(name = "hsn_code")
+    private String hsnCode;
 
-    @Column(name="gst_goods_name")
+    @Column(name = "gst_goods_name")
     private String gstGoodsName;
 
-    @Column(name="effective_from")
+    @Column(name = "effective_from")
     private Date effectiveFrom;
 
-    @Column(name="sgst")
+    @Column(name = "sgst")
     private Double sgst;
 
-    @Column(name="cgst")
+    @Column(name = "cgst")
     private Double cgst;
 
-    @Column(name="igst")
+    @Column(name = "igst")
     private Double igst;
 
-    @Column(name="utgst")
+    @Column(name = "utgst")
     private Double utgst;
 
-    @OneToMany(mappedBy = "hsn",
+    @Column(name = "cess")
+    private Double cess;
+
+    @OneToMany(mappedBy = "hsn", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<Product> productSet = new HashSet<>();
 
-    public HSN(Long id, Date entryDate, String section, String chapter, String heading, String subHeading, String hsn_name, String gstGoodsName, Date effectiveFrom, Double sgst, Double cgst, Double igst, Double utgst) {
-        this.id = id;
-        this.entryDate = entryDate;
-        this.section = section;
-        this.chapter = chapter;
-        this.heading = heading;
-        this.subHeading = subHeading;
-        this.hsn_name = hsn_name;
-        this.gstGoodsName = gstGoodsName;
-        this.effectiveFrom = effectiveFrom;
-        this.sgst = sgst;
-        this.cgst = cgst;
-        this.igst = igst;
-        this.utgst = utgst;
-    }
+    @Column(name = "delete_status", nullable = false)
+    private int hsnDeleteStatus;
+
 }
 
 

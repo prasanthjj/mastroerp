@@ -7,25 +7,30 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name="assets")
+@Table(name = "assets")
 
 public class Assets {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="asset_name")
+    @Column(name = "asset_no")
+    private String assetNo;
+
+    @Column(name = "asset_name", nullable = false)
     private String assetName;
 
-    @Column(name="asset_type")
+    @Column(name = "asset_type")
     private String assetType;
 
-    @Column(name="asset_location")
-    private  String assetLocation;
+    @Column(name = "asset_location")
+    private String assetLocation;
 
     @Column(name="sub_location")
     private String subLocation;
@@ -33,8 +38,8 @@ public class Assets {
     @Column(name="party_no")
     private String partyNo;
 
-    @Column(name="hours_utilized")
-    private String hoursUtilized;
+    @Column(name = "hours_utilized")
+    private Double hoursUtilized;
 
     @Column(name="installation_date")
     private Date installationDate;
@@ -49,33 +54,37 @@ public class Assets {
     private String maintenancePriority;
 
     @Column(name = "is_active", nullable = false)
-    protected boolean isActive;
+    private Boolean active;
 
     @Column(name = "maintenanace_required", nullable = false)
-    protected boolean maintenanceRequired;
+    private Boolean maintenanceRequired;
 
-    @Column(name="make")
+    @Column(name = "make")
     private String make;
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetCharacteristics assetCharacteristics;
+    @Column(name = "delete_status", nullable = false)
+    private int assetDeleteStatus;
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetMaintenanceActivities assetMaintenanceActivities;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetcharacteristics", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "characteristics_id", referencedColumnName = "id")})
+    private Set<AssetCharacteristics> assetCharacteristics = new HashSet<>();
 
-    @OneToOne(mappedBy = "assets",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private AssetChecklist assetChecklist;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetmaintenanceactivities", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "maintenanceactivities_id", referencedColumnName = "id")})
+    private Set<AssetMaintenanceActivities> assetMaintenanceActivities = new HashSet<>();
 
-    public Assets(long id, String assetName, String assetType, String assetLocation, String subLocation, String partyNo, String hoursUtilized, Date installationDate, Date effectiveDate, String capacity, String maintenancePriority, boolean isActive, boolean maintenanceRequired, String make) {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "asset_assetchecklist", joinColumns = {@JoinColumn(name = "asset_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "checklist_id", referencedColumnName = "id")})
+    private Set<AssetChecklist> assetChecklists = new HashSet<>();
+
+    public Assets() {
+
+    }
+
+    public Assets(Long id, String assetName, String assetType, String assetLocation, String subLocation, String partyNo, Double hoursUtilized, Date installationDate, Date effectiveDate, String capacity, String maintenancePriority, Boolean active, Boolean maintenanceRequired, String make, Set<AssetCharacteristics> assetCharacteristics) {
         this.id = id;
         this.assetName = assetName;
         this.assetType = assetType;
@@ -87,8 +96,10 @@ public class Assets {
         this.effectiveDate = effectiveDate;
         this.capacity = capacity;
         this.maintenancePriority = maintenancePriority;
-        this.isActive = isActive;
+        this.active = active;
         this.maintenanceRequired = maintenanceRequired;
         this.make = make;
+        this.assetCharacteristics = assetCharacteristics;
     }
+
 }

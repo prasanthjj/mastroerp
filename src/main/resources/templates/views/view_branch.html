@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastro Metals | View Branch</title>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" th:src="@{/resources/css/bootstrap.min.css}">
+    <link href="../resources/font-awesome/css/font-awesome.css" rel="stylesheet"
+          th:src="@{/resources/font-awesome/css/font-awesome.css}">
+
+    <!-- Morris -->
+    <link href="../resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/morris/morris-0.4.3.min.css}">
+    <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
+    <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
+    <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <nav lang="en" th:replace="views/fragments/sidepanel :: nav"></nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom ">
+            <nav lang="en" th:replace="views/fragments/header :: nav"></nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-7">
+                <h2 class="text-info"><i class="fa fa-barcode"></i> View Branch </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Admin</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a th:href="@{/admin/getBranch}">Branch List</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong> View Branch</strong>
+                    </li>
+                </ol>
+            </div>
+
+            <div lang="en" th:replace="views/fragments/ipaddress :: div"></div>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  mastro-ibox-title">
+                            <h5 class="txt-white">General Details</h5>
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Branch Code</strong></label>
+                                            <label class="col-sm-7 col-form-label" th:text="${branchForm.id}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Branch Name </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchName}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Branch
+                                                Prefix</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchPrefix}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Email ID</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.emailId}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Mobile
+                                                Number</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.phoneNo}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Landline
+                                                Number</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.landNo}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Fax No.</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.faxNo}"></label>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content">
+
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Country Name</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.countryName}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>State Name</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.stateName}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>City Name </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.cityName}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Branch Code</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchCode}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Branch
+                                                Address</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchAddress}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Pin Code.</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.pinCode}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Website</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.website}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>Local
+                                                Currency</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.localCurrency}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title  mastro-ibox-title">
+                            <h5 class="txt-white">Registration Details</h5>
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content mastro-ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content ">
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>TAN No.</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.tanNo}"></label>
+                                        </div>
+
+                                        <h2>Income Tax Registration Details</h2>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>PAN No. </strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.panNo}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>With Effect
+                                                From</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${#dates.format(branchForm.branchRegistration.panDate,'MM/dd/yyyy')}"></label>
+                                        </div>
+
+                                        <h2>Provident Fund Registration Details</h2>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>PF Account
+                                                No.</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.pfAccount}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>With effect From
+                                                Date</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${#dates.format(branchForm.branchRegistration.pfDate,'MM/dd/yyyy')}"></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="ibox-content mastro-sub-ibox-content">
+                                        <h2>ESIC Registration Details</h2>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong> ESIC Account
+                                                No.</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.esicAccount}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>With effect From
+                                                Date</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.esicAccount}"></label>
+                                        </div>
+
+                                        <h2>GST Details</h2>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="row">
+                                            <label class="col-sm-5 col-form-label"><strong>GST Details</strong></label>
+                                            <label class="col-sm-7 col-form-label"
+                                                   th:text="${branchForm.branchRegistration.gstIn}"></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer lang="en" th:replace="views/fragments/footer :: footer"></footer>
+
+    </div>
+
+</div>
+
+<div lang="en" th:replace="views/fragments/switchBranch :: div"></div>
+
+<!-- Mainly scripts -->
+<script src="../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+<script src="../resources/js/popper.min.js" th:src="@{/resources/js/popper.min.js}"></script>
+<script src="../resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+<script src="../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="../resources/js/plugins/slimscroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+
+<!-- Custom and plugin javascript -->
+
+<script src="../resources/js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="../resources/js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+
+<!-- jQuery UI -->
+<script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
+        th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- Jquery Validate -->
+<script src="../resources/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/resources/js/plugins/validate/jquery.validate.min.js}"></script>
+
+<!-- Steps -->
+<script src="../resources/js/plugins/steps/jquery.steps.min.js"
+        th:src="@{/resources/js/plugins/steps/jquery.steps.min.js}"></script>
+<script src="../resources/js/mastro/branch_step.js" th:src="@{/resources/js/mastro/branch_step.js}"></script>
+</body>
+</html>

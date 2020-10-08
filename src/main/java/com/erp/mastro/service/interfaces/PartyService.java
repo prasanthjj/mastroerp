@@ -1,7 +1,11 @@
 package com.erp.mastro.service.interfaces;
 
 import com.erp.mastro.entities.*;
+import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.IndustryTypeRequestModel;
+import com.erp.mastro.model.request.PartyRequestModel;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -11,18 +15,26 @@ public interface PartyService {
 
     Party getPartyById(Long id);
 
-    void saveOrUpdateParty(Party party);
+    List<IndustryType> getAllIndustryType();
+
+    IndustryType getIndustryTypeById(Long id);
+
+    PriceList getPriceListById(Long id);
+
+    Party saveOrUpdateParty(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks) throws ModelNotFoundException, ParseException;
 
     void deleteParty(Long id);
 
-    void saveOrUpdatePartyContactDetails(Party party, Set<ContactDetails> contactDetails);
+    void activateOrDeactivateParty(Long id);
 
-    void saveOrUpdatePartyBankDetails(Party party, Set<BankDetails> bankDetails);
+    Set<ContactDetails> saveOrUpdatePartyContactDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException;
 
-    void saveOrUpdatePartyBillingDetails(Party party, Set<BillingDetails> billingDetails);
+    Set<BankDetails> saveOrUpdatePartyBankDetails(PartyRequestModel partyRequestModel, Party party) throws ModelNotFoundException;
 
-    void saveOrUpdatePartyCreditDetails(Party party, Set<CreditDetails> creditDetails);
+    Set<BillingDetails> saveOrUpdatePartyBillingDetails(PartyRequestModel partyRequestModel, Party party);
 
-    void saveOrUpdatePartyProducts(Party party,Set<Product> products);
+    Set<CreditDetails> saveOrUpdatePartyCreditDetails(PartyRequestModel partyRequestModel, String[] branchids, String[] creditLimits, String[] creditDays, String[] creditWorthiness, String[] interestRates, String[] remarks, Party party);
+
+    IndustryType saveOrUpdateIndustryType(IndustryTypeRequestModel industryTypeRequestModel) throws ModelNotFoundException;
 
 }

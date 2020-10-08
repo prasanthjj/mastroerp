@@ -31,13 +31,5 @@ public class Location {
     @Column(name = "pincode")
     private String pincode;
 
-    public Location(Long id, String countryName, String stateName, String cityName, String areaName, String pincode) {
-        this.id = id;
-        this.countryName = countryName;
-        this.stateName = stateName;
-        this.cityName = cityName;
-        this.areaName = areaName;
-        this.pincode = pincode;
-    }
 
 }
