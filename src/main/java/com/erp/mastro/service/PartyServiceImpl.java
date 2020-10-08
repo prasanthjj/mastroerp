@@ -13,8 +13,6 @@ import com.erp.mastro.repository.PartyRepository;
 import com.erp.mastro.repository.PriceListRepository;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PriceListService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -190,7 +188,7 @@ public class PartyServiceImpl implements PartyService {
         }
         String sDate1 = partyRequestModel.getSpartyDate();
         if (sDate1 != "") {
-            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+            Date date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
             party.setPartyDate(date1);
         }
         partyRepository.save(party);
@@ -232,7 +230,7 @@ public class PartyServiceImpl implements PartyService {
         }
         String sDate1 = partyRequestModel.getSpartyDate();
         if (sDate1 != "") {
-            Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+            Date date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
             party.setPartyDate(date1);
         }
         partyRepository.save(party);

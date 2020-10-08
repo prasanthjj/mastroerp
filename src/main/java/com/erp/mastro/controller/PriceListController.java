@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.PriceList;
 import com.erp.mastro.exception.MastroEntityException;
@@ -34,7 +35,7 @@ public class PriceListController {
                     .sorted(Comparator.comparing(
                             PriceList::getId).reversed())
                     .collect(Collectors.toList());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("priceListTab", "priceList");
             model.addAttribute("priceList", priceList);
             model.addAttribute("priceListForm", new PriceListRequestModel());

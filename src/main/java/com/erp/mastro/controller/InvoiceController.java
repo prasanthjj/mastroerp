@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.SalesSlipRequestModel;
@@ -41,7 +42,7 @@ public class InvoiceController {
         MastroLogUtils.info(InvoiceController.class, "Method to get sales slip invoice list :");
         try {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("invoiceTab", "invoice");
             List<SalesSlip> salesSlipList = currentBranch.getSalesSlips().stream()
                     .filter(salesSlipData -> (null != salesSlipData))
@@ -72,7 +73,7 @@ public class InvoiceController {
     public String getInvoiceViaSalesSlip(HttpServletRequest request, @RequestParam("salesSlipId") Long salesSlipId, Model model) {
         MastroLogUtils.info(InvoiceController.class, "Going to get create invoice via sales slip" + salesSlipId);
         try {
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("invoiceTab", "invoice");
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
             if (salesSlipId != null) {
@@ -104,7 +105,7 @@ public class InvoiceController {
 
         try {
             MastroLogUtils.info(InvoiceController.class, " create sales slip invoice " + salesSlipRequestModel.toString());
-            model.addAttribute("salesModule", "salesModule");
+            model.addAttribute(Constants.SALES_MODULE, Constants.SALES_MODULE);
             model.addAttribute("invoiceTab", "invoice");
             salesSlipService.generateSalesSlipInvoice(salesSlipRequestModel);
             return "redirect:/sales/getInvoiceList";

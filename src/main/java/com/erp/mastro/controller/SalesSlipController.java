@@ -60,7 +60,7 @@ public class SalesSlipController {
         MastroLogUtils.info(SalesSlipController.class, "Going to add sales slip : {}");
         try {
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             return "views/addPurchaseSlip";
 
@@ -119,7 +119,7 @@ public class SalesSlipController {
     public String createSalesSlipBasic(@ModelAttribute("salesSlipForm") @Valid SalesSlipRequestModel salesSlipRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to create basic sales slip details : {}" + salesSlipRequestModel.toString());
         try {
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
             SalesSlip salesSlip = salesSlipService.createSalesSlip(salesSlipRequestModel);
@@ -288,7 +288,7 @@ public class SalesSlipController {
     public String getsSalesSlipBasic(@RequestParam("salesSlipId") Long salesSlipId, HttpServletRequest request, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to get sales slip details : {}" + salesSlipId);
         try {
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             SalesSlip salesSlip = salesSlipService.getSalesSlipById(salesSlipId);
             BillingDetails billingDetails = salesSlip.getParty().getBillingDetails().stream().findFirst().get();
@@ -362,7 +362,7 @@ public class SalesSlipController {
     public String saveSalesSlipFullDetails(@ModelAttribute("salesSlipForm") @Valid SalesSlipRequestModel salesSlipRequestModel, HttpServletRequest request, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to save  sales slip full details : {}" + salesSlipRequestModel.toString());
         try {
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             salesSlipService.saveSalesSlipFullData(salesSlipRequestModel);
 
@@ -388,7 +388,7 @@ public class SalesSlipController {
     public String getSalesSlipPreview(HttpServletRequest request, @RequestParam("salesSlipId") Long salesSlipId, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Method to get sales slip preview :" + salesSlipId);
         try {
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
             if (salesSlipId != null) {
                 SalesSlip salesSlip = salesSlipService.getSalesSlipById(salesSlipId);

@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Department;
 import com.erp.mastro.model.request.DepartmentRequestModel;
@@ -39,7 +40,7 @@ public class DepartmentController {
                             Department::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("departmentForm", new DepartmentRequestModel());
-            model.addAttribute("hrModule", "hrModule");
+            model.addAttribute(Constants.HR_MODULE, Constants.HR_MODULE);
             model.addAttribute("departmentTab", "department");
             model.addAttribute("departmentList", departmentList);
             return "views/department_master";

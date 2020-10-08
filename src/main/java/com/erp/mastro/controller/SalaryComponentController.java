@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.SalaryComponent;
 import com.erp.mastro.model.request.SalaryComponentRequestModel;
@@ -42,7 +43,7 @@ public class SalaryComponentController {
                 /*  }*/
             }
             model.addAttribute("salryComponentForm", new SalaryComponentRequestModel());
-            model.addAttribute("hrModule", "hrModule");
+            model.addAttribute(Constants.HR_MODULE, Constants.HR_MODULE);
             model.addAttribute("salaryComponentTab", "salaryComponent");
             model.addAttribute("salaryComponentList", salaryComponentList);
             return "views/salary_components_master";
@@ -65,7 +66,7 @@ public class SalaryComponentController {
                     .collect(Collectors.toList());
 
             model.addAttribute("salryComponentForm", new SalaryComponentRequestModel());
-            model.addAttribute("hrModule", "hrModule");
+            model.addAttribute(Constants.HR_MODULE, Constants.HR_MODULE);
             model.addAttribute("salaryComponentTab", "salaryComponent");
 
             return "views/add_component";
@@ -90,7 +91,7 @@ public class SalaryComponentController {
         try {
             if (salryComponentId != null) {
 
-                model.addAttribute("hrModule", "hrModule");
+                model.addAttribute(Constants.HR_MODULE, Constants.HR_MODULE);
                 model.addAttribute("salaryComponentTab", "salaryComponent");
                 model.addAttribute("salryComponentForm", new SalaryComponentRequestModel(salaryComponentService.getSalaryComponentId(salryComponentId)));
 
@@ -138,7 +139,7 @@ public class SalaryComponentController {
         try {
             SalaryComponent salaryComponent = salaryComponentService.getSalaryComponentId(salryComponentId);
             model.addAttribute("salryComponentForm", salaryComponentService.getSalaryComponentId(salryComponentId));
-            model.addAttribute("hrModule", "hrModule");
+            model.addAttribute(Constants.HR_MODULE, Constants.HR_MODULE);
             model.addAttribute("salaryComponentTab", "salaryComponent");
             return "views/ViewSalaryComponent";
         } catch (Exception e) {

@@ -48,7 +48,7 @@ public class POInvoiceController {
     public String getPurchaseOrderInvoice(HttpServletRequest request, @RequestParam("poId") Long poId, Model model) {
         MastroLogUtils.info(POInvoiceController.class, "Going to get create po invoice" + poId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
             model.addAttribute("purchaseTab", "purchase");
             model.addAttribute("poInvoiceForm", new POInvoiceRequestModel());
             if (poId != null) {
@@ -166,7 +166,7 @@ public class POInvoiceController {
         try {
             Long poId = Long.parseLong(request.getParameter("poId"));
             MastroLogUtils.info(POInvoiceController.class, " create po invoice for the po" + poId);
-            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
             model.addAttribute("purchaseTab", "purchase");
             poInvoiceService.generatePOInvoice(poInvoiceRequestModel);
             return "redirect:/purchase/getPurchaseOrderList";
@@ -191,7 +191,7 @@ public class POInvoiceController {
         MastroLogUtils.info(POInvoiceController.class, "Method to  getPurchaseInvoiceList :");
         try {
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
-            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
             model.addAttribute("purchaseInvoiceTab", "purchaseInvoice");
 
             List<POInvoice> poInvoiceList = currentBranch.getPoInvoiceSet().stream()
@@ -214,7 +214,7 @@ public class POInvoiceController {
     public String getPurchaseInvoicePreview(HttpServletRequest request, @RequestParam("poInvoiceId") Long poInvoiceId, Model model) {
         MastroLogUtils.info(POInvoiceController.class, "Going to get po invoice" + poInvoiceId);
         try {
-            model.addAttribute("purchaseModule", "purchaseModule");
+            model.addAttribute(Constants.PURCHASE_MODULE, Constants.PURCHASE_MODULE);
             model.addAttribute("purchaseInvoiceTab", "purchaseInvoice");
             if (poInvoiceId != null) {
                 POInvoice poInvoice = poInvoiceService.getPOInvoiceyId(poInvoiceId);

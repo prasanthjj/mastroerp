@@ -73,7 +73,7 @@ public class IndentController {
                             Indent::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("indentForm", new IndentModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentList", indentList);
 
@@ -163,7 +163,7 @@ public class IndentController {
             List<Indent> indentList = indentService.getAllIndents();
 
             model.addAttribute("indentForm", new IndentModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentList", indentList);
             return "views/addIndent";
@@ -188,7 +188,7 @@ public class IndentController {
         MastroLogUtils.info(IndentController.class, "Going to createIndent and indent items : {}" + indentModel.toString());
         try {
             Indent indent = indentService.createIndent(indentModel);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentDetails", indent);
             model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
@@ -249,7 +249,7 @@ public class IndentController {
         try {
             Indent indent = indentService.getIndentById(indentId);
             model.addAttribute("indentDetails", indent);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             return "views/view_indent";
         } catch (Exception e) {
@@ -272,7 +272,7 @@ public class IndentController {
         MastroLogUtils.info(StockController.class, "Going to edit indent : {}" + indentId);
         try {
             Indent indent = indentService.getIndentById(indentId);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentDetails", indent);
             model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
@@ -297,7 +297,7 @@ public class IndentController {
         MastroLogUtils.info(IndentController.class, "Going to edit indent : {}" + indentModel.toString());
         try {
             Indent indent = indentService.createIndent(indentModel);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentDetails", indent);
             model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));

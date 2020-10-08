@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.CreditDetails;
@@ -57,7 +58,7 @@ public class PartyController {
                     .sorted(Comparator.comparing(Party::getId).reversed())
                     .collect(Collectors.toList());
 
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("partyTab", "party");
             model.addAttribute("partyList", partyList);
             return "views/partyMaster";
@@ -92,7 +93,7 @@ public class PartyController {
             }
             model.addAttribute("partyForm", new PartyRequestModel());
             model.addAttribute("industryForm", new IndustryTypeRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("partyTab", "party");
             model.addAttribute("industryTypes", industryTypes);
             model.addAttribute("branchList", branchList);
@@ -232,7 +233,7 @@ public class PartyController {
             }
             model.addAttribute("branchList", branchList);
             model.addAttribute("industryTypes", industryTypes);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("partytab", "party");
             if (partyId != null) {
                 model.addAttribute("partyForm", new PartyRequestModel(partyService.getPartyById(partyId)));
@@ -260,7 +261,7 @@ public class PartyController {
         try {
             Party party = partyService.getPartyById(partyId);
             model.addAttribute("partyDetails", party);
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("partyTab", "party");
             return "views/viewParty";
         } catch (Exception e) {

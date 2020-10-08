@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Catalog;
 import com.erp.mastro.entities.Category;
@@ -44,7 +45,7 @@ public class CatalogController {
             model.addAttribute("catalogForm", new CatalogRequestModel());
             model.addAttribute("categoryForm", new CategoryRequestModel());
             model.addAttribute("subCategoryForm", new SubCategoryRequestModel());
-            model.addAttribute("masterModule", "masterModule");
+            model.addAttribute(Constants.MASTER_MODULE, Constants.MASTER_MODULE);
             model.addAttribute("catalogTab", "catalog");
             model.addAttribute("catalogList", catalogList);
             return "views/catalogMaster";

@@ -86,38 +86,38 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setVatTinNo(branchRequestModel.getVatTinNo());
             String sDate1 = branchRequestModel.getsVatDate();
             if (sDate1 != "") {
-                Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+                Date date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
                 branchRegistration.setVatDate(date1);
             }
             branchRegistration.setCstTinNo(branchRequestModel.getCstTinNo());
             String sDate2 = branchRequestModel.getsCstdate();
             if (sDate2 != "") {
-                Date date2 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate2);
+                Date date2 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate2);
                 branchRegistration.setCstdate(date2);
             }
             branchRegistration.setJuridical(branchRequestModel.getJuridical());
             branchRegistration.setSTaxNo(branchRequestModel.getSTaxNo());
             String sDate3 = branchRequestModel.getsStaxDate();
             if (sDate3 != "") {
-                Date date3 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate3);
+                Date date3 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate3);
                 branchRegistration.setStaxDate(date3);
             }
             branchRegistration.setPanNo(branchRequestModel.getPanNo());
             String sDate4 = branchRequestModel.getsPanDate();
             if (sDate4 != "") {
-                Date date4 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate4);
+                Date date4 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate4);
                 branchRegistration.setPanDate(date4);
             }
             branchRegistration.setPfAccount(branchRequestModel.getPfAccount());
             String sDate5 = branchRequestModel.getsPfDate();
             if (sDate5 != "") {
-                Date date5 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate5);
+                Date date5 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate5);
                 branchRegistration.setPfDate(date5);
             }
             branchRegistration.setEsicAccount(branchRequestModel.getEsicAccount());
             String sDate6 = branchRequestModel.getsEsicDate();
             if (sDate6 != "") {
-                Date date6 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate6);
+                Date date6 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate6);
                 branchRegistration.setEsicDate(date6);
             }
             branchRegistration.setEccNo(branchRequestModel.getEccNo());
@@ -134,7 +134,7 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
             String sDate7 = branchRequestModel.getsGstDate();
             if (sDate7 != "") {
-                Date date7 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate7);
+                Date date7 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate7);
                 branchRegistration.setGstDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);
@@ -164,13 +164,13 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setVatTinNo(branchRequestModel.getVatTinNo());
             String sDate1 = branchRequestModel.getsVatDate();
             if (sDate1 != "") {
-                Date date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+                Date date1 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate1);
                 branchRegistration.setVatDate(date1);
             }
             branchRegistration.setCstTinNo(branchRequestModel.getCstTinNo());
             String sDate2 = branchRequestModel.getsCstdate();
             if (sDate2 != "") {
-                Date date2 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate2);
+                Date date2 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate2);
                 branchRegistration.setCstdate(date2);
             }
             branchRegistration.setJuridical(branchRequestModel.getJuridical());
@@ -178,25 +178,25 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setSTaxNo(branchRequestModel.getSTaxNo());
             String sDate3 = branchRequestModel.getsStaxDate();
             if (sDate3 != "") {
-                Date date3 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate3);
+                Date date3 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate3);
                 branchRegistration.setStaxDate(date3);
             }
             branchRegistration.setPanNo(branchRequestModel.getPanNo());
             String sDate4 = branchRequestModel.getsPanDate();
             if (sDate4 != "") {
-                Date date4 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate4);
+                Date date4 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate4);
                 branchRegistration.setPanDate(date4);
             }
             branchRegistration.setPfAccount(branchRequestModel.getPfAccount());
             String sDate5 = branchRequestModel.getsPfDate();
             if (sDate5 != "") {
-                Date date5 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate5);
+                Date date5 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate5);
                 branchRegistration.setPfDate(date5);
             }
             branchRegistration.setEsicAccount(branchRequestModel.getEsicAccount());
             String sDate6 = branchRequestModel.getsEsicDate();
             if (sDate6 != "") {
-                Date date6 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate6);
+                Date date6 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate6);
                 branchRegistration.setEsicDate(date6);
             }
             branchRegistration.setEccNo(branchRequestModel.getEccNo());
@@ -213,7 +213,7 @@ public class BranchServiceImpl implements BranchService {
             branchRegistration.setCinNo(branchRequestModel.getCinNo());
             String sDate7 = branchRequestModel.getsGstDate();
             if (sDate7 != "") {
-                Date date7 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate7);
+                Date date7 = new SimpleDateFormat(Constants.DATE_MM_DD_YYYY).parse(sDate7);
                 branchRegistration.setGstDate(date7);
             }
             branch.setBranchRegistration(branchRegistration);

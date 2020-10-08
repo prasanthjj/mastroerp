@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.Roles;
 import com.erp.mastro.model.request.RolesRequestModel;
@@ -39,7 +40,7 @@ public class RolesController {
                             Roles::getId).reversed())
                     .collect(Collectors.toList());
             model.addAttribute("roleForm", new RolesRequestModel());
-            model.addAttribute("adminModule", "adminModule");
+            model.addAttribute(Constants.ADMIN_MODULE, Constants.ADMIN_MODULE);
             model.addAttribute("rolesTab", "roles");
             model.addAttribute("rolesList", rolesList);
             return "views/role_master";
@@ -107,7 +108,7 @@ public class RolesController {
                 return new GenericResponse(false, "Role id null");
             }
         } catch (Exception e) {
-            MastroLogUtils.error(RolesController.class, "Error occured while deleting Roles : {}");
+            MastroLogUtils.error(RolesController.class, "Error occurred while deleting Roles : {}");
             return new GenericResponse(false, e.getMessage());
         }
     }

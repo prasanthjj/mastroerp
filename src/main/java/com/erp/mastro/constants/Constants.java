@@ -7,7 +7,6 @@ public class Constants {
     public static final String FILE_SEPARATOR = "/";
     public static final String S3_MASTRO = "mastro";
     public static final String FLAT_AMOUNT = "Flat-Amount";
-    public static final String PURCHASE_MODULE = "purchaseModule";
     public static final String PURCHASE = "purchase";
     public static final String PURCHASE_TAB = "purchaseTab";
     public static final String ROLE_ADMIN = "ADMIN";
@@ -36,6 +35,7 @@ public class Constants {
     public static final String STATUS_PO_INVOICED = "Invoiced";
 
     public static final String CUSTOMER = "Customer";
+    public static final String SUPPLIER = "Supplier";
 
     public static final String PARTY_TYPE_A = "A";
     public static final String PARTY_TYPE_B = "B";
@@ -43,10 +43,16 @@ public class Constants {
 
     public static final String PARTY_TYPE_S = "S";
 
-    public static final String DATEFORMAT_MM_DD_YYYY = "MM/dd/yyyy";
+    public static final String DATE_MM_DD_YYYY = "MM/dd/yyyy";
 
     public static final String PRODUCT_PIC_FOLDER = "/productPic/";
 
-    public static final String SUPPLIER = "Supplier";
+    public static final String ADMIN_MODULE = "adminModule";
+    public static final String MASTER_MODULE = "masterModule";
+    public static final String INVENTORY_MODULE = "inventoryModule";
+    public static final String HR_MODULE = "hrModule";
+    public static final String SALES_MODULE = "salesModule";
+    public static final String PURCHASE_MODULE = "purchaseModule";
+    public static final String REPORT_MODULE = "reportModule";
 
 }

@@ -1,6 +1,7 @@
 package com.erp.mastro.controller;
 
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.GatePass;
 import com.erp.mastro.model.request.GatePassRequestModel;
@@ -41,7 +42,7 @@ public class GatePassController {
                     .collect(Collectors.toList());
 
             model.addAttribute("gatePassForm", new GatePassRequestModel());
-            model.addAttribute("inventoryModule", "inventory");
+            model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("gatePassTab", "gatePass");
             model.addAttribute("gatePassList", gatePassList);
             return "views/gatepass";
@@ -64,7 +65,7 @@ public class GatePassController {
         try {
 
             model.addAttribute("gatePassForm", new GatePassRequestModel());
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("gatePassTab", "gatePassTab");
 
             return "views/create_gatepass";
@@ -88,7 +89,7 @@ public class GatePassController {
         try {
             if (gatePassId != null) {
                 System.out.println("gatePassId: " + gatePassId);
-                model.addAttribute("inventoryModule", "inventoryModule");
+                model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
                 model.addAttribute("gatePassTab", "gatePassTab");
                 model.addAttribute("gatePassForm", new GatePassRequestModel(gatePassService.getGatePassId(gatePassId)));
             }
@@ -135,7 +136,7 @@ public class GatePassController {
         try {
             GatePass gatePass = gatePassService.getGatePassId(gatePassId);
             model.addAttribute("gatePassForm", gatePass);
-            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("gatePassTab", "gatePassTab");
             return "views/view_gatepass";
         } catch (Exception e) {
