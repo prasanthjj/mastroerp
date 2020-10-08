@@ -61,7 +61,7 @@
                                 <span th:if="${salesSlipDetails== null}">
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <div class="form-group"><label>Party Name</label>
+                                        <div class="form-group"><label>Party Name <i class="fa fa-asterisk "></i></label>
                                             <input type="hidden" name="selectedPartyInSalesSlip" id="partyIdSalesInput">
                                             <input type="text" class="form-control salespartyautocomplete"
                                                    placeholder="Select party"
@@ -132,7 +132,7 @@
                                 <span th:unless="${salesSlipDetails== null}">
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <div class="form-group"><label>Party Name</label>
+                                        <div class="form-group"><label>Party Name <i class="fa fa-asterisk "></i></label>
 
                                          <h4>
                                                <span th:text="${salesSlipDetails.party.partyName}"></span>
@@ -149,14 +149,14 @@
                                                 <tr>
                                                     <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
                                                     <td>
-                                                        <span class="form-control"
+                                                        <span
                                                               th:text="${salesSlipDetails.transportMode}"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="master-blue-bg txt-white">vehicle No</td>
                                                     <td>
-                                                       <span class="form-control"
+                                                       <span
                                                              th:text="${salesSlipDetails.vehicleNo}"></span>
                                                     </td>
                                                 </tr>
@@ -202,7 +202,8 @@
                                 </div>
                         </span>
                             </form>
-                            <div class="ibox">
+
+                            <div class="ibox" th:if="${salesSlipDetails!= null}">
                                 <div class="ibox-title  ">
                                     <h3>Item Particulars</h3>
                                     <div class="ibox-tools">
@@ -212,7 +213,7 @@
                                 <div class="ibox-content">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <div class="form-group"><label>Item Name</label>
+                                            <div class="form-group"><label>Item Name <i class="fa fa-asterisk "></i></label>
 
                                                     <!--<input type="text" class="form-control item_head"
                                                           >-->
@@ -224,7 +225,7 @@
                                                    </span>
                                                     <input type="hidden" name="selectedProduct" id="itemIdInputSale">
                                                     <input type="text" class="form-control itemautocmopleteinsalesslip"
-                                                           placeholder="Select item">
+                                                           placeholder="Select item" >
 
                                                     <div class="item_dropdown_sales">
                                                         <ul class="auto-dropdown-menu">
@@ -233,20 +234,19 @@
                                                     </div>
 
 
-
                                             </div>
 
                                         </div>
 
                                         <div class="col-lg-2">
-                                            <div class="form-group"><label>UOM</label>
+                                            <div class="form-group"><label>UOM  <i class="fa fa-asterisk "></i></label>
                                                 <select class="form-control" id="saleuom" required>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <div class="form-group"><label>Quantity</label>
-                                                <input type="text" class="form-control" id="qtyenter"/>
+                                            <div class="form-group"><label>Quantity <i class="fa fa-asterisk "></i></label>
+                                                <input type="text" class="form-control" id="qtyenter" required/>
                                             </div>
                                         </div>
 
@@ -307,7 +307,8 @@
                                         <td></td>
                                         <td>Sub Total</td>
                                         <td colspan="5"></td>
-                                        <td th:if="${subTotal!= null}"><span
+
+                                        <td><span th:if="${subTotal!= null}"
                                                 th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 4, 'POINT')}"></span></td>
                                     </tr>
                                          <tr>
@@ -324,7 +325,7 @@
                                                 th:text="${#numbers.formatDecimal(loadingChargeSgstAmt, 0, 'COMMA', 4, 'POINT')}"></span></td>
                                         <td align="right" th:if="${loadingChargeCgstAmt!= null}"><span
                                                 th:text="${#numbers.formatDecimal(loadingChargeCgstAmt, 0, 'COMMA', 4, 'POINT')}"></span></td>
-                                        <td align="right" th:if="${finalLoadingCharge!= null}"><span
+                                        <td align="right"><span th:if="${finalLoadingCharge!= null}"
                                                 th:text="${#numbers.formatDecimal(finalLoadingCharge, 0, 'COMMA', 4, 'POINT')}"></span></td>
 
 
@@ -338,7 +339,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td th:if="${cessTotal!= null}"> <span
+                                        <td align="right"> <span th:if="${cessTotal!= null}"
                                                 th:text="${#numbers.formatDecimal(cessTotal, 0, 'COMMA', 4, 'POINT')}">7.1586</span></td>
 
 

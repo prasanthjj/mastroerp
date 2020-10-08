@@ -119,6 +119,7 @@
                                 </div>
                             </div>
                             </span>
+                            <span th:if="${partysDetails!= null}">
                             <div class="ibox">
                                 <div class="ibox-title  ">
                                     <form th:action="@{/sales/saveSelectedProduct}" th:object="${salesForm}"
@@ -131,21 +132,10 @@
                                                 <label>Item Name</label>
                                             </div>
                                   <div class="col-lg-4">
-
-                                           <!--     <input type="hidden" name="selectedProduct" id="itemIdInput">
-                                                <input type="text" class="form-control customerautocmoplete"
-                                                       placeholder="Select item">
-                                                <div class="customer_item_dropdown">
-                                                    <ul class="auto-dropdown-menu">
-                                                    </ul>
-                                                </div>-->
                                       <span th:if="${salesDetails!= null}">
-
                                                    <input type="hidden" name="selectedPartysId"
                                                           th:value="${salesDetails.party.id}" id="partssalesid">
                                                    </span>
-
-
                                       <input type="hidden" name="selectedProduct" id="itemIdInput">
                                       <input type="text" class="form-control customeritemautocmoplete"
                                              placeholder="Enter Item Name" required>
@@ -178,8 +168,8 @@
                                 </div>
                                 <div class="ibox-content">
                                 </div>
-
                             </div>
+                            </span>
                             <form th:action="@{/sales/createSO}" th:object="${salesForm}"
                                   name="salesForm" method="post">
                              <span th:if="${productDetails!= null}">

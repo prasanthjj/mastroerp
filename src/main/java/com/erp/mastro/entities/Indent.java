@@ -36,6 +36,9 @@ public class Indent extends Auditable<String> {
     @Column(name = "indent_status")
     private String indentStatus;
 
+    @Column(name = "soReferenceNo")
+    private String soReferenceNo;
+
     @Column(name = "indent_no")
     private String indentNo;
 
@@ -44,7 +47,7 @@ public class Indent extends Auditable<String> {
             , inverseJoinColumns = {@JoinColumn(name = "item_stock_deatils_id", referencedColumnName = "id")})
     private Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "indent",
+     @OneToMany(mappedBy = "indent",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<IndentItemPartyGroup> indentItemPartyGroups = new HashSet<>();
@@ -59,5 +62,9 @@ public class Indent extends Auditable<String> {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<DeliveryChellan> deliveryChellanSet = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "salesOrder_id")
+    private SalesOrder salesOrder;
 
 }

@@ -1,14 +1,21 @@
 package com.erp.mastro.controller;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
+import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
 import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
+import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.IndentModel;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.model.request.StockRequestModel;
+import com.erp.mastro.repository.IndentRepository;
 import com.erp.mastro.service.interfaces.IndentService;
 import com.erp.mastro.service.interfaces.ProductService;
+import com.erp.mastro.service.interfaces.SalesOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +33,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/inventory")
 public class IndentController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PurchaseOrderController.class);
+
+
     @Autowired
     private ProductService productService;
 
@@ -37,6 +44,15 @@ public class IndentController {
 
     @Autowired
     private UserController userController;
+
+    @Autowired
+    private SalesOrderService salesOrderService;
+
+
+    @Autowired
+    private IndentRepository indentRepository;
+
+
 
     /**
      * method to get indent details
@@ -60,6 +76,15 @@ public class IndentController {
             model.addAttribute("inventoryModule", "inventoryModule");
             model.addAttribute("indentTab", "indent");
             model.addAttribute("indentList", indentList);
+
+            List<SalesOrder> salesOrderSet = currentBranch.getSalesOrders().stream()
+                    .filter(salesOrderData -> (null != salesOrderData))
+                    //  .filter(salesOrderData -> (!salesOrderData.getStatus().equals("Discard")))
+                    .filter(salesOrder -> (salesOrder.getStatus().equals("Approve")))
+                    .sorted(Comparator.comparing(
+                            SalesOrder::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("salesOrderSet", salesOrderSet);
 
             return "views/indentMaster";
 
@@ -204,6 +229,11 @@ public class IndentController {
 
     }
 
+
+
+
+
+
     /**
      * Method To View Indent
      *
@@ -331,5 +361,130 @@ public class IndentController {
         }
 
     }
+
+
+
+
+    /**
+     * Method to get salesorder details
+     *
+     * @param request
+     * @param soId
+     * @param model
+     * @return indent page
+     */
+    @RequestMapping(value = "/getIndentViaSo", method = RequestMethod.GET)
+    public String getIndentViaSo(HttpServletRequest request,@Valid IndentModel indentModel, @RequestParam("soId") Long soId, Model model) {
+        logger.info("Going to get sales Order :" + soId);
+        try {
+            model.addAttribute("inventoryModule", "inventoryModule");
+            model.addAttribute("indentTab", "indent");
+
+            if (soId != null) {
+                SalesOrder salesOrder = salesOrderService.getSalesorderById(soId);
+                model.addAttribute("SoDetails", salesOrder);
+
+                Indent indent = new Indent();
+                indent.setSoReferenceNo(salesOrder.getSalesOrderNo());
+                indent.setIndentPriority("Low");
+                Date date1 = new Date();
+                Calendar c = Calendar.getInstance();
+                c.setTime(date1);
+                c.add(Calendar.DATE, 7);
+                Date date1PlusSeven = c.getTime();
+                indent.setIndentDate(date1PlusSeven);
+
+
+                Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+                indent.setBranch(currentBranch);
+
+
+                indentRepository.save(indent);
+                String currentBranchCode = indent.getBranch().getBranchCode();
+                if (currentBranchCode != null) {
+                    indent.setIndentNo(MastroApplicationUtils.generateName(currentBranchCode, "IND", indent.getId()));
+                }
+                indentRepository.save(indent);
+
+
+                for (SalesOrderProduct salesOrderitem : salesOrder.getSalesOrderProductSet()) {
+                    ItemStockDetails itemStockDetails =new ItemStockDetails();
+
+                    Set<Stock> stocks = salesOrderitem.getProduct().getStockSet().stream()
+                            .filter(stockItem -> stockItem.getBranch().getId().equals(currentBranch.getId()))
+                            .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                            .collect(Collectors.toSet());
+                    if (stocks.isEmpty()==false){
+                        Stock stock= stocks.stream().findFirst().get();
+                        itemStockDetails.setStock(stock);
+                    }
+                    indent.setIndentStatus("OPEN");
+
+                    itemStockDetails.setQuantityToIndent(salesOrderitem.getQuantity());
+
+
+                    List<IndentModel.IndentItemStockDetailsModel> indentItemStockDetailsModels = new ArrayList<>();
+                    IndentModel.IndentItemStockDetailsModel indentItemStockDetailsModel = new IndentModel.IndentItemStockDetailsModel();
+                    Long productId = salesOrderitem.getProduct().getId();
+                    Product product = productService.getProductById(productId);
+
+                    Set<ProductUOM> productUOMS = product.getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .collect(Collectors.toSet());
+                    Set<ProductRequestModel.ProductUOMModel> productUOMModels = new HashSet<>();
+                    for (ProductUOM productUOM : productUOMS) {
+                        ProductRequestModel.ProductUOMModel productUOMModel = new ProductRequestModel.ProductUOMModel();
+                        productUOMModel.setId(productUOM.getUom().getId());
+                        productUOMModel.setNameuom(productUOM.getUom().getUOM());
+                        productUOMModels.add(productUOMModel);
+                    }
+
+                    indentItemStockDetailsModel.setProductUOMS(productUOMS);
+
+                    indentItemStockDetailsModel.setSoReferenceNo(salesOrder.getSalesOrderNo());
+                    indentItemStockDetailsModel.setProduct(salesOrderitem.getProduct());
+
+                    indentItemStockDetailsModels.add(indentItemStockDetailsModel);
+
+                    indent.getItemStockDetailsSet().add(itemStockDetails);
+
+
+                }
+
+                indentRepository.save(indent);
+                model.addAttribute("indentForm", new IndentModel(indentService.getIndentById(indent.getId())));
+                model.addAttribute("indentDetails", indent);
+                model.addAttribute("salesOrderDetails",salesOrder);
+
+            }
+            return "views/indentViaSo";
+
+        } catch (Exception e) {
+            logger.error("Error occured while getIndentViaSo :" + soId, e);
+            throw e;
+        }
+    }
+
+
+    @PostMapping("/saveIndentSo")
+    public String saveIndentSo(@ModelAttribute("indentForm") @Valid IndentModel indentModel, HttpServletRequest request, Model model) throws ModelNotFoundException {
+        MastroLogUtils.info(IndentController.class, "Going to save indent sales order item details: {}" + indentModel.toString());
+        try {
+          indentService.saveOrUpdateIndentItemDetails(indentModel);
+
+
+
+            return "redirect:/inventory/getIndentList";
+        }catch (ModelNotFoundException e) {
+            MastroLogUtils.error(this, "indent model empty", e);
+            return "redirect:/inventory/getIndentList";
+        } catch (Exception e) {
+            MastroLogUtils.error(IndentController.class, "Error occured while save indent sales order details : {}", e);
+            throw e;
+        }
+
+    }
+
 
 }

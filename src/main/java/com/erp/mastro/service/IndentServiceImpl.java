@@ -97,57 +97,57 @@ public class IndentServiceImpl implements IndentService {
 
                 indent.setIndentStatus("OPEN");
                 ItemStockDetails itemStockDetails;
-               if(indent.getItemStockDetailsSet()!=null) {
-                   itemStockDetails = new ItemStockDetails();
-                   Set<Stock> stockSet = getAllStocks().stream()
-                           .filter(stockData -> (null != stockData))
-                           .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
-                           .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
-                           .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
-                           .collect(Collectors.toSet());
-                   itemStockDetails.setStock(stockSet.stream().findFirst().get());
-                   itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
-                   itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
-                   itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
-                   indent.getItemStockDetailsSet().add(itemStockDetails);
-               }
-               else {
-                   Set<ItemStockDetails> itemStockDetailsSet = indent.getItemStockDetailsSet();
-                   Set<ItemStockDetails> newitemstockDetails = itemStockDetailsSet.stream()
-                           .filter(itemStockData -> (null != itemStockData))
-                           .filter(itemStockData -> (indentModel.getProductId().equals(itemStockData.getStock().getProduct().getId())))
-                           .collect(Collectors.toSet());
-                   if (newitemstockDetails.isEmpty()==false){
-                       itemStockDetails = newitemstockDetails.stream().findFirst().get();
-                       Set<Stock> stockSet = getAllStocks().stream()
-                               .filter(stockData -> (null != stockData))
-                               .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
-                               .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
-                               .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
-                               .collect(Collectors.toSet());
+                if(indent.getItemStockDetailsSet()!=null) {
+                    itemStockDetails = new ItemStockDetails();
+                    Set<Stock> stockSet = getAllStocks().stream()
+                            .filter(stockData -> (null != stockData))
+                            .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                            .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
+                            .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                            .collect(Collectors.toSet());
+                    itemStockDetails.setStock(stockSet.stream().findFirst().get());
+                    itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
+                    itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
+                    itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
+                    indent.getItemStockDetailsSet().add(itemStockDetails);
+                }
+                else {
+                    Set<ItemStockDetails> itemStockDetailsSet = indent.getItemStockDetailsSet();
+                    Set<ItemStockDetails> newitemstockDetails = itemStockDetailsSet.stream()
+                            .filter(itemStockData -> (null != itemStockData))
+                            .filter(itemStockData -> (indentModel.getProductId().equals(itemStockData.getStock().getProduct().getId())))
+                            .collect(Collectors.toSet());
+                    if (newitemstockDetails.isEmpty()==false){
+                        itemStockDetails = newitemstockDetails.stream().findFirst().get();
+                        Set<Stock> stockSet = getAllStocks().stream()
+                                .filter(stockData -> (null != stockData))
+                                .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                                .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
+                                .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                                .collect(Collectors.toSet());
 
-                       itemStockDetails.setStock(stockSet.stream().findFirst().get());
-                       itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
-                       itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
-                       itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
-                       indent.getItemStockDetailsSet().add(itemStockDetails);
+                        itemStockDetails.setStock(stockSet.stream().findFirst().get());
+                        itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
+                        itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
+                        itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
+                        indent.getItemStockDetailsSet().add(itemStockDetails);
 
-                   }
-                   else {
-                       itemStockDetails = new ItemStockDetails();
-                       Set<Stock> stockSet = getAllStocks().stream()
-                               .filter(stockData -> (null != stockData))
-                               .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
-                               .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
-                               .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
-                               .collect(Collectors.toSet());
-                       itemStockDetails.setStock(stockSet.stream().findFirst().get());
-                       itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
-                       itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
-                       itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
-                       indent.getItemStockDetailsSet().add(itemStockDetails);
-                   }
-               }
+                    }
+                    else {
+                        itemStockDetails = new ItemStockDetails();
+                        Set<Stock> stockSet = getAllStocks().stream()
+                                .filter(stockData -> (null != stockData))
+                                .filter(stockData -> (currentBranch.getId().equals(stockData.getBranch().getId())))
+                                .filter(stockData -> (indentModel.getProductId().equals(stockData.getProduct().getId())))
+                                .filter(stockData -> (1 != stockData.getStockDeleteStatus()))
+                                .collect(Collectors.toSet());
+                        itemStockDetails.setStock(stockSet.stream().findFirst().get());
+                        itemStockDetails.setSoReferenceNo(indentModel.getSoReferenceNo());
+                        itemStockDetails.setQuantityToIndent(indentModel.getQuantityToIndent());
+                        itemStockDetails.setPurchaseUOM(indentModel.getPurchaseUOM());
+                        indent.getItemStockDetailsSet().add(itemStockDetails);
+                    }
+                }
 
                 indentRepository.save(indent);
 
@@ -194,7 +194,7 @@ public class IndentServiceImpl implements IndentService {
             indent.getItemStockDetailsSet().add(itemStockDetails);
         }
         else {
-            Set<ItemStockDetails> itemStockDetailsSet;
+            Set<ItemStockDetails> itemStockDetailsSet = new HashSet<>();
             itemStockDetailsSet = indent.getItemStockDetailsSet();
             Set<ItemStockDetails> newitemstockDetails = itemStockDetailsSet.stream()
                     .filter(itemStockData -> (null != itemStockData))
@@ -252,6 +252,8 @@ public class IndentServiceImpl implements IndentService {
 
             MastroLogUtils.info(IndentService.class, "Going to edit indent Items {}" + indentModel.toString());
             indent = indentRepository.findById(indentModel.getId()).get();
+            indent.setIndentPriority(indentModel.getIndentPriority());
+            indent.setIndentDate(indentModel.getIndentDate());
             Set<ItemStockDetails> itemStockDetails = saveOrUpdateIndentItems(indentModel, indent);
             indent.setItemStockDetailsSet(itemStockDetails);
 
@@ -286,9 +288,9 @@ public class IndentServiceImpl implements IndentService {
                             .filter(indentItem -> (null != indentItem))
                             .filter(indentItem -> (indentItem.getId().equals(itemStockDetailsModel.getId())))
                             .findFirst().get();
-
+/*
                     itemStockDetails.setQuantityToIndent(itemStockDetailsModel.getQuantityToIndent());
-                    itemStockDetails.setSoReferenceNo(itemStockDetailsModel.getSoReferenceNo());
+                    itemStockDetails.setSoReferenceNo(itemStockDetailsModel.getSoReferenceNo());*/
                     if (itemStockDetailsModel.getUomId() != null) {
                         itemStockDetails.setPurchaseUOM(uomRepository.findById(itemStockDetailsModel.getUomId()).get());
                     }
@@ -296,7 +298,7 @@ public class IndentServiceImpl implements IndentService {
                     if (!sDate1.equals("")) {
                         Date date1 = null;
                         try {
-                            date1 = new SimpleDateFormat(Constants.DATEFORMAT_MM_DD_YYYY).parse(sDate1);
+                            date1 = new SimpleDateFormat("MM/dd/yyyy").parse(sDate1);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

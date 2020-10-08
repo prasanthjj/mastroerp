@@ -57,6 +57,11 @@ public class IndentModel {
         private Long stockId;
         private Long uomId;
         private Stock stock;
+        private Double curentStock;
+        private String productName;
+        private String baseUom;
+        private Product product;
+
         private Uom uom;
         private Set<ProductUOM> productUOMS;
 

@@ -86,7 +86,7 @@ public class PurchaseOrderController {
             List<Indent> indentSet = currentBranch.getIndentSet().stream()
                     .filter(indentData -> (null != indentData))
                     .filter(indentData -> (1 != indentData.getIndentDeleteStatus()))
-                    .filter(indentItem -> (indentItem.getIndentStatus().equals("OPEN")))
+                   .filter(indentItem -> (indentItem.getIndentStatus().equals("OPEN")))
                     .sorted(Comparator.comparing(
                             Indent::getId).reversed())
                     .collect(Collectors.toList());
@@ -117,7 +117,19 @@ public class PurchaseOrderController {
             model.addAttribute(Constants.PURCHASE_TAB, Constants.PURCHASE);
             if (indentId != null) {
                 Indent indent = indentService.getIndentById(indentId);
+
+                boolean purchaseBtn = false;
+                Set itemStockDetailsSet =indent.getItemStockDetailsSet();
+                for(Object it: itemStockDetailsSet){
+                    ItemStockDetails itemStockDetails = (ItemStockDetails) it;
+                    if (itemStockDetails!=null) {
+                        if (itemStockDetails.getPurchaseQuantity()!=null && itemStockDetails.getPurchaseQuantity() > 0) {
+                            purchaseBtn = true;
+                        }
+                    }
+                }
                 model.addAttribute("indentDetails", indent);
+                model.addAttribute("purchaseBtn",purchaseBtn);
             }
             return "views/addPoViaIndent";
 

@@ -69,20 +69,21 @@
 
                                 <div class="row">
 
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Indent No.</label>
-                                            <div th:text="${indentDetails.id}">IN25062020</div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-lg-5">Indent No.</label>
+                                            <div class="col-lg-7" th:text="${indentDetails.indentNo}">IN25062020</div>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
 
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Indent Date</label>
+                                    <div class="col-lg-4">
+                                        <div class="form-group row">
+                                            <label class="col-lg-5">Indent Date</label>
+                                            <div class="col-lg-7">
                                            <p  th:text="${#dates.format(indentDetails.createdDate, 'dd-MMMM-yyyy')}"></p>
+                                            </div>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
+
                                     </div>
 
                                 </div>
@@ -157,9 +158,15 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                                <div class="col-lg-12 text-right">
+
+                                    <span th:if="${purchaseBtn==true}">
+                                        <div class="col-lg-12 text-right">
                                     <button class="btn btn-primary btn-sm" type="submit">Purchase</button>
                                 </div>
+                                    </span>
+
+
+
                             </form>
                         </div>
                     </div>
@@ -274,6 +281,8 @@
         th:src="@{/resources/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
 <script>
         $(document).ready(function(){
+
+
             $('.dataTables-example').DataTable({
                 pageLength: 25,
                 responsive: true,

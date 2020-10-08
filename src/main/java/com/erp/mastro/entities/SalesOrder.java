@@ -46,6 +46,7 @@ public class SalesOrder extends Auditable<String> {
     @Column(name = "SalesOrder_no")
     private String salesOrderNo;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private Branch branch;
@@ -54,5 +55,11 @@ public class SalesOrder extends Auditable<String> {
     @JoinTable(name = "salesorder_salesorderproduct", joinColumns = {@JoinColumn(name = "sales_order_id", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "sales_order_product_id", referencedColumnName = "id")})
     private Set<SalesOrderProduct> salesOrderProductSet = new HashSet<>();
+
+
+    @OneToMany(mappedBy = "salesOrder",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Indent> indents = new HashSet<>();
 
 }

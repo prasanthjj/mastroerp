@@ -102,8 +102,8 @@
                                     <div class="row">
                                 
                                         <div class="col-lg-6">
-                                            <div class="form-group"><label>Purchase Order No</label>
-                                                <select class="form-control" id="partyPo" name="poId">
+                                            <div class="form-group"><label>Purchase Order No <i class="fa fa-asterisk "></i></label>
+                                                <select class="form-control" id="partyPo" name="poId" required>
 
                                                 </select>
                                             </div>
@@ -386,9 +386,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <span th:if="${grnDetails!= null}">
                                 <div class="col-lg-12 text-right">
                                     <button class="btn btn-primary btn-sm" type="submit">Create GRN</button>
                                 </div>
+                                </span>
                             </form>
                         </div>
                     </div>
@@ -502,7 +504,6 @@ $(document).ready(function(){
             if(data.success) {
             $("#partyPo").html("");
                $.each(data.data.partypos, function(i){
-
                $('#partyPo').append($('<option>').val(this['id']).text(this['pono']));
                   });
             }

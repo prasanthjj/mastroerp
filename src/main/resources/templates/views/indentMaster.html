@@ -176,12 +176,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="gradeX">
+                           <!-- <tr class="gradeX">
                                 <td>1</td>
                                 <td class="center"><a href="add_indent_via_sales_order.html">SO24062020</a></td>
                                 <td class="center"></td>
-                            </tr>
-                            <tr class="gradeX">
+                            </tr>-->
+                           <tr class="gradeX" th:each="salesObj,iterator:${salesOrderSet}">
+                               <td th:text="${iterator.index+1}">1</td>
+                               <td class="center"><a href="add_indent_via_sales_order.html"
+                                                     th:href="@{/inventory/getIndentViaSo?soId=__${salesObj.id}__}"><span
+                                       th:text="${salesObj.salesOrderNo}"></span></a></td>
+                               <td class="center" th:text="${#dates.format(salesObj.createdDate, 'dd-MMMM-yyyy')}">
+
+                               </td>
+                           </tr>
+                         <!--   <tr class="gradeX">
                                 <td>2</td>
                                 <td class="center"><a href="add_indent_via_sales_order.html">SO25062020</a></td>
                                 <td class="center"></td>
@@ -190,7 +199,7 @@
                                 <td>3</td>
                                 <td class="center"><a href="add_indent_via_sales_order.html">SO26062020</a></td>
                                 <td class="center"></td>
-                            </tr>
+                            </tr>-->
                             </tbody>
                             <tfoot>
 
