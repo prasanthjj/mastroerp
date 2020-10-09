@@ -19,4 +19,6 @@ public interface SalesSlipService {
     List<SalesSlip> getAllSalesSlips();
 
     void generateSalesSlipInvoice(SalesSlipRequestModel salesSlipRequestModel) throws ModelNotFoundException;
+
+    void grnUpdationOnSaleSlipCut(Long grnItemsId, Long partyId, Long productSalesIds, Double rateValue, Double qtyEnter, Long salesUOMId, Long salesslipId);
 }

@@ -124,6 +124,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setSubCategory(subCategory);
                 product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension());
                 product.setDimension(productRequestModel.getDimension());
+                product.setProductLength(productRequestModel.getProductLength());
                 product.setColour(productRequestModel.getColour());
                 product.setWarranty(productRequestModel.getWarranty());
                 product.setGuarantee(productRequestModel.getGuarantee());
@@ -167,6 +168,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setSubCategory(subCategory);
                 product.setProductName(subCategory.getSubCategoryName() + " " + productRequestModel.getColour() + " " + productRequestModel.getDimension());
                 product.setDimension(productRequestModel.getDimension());
+                product.setProductLength(productRequestModel.getProductLength());
                 product.setColour(productRequestModel.getColour());
                 product.setWarranty(productRequestModel.getWarranty());
                 product.setGuarantee(productRequestModel.getGuarantee());

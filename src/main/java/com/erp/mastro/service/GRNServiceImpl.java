@@ -65,6 +65,17 @@ public class GRNServiceImpl implements GRNService {
     }
 
     /**
+     * Method to get all grn items
+     *
+     * @return grnItems list
+     */
+    public List<GRNItems> getAllGRNItems() {
+        List<GRNItems> grnItemsList = new ArrayList<GRNItems>();
+        grnItemRepository.findAll().forEach(grnItems -> grnItemsList.add(grnItems));
+        return grnItemsList;
+    }
+
+    /**
      * Method to create GRN
      *
      * @param grnRequestModel

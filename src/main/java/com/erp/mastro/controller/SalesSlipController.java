@@ -9,7 +9,9 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.model.request.ProductRequestModel;
 import com.erp.mastro.model.request.SalesSlipRequestModel;
+import com.erp.mastro.repository.GRNItemRepository;
 import com.erp.mastro.repository.ProductUOMRepository;
+import com.erp.mastro.repository.StockRepository;
 import com.erp.mastro.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,12 @@ public class SalesSlipController {
 
     @Autowired
     private ProductUOMRepository productUOMRepository;
+
+    @Autowired
+    private GRNItemRepository grnItemRepository;
+
+    @Autowired
+    private StockRepository stockRepository;
 
     /**
      * Method to load create sales slip
@@ -214,6 +222,7 @@ public class SalesSlipController {
             }
 
             List<GRNRequestModel.GRNItemModel> grnItemModels = new ArrayList<>();
+            List<GRNRequestModel.GRNItemModel> grnItemModelsForCutting = new ArrayList<>();
             List<GRNItems> grnItemsList = grnItemsSetFinal.stream()
                     .filter(grnitemData -> (null != grnitemData))
                     .filter(grnitemData -> (0 != grnitemData.getAccepted()))
@@ -224,32 +233,78 @@ public class SalesSlipController {
             List<GRNItems> grnItemsList1 = grnItemsList.stream()
                     .limit(5)
                     .collect(Collectors.toList());
-            /*grnItemsList1.limit(5).findFirst();*/
 
             ProductUOM salesUom = productUOMRepository.findById(productSaleUomId).get();
-            for (GRNItems grnItems : grnItemsList1) {
-                GRNRequestModel.GRNItemModel grnItemModel = new GRNRequestModel.GRNItemModel();
-                grnItemModel.setId(grnItems.getId());
-                grnItemModel.setAcceptedqty(grnItems.getAccepted());
-                grnItemModel.setPurchaseuom(grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM().getUOM());
-                grnItemModel.setGrnid(grnItems.getGrn().getId());
-                grnItemModel.setItemname(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductName());
-                Uom purchaseUOM = grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
-                ProductUOM productUOMPurchase = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
-                        .filter(productuomData -> (null != productuomData))
-                        .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
-                        .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
-                        .findFirst().get();
-                Double grnItemQtyInBaseUOM = grnItems.getAccepted() * productUOMPurchase.getConvertionFactor();
-                Double grnItemQtyInSalesUOM = grnItemQtyInBaseUOM / salesUom.getConvertionFactor();
-                grnItemModel.setAcceptedqtyinsalesuom(Math.round(grnItemQtyInSalesUOM * 100.0) / 100.0);
-                grnItemModel.setSalesuom(salesUom.getUom().getUOM());
-                grnItemModels.add(grnItemModel);
-            }
+            if (grnItemsList1.isEmpty() == false) {
+                for (GRNItems grnItems : grnItemsList1) {
+                    GRNRequestModel.GRNItemModel grnItemModel = new GRNRequestModel.GRNItemModel();
+                    grnItemModel.setId(grnItems.getId());
+                    grnItemModel.setAcceptedqty(grnItems.getAccepted());
+                    grnItemModel.setPurchaseuom(grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM().getUOM());
+                    grnItemModel.setGrnno(grnItems.getGrn().getGrnNo());
+                    grnItemModel.setItemname(grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductName());
+                    Uom purchaseUOM = grnItems.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                    ProductUOM productUOMPurchase = grnItems.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .findFirst().get();
+                    Double grnItemQtyInBaseUOM = grnItems.getAccepted() * productUOMPurchase.getConvertionFactor();
+                    Double grnItemQtyInSalesUOM = grnItemQtyInBaseUOM / salesUom.getConvertionFactor();
+                    grnItemModel.setAcceptedqtyinsalesuom(Math.round(grnItemQtyInSalesUOM * 100.0) / 100.0);
+                    grnItemModel.setSalesuom(salesUom.getUom().getUOM());
+                    grnItemModels.add(grnItemModel);
+                }
+            } else {
+                List<GRNItems> grnItemsForCutting = grnItemsSet.stream()
+                        .filter(grnitemData -> (null != grnitemData))
+                        .filter(grnitemData -> (0 != grnitemData.getAccepted()))
+                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()).equals(product.getSubCategory().getId()))
+                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()).equals(product.getColour()))
+                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength() > product.getProductLength()))
+                        .sorted(Comparator.comparing(
+                                GRNItems::getId))
+                        .collect(Collectors.toList());
 
+               /* List<GRNItems> grnItemsList1ForCutting = grnItemsForCutting.stream()
+                        .limit(5)
+                        .collect(Collectors.toList());*/
+                if (grnItemsForCutting.isEmpty() == false) {
+                    for (GRNItems grnItemsCut : grnItemsForCutting) {
+                        GRNRequestModel.GRNItemModel grnItemModelCut = new GRNRequestModel.GRNItemModel();
+                        grnItemModelCut.setId(grnItemsCut.getId());
+                        grnItemModelCut.setAcceptedqty(grnItemsCut.getAccepted());
+                        grnItemModelCut.setPurchaseuom(grnItemsCut.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM().getUOM());
+                        grnItemModelCut.setGrnno(grnItemsCut.getGrn().getGrnNo());
+                        grnItemModelCut.setItemname(grnItemsCut.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductName());
+                        Uom purchaseUOM = grnItemsCut.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                        ProductUOM productUOMPurchase = grnItemsCut.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                .filter(productuomData -> (null != productuomData))
+                                .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                                .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                                .findFirst().get();
+                        Double grnItemQtyInBaseUOM = grnItemsCut.getAccepted() * productUOMPurchase.getConvertionFactor();
+                        Set<ProductUOM> salesUOMsOfCuttingProduct = grnItemsCut.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                .filter(productUomData -> (null != productUomData))
+                                .filter(productUOMData -> (productUOMData.getTransactionType().equals(Constants.SALES)))
+                                .filter(productUOMData -> (productUOMData.getUom().getId().equals(salesUom.getUom().getId())))
+                                .collect(Collectors.toSet());
+
+                        if (salesUOMsOfCuttingProduct.isEmpty() == false) {
+                            Double grnItemQtyInSalesUOM = grnItemQtyInBaseUOM / salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor();
+                            grnItemModelCut.setAcceptedqtyinsalesuom(MastroApplicationUtils.roundTwoDecimals(grnItemQtyInSalesUOM));
+                        } else {
+                            grnItemModelCut.setAcceptedqtyinsalesuom(0.0d);
+                        }
+                        grnItemModelCut.setSalesuom(salesUom.getUom().getUOM());
+                        grnItemModelsForCutting.add(grnItemModelCut);
+                    }
+                }
+            }
             return new GenericResponse(true, "get ProductPartyGrnItems details")
                     .setProperty("productname", product.getProductName())
-                    .setProperty("grnitems", grnItemModels);
+                    .setProperty("grnitems", grnItemModels)
+                    .setProperty("grnitemsCut", grnItemModelsForCutting);
 
         } catch (Exception e) {
             MastroLogUtils.error(this, e.getMessage(), e);
@@ -413,4 +468,32 @@ public class SalesSlipController {
             throw e;
         }
     }
+
+    /**
+     * method include Cut product calculatio
+     *
+     * @param grnItemsId
+     * @param partyId
+     * @param productSalesIds
+     * @param rateValue
+     * @param qtyEnter
+     * @param salesUOMId
+     * @param salesslipId
+     * @return response
+     */
+    @RequestMapping(value = "/saveSelectedGrnItemsForCut", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse saveSelectedGrnItemsForCut(@RequestParam("grnItemsId") Long grnItemsId, @RequestParam("partyId") Long partyId, @RequestParam("productSalesIds") Long productSalesIds, @RequestParam("rateValue") Double rateValue, @RequestParam("qtyEnter") Double qtyEnter, @RequestParam("salesUOMId") Long salesUOMId, @RequestParam("salesslipid") Long salesslipId) {
+        try {
+            MastroLogUtils.info(SalesSlipController.class, "Going to saveSelectedGrnItems details : {}" + grnItemsId);
+            salesSlipService.grnUpdationOnSaleSlipCut(grnItemsId, partyId, productSalesIds, rateValue, qtyEnter, salesUOMId, salesslipId);
+            return new GenericResponse(true, "save details details")
+                    .setProperty("saleslipId", salesslipId);
+
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
+
 }

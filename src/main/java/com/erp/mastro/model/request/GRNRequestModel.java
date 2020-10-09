@@ -134,6 +134,7 @@ public class GRNRequestModel {
         private Long grnid;
         private Double acceptedqtyinsalesuom;
         private String salesuom;
+        private String grnno;
 
     }
     @Override

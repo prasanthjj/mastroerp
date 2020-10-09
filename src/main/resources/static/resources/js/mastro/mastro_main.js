@@ -1415,7 +1415,6 @@ $("#calculationAmount").hide();
        });
         //get Subcategory edit end
 
-
  //get sales item grn start
       $("body").on('click','.addItemButton',function (e) {
 
@@ -1435,12 +1434,24 @@ $("#calculationAmount").hide();
 
                                        $("#grnitemDetails tbody").html("");
                                        $('#grnProductId').text(data.data.productname);
+                                       if(data.data.grnitems.length!=0)
+                                       {
                                         $.each(data.data.grnitems, function(){
 
-                                         var tblRow ="<tr>"+"<td>"+this['grnid']+"</td>"+"<td>"+this['itemname']+"</td>"+"<td>"+this['acceptedqty'] +"<span>"+this['purchaseuom']+"</span>"+'('+"<span>"+this['acceptedqtyinsalesuom']+"</span>"+"<span>"+this['salesuom']+"</span>"+')'+"</td>" +"<td>"+"<div class='btn-group'>" +"<button data-toggle='dropdown' class='btn btn-primary dropdown-toggle'>Action</button>"+ "<ul class='dropdown-menu'>"+"<li>"+"<a class='dropdown-item font-bold selectGrnItem' data-grnitemid=" +this['id'] +" > Select</a>"+"</li>"+"<li>"+"<a class='dropdown-item font-bold splitgrnItem' data-toggle='modal' data-target='#splitgrnsItem'>Manage</a>"+"</li>"+"<li class='dropdown-divider'>"+"</li>"+"</ul>"+"</div>" +"</td>"+ "</tr>";
+                                         var tblRow ="<tr>"+"<td>"+this['grnno']+"</td>"+"<td>"+this['itemname']+"</td>"+"<td>"+"</td>"+"<td>"+this['acceptedqty'] +"<span>"+this['purchaseuom']+"</span>"+'('+"<span>"+this['acceptedqtyinsalesuom']+"</span>"+"<span>"+this['salesuom']+"</span>"+')'+"</td>"+"<td>"+"<a href='#' class='btn btn-primary selectGrnItem' data-grnitemid=" +this['id'] +" > Select</a>"+"</td>"+ "</tr>";
 
                                        $(tblRow).appendTo("#grnitemDetails tbody");
                                         });
+                                        }
+                                        else
+                                        {
+                                          $.each(data.data.grnitemsCut, function(){
+
+                                          var tblRow ="<tr>"+"<td>"+this['grnno']+"</td>"+"<td>"+this['itemname']+"</td>"+"<td>"+"</td>"+"<td>"+this['acceptedqty'] +"<span>"+this['purchaseuom']+"</span>"+'('+"<span>"+this['acceptedqtyinsalesuom']+"</span>"+"<span>"+this['salesuom']+"</span>"+')'+"</td>"+"<td>"+"<a href='#' class='btn btn-primary selectGrnItemCut' data-grnitemid=" +this['id'] +" > Select</a>"+"</td>"+ "</tr>";
+
+                                     $(tblRow).appendTo("#grnitemDetails tbody");
+                                                              });
+                                        }
                                     }
 
                                },
@@ -1490,3 +1501,38 @@ $("#calculationAmount").hide();
        });
    });
     //save selected qty of grn item in sale end
+
+   //save selected qty of grn item cut in sale start
+          $("body").on('click','.selectGrnItemCut',function (e) {
+
+            e.preventDefault();
+
+             var grnItemsId=$(this).data('grnitemid');
+             var partySalesIds=document.getElementById("partssalesid").value;
+             var productSalesIds=document.getElementById("itemIdInputSale").value;
+             var rateValue=document.getElementById("rate").value;
+             var qtyEnter=document.getElementById("qtyenter").value;
+             var saleuom=document.getElementById("saleuom").value;
+             var saleslipId=document.getElementById("salesslipid").value;
+
+            	$.ajax({
+              url: '/inventory/saveSelectedGrnItemsForCut',
+              type: 'GET',
+              dataType : 'json',
+              data: { 'grnItemsId': grnItemsId,'partyId':partySalesIds,'productSalesIds':productSalesIds,'rateValue':rateValue,'qtyEnter':qtyEnter,'salesUOMId':saleuom,'salesslipid':saleslipId},
+
+              success: function(data){
+
+              var salId=data.data.saleslipId;
+          var redirectionUrl= "/inventory/getsSalesSlipBasic?salesSlipId="+salId;
+            window.location.href = redirectionUrl;
+
+                                   },
+
+          error: function(jqXHR, textStatus)
+           {
+           alert('Error Occured');
+            }
+               });
+           });
+            //save selected qty of grn item cut in sale end

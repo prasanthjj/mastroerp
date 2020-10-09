@@ -111,4 +111,7 @@ public class Product extends Auditable<String>{
     @Column(name = "product_code")
     private String productCode;
 
+    @Column(name = "product_length")
+    private Double productLength;
+
 }

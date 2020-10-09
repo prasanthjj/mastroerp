@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -382,6 +379,252 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             salesSlip.setStatus(Constants.STATUS_SALESSLIP);
             salesSlipRepository.save(salesSlip);
             MastroLogUtils.info(SalesSlipService.class, "Generate invoice succesfully.");
+        }
+    }
+
+    /**
+     * Grn ans store updation on cut
+     *
+     * @param grnItemsId
+     * @param partyId
+     * @param productSalesIds
+     * @param rateValue
+     * @param qtyEnter
+     * @param salesUOMId
+     * @param salesslipId
+     */
+    @Transactional(rollbackOn = {Exception.class})
+    public void grnUpdationOnSaleSlipCut(Long grnItemsId, Long partyId, Long productSalesIds, Double rateValue, Double qtyEnter, Long salesUOMId, Long salesslipId) {
+
+        Product productToSale = productService.getProductById(productSalesIds);
+        GRNItems grnItem = grnService.getGRNItemById(grnItemsId);
+        Double lengthOfProductCut = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength();
+        Double lengthOfRequiredProduct = productToSale.getProductLength();
+        Double differenceOfLength = lengthOfProductCut - lengthOfRequiredProduct;
+
+        Uom salesUOMOfRequiredProduct = productUOMRepository.findById(salesUOMId).get().getUom();
+        Uom grnItemToCutUOM = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+
+        List<GRNItems> grnItemsOfProductToSale = grnService.getAllGRNItems().stream()
+                .filter(grnitemData -> (null != grnitemData))
+                .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getId()).equals(productToSale.getId()))
+                .filter(grnitemData -> (grnitemData.getGrn().getBranch().getId()).equals(grnItem.getGrn().getBranch().getId()))
+                .sorted(Comparator.comparing(
+                        GRNItems::getId))
+                .collect(Collectors.toList());
+        if (grnItemsOfProductToSale.isEmpty() == false) {
+
+            Double mode = lengthOfProductCut % lengthOfRequiredProduct;
+            Double qtyRequired = qtyEnter;
+            Double qtyCuted = 0.0d;
+            if (salesUOMOfRequiredProduct.getId().equals(grnItemToCutUOM.getId())) {
+                while (qtyRequired > qtyCuted) {
+                    if (grnItem.getAccepted() > 0) {
+                        if (mode == 0) {
+                            Double qtyAdded = lengthOfProductCut / lengthOfRequiredProduct;
+                            GRNItems productGrnItem = grnItemsOfProductToSale.stream().findFirst().get();
+                            productGrnItem.setAccepted(productGrnItem.getAccepted() + qtyAdded);
+                            grnItemRepository.save(productGrnItem);
+                            Stock stock = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                            Uom purchaseUOM = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                            ProductUOM productUOMPurchase = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                    .filter(productUOMData -> (null != productUOMData))
+                                    .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                    .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOM.getId())))
+                                    .findFirst().get();
+                            stock.setCurrentStock(stock.getCurrentStock() + (qtyAdded * productUOMPurchase.getConvertionFactor()));
+                            stockRepository.save(stock);
+
+                            grnItem.setAccepted(grnItem.getAccepted() - 1);
+                            grnItemRepository.save(grnItem);
+                            Stock stockOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+
+                            Uom purchaseUOMOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                            ProductUOM productUOMPurchaseOfCuted = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                    .filter(productUOMData -> (null != productUOMData))
+                                    .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                    .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfCutedItem.getId())))
+                                    .findFirst().get();
+                            stockOfCutedItem.setCurrentStock(stockOfCutedItem.getCurrentStock() - (1 * productUOMPurchaseOfCuted.getConvertionFactor()));
+                            stockRepository.save(stockOfCutedItem);
+                            qtyCuted = qtyCuted + qtyAdded;
+                        } else {
+                            GRNItems productGrnItem = grnItemsOfProductToSale.stream().findFirst().get();
+                            productGrnItem.setAccepted(productGrnItem.getAccepted() + 1);
+                            grnItemRepository.save(productGrnItem);
+                            Stock stock = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                            Uom purchaseUOM = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                            ProductUOM productUOMPurchase = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                    .filter(productUOMData -> (null != productUOMData))
+                                    .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                    .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOM.getId())))
+                                    .findFirst().get();
+                            stock.setCurrentStock(stock.getCurrentStock() + (1 * productUOMPurchase.getConvertionFactor()));
+                            stockRepository.save(stock);
+
+                            grnItem.setAccepted(grnItem.getAccepted() - 1);
+                            grnItemRepository.save(grnItem);
+                            Stock stockOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+
+                            Uom purchaseUOMOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                            ProductUOM productUOMPurchaseOfCuted = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                    .filter(productUOMData -> (null != productUOMData))
+                                    .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                    .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfCutedItem.getId())))
+                                    .findFirst().get();
+                            stockOfCutedItem.setCurrentStock(stockOfCutedItem.getCurrentStock() - (1 * productUOMPurchaseOfCuted.getConvertionFactor()));
+                            stockRepository.save(stockOfCutedItem);
+
+                            List<GRNItems> grnItemsOfProductCutRemainingToadd = grnService.getAllGRNItems().stream()
+                                    .filter(grnitemData -> (null != grnitemData))
+                                    .filter(grnitemData -> (grnitemData.getGrn().getBranch().getId()).equals(grnItem.getGrn().getBranch().getId()))
+                                    .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()))
+                                    .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()))
+                                    .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength().equals(differenceOfLength)))
+                                    .sorted(Comparator.comparing(
+                                            GRNItems::getId))
+                                    .collect(Collectors.toList());
+
+                            if (grnItemsOfProductCutRemainingToadd.isEmpty() == false) {
+                                GRNItems productGrnItemRemainingAdd = grnItemsOfProductCutRemainingToadd.stream().findFirst().get();
+                                productGrnItemRemainingAdd.setAccepted(productGrnItemRemainingAdd.getAccepted() + 1);
+                                grnItemRepository.save(productGrnItemRemainingAdd);
+                                Stock stockOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                                Uom purchaseUOMOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                ProductUOM productUOMPurchaseOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                        .filter(productUOMData -> (null != productUOMData))
+                                        .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfRemainingItem.getId())))
+                                        .findFirst().get();
+                                stockOfRemainingItem.setCurrentStock(stockOfRemainingItem.getCurrentStock() + (1 * productUOMPurchaseOfRemainingItem.getConvertionFactor()));
+                                stockRepository.save(stockOfRemainingItem);
+                            }
+                            qtyCuted = qtyCuted + 1;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                Double acceptedQtyOfGrnItemToCutInSalesUom = 0.0d;
+                Set<ProductUOM> salesUOMsOfCuttingProduct = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                        .filter(productUomData -> (null != productUomData))
+                        .filter(productUOMData -> (productUOMData.getTransactionType().equals(Constants.SALES)))
+                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(salesUOMOfRequiredProduct.getId())))
+                        .collect(Collectors.toSet());
+                if (salesUOMsOfCuttingProduct.isEmpty() == false) {
+                    Uom purchaseUOM = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                    ProductUOM cuttingGrnItemPurchaseUom = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                            .filter(productuomData -> (null != productuomData))
+                            .filter(productuomData -> (productuomData.getTransactionType().equals("Purchase")))
+                            .filter(productuomData -> (productuomData.getUom().getId().equals(purchaseUOM.getId())))
+                            .findFirst().get();
+                    Double cuttingGrnItemQtyInBaseUOM = grnItem.getAccepted() * cuttingGrnItemPurchaseUom.getConvertionFactor();
+
+                    acceptedQtyOfGrnItemToCutInSalesUom = cuttingGrnItemQtyInBaseUOM / salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor();
+
+                    while (qtyRequired > qtyCuted) {
+                        if (acceptedQtyOfGrnItemToCutInSalesUom > 0) {
+                            if (mode == 0) {
+                                Double qtyAdded = lengthOfProductCut / lengthOfRequiredProduct;
+                                GRNItems productGrnItem = grnItemsOfProductToSale.stream().findFirst().get();
+                                Uom purchaseUOMOfproductGrnItem = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                ProductUOM productUOMPurchase = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                        .filter(productUOMData -> (null != productUOMData))
+                                        .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfproductGrnItem.getId())))
+                                        .findFirst().get();
+                                productGrnItem.setAccepted(productGrnItem.getAccepted() + ((qtyAdded * productUOMRepository.findById(salesUOMId).get().getConvertionFactor())) / (productUOMPurchase.getConvertionFactor()));
+                                grnItemRepository.save(productGrnItem);
+                                Stock stock = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+
+                                stock.setCurrentStock(stock.getCurrentStock() + (qtyAdded * productUOMRepository.findById(salesUOMId).get().getConvertionFactor()));
+                                stockRepository.save(stock);
+
+                                Uom purchaseUOMOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                ProductUOM productUOMPurchaseOfCuted = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                        .filter(productUOMData -> (null != productUOMData))
+                                        .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfCutedItem.getId())))
+                                        .findFirst().get();
+                                acceptedQtyOfGrnItemToCutInSalesUom--;
+                                grnItem.setAccepted(grnItem.getAccepted() - (((1 * salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor())) / productUOMPurchaseOfCuted.getConvertionFactor()));
+                                grnItemRepository.save(grnItem);
+
+                                Stock stockOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                                stockOfCutedItem.setCurrentStock(stockOfCutedItem.getCurrentStock() - (1 * salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor()));
+                                stockRepository.save(stockOfCutedItem);
+                                qtyCuted = qtyCuted + qtyAdded;
+                            } else {
+                                GRNItems productGrnItem = grnItemsOfProductToSale.stream().findFirst().get();
+                                Uom purchaseUOMOfproductGrnItem = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                ProductUOM productUOMPurchase = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                        .filter(productUOMData -> (null != productUOMData))
+                                        .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfproductGrnItem.getId())))
+                                        .findFirst().get();
+                                productGrnItem.setAccepted(productGrnItem.getAccepted() + ((1 * productUOMRepository.findById(salesUOMId).get().getConvertionFactor())) / (productUOMPurchase.getConvertionFactor()));
+                                grnItemRepository.save(productGrnItem);
+
+                                Stock stock = productGrnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                                stock.setCurrentStock(stock.getCurrentStock() + (1 * productUOMRepository.findById(salesUOMId).get().getConvertionFactor()));
+                                stockRepository.save(stock);
+
+                                Uom purchaseUOMOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                ProductUOM productUOMPurchaseOfCuted = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                        .filter(productUOMData -> (null != productUOMData))
+                                        .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                        .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfCutedItem.getId())))
+                                        .findFirst().get();
+                                acceptedQtyOfGrnItemToCutInSalesUom--;
+                                grnItem.setAccepted(grnItem.getAccepted() - (((1 * salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor())) / productUOMPurchaseOfCuted.getConvertionFactor()));
+                                grnItemRepository.save(grnItem);
+
+                                Stock stockOfCutedItem = grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                                stockOfCutedItem.setCurrentStock(stockOfCutedItem.getCurrentStock() - (1 * salesUOMsOfCuttingProduct.stream().findFirst().get().getConvertionFactor()));
+                                stockRepository.save(stockOfCutedItem);
+
+                                List<GRNItems> grnItemsOfProductCutRemainingToadd = grnService.getAllGRNItems().stream()
+                                        .filter(grnitemData -> (null != grnitemData))
+                                        .filter(grnitemData -> (grnitemData.getGrn().getBranch().getId()).equals(grnItem.getGrn().getBranch().getId()))
+                                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()))
+                                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()))
+                                        .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength().equals(differenceOfLength)))
+                                        .sorted(Comparator.comparing(
+                                                GRNItems::getId))
+                                        .collect(Collectors.toList());
+
+                                if (grnItemsOfProductCutRemainingToadd.isEmpty() == false) {
+                                    GRNItems productGrnItemRemainingAdd = grnItemsOfProductCutRemainingToadd.stream().findFirst().get();
+                                    Uom purchaseUOMOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getPurchaseUOM();
+                                    ProductUOM productUOMPurchaseOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                            .filter(productUOMData -> (null != productUOMData))
+                                            .filter(productUOMData -> (productUOMData.getTransactionType().equals("Purchase")))
+                                            .filter(productUOMData -> (productUOMData.getUom().getId().equals(purchaseUOMOfRemainingItem.getId())))
+                                            .findFirst().get();
+                                    Set<ProductUOM> salesUOMsOfRemainingProduct = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductUOMSet().stream()
+                                            .filter(productUomData -> (null != productUomData))
+                                            .filter(productUOMData -> (productUOMData.getTransactionType().equals(Constants.SALES)))
+                                            .filter(productUOMData -> (productUOMData.getUom().getId().equals(salesUOMOfRequiredProduct.getId())))
+                                            .collect(Collectors.toSet());
+                                    if (salesUOMsOfRemainingProduct.isEmpty() == false) {
+                                        productGrnItemRemainingAdd.setAccepted(productGrnItemRemainingAdd.getAccepted() + ((1 * salesUOMsOfRemainingProduct.stream().findFirst().get().getConvertionFactor()) / productUOMPurchaseOfRemainingItem.getConvertionFactor()));
+                                        grnItemRepository.save(productGrnItemRemainingAdd);
+
+                                        Stock stockOfRemainingItem = productGrnItemRemainingAdd.getIndentItemPartyGroup().getItemStockDetails().getStock();
+                                        stockOfRemainingItem.setCurrentStock(stockOfRemainingItem.getCurrentStock() + (1 * salesUOMsOfRemainingProduct.stream().findFirst().get().getConvertionFactor()));
+                                        stockRepository.save(stockOfRemainingItem);
+                                    }
+
+                                }
+                                qtyCuted = qtyCuted + 1;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 

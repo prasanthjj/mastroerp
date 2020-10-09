@@ -33,6 +33,7 @@ public class ProductRequestModel {
     private String toleranceType;
     private Double amount;
     private Double percentageAmount;
+    private Double productLength;
 
     public ProductRequestModel() {
 
@@ -55,6 +56,7 @@ public class ProductRequestModel {
             this.setPropertySize(product.getPropertySize());
             this.setLoadingCharge(product.getLoadingCharge());
             this.setToleranceType(product.getToleranceType());
+            this.setProductLength(product.getProductLength());
             if (product.getToleranceType().equals(Constants.FLAT_AMOUNT)) {
                 this.amount = product.getAmount();
             } else {
