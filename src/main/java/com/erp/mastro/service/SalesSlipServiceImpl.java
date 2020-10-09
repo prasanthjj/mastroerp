@@ -409,6 +409,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                 .filter(grnitemData -> (null != grnitemData))
                 .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getId()).equals(productToSale.getId()))
                 .filter(grnitemData -> (grnitemData.getGrn().getBranch().getId()).equals(grnItem.getGrn().getBranch().getId()))
+                .filter(grnitemData -> (grnitemData.getGrn().getStatus().equals(Constants.STATUS_APPROVED)))
                 .sorted(Comparator.comparing(
                         GRNItems::getId))
                 .collect(Collectors.toList());
@@ -481,6 +482,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                                     .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()))
                                     .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()))
                                     .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength().equals(differenceOfLength)))
+                                    .filter(grnitemData -> (grnitemData.getGrn().getStatus().equals(Constants.STATUS_APPROVED)))
                                     .sorted(Comparator.comparing(
                                             GRNItems::getId))
                                     .collect(Collectors.toList());
@@ -590,6 +592,7 @@ public class SalesSlipServiceImpl implements SalesSlipService {
                                         .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getSubCategory().getId()))
                                         .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()).equals(grnItem.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getColour()))
                                         .filter(grnitemData -> (grnitemData.getIndentItemPartyGroup().getItemStockDetails().getStock().getProduct().getProductLength().equals(differenceOfLength)))
+                                        .filter(grnitemData -> (grnitemData.getGrn().getStatus().equals(Constants.STATUS_APPROVED)))
                                         .sorted(Comparator.comparing(
                                                 GRNItems::getId))
                                         .collect(Collectors.toList());
