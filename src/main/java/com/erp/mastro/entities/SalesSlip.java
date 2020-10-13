@@ -22,12 +22,6 @@ public class SalesSlip extends Auditable<String> {
     @JoinColumn(name = "party_id")
     private Party party;
 
-    @Column(name = "transport_mode")
-    private String transportMode;
-
-    @Column(name = "vehicle_no")
-    private String vehicleNo;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private Branch branch;
@@ -90,4 +84,8 @@ public class SalesSlip extends Auditable<String> {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<SalesSlipInvoice> salesSlipInvoices = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gatepass_id")
+    private GatePass gatePass;
 }

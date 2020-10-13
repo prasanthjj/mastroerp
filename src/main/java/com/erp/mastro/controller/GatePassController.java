@@ -3,6 +3,7 @@ package com.erp.mastro.controller;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
 import com.erp.mastro.custom.responseBody.GenericResponse;
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.GatePass;
 import com.erp.mastro.model.request.GatePassRequestModel;
 import com.erp.mastro.service.interfaces.GatePassService;
@@ -23,6 +24,9 @@ public class GatePassController {
     @Autowired
     private GatePassService gatePassService;
 
+    @Autowired
+    private UserController userController;
+
     /**
      * Method to get  Gate Pass
      * *
@@ -34,9 +38,11 @@ public class GatePassController {
     public String getGatePass(Model model) {
 
         try {
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<GatePass> gatePassList = gatePassService.getAllGatePass().stream()
                     .filter(gatePassData -> (null != gatePassData))
                     .filter(gatePassData -> (1 != gatePassData.getGatepassDeleteStatus()))
+                    .filter(gatePassData -> (gatePassData.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
                             GatePass::getId).reversed())
                     .collect(Collectors.toList());
@@ -88,7 +94,6 @@ public class GatePassController {
         MastroLogUtils.info(SalaryComponentController.class, "Going to edit Gate Pass in controller: {}" + gatePassId);
         try {
             if (gatePassId != null) {
-                System.out.println("gatePassId: " + gatePassId);
                 model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
                 model.addAttribute("gatePassTab", "gatePassTab");
                 model.addAttribute("gatePassForm", new GatePassRequestModel(gatePassService.getGatePassId(gatePassId)));
@@ -114,7 +119,6 @@ public class GatePassController {
 
         MastroLogUtils.info(GatePassController.class, "Going to save Gate Pass : {}");
         try {
-            System.out.println("Date" + gatePassRequestModel.getsEntryDate());
             gatePassService.saveOrUpdateGatePass(gatePassRequestModel, value, val);
         } catch (Exception e) {
             MastroLogUtils.error(GatePassController.class, "Error occured while saving Gate Pass : {}");

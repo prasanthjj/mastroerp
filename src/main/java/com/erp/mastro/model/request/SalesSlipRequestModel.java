@@ -9,8 +9,6 @@ import lombok.Setter;
 public class SalesSlipRequestModel {
 
     private Long id;
-    private String transportMode;
-    private String vehicleNo;
     private Long selectedPartyInSalesSlip;
     private String specificInst;
     private String remarks;
@@ -27,13 +25,12 @@ public class SalesSlipRequestModel {
     private Double loadingChargeCgst;
     private Double loadingChargesgst;
     private String paymentMode;
+    private Long gatePassId;
 
     @Override
     public String toString() {
         return "SalesSlipRequestModel{" +
                 "id=" + id +
-                ", transportMode='" + transportMode + '\'' +
-                ", vehicleNo='" + vehicleNo + '\'' +
                 ", partyId=" + selectedPartyInSalesSlip +
                 '}';
     }

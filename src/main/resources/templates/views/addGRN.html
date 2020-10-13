@@ -25,12 +25,17 @@
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
-<style>
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
+    <style>
      .sweet-alert h2 {
   color: #f00;
 }
 
-</style>
+
+    </style>
 </head>
 
 <body>
@@ -71,18 +76,14 @@
                                   name="grnForm" method="post">
                          <span th:if="${grnDetails== null}">
                             <div class="row">
-                                <div class="col-lg-5">
-                                    <div class="row">
-                                
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Received Against</label>
+                                <div class="col-lg-4">
+                                    <div class="form-group"><label>Received Against</label>
                                                 <select class="form-control" name="receivedAganist">
                                                     <option value="PO">PO</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Received From <i class="fa fa-asterisk "></i></label>
+                                     <div class="form-group"><label>Received From <i
+                                             class="fa fa-asterisk "></i></label>
                                                     <input type="hidden" name="selectedParty" id="partysIdInput">
                                                     <input type="text" class="form-control grnpartyautocmoplete"
                                                            placeholder="Select party" required>
@@ -95,34 +96,64 @@
 
 
                                                 </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="row">
-                                
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Purchase Order No <i class="fa fa-asterisk "></i></label>
+                                    <div class="form-group"><label>Purchase Order No <i
+                                            class="fa fa-asterisk "></i></label>
                                                 <select class="form-control" id="partyPo" name="poId" required>
 
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-7">
-                                    <div class="row">
-                                        <div class="col-lg-4">
+                                     <div class="form-group">
                                             <label>Invoice Copy</label>
                                             <div class="custom-file">
                                                 <input id="logo" type="file" class="custom-file-input">
                                                 <label for="logo" class="custom-file-label">Choose file...</label>
-                                            </div> 
+                                            </div>
                                         </div>
-                                        <div class="col-lg-8  ">
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                   <div class="col-lg-4">
+
                                             <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Gate Pass</td>
+                                                    <td>
+                                                      <!--  <input type="text" class="form-control" name="transportMode"/>-->
+                                                          <select class="form-control m-b selectGatePassGRN"
+                                                                  name="gatePassId" id="gatepassid">
+                                                    <option value="">Select</option>
+                                                    <option th:each="gatePassList: ${gatePassList}"
+                                                            th:value="${gatePassList.id}"
+                                                            th:text="${gatePassList.gatePassCode}"></option>
+
+                                                </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white">vehicle No</td>
+                                                    <td>
+                                                        <span id="vehiclesNo"></span>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="master-blue-bg txt-white">Transport Name</td>
+                                                    <td>
+                                                        <span id="transportName"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        </div>
+                                <div class="col-lg-4">
+                                      <div class="table-responsive">
                                                 <table class="table table-bordered ">
                                                     <tr>
                                                         <td class="master-blue-bg txt-white"
@@ -167,8 +198,7 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12 text-right m-b-lg">
@@ -178,18 +208,13 @@
 
                                 <span th:unless="${grnDetails== null}">
                             <div class="row">
-                                <div class="col-lg-5">
-                                    <div class="row">
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Received Against</label>
+                                <div class="col-lg-4">
+                                    <div class="form-group"><label>Received Against</label>
                                                 <label class="col-sm-7 col-form-label"
                                                        th:text="${grnDetails.receivedAganist}">: HSN001</label>
 
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Received From</label>
+                                     <div class="form-group"><label>Received From</label>
                                                 <div class="col-sm-8">
 
                                  <label class="col-sm-7 col-form-label"
@@ -199,35 +224,48 @@
 
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="row">
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label>Purchase Order No</label>
+                                     <div class="form-group"><label>Purchase Order No</label>
 
                                                   <label class="col-sm-9 col-form-label"
                                                          th:text="${grnDetails.purchaseOrder.poNo}">: HSN001</label>
-                                                <!--   <select class="form-control" id="partyPo" name="poId">
+                                         <!--   <select class="form-control" id="partyPo" name="poId">
 
-                                                   </select>-->
+                                            </select>-->
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                        </div>
-                                    </div>
+
                                 </div>
-                                <div class="col-lg-7">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                         <!--   <label>Invoice Copy</label>
-                                            <div class="custom-file">
-                                                <input id="logo" type="file" class="custom-file-input">
-                                                <label for="logo" class="custom-file-label">Choose file...</label>
-                                            </div>-->
+                                 <div class="col-lg-4">
+                                             <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <span th:if="${grnDetails.gatePass!= null}">
+                                                 <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Gate Pass</td>
+                                                    <td>
+                                                        <span
+                                                                th:text="${grnDetails.gatePass.gatePassCode}"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Transport Name</td>
+                                                    <td>
+                                                        <span
+                                                                th:text="${grnDetails.gatePass.transportName}"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white">vehicle No</td>
+                                                    <td>
+                                                       <span
+                                                               th:text="${grnDetails.gatePass.vehicleNo}"></span>
+                                                    </td>
+                                                </tr>
+                                                    </span>
+                                            </table>
                                         </div>
-                                        <div class="col-lg-8  ">
+                                        </div>
+
+                                <div class="col-lg-4 ">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered ">
                                                     <tr>
@@ -268,8 +306,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+
                             </div>
                                     <!-- <div class="col-lg-12 text-right">
                                          <button class="btn btn-primary btn-sm" type="submit">Select</button>
@@ -444,6 +481,8 @@
 <script src="../resources/js/mastro/mastro_main.js" th:src="@{/resources/js/mastro/mastro_main.js}"></script>
 <script src="../resources/js/plugins/typehead/bootstrap3-typeahead.min.js"
         th:src="@{/resources/js/plugins/typehead/bootstrap3-typeahead.min.js}"></script>
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
 </body>
 </html>
 <script>
@@ -608,4 +647,36 @@ document.getElementById('grnpoItemsModels'+arg+'.accepted').value='';
 }
 
 }
+//SelectGatepass Starts
+    $(".selectGatePassGRN").select2({
+     theme:'bootstrap4',
+     });
+    // Select Gatepass Ends
+
+    //gate pass data view start
+       $('#gatepassid').change(function () {
+       var gatePassId=$('#gatepassid').val();
+        $('#vehiclesNo').html("");
+         $('#transportName').html("");
+       if(gatePassId!='')
+       {
+        $.ajax({
+                                                                  url: '/inventory/getGatePassDetails',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'gatePassId': gatePassId},
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+
+                                                                                    $('#vehiclesNo').text(data.data.vehicleNo);
+                                                                                     $('#transportName').text(data.data.transportName);
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+       }
+       });
+    //gate pass data view end
 </script>

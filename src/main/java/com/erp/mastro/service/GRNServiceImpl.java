@@ -9,6 +9,7 @@ import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.GRNRequestModel;
 import com.erp.mastro.repository.*;
 import com.erp.mastro.service.interfaces.GRNService;
+import com.erp.mastro.service.interfaces.GatePassService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class GRNServiceImpl implements GRNService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
+
+    @Autowired
+    private GatePassService gatePassService;
 
     /**
      * Method to get all grns
@@ -109,6 +113,9 @@ public class GRNServiceImpl implements GRNService {
                         e.printStackTrace();
                     }
                     grn.setDate(date1);
+                }
+                if (grnRequestModel.getGatePassId() != null) {
+                    grn.setGatePass(gatePassService.getGatePassId(grnRequestModel.getGatePassId()));
                 }
                 grnRepository.save(grn);
             }

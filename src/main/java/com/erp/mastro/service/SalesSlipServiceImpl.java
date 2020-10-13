@@ -8,10 +8,7 @@ import com.erp.mastro.entities.*;
 import com.erp.mastro.exception.ModelNotFoundException;
 import com.erp.mastro.model.request.SalesSlipRequestModel;
 import com.erp.mastro.repository.*;
-import com.erp.mastro.service.interfaces.GRNService;
-import com.erp.mastro.service.interfaces.PartyService;
-import com.erp.mastro.service.interfaces.ProductService;
-import com.erp.mastro.service.interfaces.SalesSlipService;
+import com.erp.mastro.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +51,9 @@ public class SalesSlipServiceImpl implements SalesSlipService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
+
+    @Autowired
+    private GatePassService gatePassService;
 
     /**
      * Method to get all sales slip
@@ -112,8 +112,9 @@ public class SalesSlipServiceImpl implements SalesSlipService {
             if (salesSlipRequestModel.getId() == null) {
                 MastroLogUtils.info(SalesSlipService.class, "Going to create sales slip{}" + salesSlipRequestModel.toString());
                 salesSlip.setParty(partyService.getPartyById(salesSlipRequestModel.getSelectedPartyInSalesSlip()));
-                salesSlip.setTransportMode(salesSlipRequestModel.getTransportMode());
-                salesSlip.setVehicleNo(salesSlipRequestModel.getVehicleNo());
+                if (salesSlipRequestModel.getGatePassId() != null) {
+                    salesSlip.setGatePass(gatePassService.getGatePassId(salesSlipRequestModel.getGatePassId()));
+                }
                 Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
                 salesSlip.setBranch(currentBranch);
                 salesSlipRepository.save(salesSlip);

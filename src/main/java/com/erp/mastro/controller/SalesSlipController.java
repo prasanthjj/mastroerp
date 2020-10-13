@@ -57,6 +57,9 @@ public class SalesSlipController {
     @Autowired
     private StockRepository stockRepository;
 
+    @Autowired
+    private GatePassService gatePassService;
+
     /**
      * Method to load create sales slip
      *
@@ -67,9 +70,19 @@ public class SalesSlipController {
     public String getCreateSalesSlip(Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to add sales slip : {}");
         try {
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             model.addAttribute("salesSlipForm", new SalesSlipRequestModel());
             model.addAttribute(Constants.INVENTORY_MODULE, "inventory");
             model.addAttribute("deliveryChellanTab", "deliveryChellan");
+            List<GatePass> gatePassList = gatePassService.getAllGatePass().stream()
+                    .filter(gatePassData -> (null != gatePassData))
+                    .filter(gatePassData -> (1 != gatePassData.getGatepassDeleteStatus()))
+                    .filter(gatePassData -> (gatePassData.getVehicleMovementType().equals(Constants.OUTWARD)))
+                    .filter(gatePassData -> (gatePassData.getBranch().getId().equals(currentBranch.getId())))
+                    .sorted(Comparator.comparing(
+                            GatePass::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("gatePassList", gatePassList);
             return "views/addPurchaseSlip";
 
         } catch (Exception e) {
@@ -266,9 +279,6 @@ public class SalesSlipController {
                                 GRNItems::getId))
                         .collect(Collectors.toList());
 
-               /* List<GRNItems> grnItemsList1ForCutting = grnItemsForCutting.stream()
-                        .limit(5)
-                        .collect(Collectors.toList());*/
                 if (grnItemsForCutting.isEmpty() == false) {
                     for (GRNItems grnItemsCut : grnItemsForCutting) {
                         GRNRequestModel.GRNItemModel grnItemModelCut = new GRNRequestModel.GRNItemModel();
@@ -339,6 +349,14 @@ public class SalesSlipController {
         }
     }
 
+    /**
+     * Method to get salesslip basic details
+     *
+     * @param salesSlipId
+     * @param request
+     * @param model
+     * @return
+     */
     @GetMapping("/getsSalesSlipBasic")
     public String getsSalesSlipBasic(@RequestParam("salesSlipId") Long salesSlipId, HttpServletRequest request, Model model) {
         MastroLogUtils.info(SalesSlipController.class, "Going to get sales slip details : {}" + salesSlipId);
@@ -496,4 +514,25 @@ public class SalesSlipController {
         }
     }
 
+    /**
+     * Method to Get gatepass details
+     *
+     * @param gatePassId
+     * @return gatepass details
+     */
+    @RequestMapping(value = "/getGatePassDetails", method = RequestMethod.GET)
+    @ResponseBody
+    public GenericResponse getGatePassDetailsInSales(@RequestParam("gatePassId") Long gatePassId) {
+        try {
+            MastroLogUtils.info(SalesSlipController.class, "Going to get gatepass details : {}" + gatePassId);
+            GatePass gatePass = gatePassService.getGatePassId(gatePassId);
+            return new GenericResponse(true, "get party details")
+                    .setProperty("gatePassCodes", gatePass.getGatePassCode())
+                    .setProperty("vehicleNo", gatePass.getVehicleNo())
+                    .setProperty("transportName", gatePass.getTransportName());
+        } catch (Exception e) {
+            MastroLogUtils.error(this, e.getMessage(), e);
+            throw e;
+        }
+    }
 }

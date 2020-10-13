@@ -123,4 +123,9 @@ public class Branch {
             orphanRemoval = true)
     private Set<StockLedger> stockLedgers = new HashSet<>();
 
+    @OneToMany(mappedBy = "branch",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GatePass> gatePass = new HashSet<>();
+
 }

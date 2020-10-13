@@ -11,6 +11,7 @@ import com.erp.mastro.model.request.PartyRequestModel;
 import com.erp.mastro.repository.GRNRepository;
 import com.erp.mastro.repository.IndentItemPartyGroupRepository;
 import com.erp.mastro.service.interfaces.GRNService;
+import com.erp.mastro.service.interfaces.GatePassService;
 import com.erp.mastro.service.interfaces.PartyService;
 import com.erp.mastro.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class GRNController {
 
     @Autowired
     private IndentItemPartyGroupRepository indentItemPartyGroupRepository;
+
+    @Autowired
+    private GatePassService gatePassService;
 
     /**
      * Method to get all GRN and display as a list
@@ -97,6 +101,16 @@ public class GRNController {
             model.addAttribute("grnForm", new GRNRequestModel());
             model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("GRNTab", "GRN");
+            Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+            List<GatePass> gatePassList = gatePassService.getAllGatePass().stream()
+                    .filter(gatePassData -> (null != gatePassData))
+                    .filter(gatePassData -> (1 != gatePassData.getGatepassDeleteStatus()))
+                    .filter(gatePassData -> (gatePassData.getVehicleMovementType().equals(Constants.INWARD)))
+                    .filter(gatePassData -> (gatePassData.getBranch().getId().equals(currentBranch.getId())))
+                    .sorted(Comparator.comparing(
+                            GatePass::getId).reversed())
+                    .collect(Collectors.toList());
+            model.addAttribute("gatePassList", gatePassList);
             return "views/addGRN";
 
         } catch (Exception e) {

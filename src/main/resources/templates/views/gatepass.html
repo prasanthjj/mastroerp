@@ -74,7 +74,7 @@
                                         <th class="mastro-blue-bg txt-white">No</th>
                                         <th>Vehicle Movement Type</th>
                                         <th>Empty/With Material</th>
-                                        <th>Entry No.</th>
+                                        <th>GatePass No.</th>
                                         <th>Entry Date</th>
                                         <th>Vehicle No.</th>
                                         <th>Reference Document No.</th>
@@ -86,7 +86,7 @@
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${gatepassObj.vehicleMovementType}"></td>
                                         <td th:text="${gatepassObj.emptyMaterial}"></td>
-                                        <td th:text="${gatepassObj.id}"></td>
+                                        <td th:text="${gatepassObj.gatePassCode}"></td>
                                         <!-- <td th:text="${gatepassObj.entryDate}"></td>-->
                                         <td><p class="m-t-md"
                                                th:text="${#dates.format(gatepassObj.entryDate,'MM/dd/yyyy')}"></p></td>

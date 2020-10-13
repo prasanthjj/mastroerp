@@ -55,5 +55,7 @@ public class Constants {
     public static final String PURCHASE_MODULE = "purchaseModule";
     public static final String REPORT_MODULE = "reportModule";
     public static final String SALES = "Sales";
+    public static final String OUTWARD = "Outward";
+    public static final String INWARD = "Inward";
 
 }

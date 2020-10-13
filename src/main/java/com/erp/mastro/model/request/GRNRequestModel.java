@@ -25,6 +25,7 @@ public class GRNRequestModel {
     private String receivedThrough;
     private String remarks;
     private Long userInspId;
+    private Long gatePassId;
     private List<GRNRequestModel.GRNPOItemsModel> grnpoItemsModels = new ArrayList<>();
 
     public GRNRequestModel() {

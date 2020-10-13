@@ -1,7 +1,10 @@
 package com.erp.mastro.service;
 
+import com.erp.mastro.common.MastroApplicationUtils;
 import com.erp.mastro.common.MastroLogUtils;
 import com.erp.mastro.constants.Constants;
+import com.erp.mastro.controller.UserController;
+import com.erp.mastro.entities.Branch;
 import com.erp.mastro.entities.GatePass;
 import com.erp.mastro.model.request.GatePassRequestModel;
 import com.erp.mastro.repository.GatePassRepository;
@@ -24,6 +27,9 @@ public class GatePassServiceImpl implements GatePassService {
 
     @Autowired
     GatePassRepository gatePassRepository;
+
+    @Autowired
+    private UserController userController;
 
     /**
      * method to get all Gate Pass
@@ -94,7 +100,14 @@ public class GatePassServiceImpl implements GatePassService {
         gatePass.setCustomerVendorName(gatePassRequestModel.getCustomerVendorName());
         gatePass.setCustomerVendorAddress(gatePassRequestModel.getCustomerVendorAddress());
         gatePass.setLRNo(gatePassRequestModel.getLRNo());
+        Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
+        gatePass.setBranch(currentBranch);
         gatePassRepository.save(gatePass);
+        Branch currentBranchCode = gatePass.getBranch();
+        if (currentBranchCode != null) {
+            gatePass.setGatePassCode(MastroApplicationUtils.generateName(currentBranch.getBranchCode(), "GP", gatePass.getId()));
+        }
+
     }
 
     /**

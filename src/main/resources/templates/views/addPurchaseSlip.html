@@ -20,6 +20,10 @@
     <link href="../resources/css/animate.css" rel="stylesheet" th:src="@{/resources/css/animate.css}">
     <link href="../resources/css/style.css" rel="stylesheet" th:src="@{/resources/css/style.css}">
     <link href="../resources/css/mastro-style.css" rel="stylesheet" th:src="@{/resources/css/mastro-style.css}">
+    <link href="../resources/css/plugins/select2/select2.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2.min.css}">
+    <link href="../resources/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"
+          th:src="@{/resources/css/plugins/select2/select2-bootstrap4.min.css}">
 </head>
 
 <body>
@@ -82,15 +86,29 @@
                                         <div class="table-responsive">
                                             <table class="table table-bordered ">
                                                 <tr>
-                                                    <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
+                                                    <td class="master-blue-bg txt-white" width="50%">Gate Pass</td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="transportMode"/>
+                                                      <!--  <input type="text" class="form-control" name="transportMode"/>-->
+                                                          <select class="form-control m-b selectGatePass"
+                                                                  name="gatePassId" id="gatepassid">
+                                                    <option value="">Select</option>
+                                                    <option th:each="gatePassList: ${gatePassList}"
+                                                            th:value="${gatePassList.id}"
+                                                            th:text="${gatePassList.gatePassCode}"></option>
+
+                                                </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="master-blue-bg txt-white">vehicle No</td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="vehicleNo"/>
+                                                        <span id="vehiclesNo"></span>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="master-blue-bg txt-white">Transport Name</td>
+                                                    <td>
+                                                        <span id="transportName"></span>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -146,20 +164,29 @@
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered ">
-                                                <tr>
-                                                    <td class="master-blue-bg txt-white" width="50%">Transport Mode</td>
+                                                <span th:if="${salesSlipDetails.gatePass!= null}">
+                                                 <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Gate Pass</td>
                                                     <td>
                                                         <span
-                                                              th:text="${salesSlipDetails.transportMode}"></span>
+                                                                th:text="${salesSlipDetails.gatePass.gatePassCode}"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="master-blue-bg txt-white" width="50%">Transport Name</td>
+                                                    <td>
+                                                        <span
+                                                                th:text="${salesSlipDetails.gatePass.transportName}"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="master-blue-bg txt-white">vehicle No</td>
                                                     <td>
                                                        <span
-                                                             th:text="${salesSlipDetails.vehicleNo}"></span>
+                                                               th:text="${salesSlipDetails.gatePass.vehicleNo}"></span>
                                                     </td>
                                                 </tr>
+                                                    </span>
                                             </table>
                                         </div>
                                         <!-- <div class="form-group text-right">
@@ -561,7 +588,8 @@
 <script src="../resources/js/plugins/jquery-ui/jquery-ui.min.js"
         th:src="@{/resources/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
 
-
+<script src="../resources/js/plugins/select2/select2.full.min.js"
+        th:src="@{/resources/js/plugins/select2/select2.full.min.js}"></script>
 <!-- Sweet alert -->
 <script src="../resources/js/plugins/sweetalert/sweetalert.min.js"
         th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
@@ -634,7 +662,38 @@
       });
 
 
+ //SelectGatepass Starts
+    $(".selectGatePass").select2({
+     theme:'bootstrap4',
+     });
+    // Select Gatepass Ends
 
+    //gate pass data view start
+       $('#gatepassid').change(function () {
+       var gatePassId=$('#gatepassid').val();
+        $('#vehiclesNo').html("");
+         $('#transportName').html("");
+       if(gatePassId!='')
+       {
+        $.ajax({
+                                                                  url: '/inventory/getGatePassDetails',
+                                                                                type: 'GET',
+                                                                                dataType : 'json',
+                                                                                data: { 'gatePassId': gatePassId},
+                                                                                success: function(data){
+                                                                                    if(data.success) {
+
+                                                                                    $('#vehiclesNo').text(data.data.vehicleNo);
+                                                                                     $('#transportName').text(data.data.transportName);
+                                                                                    }
+                                                                                },
+                                                                                error: function(jqXHR, textStatus) {
+                                                                                    alert('Error Occured');
+                                                                                }
+                                                                            });
+       }
+       });
+    //gate pass data view end
 </script>
 
 </body>

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
@@ -60,5 +62,22 @@ public class GatePass {
 
     @Column(name = "delete_status", nullable = false)
     private int gatepassDeleteStatus;
+
+    @Column(name = "gatepass_code")
+    private String gatePassCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
+    @OneToMany(mappedBy = "gatePass",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<SalesSlip> salesSlips = new HashSet<>();
+
+    @OneToMany(mappedBy = "gatePass",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<GRN> grnSet = new HashSet<>();
 
 }

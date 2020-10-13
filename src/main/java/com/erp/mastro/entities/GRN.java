@@ -70,4 +70,8 @@ public class GRN extends Auditable<String> {
 
     @Column(name = "create_another_po", nullable = false)
     private int createAnotherPO;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gatepass_id")
+    private GatePass gatePass;
 }
