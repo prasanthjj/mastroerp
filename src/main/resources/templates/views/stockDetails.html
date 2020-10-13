@@ -90,10 +90,22 @@
                                     <tr class="gradeX" th:each="stockObj,iterator:${stockDetailsList}">
                                         <td th:text="${iterator.index+1}">1</td>
                                         <td th:text="${stockObj.product.productName}"></td>
+                                        <span th:if="${stockObj.openingStock!= 0}">
                                         <td th:text="${#numbers.formatDecimal(stockObj.openingStock, 0, 'COMMA', 2, 'POINT')}"></td>
+                                        </span>
+                                        <span th:unless="${stockObj.openingStock!= 0}">
+                                        <td>0.0</td>
+                                        </span>
+                                        <span th:if="${stockObj.currentStock!= 0}">
                                         <td class="center"
                                             th:text="${#numbers.formatDecimal(stockObj.currentStock, 0, 'COMMA', 2, 'POINT')}">
                                         </td>
+                                        </span>
+                                        <span th:unless="${stockObj.currentStock!= 0}">
+                                        <td class="center">
+                                        0.0
+                                        </td>
+                                        </span>
                                         <td class="center" th:text="${stockObj.reorderLevel}"></td>
                                         <!--  <td class="center">003202689</td>-->
                                         <!--  <td class="center">30/06/2020</td>-->

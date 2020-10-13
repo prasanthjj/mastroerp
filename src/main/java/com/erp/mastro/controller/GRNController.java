@@ -106,6 +106,7 @@ public class GRNController {
                     .filter(gatePassData -> (null != gatePassData))
                     .filter(gatePassData -> (1 != gatePassData.getGatepassDeleteStatus()))
                     .filter(gatePassData -> (gatePassData.getVehicleMovementType().equals(Constants.INWARD)))
+                    .filter(gatePassData -> (null != gatePassData.getBranch()))
                     .filter(gatePassData -> (gatePassData.getBranch().getId().equals(currentBranch.getId())))
                     .sorted(Comparator.comparing(
                             GatePass::getId).reversed())
