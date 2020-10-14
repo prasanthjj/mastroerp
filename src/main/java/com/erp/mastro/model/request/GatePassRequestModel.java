@@ -70,4 +70,26 @@ public class GatePassRequestModel {
     public void setsEntryDate(String sEntryDate) {
         this.sEntryDate = sEntryDate;
     }
+
+    @Override
+    public String toString() {
+        return "GatePassRequestModel{" +
+                "id=" + id +
+                ", vehicleMovementType='" + vehicleMovementType + '\'' +
+                ", emptyMaterial='" + emptyMaterial + '\'' +
+                ", entryNo='" + entryNo + '\'' +
+                ", entryDate=" + entryDate +
+                ", sEntryDate='" + sEntryDate + '\'' +
+                ", vehicleNo='" + vehicleNo + '\'' +
+                ", transportName='" + transportName + '\'' +
+                ", transportAddress='" + transportAddress + '\'' +
+                ", preparedBy='" + preparedBy + '\'' +
+                ", materialDescription='" + materialDescription + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", referenceDocumentNo='" + referenceDocumentNo + '\'' +
+                ", customerVendorName='" + customerVendorName + '\'' +
+                ", customerVendorAddress='" + customerVendorAddress + '\'' +
+                ", LRNo='" + LRNo + '\'' +
+                '}';
+    }
 }

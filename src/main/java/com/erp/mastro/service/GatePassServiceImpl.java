@@ -40,6 +40,7 @@ public class GatePassServiceImpl implements GatePassService {
     @Override
     public List<GatePass> getAllGatePass() {
 
+        MastroLogUtils.info(GatePassService.class, "Going to get all gatepass");
         List<GatePass> gatePassList = new ArrayList<>();
         gatePassRepository.findAll().forEach(gatePass -> gatePassList.add(gatePass));
         return gatePassList;
@@ -68,7 +69,7 @@ public class GatePassServiceImpl implements GatePassService {
     public void saveOrUpdateGatePass(GatePassRequestModel gatePassRequestModel, String value, String val) throws ParseException {
         GatePass gatePass;
         if (gatePassRequestModel.getId() == null) {
-            MastroLogUtils.info(GatePassService.class, "Going to save GAte Pass {}" + gatePassRequestModel.toString());
+            MastroLogUtils.info(GatePassService.class, "Going to save Gate Pass {}" + gatePassRequestModel.toString());
             gatePass = new GatePass();
             setGatePassData(gatePassRequestModel, value, val, gatePass);
         } else {

@@ -18,6 +18,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller include all gatepass methods
+ */
 @Controller
 public class GatePassController {
 
@@ -38,6 +41,7 @@ public class GatePassController {
     public String getGatePass(Model model) {
 
         try {
+            MastroLogUtils.info(GatePassController.class, "Going to get Gate Pass list");
             Branch currentBranch = userController.getCurrentUser().getUserSelectedBranch().getCurrentBranch();
             List<GatePass> gatePassList = gatePassService.getAllGatePass().stream()
                     .filter(gatePassData -> (null != gatePassData))
@@ -67,14 +71,12 @@ public class GatePassController {
      */
     @GetMapping("/inventory/addGatePass")
     public String addGatePass(Model model) {
-        MastroLogUtils.info(GatePassController.class, "Going to add Gate Pass list : {}");
+        MastroLogUtils.info(GatePassController.class, "Going to add Gate Pass");
 
         try {
-
             model.addAttribute("gatePassForm", new GatePassRequestModel());
             model.addAttribute(Constants.INVENTORY_MODULE, Constants.INVENTORY_MODULE);
             model.addAttribute("gatePassTab", "gatePassTab");
-
             return "views/create_gatepass";
         } catch (Exception e) {
             MastroLogUtils.error(GatePassController.class, "Error occured while adding Gate Pass : {}");
@@ -118,7 +120,7 @@ public class GatePassController {
     @PostMapping("/inventory/saveGatePass")
     public String saveGatePass(@RequestParam("vehicleMovement") String value, @ModelAttribute("gatePassForm") @Valid GatePassRequestModel gatePassRequestModel, HttpServletRequest request, Model model, @RequestParam("emptyMatrial") String val) {
 
-        MastroLogUtils.info(GatePassController.class, "Going to save Gate Pass : {}");
+        MastroLogUtils.info(GatePassController.class, "Going to save Gate Pass : {}" + gatePassRequestModel.toString());
         try {
             gatePassService.saveOrUpdateGatePass(gatePassRequestModel, value, val);
         } catch (Exception e) {
@@ -163,7 +165,7 @@ public class GatePassController {
     @PostMapping("/inventory/deleteGatePass")
     @ResponseBody
     public GenericResponse deleteGatePass(Model model, HttpServletRequest request, @RequestParam("gatepassids") Long gatePassid) {
-        MastroLogUtils.info(BranchController.class, "Going to delete Branch : {}" + gatePassid);
+        MastroLogUtils.info(BranchController.class, "Going to delete gate pass : {}" + gatePassid);
         try {
             if (gatePassid != null) {
                 gatePassService.deleteGatePass(gatePassid);
